@@ -1,0 +1,49 @@
+{
+  "profile-page": {
+    "title" : "Profiles & Wallets",
+    "description": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this dashboard",
+    "wallet": "Wallet",
+    "filter": "Filter",
+    "empty-title": "Add Credentials",
+    "empty-description": "Explore credentials marketplace with different providers "
+  },
+  "sign-in-page": {
+    "title": "Sign in",
+    "description": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this dashboard"
+  },
+  "validations": {
+    "field-error_required": "Please fill out this field",
+    "field-error_minLength": "This field must contain minimum {{minLength}} symbols",
+    "field-error_maxLength": "This field must contain maximum {{maxLength}} symbols"
+  },
+  "errors": {
+    "default": "Something went wrong"
+  },
+  "notifications": {
+    "default-title-success": "Success",
+    "default-title-error": "Error",
+    "default-title-warning": "Warning",
+    "default-title-info": "Info",
+    "default-title-default": "Just a message",
+    "default-message-success": "Action successful",
+    "default-message-error": "Something went wrong",
+    "default-message-warning": "Something you are doing is not recommended",
+    "default-message-info": "Something is happening. Just want you to know that",
+    "default-message-default": "Just a message"
+  },
+  "store-overview": {
+    "loading-error-msg": "Oops... Something went wrong",
+    "no-data-msg": "Empty..."
+  },
+  "login-form": {
+    "login-lbl": "Login",
+    "password-lbl": "Password",
+    "login-success-msg": "Access granted",
+    "submit-btn": "Submit",
+    "primitives-title": "Primitives",
+    "nested-object-title": "Deep dested object",
+    "primitive-array-title": "Primitive array",
+    "object-array-title": "Object array",
+    "object-and-array-combine-title": "Complex array & Object"
+  }
+}

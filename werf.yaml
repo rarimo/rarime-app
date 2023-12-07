@@ -1,0 +1,38 @@
+configVersion: 1
+project: "dashboard-rarime"
+---
+image: builder
+from: node:18-alpine
+git:
+  - add: /
+    to: /app
+    stageDependencies:
+      install:
+        - package.json
+        - yarn.lock
+      setup:
+        - "**/*"
+shell:
+  beforeInstall:
+    - apk --no-cache --update --virtual build-dependencies add python3 make g++ git
+  install:
+    - cd /app
+    - yarn install
+  setup:
+    - cd /app
+    - export VITE_SENTRY_AUTH_TOKEN="{{ env "VITE_SENTRY_AUTH_TOKEN" }}"
+    - export VITE_SENTRY_DSN="{{ env "VITE_SENTRY_DSN" }}"
+    - export VITE_APP_DOMAIN="{{ env "VITE_APP_DOMAIN" }}"
+    - yarn build
+
+---
+image: web
+from: nginx:alpine
+git:
+  - add: /nginx.conf
+    to: /etc/nginx/nginx.conf
+import:
+  - image: builder
+    add: /app/dist
+    to: /usr/share/nginx/html
+    after: setup

@@ -1,0 +1,43 @@
+/* stylelint-disable scss/dollar-variable-empty-line-before */
+$col-dark: rgba(31, 33, 36, 0.87);
+$col-light: #ffffff;
+
+$col-txt-primary: $col-dark;
+$col-txt-secondary: rgba(31, 33, 36, 0.6);
+$col-txt-disabled: rgba(31, 33, 36, 0.38);
+
+$col-primary-light: #3044fe;
+$col-primary-main: #3044fe;
+$col-primary-dark: #2839d5;
+
+$col-secondary-light: #a37cd3;
+$col-secondary-main: #9163cb;
+$col-secondary-dark: #7a53ab;
+
+$col-error-light: #ff5a51;
+$col-error-main: #ff3b30;
+$col-error-dark: #d63228;
+
+$col-warning-light: #ffa629;
+$col-warning-main: #ff9500;
+$col-warning-dark: #d67d00;
+
+$col-info-light: #03a9f4;
+$col-info-main: #0288d1;
+$col-info-dark: #01579b;
+
+$col-success-light: #54d074;
+$col-success-main: #34c759;
+$col-success-dark: #2ca74b;
+
+$col-bg-default: #e0e1f8;
+$col-bg-paper: #f5f5ff;
+$col-bg-divider: rgba(0, 0, 0, 0.06);
+
+$col-action-active: $col-bg-divider;
+$col-action-hover: rgba(31, 33, 36, 0.04);
+$col-action-selected: rgba(31, 33, 36, 0.08);
+$col-action-disabled-bg: rgba(31, 33, 36, 0.12);
+$col-action-focus: $col-action-disabled-bg;
+$col-action-disabled: $col-txt-disabled;
+/* stylelint-enable scss/dollar-variable-empty-line-before */

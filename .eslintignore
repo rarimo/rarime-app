@@ -1,0 +1,4 @@
+dist/*.js
+index.html
+*.md
+static/env.js
