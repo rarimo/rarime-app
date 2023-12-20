@@ -74,6 +74,8 @@ export default defineConfig(({ mode }) => {
         '@': `${root}/`,
         '@config': `${root}/config.ts`,
         '@static': `${root}/../static`,
+
+        'near-api-js': 'near-api-js/dist/near-api-js.js',
       },
     },
     optimizeDeps: {
@@ -95,7 +97,6 @@ export default defineConfig(({ mode }) => {
       sourcemap: true,
       target: 'esnext',
       rollupOptions: {
-        external: ['@walletconnect/modal'],
         plugins: [
           // Enable rollup polyfills plugin
           // used during production bundling
