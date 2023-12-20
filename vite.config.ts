@@ -92,8 +92,10 @@ export default defineConfig(({ mode }) => {
       ],
     },
     build: {
+      sourcemap: true,
       target: 'esnext',
       rollupOptions: {
+        external: ['@walletconnect/modal'],
         plugins: [
           // Enable rollup polyfills plugin
           // used during production bundling

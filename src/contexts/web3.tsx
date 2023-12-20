@@ -8,13 +8,12 @@ import {
   ProviderProxyConstructor,
   PROVIDERS,
 } from '@distributedlab/w3p'
-import { createContext, memo, ReactNode, useCallback, useMemo } from 'react'
+import { createContext, HTMLAttributes, useCallback, useMemo } from 'react'
 
 import { config } from '@/config'
 import { ErrorHandler } from '@/helpers'
-import { useAppDispatch, useAppSelector, useProvider } from '@/hooks'
-import { clearWeb3Storage, providerType, setProviderType } from '@/store'
-import { SUPPORTED_PROVIDERS } from '@/types'
+import { useProvider } from '@/hooks'
+import { useWeb3Store } from '@/store'
 
 interface Web3ProviderContextValue {
   provider?: ReturnType<typeof useProvider>
@@ -48,17 +47,20 @@ export const web3ProviderContext = createContext<Web3ProviderContextValue>({
   },
 })
 
+type Props = HTMLAttributes<HTMLDivElement>
+
+export type SUPPORTED_PROVIDERS = PROVIDERS
+
 const SUPPORTED_PROVIDERS_MAP: {
   [key in SUPPORTED_PROVIDERS]?: ProviderProxyConstructor
 } = {
   [PROVIDERS.Metamask]: MetamaskProvider,
 }
 
-export const Web3ProviderContextProvider = memo(({ children }: { children: ReactNode }) => {
+export const Web3ProviderContextProvider = ({ children }: Props) => {
   const providerDetector = useMemo(() => new ProviderDetector<SUPPORTED_PROVIDERS>(), [])
 
-  const dispatch = useAppDispatch()
-  const storageProviderType = useAppSelector(providerType)
+  const { providerType: storeProviderType, setProviderType } = useWeb3Store()
 
   const provider = useProvider()
 
@@ -75,8 +77,8 @@ export const Web3ProviderContextProvider = memo(({ children }: { children: React
       // empty
     }
 
-    dispatch(clearWeb3Storage())
-  }, [dispatch, provider])
+    setProviderType(undefined)
+  }, [provider, setProviderType])
 
   const listeners = useMemo(
     () => ({
@@ -88,8 +90,6 @@ export const Web3ProviderContextProvider = memo(({ children }: { children: React
   const init = useCallback(
     async (providerType?: SUPPORTED_PROVIDERS) => {
       try {
-        dispatch(setProviderType(providerType || storageProviderType))
-
         await providerDetector.init()
 
         Provider.setChainsDetails(
@@ -102,7 +102,7 @@ export const Web3ProviderContextProvider = memo(({ children }: { children: React
           ),
         )
 
-        const currentProviderType = providerType || storageProviderType
+        const currentProviderType = providerType || storeProviderType
 
         if (!currentProviderType) return
 
@@ -117,6 +117,8 @@ export const Web3ProviderContextProvider = memo(({ children }: { children: React
         if (!initializedProvider.isConnected) {
           await initializedProvider?.connect?.()
         }
+
+        setProviderType(providerType || storeProviderType)
       } catch (error) {
         if (
           error instanceof Error &&
@@ -129,7 +131,7 @@ export const Web3ProviderContextProvider = memo(({ children }: { children: React
         throw error
       }
     },
-    [provider, disconnect, listeners, providerDetector, dispatch, storageProviderType],
+    [providerDetector, storeProviderType, provider, listeners, setProviderType, disconnect],
   )
 
   const addProvider = (provider: ProviderInstance) => {
@@ -183,4 +185,4 @@ export const Web3ProviderContextProvider = memo(({ children }: { children: React
       {children}
     </web3ProviderContext.Provider>
   )
-})
+}
