@@ -33,8 +33,7 @@ export const useThemeMode = () => {
     if (!themeMode) return
 
     document.body.classList.add(THEME_CLASSES[themeMode])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [themeMode])
 
   return { theme, setTheme: uiStore.setThemeMode }
 }
