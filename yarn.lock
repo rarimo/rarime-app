@@ -1760,7 +1760,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rarimo/rarime-connector@npm:^1.0.1":
+"@rarimo/rarime-connector@npm:^1.0.2":
   version: 1.0.2
   resolution: "@rarimo/rarime-connector@npm:1.0.2"
   dependencies:
@@ -4499,7 +4499,7 @@ __metadata:
     "@hookform/resolvers": "npm:^3.3.2"
     "@mui/icons-material": "npm:^5.14.19"
     "@mui/material": "npm:^5.14.20"
-    "@rarimo/rarime-connector": "npm:^1.0.1"
+    "@rarimo/rarime-connector": "npm:^1.0.2"
     "@types/lodash": "npm:^4"
     "@types/react": "npm:^18.2.37"
     "@types/react-dom": "npm:^18.2.15"
@@ -12315,9 +12315,9 @@ __metadata:
   linkType: hard
 
 "traverse@npm:^0.6.6":
-  version: 0.6.7
-  resolution: "traverse@npm:0.6.7"
-  checksum: 97312cbcce0fdc640cf871a33c3f8efa85fbc2e21020bcbbf48b50883db4c41cfef580f3deaab67217291b761be4558fff34aab1baff7eb2b65323412458a489
+  version: 0.6.8
+  resolution: "traverse@npm:0.6.8"
+  checksum: d97a71be2ca895ff6b813840db37f9b5d88e30f7c4c4bd5b22c5c68ebc22d4a10c4599e02c51414523cc7ada3432e118ea62ebd53cf6f3a4f3aa951bd45072a9
   languageName: node
   linkType: hard
 

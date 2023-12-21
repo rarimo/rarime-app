@@ -39,7 +39,7 @@
     "@hookform/resolvers": "^3.3.2",
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
-    "@rarimo/rarime-connector": "^1.0.1",
+    "@rarimo/rarime-connector": "^1.0.2",
     "@walletconnect/modal": "^2.6.2",
     "i18next": "^22.4.3",
     "lodash": "^4.17.21",

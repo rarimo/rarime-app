@@ -1,47 +1,20 @@
-import { useCallback } from 'react'
-import { proxy, subscribe, useSnapshot } from 'valtio'
-
 import { ThemeMode } from '@/enums'
+import { createStore } from '@/helpers'
 
-const storeName = 'ui'
-
-export const uiStore = proxy<{
+interface UiStore {
   viewportWidth: number
   themeMode?: ThemeMode
-}>(
-  JSON.parse(localStorage.getItem(storeName)!) || {
-    viewportWidth: window.innerWidth,
-    themeMode: ThemeMode.Light,
-  },
-)
-
-subscribe(uiStore, () => {
-  localStorage.setItem(storeName, JSON.stringify(uiStore))
-})
-
-export const useUiStore = () => {
-  const uiStoreSnapshot = useSnapshot(uiStore)
-
-  const setViewportWidth = useCallback((width: number) => {
-    uiStore.viewportWidth = width
-  }, [])
-
-  const setThemeMode = useCallback((mode: ThemeMode) => {
-    uiStore.themeMode = mode
-  }, [])
-
-  // FIXME
-  const clearUiStorage = useCallback(() => {
-    uiStore.themeMode = '' as ThemeMode
-    uiStore.viewportWidth = 0
-  }, [])
-
-  return {
-    viewportWidth: uiStoreSnapshot.viewportWidth,
-    themeMode: uiStoreSnapshot.themeMode,
-
-    setViewportWidth,
-    setThemeMode,
-    clearUiStorage,
-  }
 }
+
+export const [uiStore, useUiState] = createStore('ui', {} as UiStore, state => ({
+  setViewportWidth: (width: number) => {
+    state.viewportWidth = width
+  },
+  setThemeMode: (mode: ThemeMode) => {
+    state.themeMode = mode
+  },
+  clearUiStorage: () => {
+    state.themeMode = '' as ThemeMode
+    state.viewportWidth = 0
+  },
+}))

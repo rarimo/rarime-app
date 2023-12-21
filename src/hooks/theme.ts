@@ -2,7 +2,7 @@ import { createTheme } from '@mui/material'
 import { useEffect, useMemo } from 'react'
 
 import { ThemeMode } from '@/enums'
-import { useUiStore } from '@/store'
+import { uiStore, useUiState } from '@/store'
 import { componentsTheme, lightPalette, typographyTheme } from '@/theme'
 
 const THEME_CLASSES = {
@@ -11,7 +11,7 @@ const THEME_CLASSES = {
 }
 
 export const useThemeMode = () => {
-  const { themeMode, setThemeMode } = useUiStore()
+  const { themeMode } = useUiState()
 
   const theme = useMemo(
     () =>
@@ -36,5 +36,5 @@ export const useThemeMode = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return { theme, setTheme: setThemeMode }
+  return { theme, setTheme: uiStore.setThemeMode }
 }

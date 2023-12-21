@@ -1,14 +1,14 @@
 import debounce from 'lodash/debounce'
 import { useEffect } from 'react'
 
-import { useUiStore } from '@/store'
+import { uiStore, useUiState } from '@/store'
 
 export const useViewportSizes = () => {
-  const { viewportWidth, setViewportWidth } = useUiStore()
+  const { viewportWidth } = useUiState()
 
   const setViewportSizes = () => {
     assignVhCssVariable()
-    setViewportWidth(window.innerWidth)
+    uiStore.setViewportWidth(window.innerWidth)
   }
 
   const assignVhCssVariable = () => {

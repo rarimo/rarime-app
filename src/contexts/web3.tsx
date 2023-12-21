@@ -8,12 +8,13 @@ import {
   ProviderProxyConstructor,
   PROVIDERS,
 } from '@distributedlab/w3p'
-import { createContext, HTMLAttributes, useCallback, useMemo } from 'react'
+import { createContext, ReactNode, useCallback, useMemo } from 'react'
 
 import { config } from '@/config'
 import { ErrorHandler } from '@/helpers'
 import { useProvider } from '@/hooks'
-import { useWeb3Store } from '@/store'
+import { useWeb3State, web3Store } from '@/store'
+import { SUPPORTED_PROVIDERS } from '@/types'
 
 interface Web3ProviderContextValue {
   provider?: ReturnType<typeof useProvider>
@@ -47,20 +48,16 @@ export const web3ProviderContext = createContext<Web3ProviderContextValue>({
   },
 })
 
-type Props = HTMLAttributes<HTMLDivElement>
-
-export type SUPPORTED_PROVIDERS = PROVIDERS
-
 const SUPPORTED_PROVIDERS_MAP: {
   [key in SUPPORTED_PROVIDERS]?: ProviderProxyConstructor
 } = {
   [PROVIDERS.Metamask]: MetamaskProvider,
 }
 
-export const Web3ProviderContextProvider = ({ children }: Props) => {
+export const Web3ProviderContextProvider = ({ children }: { children: ReactNode }) => {
   const providerDetector = useMemo(() => new ProviderDetector<SUPPORTED_PROVIDERS>(), [])
 
-  const { providerType: storeProviderType, setProviderType } = useWeb3Store()
+  const { providerType: storeProviderType } = useWeb3State()
 
   const provider = useProvider()
 
@@ -77,8 +74,8 @@ export const Web3ProviderContextProvider = ({ children }: Props) => {
       // empty
     }
 
-    setProviderType(undefined)
-  }, [provider, setProviderType])
+    web3Store.setProviderType(undefined)
+  }, [provider])
 
   const listeners = useMemo(
     () => ({
@@ -118,7 +115,7 @@ export const Web3ProviderContextProvider = ({ children }: Props) => {
           await initializedProvider?.connect?.()
         }
 
-        setProviderType(providerType || storeProviderType)
+        web3Store.setProviderType(providerType || storeProviderType)
       } catch (error) {
         if (
           error instanceof Error &&
@@ -131,7 +128,7 @@ export const Web3ProviderContextProvider = ({ children }: Props) => {
         throw error
       }
     },
-    [providerDetector, storeProviderType, provider, listeners, setProviderType, disconnect],
+    [providerDetector, storeProviderType, provider, listeners, disconnect],
   )
 
   const addProvider = (provider: ProviderInstance) => {
