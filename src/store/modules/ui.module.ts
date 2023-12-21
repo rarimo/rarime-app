@@ -6,15 +6,22 @@ interface UiStore {
   themeMode?: ThemeMode
 }
 
-export const [uiStore, useUiState] = createStore('ui', {} as UiStore, state => ({
-  setViewportWidth: (width: number) => {
-    state.viewportWidth = width
-  },
-  setThemeMode: (mode: ThemeMode) => {
-    state.themeMode = mode
-  },
-  clearUiStorage: () => {
-    state.themeMode = '' as ThemeMode
-    state.viewportWidth = 0
-  },
-}))
+export const [uiStore, useUiState] = createStore(
+  'ui',
+  {
+    viewportWidth: 0,
+    themeMode: ThemeMode.Light,
+  } as UiStore,
+  state => ({
+    setViewportWidth: (width: number) => {
+      state.viewportWidth = width
+    },
+    setThemeMode: (mode: ThemeMode) => {
+      state.themeMode = mode
+    },
+    clearUiStorage: () => {
+      state.themeMode = '' as ThemeMode
+      state.viewportWidth = 0
+    },
+  }),
+)
