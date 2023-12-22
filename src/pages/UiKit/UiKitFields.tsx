@@ -1,4 +1,5 @@
-import { Stack, Typography } from '@mui/material'
+import { AccountCircle, Delete } from '@mui/icons-material'
+import { InputAdornment, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
 import { UiSelectField, UiTextField } from '@/ui'
@@ -35,8 +36,50 @@ export default function UiKitFields() {
         <UiTextField placeholder={'placeholder'} />
         <UiTextField label={'label'} placeholder={'placeholder'} />
         <UiTextField label={'disabled'} disabled={true} />
-        <UiTextField label={'label'} />
         <UiTextField label={'error'} error helperText={`there is error`} />
+
+        <UiTextField
+          label={'label'}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <AccountCircle />
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        <UiTextField
+          label={'label'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position='end'>
+                <AccountCircle />
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        <UiTextField
+          label={'label'}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <AccountCircle />
+              </InputAdornment>
+            ),
+            endAdornment: (
+              <InputAdornment position='end'>
+                <AccountCircle />
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        <UiTextField label={'success'} placeholder={'placeholder'} color='success' />
+        <UiTextField label={'error'} placeholder={'placeholder'} color='error' />
+        <UiTextField label={'warning'} placeholder={'placeholder'} color='warning' />
+        <UiTextField label={'info'} placeholder={'placeholder'} color='info' />
       </Stack>
 
       <Typography variant={`h6`}>{`Select`}</Typography>
@@ -64,6 +107,37 @@ export default function UiKitFields() {
           value={selectedValue}
           updateValue={setSelectedValue}
           errorMessage={'there is error'}
+        />
+
+        <UiSelectField
+          label={'label'}
+          selectOptions={SELECT_OPTIONS.map(el => ({
+            ...el,
+            adornmentLeft: <Delete />,
+          }))}
+          value={selectedValue}
+          updateValue={setSelectedValue}
+        />
+
+        <UiSelectField
+          label={'label'}
+          selectOptions={SELECT_OPTIONS.map(el => ({
+            ...el,
+            adornmentRight: <Delete />,
+          }))}
+          value={selectedValue}
+          updateValue={setSelectedValue}
+        />
+
+        <UiSelectField
+          label={'label'}
+          selectOptions={SELECT_OPTIONS.map(el => ({
+            ...el,
+            adornmentLeft: <Delete />,
+            adornmentRight: <Delete />,
+          }))}
+          value={selectedValue}
+          updateValue={setSelectedValue}
         />
       </Stack>
     </Stack>

@@ -6,6 +6,7 @@ import {
   Select,
   SelectChangeEvent,
   SelectProps,
+  Stack,
 } from '@mui/material'
 import { ReactNode, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
@@ -14,6 +15,8 @@ type Props<T extends string> = Omit<SelectProps<T>, 'error'> & {
   selectOptions: {
     value: T
     label: string
+    adornmentLeft?: ReactNode
+    adornmentRight?: ReactNode
   }[]
   updateValue?: (value: T) => void
   errorMessage?: string
@@ -40,9 +43,19 @@ export default function UiSelectField<T extends string>({
       {rest.label && <InputLabel id={labelId}>{rest.label}</InputLabel>}
 
       <Select {...rest} id={id} labelId={labelId} value={rest.value || ''} onChange={handleChange}>
-        {selectOptions.map(({ value, label }, idx) => (
+        {selectOptions.map(({ value, label, adornmentLeft, adornmentRight }, idx) => (
           <MenuItem key={idx} value={value}>
-            {label}
+            <Stack
+              flex={1}
+              direction='row'
+              alignItems='center'
+              justifyContent='flex-start'
+              gap={theme => theme.spacing(1)}
+            >
+              {adornmentLeft}
+              {label}
+              {adornmentRight}
+            </Stack>
           </MenuItem>
         ))}
       </Select>
