@@ -19,7 +19,7 @@ const SELECT_OPTIONS = [
 ]
 
 export default function UiKitFields() {
-  const [selectedValue, setSelectedValue] = useState<string | number>()
+  const [selectedValue, setSelectedValue] = useState<string>()
 
   return (
     <Stack gap={theme => theme.spacing(2)} justifyContent={`flex-start`}>
@@ -57,6 +57,13 @@ export default function UiKitFields() {
           selectOptions={SELECT_OPTIONS}
           value={selectedValue}
           updateValue={setSelectedValue}
+        />
+        <UiSelectField
+          label={'label'}
+          selectOptions={SELECT_OPTIONS}
+          value={selectedValue}
+          updateValue={setSelectedValue}
+          errorMessage={'there is error'}
         />
       </Stack>
     </Stack>

@@ -1,5 +1,6 @@
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -9,17 +10,19 @@ import {
 import { ReactNode, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-interface Props<T extends string | number> extends SelectProps<T> {
+type Props<T extends string> = Omit<SelectProps<T>, 'error'> & {
   selectOptions: {
     value: T
     label: string
   }[]
-  updateValue?: (value: string | number) => void
+  updateValue?: (value: T) => void
+  errorMessage?: string
 }
 
-export default function UiSelectField<T extends string | number>({
+export default function UiSelectField<T extends string>({
   selectOptions,
   updateValue,
+  errorMessage,
   ...rest
 }: Props<T>) {
   const id = useMemo(() => rest.id ?? `ui-select-field-${uuidv4()}`, [rest.id])
@@ -27,13 +30,13 @@ export default function UiSelectField<T extends string | number>({
   const labelId = useMemo(() => rest.labelId ?? `${id}-label`, [id, rest.labelId])
 
   const handleChange = (e: SelectChangeEvent<T>, child: ReactNode) => {
-    updateValue?.(e.target.value)
+    updateValue?.(e.target.value as T)
 
     rest?.onChange?.(e, child)
   }
 
   return (
-    <FormControl fullWidth>
+    <FormControl fullWidth error={!!errorMessage}>
       {rest.label && <InputLabel id={labelId}>{rest.label}</InputLabel>}
 
       <Select {...rest} id={id} labelId={labelId} value={rest.value || ''} onChange={handleChange}>
@@ -43,6 +46,8 @@ export default function UiSelectField<T extends string | number>({
           </MenuItem>
         ))}
       </Select>
+
+      {errorMessage && <FormHelperText>Error</FormHelperText>}
     </FormControl>
   )
 }

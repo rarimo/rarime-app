@@ -1,5 +1,5 @@
 import { Box, Stack, Tab, Tabs } from '@mui/material'
-import { useState } from 'react'
+import { ReactNode, SyntheticEvent, useState } from 'react'
 
 import UiKitButtons from '@/pages/UiKit/UiKitButtons'
 import UiKitFields from '@/pages/UiKit/UiKitFields'
@@ -11,15 +11,16 @@ const a11yProps = (index: number) => {
   }
 }
 
-interface TabPanelProps {
-  children?: React.ReactNode
+function CustomTabPanel({
+  children,
+  value,
+  index,
+  ...rest
+}: {
+  children?: ReactNode
   index: number
   value: number
-}
-
-function CustomTabPanel(props: TabPanelProps) {
-  const { children, value, index, ...rest } = props
-
+}) {
   return (
     <div
       role='tabpanel'
@@ -36,7 +37,7 @@ function CustomTabPanel(props: TabPanelProps) {
 export default function UiKit() {
   const [currentTab, setCurrentTab] = useState(0)
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: SyntheticEvent, newValue: number) => {
     setCurrentTab(newValue)
   }
 
