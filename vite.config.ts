@@ -74,6 +74,8 @@ export default defineConfig(({ mode }) => {
         '@': `${root}/`,
         '@config': `${root}/config.ts`,
         '@static': `${root}/../static`,
+
+        'near-api-js': 'near-api-js/dist/near-api-js.js',
       },
     },
     optimizeDeps: {
@@ -92,6 +94,7 @@ export default defineConfig(({ mode }) => {
       ],
     },
     build: {
+      sourcemap: true,
       target: 'esnext',
       rollupOptions: {
         plugins: [
