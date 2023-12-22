@@ -20,7 +20,7 @@ import MainLayout from './layouts/MainLayout'
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
   // TODO: Replace with real auth check
-  const isAuthorized = true
+  const isAuthorized = false
 
   const signInGuard = () => (isAuthorized ? redirect(Routes.Root) : null)
   const authProtectedGuard = ({ request }: LoaderFunctionArgs) => {
