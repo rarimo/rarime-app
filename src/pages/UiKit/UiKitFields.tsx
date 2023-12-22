@@ -1,8 +1,9 @@
 import { AccountCircle, Delete } from '@mui/icons-material'
 import { InputAdornment, Stack, Typography } from '@mui/material'
+import Grid2 from '@mui/material/Unstable_Grid2'
 import { useState } from 'react'
 
-import { UiCheckbox, UiSelectField, UiTextField } from '@/ui'
+import { UiCheckbox, UiRadioGroup, UiSelectField, UiTextField } from '@/ui'
 
 const SELECT_OPTIONS = [
   {
@@ -18,9 +19,33 @@ const SELECT_OPTIONS = [
     value: 'value-3',
   },
 ]
+const RADIO_GROUP_OPTIONS = [
+  ...SELECT_OPTIONS,
+  {
+    label: 'top-4',
+    value: 'top-4',
+    labelPlacement: 'top' as 'top' | 'bottom' | 'end' | 'start' | undefined,
+  },
+  {
+    label: 'bottom-4',
+    value: 'bottom-4',
+    labelPlacement: 'bottom' as 'top' | 'bottom' | 'end' | 'start' | undefined,
+  },
+  {
+    label: 'start-4',
+    value: 'start-4',
+    labelPlacement: 'start' as 'top' | 'bottom' | 'end' | 'start' | undefined,
+  },
+  {
+    label: 'end-4',
+    value: 'end-4',
+    labelPlacement: 'end' as 'top' | 'bottom' | 'end' | 'start' | undefined,
+  },
+]
 
 export default function UiKitFields() {
   const [selectedValue, setSelectedValue] = useState<string>()
+  const [radioGroupValue, setRadioGroupValue] = useState<string>()
 
   return (
     <Stack
@@ -145,7 +170,7 @@ export default function UiKitFields() {
         />
       </Stack>
 
-      <Typography variant={`h6`}>{`Select`}</Typography>
+      <Typography variant={`h6`}>{`Checkbox`}</Typography>
       <Stack
         direction={'row'}
         flexWrap={`wrap`}
@@ -158,6 +183,14 @@ export default function UiKitFields() {
         <UiCheckbox label={'label'} disabled />
         <UiCheckbox label={'label'} required />
       </Stack>
+
+      <Typography variant={`h6`}>{`Radio group`}</Typography>
+      <Typography>{`Radio group value: ${radioGroupValue}`}</Typography>
+      <Grid2 container spacing={2} gap={theme => theme.spacing(2)} justifyContent={`flex-start`}>
+        <Grid2 xs={1}>
+          <UiRadioGroup groupOptions={RADIO_GROUP_OPTIONS} updateValue={setRadioGroupValue} />
+        </Grid2>
+      </Grid2>
     </Stack>
   )
 }
