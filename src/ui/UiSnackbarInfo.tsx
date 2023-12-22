@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 
 import { BusEvents } from '@/enums'
 
-const getIconBySeverity = (theme: Theme, severity: AlertColor) => {
+function getIconBySeverity(theme: Theme, severity: AlertColor) {
   const color = theme.palette[severity].dark
   const iconProps = {
     'aria-hidden': true,
@@ -30,7 +30,7 @@ const getIconBySeverity = (theme: Theme, severity: AlertColor) => {
   return { icon, color }
 }
 
-const SnackbarInfo = ({
+export default function UiSnackbarInfo({
   anchorOrigin = { vertical: 'top', horizontal: 'right' },
   autoHideDuration = 5000,
   isOpened,
@@ -44,7 +44,7 @@ const SnackbarInfo = ({
   message: string
   close?: () => void
   severity: AlertColor
-}) => {
+}) {
   const { t } = useTranslation()
   const theme = useTheme()
 
@@ -99,5 +99,3 @@ const SnackbarInfo = ({
     </Snackbar>
   )
 }
-
-export default SnackbarInfo

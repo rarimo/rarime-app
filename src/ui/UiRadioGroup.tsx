@@ -18,7 +18,7 @@ interface Props {
   resultValue: (value: SelectChangeEvent<Value>) => void
 }
 
-const AppRadioGroup = ({
+export default function UiRadioGroup({
   labelGroup,
   values,
   labels,
@@ -26,7 +26,7 @@ const AppRadioGroup = ({
   name,
   id,
   resultValue,
-}: Props) => {
+}: Props) {
   const handleChange = (value: SelectChangeEvent<Value>) => {
     resultValue(value)
   }
@@ -47,5 +47,3 @@ const AppRadioGroup = ({
     </FormControl>
   )
 }
-
-export default AppRadioGroup

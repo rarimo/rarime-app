@@ -3,14 +3,14 @@ import isObject from 'lodash/isObject'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { SnackbarInfo } from '@/components'
 import { BusEvents } from '@/enums'
 import { bus } from '@/helpers'
 import { ErrorHandlerPayload, StatusMessagePayload } from '@/types'
+import { UiSnackbarInfo } from '@/ui'
 
 const STATUS_MESSAGE_AUTO_HIDE_DURATION = 30 * 1000
 
-const StatusMessage = () => {
+export default function UiStatusMessage() {
   const { t } = useTranslation()
 
   const [isStatusMessageShown, setIsStatusMessageShown] = useState(false)
@@ -64,7 +64,7 @@ const StatusMessage = () => {
   }
 
   return (
-    <SnackbarInfo
+    <UiSnackbarInfo
       isOpened={isStatusMessageShown}
       autoHideDuration={STATUS_MESSAGE_AUTO_HIDE_DURATION}
       message={statusMessage}
@@ -73,5 +73,3 @@ const StatusMessage = () => {
     />
   )
 }
-
-export default StatusMessage

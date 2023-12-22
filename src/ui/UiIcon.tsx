@@ -3,7 +3,7 @@ import { HTMLAttributes } from 'react'
 
 import { Icons } from '@/enums'
 
-export default function Icon({
+export default function UiIcon({
   name,
   className = '',
   sx = {},

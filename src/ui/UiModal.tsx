@@ -21,12 +21,10 @@ const defaultStyle: SxProps = {
   borderRadius: '8px',
 }
 
-const AppModal = ({ isOpen, onClose, children, style = defaultStyle }: Props) => {
+export default function UiModal({ isOpen, onClose, children, style = defaultStyle }: Props) {
   return (
     <Modal open={isOpen} onClose={onClose}>
       <Box sx={style}>{children}</Box>
     </Modal>
   )
 }
-
-export default AppModal

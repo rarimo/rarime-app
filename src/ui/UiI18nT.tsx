@@ -3,7 +3,7 @@ import { Trans, useTranslation } from 'react-i18next'
 
 import { I18nKey } from '@/types'
 
-const I18nT = <S extends string>({
+export default function UiI18nT<S extends string>({
   path,
   children,
   values,
@@ -11,7 +11,7 @@ const I18nT = <S extends string>({
   path: I18nKey<S> | I18nKey<S>[]
   children: readonly ReactElement[] | { readonly [tagName: string]: ReactElement }
   values?: Record<string, string | number | undefined>
-}) => {
+}) {
   const { t } = useTranslation()
 
   return (
@@ -23,5 +23,3 @@ const I18nT = <S extends string>({
     />
   )
 }
-
-export default I18nT

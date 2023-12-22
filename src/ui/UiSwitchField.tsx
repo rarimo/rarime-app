@@ -2,8 +2,6 @@ import { Switch, type SwitchProps } from '@mui/material'
 
 interface Props extends SwitchProps {}
 
-const AppSwitch = ({ ...rest }: Props) => {
+export default function UiSwitchField({ ...rest }: Props) {
   return <Switch {...rest} />
 }
-
-export default AppSwitch

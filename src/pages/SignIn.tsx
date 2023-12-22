@@ -4,9 +4,9 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-import { AppButton } from '@/components'
 import { Routes } from '@/enums'
 import { useMetamaskZkpSnapContext, useWeb3Context } from '@/hooks'
+import { UiButton } from '@/ui'
 
 export default function SignIn() {
   const navigate = useNavigate()
@@ -29,7 +29,7 @@ export default function SignIn() {
     <Stack flex={1}>
       <Typography>{t('sign-in-page.title')}</Typography>
       <Typography>{t('sign-in-page.description')}</Typography>
-      <AppButton onClick={connectWallet}>Connect</AppButton>
+      <UiButton onClick={connectWallet}>Connect</UiButton>
     </Stack>
   )
 }

@@ -2,10 +2,11 @@ import { lazy, Suspense } from 'react'
 import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-router-dom'
 
 import App from '@/App'
-import { StatusMessage } from '@/components'
 import { MetamaskZkpSnapContextProvider, Web3ProviderContextProvider } from '@/contexts'
 import { Routes } from '@/enums'
 import Profiles from '@/pages/Profiles'
+import UiKit from '@/pages/UiKit'
+import { UiStatusMessage } from '@/ui'
 
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
@@ -19,7 +20,7 @@ export const AppRoutes = () => {
             <MetamaskZkpSnapContextProvider>
               <App>
                 <Outlet />
-                <StatusMessage />
+                <UiStatusMessage />
               </App>
             </MetamaskZkpSnapContextProvider>
           </Web3ProviderContextProvider>
@@ -28,21 +29,24 @@ export const AppRoutes = () => {
       children: [
         {
           index: true,
+          path: Routes.UiKit,
+          element: <UiKit />,
+        },
+        {
           path: Routes.Profiles,
           element: <Profiles />,
         },
         {
-          index: true,
           path: Routes.SignIn,
           element: <SignIn />,
         },
         {
           path: '/',
-          element: <Navigate replace to={Routes.SignIn} />,
+          element: <Navigate replace to={Routes.UiKit} />,
         },
         {
           path: '*',
-          element: <Navigate replace to={Routes.SignIn} />,
+          element: <Navigate replace to={Routes.UiKit} />,
         },
       ],
     },
