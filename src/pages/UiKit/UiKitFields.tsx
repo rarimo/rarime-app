@@ -2,7 +2,7 @@ import { AccountCircle, Delete } from '@mui/icons-material'
 import { InputAdornment, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
-import { UiSelectField, UiTextField } from '@/ui'
+import { UiCheckbox, UiSelectField, UiTextField } from '@/ui'
 
 const SELECT_OPTIONS = [
   {
@@ -23,7 +23,11 @@ export default function UiKitFields() {
   const [selectedValue, setSelectedValue] = useState<string>()
 
   return (
-    <Stack gap={theme => theme.spacing(2)} justifyContent={`flex-start`}>
+    <Stack
+      gap={theme => theme.spacing(2)}
+      justifyContent={`flex-start`}
+      paddingBottom={theme => theme.spacing(10)}
+    >
       <Typography variant={`h6`}>{`Input`}</Typography>
       <Stack
         direction={'row'}
@@ -139,6 +143,20 @@ export default function UiKitFields() {
           value={selectedValue}
           updateValue={setSelectedValue}
         />
+      </Stack>
+
+      <Typography variant={`h6`}>{`Select`}</Typography>
+      <Stack
+        direction={'row'}
+        flexWrap={`wrap`}
+        gap={theme => theme.spacing(2)}
+        justifyContent={`flex-start`}
+      >
+        <UiCheckbox />
+        <UiCheckbox disabled />
+        <UiCheckbox label={'label'} />
+        <UiCheckbox label={'label'} disabled />
+        <UiCheckbox label={'label'} required />
       </Stack>
     </Stack>
   )
