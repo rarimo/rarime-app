@@ -2,16 +2,16 @@ import { createTheme } from '@mui/material'
 import { useEffect, useMemo } from 'react'
 
 import { ThemeMode } from '@/enums'
-import { useAppDispatch } from '@/hooks'
-import { setThemeMode } from '@/store'
+import { uiStore, useUiState } from '@/store'
 import { componentsTheme, lightPalette, typographyTheme } from '@/theme'
 
 const THEME_CLASSES = {
   [ThemeMode.Light]: 'Theme__light',
+  [ThemeMode.Dark]: 'Theme__dark',
 }
 
 export const useThemeMode = () => {
-  const dispatch = useAppDispatch()
+  const { themeMode } = useUiState()
 
   const theme = useMemo(
     () =>
@@ -30,10 +30,10 @@ export const useThemeMode = () => {
   )
 
   useEffect(() => {
-    document.body.classList.add(THEME_CLASSES[ThemeMode.Light])
-    dispatch(setThemeMode(ThemeMode.Light))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    if (!themeMode) return
 
-  return { theme }
+    document.body.classList.add(THEME_CLASSES[themeMode])
+  }, [themeMode])
+
+  return { theme, setTheme: uiStore.setThemeMode }
 }
