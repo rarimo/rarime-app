@@ -1,7 +1,13 @@
-import { Switch, type SwitchProps } from '@mui/material'
+import { FormControlLabel, Switch, type SwitchProps } from '@mui/material'
 
-interface Props extends SwitchProps {}
+interface Props extends SwitchProps {
+  label?: string
+}
 
-export default function UiSwitchField({ ...rest }: Props) {
-  return <Switch {...rest} />
+export default function UiSwitchField({ label, ...rest }: Props) {
+  return label ? (
+    <FormControlLabel control={<Switch {...rest} />} label='Label' />
+  ) : (
+    <Switch {...rest} />
+  )
 }

@@ -3,7 +3,7 @@ import { InputAdornment, Stack, Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import { useState } from 'react'
 
-import { UiCheckbox, UiRadioGroup, UiSelectField, UiTextField } from '@/ui'
+import { UiCheckbox, UiRadioGroup, UiSelectField, UiSwitchField, UiTextField } from '@/ui'
 
 const SELECT_OPTIONS = [
   {
@@ -191,6 +191,24 @@ export default function UiKitFields() {
           <UiRadioGroup groupOptions={RADIO_GROUP_OPTIONS} updateValue={setRadioGroupValue} />
         </Grid2>
       </Grid2>
+
+      <Typography variant={`h6`}>{`Switch Field`}</Typography>
+      <Stack
+        direction={'row'}
+        flexWrap={`wrap`}
+        gap={theme => theme.spacing(2)}
+        justifyContent={`flex-start`}
+      >
+        <UiSwitchField />
+        <UiSwitchField disabled />
+        <UiSwitchField defaultChecked />
+        <UiSwitchField defaultChecked disabled />
+
+        <UiSwitchField label='label' />
+        <UiSwitchField label='label' disabled />
+        <UiSwitchField label='label' defaultChecked />
+        <UiSwitchField label='label' defaultChecked disabled />
+      </Stack>
     </Stack>
   )
 }
