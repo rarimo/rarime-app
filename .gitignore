@@ -42,9 +42,15 @@ stats.html
 *.sln
 *.sw?
 
+# env files
 .env.analyze
 .env.development
 .env.production
+.env.local
 
 # Sentry Auth Token
 .env.sentry-build-plugin
+
+# IDE files
+.idea
+.vscode
