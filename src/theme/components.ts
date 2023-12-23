@@ -1,6 +1,6 @@
-import { KeyboardArrowDownOutlined } from '@mui/icons-material'
 import { Components } from '@mui/material'
 
+import { ICONS_COMPONENTS } from '@/enums'
 import { BaseTheme } from '@/types'
 
 export const componentsTheme: Components<BaseTheme> = {
@@ -50,7 +50,7 @@ export const componentsTheme: Components<BaseTheme> = {
       },
     },
     defaultProps: {
-      IconComponent: KeyboardArrowDownOutlined,
+      IconComponent: ICONS_COMPONENTS.keyboardArrowDownOutlined,
     },
   },
   MuiIconButton: {

@@ -1,4 +1,3 @@
-import { Check, ErrorOutline, Info, WarningAmber } from '@mui/icons-material'
 import {
   Alert,
   AlertColor,
@@ -12,6 +11,7 @@ import { SyntheticEvent, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { BusEvents } from '@/enums'
+import { UiIcon } from '@/ui'
 
 function getIconBySeverity(theme: Theme, severity: AlertColor) {
   const color = theme.palette[severity].dark
@@ -21,10 +21,10 @@ function getIconBySeverity(theme: Theme, severity: AlertColor) {
   }
 
   const icon = {
-    error: <ErrorOutline {...iconProps} />,
-    info: <Info {...iconProps} />,
-    success: <Check {...iconProps} />,
-    warning: <WarningAmber {...iconProps} />,
+    error: <UiIcon componentName={'errorOutline'} {...iconProps} />,
+    info: <UiIcon componentName={'info'} {...iconProps} />,
+    success: <UiIcon componentName={'check'} {...iconProps} />,
+    warning: <UiIcon componentName={'warningAmber'} {...iconProps} />,
   }[severity]
 
   return { icon, color }

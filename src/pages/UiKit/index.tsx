@@ -3,6 +3,7 @@ import { ReactNode, SyntheticEvent, useState } from 'react'
 
 import UiKitButtons from '@/pages/UiKit/UiKitButtons'
 import UiKitFields from '@/pages/UiKit/UiKitFields'
+import UiKitIcons from '@/pages/UiKit/UiKitIcons'
 
 const a11yProps = (index: number) => {
   return {
@@ -51,16 +52,13 @@ export default function UiKit() {
         </Tabs>
       </Box>
       <CustomTabPanel value={currentTab} index={0}>
-        {/*BUTTONS*/}
         <UiKitButtons />
       </CustomTabPanel>
       <CustomTabPanel value={currentTab} index={1}>
-        {/*FIELDS*/}
         <UiKitFields />
       </CustomTabPanel>
       <CustomTabPanel value={currentTab} index={2}>
-        {/*ICONS*/}
-        <Stack flex={1}></Stack>
+        <UiKitIcons />
       </CustomTabPanel>
     </Stack>
   )

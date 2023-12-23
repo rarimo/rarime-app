@@ -1,9 +1,8 @@
-import { AccountCircle, Delete } from '@mui/icons-material'
 import { InputAdornment, Stack, Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import { useState } from 'react'
 
-import { UiCheckbox, UiRadioGroup, UiSelectField, UiSwitchField, UiTextField } from '@/ui'
+import { UiCheckbox, UiIcon, UiRadioGroup, UiSelectField, UiSwitchField, UiTextField } from '@/ui'
 
 const SELECT_OPTIONS = [
   {
@@ -72,7 +71,7 @@ export default function UiKitFields() {
           InputProps={{
             startAdornment: (
               <InputAdornment position='start'>
-                <AccountCircle />
+                <UiIcon componentName='accountCircle' />
               </InputAdornment>
             ),
           }}
@@ -83,7 +82,7 @@ export default function UiKitFields() {
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
-                <AccountCircle />
+                <UiIcon componentName='accountCircle' />
               </InputAdornment>
             ),
           }}
@@ -94,12 +93,12 @@ export default function UiKitFields() {
           InputProps={{
             startAdornment: (
               <InputAdornment position='start'>
-                <AccountCircle />
+                <UiIcon componentName='accountCircle' />
               </InputAdornment>
             ),
             endAdornment: (
               <InputAdornment position='end'>
-                <AccountCircle />
+                <UiIcon componentName='accountCircle' />
               </InputAdornment>
             ),
           }}
@@ -142,7 +141,7 @@ export default function UiKitFields() {
           label={'label'}
           selectOptions={SELECT_OPTIONS.map(el => ({
             ...el,
-            adornmentLeft: <Delete />,
+            adornmentLeft: <UiIcon componentName='accountCircle' />,
           }))}
           value={selectedValue}
           updateValue={setSelectedValue}
@@ -152,7 +151,7 @@ export default function UiKitFields() {
           label={'label'}
           selectOptions={SELECT_OPTIONS.map(el => ({
             ...el,
-            adornmentRight: <Delete />,
+            adornmentRight: <UiIcon componentName='accountCircle' />,
           }))}
           value={selectedValue}
           updateValue={setSelectedValue}
@@ -162,8 +161,8 @@ export default function UiKitFields() {
           label={'label'}
           selectOptions={SELECT_OPTIONS.map(el => ({
             ...el,
-            adornmentLeft: <Delete />,
-            adornmentRight: <Delete />,
+            adornmentLeft: <UiIcon componentName='accountCircle' />,
+            adornmentRight: <UiIcon componentName='accountCircle' />,
           }))}
           value={selectedValue}
           updateValue={setSelectedValue}
