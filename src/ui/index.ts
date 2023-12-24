@@ -1,3 +1,4 @@
+export * from './modals'
 export { default as UiButton } from './UiButton'
 export { default as UiCheckbox } from './UiCheckbox'
 export { default as UiDrawer } from './UiDrawer'

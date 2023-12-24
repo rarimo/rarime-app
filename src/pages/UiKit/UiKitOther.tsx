@@ -2,10 +2,12 @@ import { Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
 import { Icons } from '@/enums'
-import { UiButton, UiDrawer, UiIcon } from '@/ui'
+import { UiBasicModal, UiButton, UiDrawer, UiIcon, UiModal } from '@/ui'
 
 export default function UiKitOther() {
   const [isDrawerShown, setIsDrawerShown] = useState(false)
+  const [isModalShown, setIsModalShown] = useState(false)
+  const [isBasicModalShown, setIsBasicModalShown] = useState(false)
 
   return (
     <Stack
@@ -25,7 +27,7 @@ export default function UiKitOther() {
         {<UiIcon componentName='accountCircle' />}
       </Stack>
 
-      <Typography variant={`h6`}>{`Icons`}</Typography>
+      <Typography variant={`h6`}>{`Drawer`}</Typography>
       <Stack
         direction={'row'}
         flexWrap={`wrap`}
@@ -43,6 +45,36 @@ export default function UiKitOther() {
             <Typography variant={`h6`}>{`This is a drawer`}</Typography>
           </Stack>
         </UiDrawer>
+      </Stack>
+
+      <Typography variant={`h6`}>{`Modal`}</Typography>
+      <Stack
+        direction={'row'}
+        flexWrap={`wrap`}
+        gap={theme => theme.spacing(2)}
+        justifyContent={`flex-start`}
+      >
+        <UiButton onClick={() => setIsModalShown(prev => !prev)}>{`Toggle Modal`}</UiButton>
+        <UiModal open={isModalShown} onClose={() => setIsModalShown(false)}>
+          <Stack
+            direction={'row'}
+            flexWrap={`wrap`}
+            gap={theme => theme.spacing(2)}
+            justifyContent={`flex-start`}
+          >
+            <Typography>{`This is a Modal`}</Typography>
+          </Stack>
+        </UiModal>
+
+        <UiButton
+          onClick={() => setIsBasicModalShown(prev => !prev)}
+        >{`Toggle BasicModal`}</UiButton>
+
+        <UiBasicModal open={isBasicModalShown} onClose={() => setIsBasicModalShown(false)}>
+          <Typography>
+            {`Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque ex expedita fuga fugit, harum, ipsum iusto magni modi natus, nostrum placeat quaerat quo. Nostrum quasi recusandae sint sunt tempore.`}
+          </Typography>
+        </UiBasicModal>
       </Stack>
     </Stack>
   )
