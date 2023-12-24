@@ -3,7 +3,7 @@ import { ReactNode, SyntheticEvent, useState } from 'react'
 
 import UiKitButtons from '@/pages/UiKit/UiKitButtons'
 import UiKitFields from '@/pages/UiKit/UiKitFields'
-import UiKitIcons from '@/pages/UiKit/UiKitIcons'
+import UiKitOther from '@/pages/UiKit/UiKitOther'
 
 const a11yProps = (index: number) => {
   return {
@@ -48,7 +48,7 @@ export default function UiKit() {
         <Tabs value={currentTab} onChange={handleChange} aria-label='basic tabs example'>
           <Tab label='BUTTONS' {...a11yProps(0)} />
           <Tab label='FIELDS' {...a11yProps(1)} />
-          <Tab label='ICONS' {...a11yProps(2)} />
+          <Tab label='OTHER' {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={currentTab} index={0}>
@@ -58,7 +58,7 @@ export default function UiKit() {
         <UiKitFields />
       </CustomTabPanel>
       <CustomTabPanel value={currentTab} index={2}>
-        <UiKitIcons />
+        <UiKitOther />
       </CustomTabPanel>
     </Stack>
   )
