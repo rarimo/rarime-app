@@ -6,7 +6,7 @@ import { ICON_COMPONENTS, Icons } from '@/enums'
 
 type Props = {
   size?: number
-  sx?: SxProps
+  sx?: SxProps<Theme>
 } & (
   | ({
       componentName: keyof typeof ICON_COMPONENTS
@@ -23,6 +23,10 @@ export default function UiIcon({ size = 6, ...props }: Props) {
     ...props.sx,
     width: theme => theme.spacing(size),
     height: theme => theme.spacing(size),
+    minWidth: theme => theme.spacing(size),
+    minHeight: theme => theme.spacing(size),
+    maxWidth: theme => theme.spacing(size),
+    maxHeight: theme => theme.spacing(size),
   }
 
   if (props.componentName) {
