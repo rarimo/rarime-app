@@ -1,13 +1,13 @@
 import { Box, SvgIconProps, SxProps } from '@mui/material'
 import { HTMLAttributes } from 'react'
 
-import { Icons, ICONS_COMPONENTS } from '@/enums'
+import { ICON_COMPONENTS, Icons } from '@/enums'
 
 type Props = {
   sx?: SxProps
 } & (
   | ({
-      componentName: keyof typeof ICONS_COMPONENTS
+      componentName: keyof typeof ICON_COMPONENTS
       name?: never
     } & SvgIconProps)
   | ({
@@ -20,7 +20,7 @@ export default function UiIcon(props: Props) {
   if (props.componentName) {
     const { componentName, ...rest } = props
 
-    const IconComponent = ICONS_COMPONENTS[componentName]
+    const IconComponent = ICON_COMPONENTS[componentName]
 
     return IconComponent && <IconComponent {...rest} />
   }

@@ -2,7 +2,7 @@ import { InputAdornment, Stack, Typography } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 import { useState } from 'react'
 
-import { UiCheckbox, UiIcon, UiRadioGroup, UiSelectField, UiSwitchField, UiTextField } from '@/ui'
+import { UiCheckbox, UiIcon, UiRadioGroup, UiSelect, UiSwitch, UiTextField } from '@/ui'
 
 const SELECT_OPTIONS = [
   {
@@ -118,28 +118,24 @@ export default function UiKitFields() {
         gap={theme => theme.spacing(2)}
         justifyContent={`flex-start`}
       >
-        <UiSelectField
-          selectOptions={SELECT_OPTIONS}
+        <UiSelect options={SELECT_OPTIONS} value={selectedValue} updateValue={setSelectedValue} />
+        <UiSelect
+          label={'label'}
+          options={SELECT_OPTIONS}
           value={selectedValue}
           updateValue={setSelectedValue}
         />
-        <UiSelectField
+        <UiSelect
           label={'label'}
-          selectOptions={SELECT_OPTIONS}
-          value={selectedValue}
-          updateValue={setSelectedValue}
-        />
-        <UiSelectField
-          label={'label'}
-          selectOptions={SELECT_OPTIONS}
+          options={SELECT_OPTIONS}
           value={selectedValue}
           updateValue={setSelectedValue}
           errorMessage={'there is error'}
         />
 
-        <UiSelectField
+        <UiSelect
           label={'label'}
-          selectOptions={SELECT_OPTIONS.map(el => ({
+          options={SELECT_OPTIONS.map(el => ({
             ...el,
             adornmentLeft: <UiIcon componentName='accountCircle' />,
           }))}
@@ -147,9 +143,9 @@ export default function UiKitFields() {
           updateValue={setSelectedValue}
         />
 
-        <UiSelectField
+        <UiSelect
           label={'label'}
-          selectOptions={SELECT_OPTIONS.map(el => ({
+          options={SELECT_OPTIONS.map(el => ({
             ...el,
             adornmentRight: <UiIcon componentName='accountCircle' />,
           }))}
@@ -157,9 +153,9 @@ export default function UiKitFields() {
           updateValue={setSelectedValue}
         />
 
-        <UiSelectField
+        <UiSelect
           label={'label'}
-          selectOptions={SELECT_OPTIONS.map(el => ({
+          options={SELECT_OPTIONS.map(el => ({
             ...el,
             adornmentLeft: <UiIcon componentName='accountCircle' />,
             adornmentRight: <UiIcon componentName='accountCircle' />,
@@ -198,15 +194,15 @@ export default function UiKitFields() {
         gap={theme => theme.spacing(2)}
         justifyContent={`flex-start`}
       >
-        <UiSwitchField />
-        <UiSwitchField disabled />
-        <UiSwitchField defaultChecked />
-        <UiSwitchField defaultChecked disabled />
+        <UiSwitch />
+        <UiSwitch disabled />
+        <UiSwitch defaultChecked />
+        <UiSwitch defaultChecked disabled />
 
-        <UiSwitchField label='label' />
-        <UiSwitchField label='label' disabled />
-        <UiSwitchField label='label' defaultChecked />
-        <UiSwitchField label='label' defaultChecked disabled />
+        <UiSwitch label='label' />
+        <UiSwitch label='label' disabled />
+        <UiSwitch label='label' defaultChecked />
+        <UiSwitch label='label' defaultChecked disabled />
       </Stack>
     </Stack>
   )

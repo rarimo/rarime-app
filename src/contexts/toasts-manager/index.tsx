@@ -2,7 +2,7 @@ import { SnackbarProvider, useSnackbar } from 'notistack'
 import { ReactNode, useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { BusEvents, Icons, ICONS_COMPONENTS } from '@/enums'
+import { BusEvents, ICON_COMPONENTS, Icons } from '@/enums'
 import { bus } from '@/helpers'
 
 import { DefaultToast } from './toasts'
@@ -12,7 +12,14 @@ const STATUS_MESSAGE_AUTO_HIDE_DURATION = 30 * 1000
 type ToastPayload = {
   title?: string
   message?: string
-  icon?: Icons | keyof typeof ICONS_COMPONENTS
+  icon?: Icons | keyof typeof ICON_COMPONENTS
+  messageType?: BusEvents
+}
+
+declare module 'notistack' {
+  interface VariantOverrides {
+    defaultToast: ToastPayload
+  }
 }
 
 function ToastsManagerController({ children }: { children: ReactNode }) {
@@ -29,7 +36,7 @@ function ToastsManagerController({ children }: { children: ReactNode }) {
     [t],
   )
 
-  const defaultIcons = useMemo<Record<BusEvents, Icons | keyof typeof ICONS_COMPONENTS>>(
+  const defaultIcons = useMemo<Record<BusEvents, Icons | keyof typeof ICON_COMPONENTS>>(
     () => ({
       [BusEvents.success]: 'check',
       [BusEvents.error]: 'errorOutline',
@@ -55,14 +62,10 @@ function ToastsManagerController({ children }: { children: ReactNode }) {
       const message = payload?.message || defaultMessages[messageType]
       const icon = payload?.icon || defaultIcons[messageType]
 
-      // FIXME: https://notistack.com/features/customization#custom-component
       enqueueSnackbar(message, {
-        variant: 'default',
+        variant: 'defaultToast',
 
-        // FIXME
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        severity: messageType,
+        messageType,
         title,
         icon,
       })
@@ -110,10 +113,7 @@ export default function ToastsManager({ children }: { children: ReactNode }) {
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       autoHideDuration={STATUS_MESSAGE_AUTO_HIDE_DURATION}
       Components={{
-        default: DefaultToast,
-        success: DefaultToast,
-        error: DefaultToast,
-        warning: DefaultToast,
+        defaultToast: DefaultToast,
       }}
       maxSnack={10}
     >

@@ -12,7 +12,7 @@ import { ReactNode, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 type Props<T extends string> = Omit<SelectProps<T>, 'error'> & {
-  selectOptions: {
+  options: {
     value: T
     label: string
     adornmentLeft?: ReactNode
@@ -22,8 +22,8 @@ type Props<T extends string> = Omit<SelectProps<T>, 'error'> & {
   errorMessage?: string
 }
 
-export default function UiSelectField<T extends string>({
-  selectOptions,
+export default function UiSelect<T extends string>({
+  options,
   updateValue,
   errorMessage,
   ...rest
@@ -43,7 +43,7 @@ export default function UiSelectField<T extends string>({
       {rest.label && <InputLabel id={labelId}>{rest.label}</InputLabel>}
 
       <Select {...rest} id={id} labelId={labelId} value={rest.value || ''} onChange={handleChange}>
-        {selectOptions.map(({ value, label, adornmentLeft, adornmentRight }, idx) => (
+        {options.map(({ value, label, adornmentLeft, adornmentRight }, idx) => (
           <MenuItem key={idx} value={value}>
             <Stack
               flex={1}

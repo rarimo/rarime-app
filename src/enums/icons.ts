@@ -10,7 +10,7 @@ export enum Icons {
   Metamask = 'metamask',
 }
 
-export const ICONS_COMPONENTS = {
+export const ICON_COMPONENTS = {
   accountCircle: AccountCircleIcon,
   delete: DeleteIcon,
   errorOutline: ErrorOutlineIcon,

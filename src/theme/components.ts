@@ -1,6 +1,6 @@
 import { Components } from '@mui/material'
 
-import { ICONS_COMPONENTS } from '@/enums'
+import { ICON_COMPONENTS } from '@/enums'
 import { BaseTheme } from '@/types'
 
 export const componentsTheme: Components<BaseTheme> = {
@@ -50,7 +50,7 @@ export const componentsTheme: Components<BaseTheme> = {
       },
     },
     defaultProps: {
-      IconComponent: ICONS_COMPONENTS.keyboardArrowDownOutlined,
+      IconComponent: ICON_COMPONENTS.keyboardArrowDownOutlined,
     },
   },
   MuiIconButton: {
