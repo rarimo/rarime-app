@@ -8,7 +8,7 @@ const AuthLayout = () => {
     <Stack
       alignItems='center'
       justifyContent='center'
-      height='100vh'
+      height='calc(100 * var(--vh, 1vh))'
       width='100%'
       sx={{
         backgroundImage: 'url("/imgs/app-bg.png")',

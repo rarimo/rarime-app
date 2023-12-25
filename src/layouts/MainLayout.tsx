@@ -5,13 +5,13 @@ import AppNavbar from '@/components/AppNavbar'
 
 const MainLayout = () => {
   return (
-    <Stack direction='row' p={3} spacing={3} height='100vh'>
+    <Stack direction='row' px={4} py={5} spacing={4} height='calc(100 * var(--vh, 1vh))'>
       <AppNavbar />
       <Stack
         width='100%'
-        borderRadius={2}
-        px={4}
-        py={3}
+        borderRadius={4}
+        px={8}
+        py={6}
         sx={{ backgroundColor: 'background.paper' }}
       >
         <Outlet />
