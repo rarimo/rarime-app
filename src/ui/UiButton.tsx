@@ -5,11 +5,12 @@ interface Props extends ButtonProps {}
 export default function UiButton({ ...rest }: Props) {
   return (
     <Button
-      sx={{
-        borderRadius: '1000px',
-        ...rest.sx,
-      }}
       {...rest}
+      sx={{
+        ...rest.sx,
+        minWidth: '48px',
+        borderRadius: '1000px',
+      }}
     />
   )
 }

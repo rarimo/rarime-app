@@ -8,6 +8,7 @@ import { default as WarningAmberIcon } from '@mui/icons-material/WarningAmber'
 
 export enum Icons {
   Metamask = 'metamask',
+  Wallet = 'wallet',
 }
 
 export const ICON_COMPONENTS = {

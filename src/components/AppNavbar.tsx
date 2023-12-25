@@ -1,8 +1,9 @@
-import { Divider, IconButton, Stack } from '@mui/material'
+import { Divider, Stack } from '@mui/material'
 import { Link } from 'react-router-dom'
 
 import { config } from '@/config'
-import { Routes } from '@/enums'
+import { Icons, Routes } from '@/enums'
+import { UiButton, UiIcon } from '@/ui'
 
 const AppNavbar = () => {
   return (
@@ -14,8 +15,11 @@ const AppNavbar = () => {
       </Link>
       <Divider />
       <Stack py={6}>
-        {/* TODO: Add profiles link */}
-        <IconButton size='small'>P</IconButton>
+        <Link to={Routes.Profiles}>
+          <UiButton component='div' sx={{ p: 3 }}>
+            <UiIcon name={Icons.Wallet} size={6} />
+          </UiButton>
+        </Link>
       </Stack>
     </Stack>
   )
