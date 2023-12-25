@@ -23,15 +23,17 @@ function CustomTabPanel({
   value: number
 }) {
   return (
-    <div
+    <Box
       role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
+      overflow='auto'
+      height='100%'
       {...rest}
     >
-      {value === index && <Box paddingTop={theme => theme.spacing(2)}>{children}</Box>}
-    </div>
+      {value === index && <Box pt={4}>{children}</Box>}
+    </Box>
   )
 }
 
@@ -43,7 +45,7 @@ export default function UiKit() {
   }
 
   return (
-    <Stack flex={1} padding={theme => theme.spacing(2)} justifyContent={`flex-start`}>
+    <Stack px={8} mt={40} width='100%' height='calc(100 * var(--vh, 1vh))' overflow='hidden'>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={currentTab} onChange={handleChange} aria-label='basic tabs example'>
           <Tab label='BUTTONS' {...a11yProps(0)} />

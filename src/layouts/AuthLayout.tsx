@@ -20,7 +20,7 @@ const AuthLayout = () => {
         <img src='/branding/logo-sign-in.svg' alt={config.APP_NAME} />
       </Box>
 
-      <Stack direction='column' alignItems='center' justifyContent='center'>
+      <Stack direction='column' alignItems='center' justifyContent='center' width='100%'>
         <Outlet />
       </Stack>
     </Stack>
