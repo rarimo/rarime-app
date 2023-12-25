@@ -22,8 +22,9 @@ export const useThemeMode = () => {
         },
         typography: typographyTheme,
         components: componentsTheme,
+        spacing: 4,
         shape: {
-          borderRadius: 8,
+          borderRadius: 4,
         },
       }),
     [],
