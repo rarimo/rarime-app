@@ -1,13 +1,20 @@
 import { Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
-import { Icons } from '@/enums'
+import { BusEvents, Icons } from '@/enums'
+import { bus } from '@/helpers'
 import { UiBasicModal, UiButton, UiDrawer, UiIcon, UiModal } from '@/ui'
 
 export default function UiKitOther() {
   const [isDrawerShown, setIsDrawerShown] = useState(false)
   const [isModalShown, setIsModalShown] = useState(false)
   const [isBasicModalShown, setIsBasicModalShown] = useState(false)
+
+  const showToast = (variant: BusEvents) => {
+    bus.emit(variant, {
+      message: `This is a ${variant} message, This is a ${variant} message, This is a ${variant} message, This is a ${variant} message, This is a ${variant} message, This is a ${variant} message`,
+    })
+  }
 
   return (
     <Stack
@@ -75,6 +82,50 @@ export default function UiKitOther() {
             {`Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque ex expedita fuga fugit, harum, ipsum iusto magni modi natus, nostrum placeat quaerat quo. Nostrum quasi recusandae sint sunt tempore.`}
           </Typography>
         </UiBasicModal>
+      </Stack>
+
+      <Typography variant={`h6`}>{`Toasts manager`}</Typography>
+      <Stack
+        direction={'row'}
+        flexWrap={`wrap`}
+        gap={theme => theme.spacing(2)}
+        justifyContent={`flex-start`}
+      >
+        <UiButton
+          onClick={() => {
+            showToast(BusEvents.success)
+          }}
+          color={`success`}
+        >
+          {`Success message`}
+        </UiButton>
+
+        <UiButton
+          onClick={() => {
+            showToast(BusEvents.error)
+          }}
+          color={`error`}
+        >
+          {`Error message`}
+        </UiButton>
+
+        <UiButton
+          onClick={() => {
+            showToast(BusEvents.warning)
+          }}
+          color={`warning`}
+        >
+          {`Warning message`}
+        </UiButton>
+
+        <UiButton
+          onClick={() => {
+            showToast(BusEvents.info)
+          }}
+          color={`info`}
+        >
+          {`Info message`}
+        </UiButton>
       </Stack>
     </Stack>
   )

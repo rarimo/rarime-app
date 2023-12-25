@@ -22,13 +22,19 @@ export default function UiIcon(props: Props) {
 
     const IconComponent = ICONS_COMPONENTS[componentName]
 
-    return <IconComponent {...rest} />
+    return IconComponent && <IconComponent {...rest} />
   }
 
   const { sx, className, name, ...rest } = props
 
   return (
-    <Box {...rest} component='svg' sx={sx} className={`icon ${className}`} aria-hidden='true'>
+    <Box
+      {...rest}
+      component='svg'
+      sx={sx}
+      className={['icon', ...(className ? [className] : [])].join(' ')}
+      aria-hidden='true'
+    >
       <use href={`#${name}-icon`} {...rest} />
     </Box>
   )
