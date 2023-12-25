@@ -9,10 +9,14 @@ import {
 } from 'react-router-dom'
 
 import App from '@/App'
-import { StatusMessage } from '@/components'
-import { MetamaskZkpSnapContextProvider, Web3ProviderContextProvider } from '@/contexts'
+import {
+  MetamaskZkpSnapContextProvider,
+  ToastsManager,
+  Web3ProviderContextProvider,
+} from '@/contexts'
 import { Routes } from '@/enums'
 import Profiles from '@/pages/Profiles'
+import UiKit from '@/pages/UiKit'
 
 import AuthLayout from './layouts/AuthLayout'
 import MainLayout from './layouts/MainLayout'
@@ -41,14 +45,15 @@ export const AppRoutes = () => {
       path: Routes.Root,
       element: (
         <Suspense fallback={<></>}>
-          <Web3ProviderContextProvider>
-            <MetamaskZkpSnapContextProvider>
-              <App>
-                <Outlet />
-                <StatusMessage />
-              </App>
-            </MetamaskZkpSnapContextProvider>
-          </Web3ProviderContextProvider>
+          <ToastsManager>
+            <Web3ProviderContextProvider>
+              <MetamaskZkpSnapContextProvider>
+                <App>
+                  <Outlet />
+                </App>
+              </MetamaskZkpSnapContextProvider>
+            </Web3ProviderContextProvider>
+          </ToastsManager>
         </Suspense>
       ),
       children: [
@@ -71,6 +76,10 @@ export const AppRoutes = () => {
               path: Routes.SignIn,
               loader: signInGuard,
               element: <SignIn />,
+            },
+            {
+              path: Routes.UiKit,
+              element: <UiKit />,
             },
           ],
         },

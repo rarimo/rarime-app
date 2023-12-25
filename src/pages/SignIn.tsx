@@ -1,11 +1,12 @@
 import { PROVIDERS } from '@distributedlab/w3p'
-import { Button, Stack, Typography } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import { Routes } from '@/enums'
 import { useMetamaskZkpSnapContext, useWeb3Context } from '@/hooks'
+import { UiButton } from '@/ui'
 
 export default function SignIn() {
   const navigate = useNavigate()
@@ -28,7 +29,7 @@ export default function SignIn() {
     <Stack flex={1}>
       <Typography>{t('sign-in-page.title')}</Typography>
       <Typography>{t('sign-in-page.description')}</Typography>
-      <Button onClick={connectWallet}>Connect</Button>
+      <UiButton onClick={connectWallet}>Connect</UiButton>
     </Stack>
   )
 }
