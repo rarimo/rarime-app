@@ -19,7 +19,7 @@ type Props = {
 )
 
 export default function UiIcon({ size = 6, ...props }: Props) {
-  const wrappedSx: SxProps<Theme> = {
+  const sx: SxProps<Theme> = {
     ...props.sx,
     width: theme => theme.spacing(size),
     height: theme => theme.spacing(size),
@@ -30,7 +30,7 @@ export default function UiIcon({ size = 6, ...props }: Props) {
 
     const IconComponent = ICON_COMPONENTS[componentName]
 
-    return IconComponent && <IconComponent {...rest} sx={wrappedSx} />
+    return IconComponent && <IconComponent {...rest} sx={sx} />
   }
 
   const { className, name, ...rest } = props
@@ -39,7 +39,7 @@ export default function UiIcon({ size = 6, ...props }: Props) {
     <Box
       {...rest}
       component='svg'
-      sx={wrappedSx}
+      sx={sx}
       className={['icon', ...(className ? [className] : [])].join(' ')}
       aria-hidden='true'
     >
