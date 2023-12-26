@@ -17,26 +17,25 @@ import {
 import { Routes } from '@/enums'
 import Profiles from '@/pages/Profiles'
 import UiKit from '@/pages/UiKit'
+import { useAuthState } from '@/store'
 
 import AuthLayout from './layouts/AuthLayout'
 import MainLayout from './layouts/MainLayout'
 
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
-  // TODO: Replace with real auth check
-  const isAuthorized = false
+  const { isAuthenticated } = useAuthState()
 
-  const signInGuard = () => (isAuthorized ? redirect(Routes.Root) : null)
+  const signInGuard = () => (isAuthenticated ? redirect(Routes.Root) : null)
   const authProtectedGuard = ({ request }: LoaderFunctionArgs) => {
     // If the user is not logged in and tries to access protected route, we redirect
     // them to sign in with a `from` parameter that allows login to redirect back
     // to this page upon successful authentication
-    if (!isAuthorized) {
+    if (!isAuthenticated) {
       const params = new URLSearchParams()
       params.set('from', new URL(request.url).pathname)
       return redirect(`${Routes.SignIn}?${params.toString()}`)
     }
-
     return null
   }
 
