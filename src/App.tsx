@@ -45,11 +45,6 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // useEffect(() => {
-  //   console.log(provider)
-  //   authStore.setJwt('')
-  // }, [provider.isConnected])
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
