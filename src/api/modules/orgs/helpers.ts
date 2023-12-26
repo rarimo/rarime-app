@@ -13,6 +13,10 @@ export const loadOrgs = async (query: OrgsRequestQueryParams) => {
   })
 }
 
+export const loadOrgsAmount = async () => {
+  return api.get<number>('/v1/orgs/amount')
+}
+
 export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => {
   return api.get<Organization>(`/v1/orgs/${id}`, {
     query,
