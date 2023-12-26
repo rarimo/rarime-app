@@ -22,12 +22,7 @@ export default function Orgs() {
     return data
   }, [])
 
-  const {
-    data: orgsAmount,
-    isLoading,
-    isLoadingError,
-    isEmpty,
-  } = useLoading<number>(5, init, {
+  const { data: orgsAmount } = useLoading<number | undefined>(undefined, init, {
     loadOnMount: true,
   })
 
@@ -37,7 +32,7 @@ export default function Orgs() {
       <PageListFilters
         tabs={[
           {
-            label: `All (${orgsAmount})`,
+            label: `All${orgsAmount ? ` (${orgsAmount})` : ''}`,
             route: 'all',
           },
           {
@@ -70,45 +65,37 @@ export default function Orgs() {
         }
       />
 
-      {isLoading ? (
-        <></>
-      ) : isLoadingError ? (
-        <></>
-      ) : isEmpty ? (
-        <></>
-      ) : (
-        <Stack flex={1}>
-          <Routes>
-            <Route
-              path='all'
-              element={
-                <List
-                  filter={{
-                    ...filter,
-                  }}
-                />
-              }
-            />
-            <Route
-              path='mine'
-              element={
-                <List
-                  filter={{
-                    ...filter,
+      <Stack flex={1}>
+        <Routes>
+          <Route
+            path='all'
+            element={
+              <List
+                filter={{
+                  ...filter,
+                }}
+              />
+            }
+          />
+          <Route
+            path='mine'
+            element={
+              <List
+                filter={{
+                  ...filter,
 
-                    /**
-                     * FIXME: get userDid from {@link useMetamaskZkpSnapContext}
-                     */
-                    [OrgsRequestFilters.UserDid]: 'did:iden3:readonly:blabla',
-                  }}
-                />
-              }
-            />
+                  /**
+                   * FIXME: get userDid from {@link useMetamaskZkpSnapContext}
+                   */
+                  [OrgsRequestFilters.UserDid]: 'did:iden3:readonly:blabla',
+                }}
+              />
+            }
+          />
 
-            <Route path='*' element={<Navigate replace to='all' />} />
-          </Routes>
-        </Stack>
-      )}
+          <Route path='*' element={<Navigate replace to='all' />} />
+        </Routes>
+      </Stack>
     </Stack>
   )
 }
