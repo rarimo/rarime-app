@@ -31,8 +31,10 @@ export default function List({ filter, ...rest }: Props) {
         <></>
       ) : isLoadingError ? (
         <></>
+      ) : isEmpty ? (
+        <></>
       ) : (
-        <>{isEmpty ? <></> : orgList.map(org => <div key={org.id}>{org.domain}</div>)}</>
+        orgList.map(org => <div key={org.id}>{org.domain}</div>)
       )}
     </Stack>
   )

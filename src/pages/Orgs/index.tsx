@@ -74,44 +74,40 @@ export default function Orgs() {
         <></>
       ) : isLoadingError ? (
         <></>
+      ) : isEmpty ? (
+        <></>
       ) : (
-        <>
-          {isEmpty ? (
-            <></>
-          ) : (
-            <Stack flex={1}>
-              <Routes>
-                <Route
-                  path='all'
-                  element={
-                    <List
-                      filter={{
-                        ...filter,
-                      }}
-                    />
-                  }
+        <Stack flex={1}>
+          <Routes>
+            <Route
+              path='all'
+              element={
+                <List
+                  filter={{
+                    ...filter,
+                  }}
                 />
-                <Route
-                  path='mine'
-                  element={
-                    <List
-                      filter={{
-                        ...filter,
+              }
+            />
+            <Route
+              path='mine'
+              element={
+                <List
+                  filter={{
+                    ...filter,
 
-                        /**
-                         * FIXME: get userDid from {@link useMetamaskZkpSnapContext}
-                         */
-                        [OrgsRequestFilters.UserDid]: 'did:iden3:readonly:blabla',
-                      }}
-                    />
-                  }
+                    /**
+                     * FIXME: get userDid from {@link useMetamaskZkpSnapContext}
+                     */
+                    [OrgsRequestFilters.UserDid]: 'did:iden3:readonly:blabla',
+                  }}
                 />
+              }
+            />
 
-                <Route path='*' element={<Navigate replace to='all' />} />
-              </Routes>
-            </Stack>
-          )}
-        </>
+            <Route path='*' element={<Navigate replace to='all' />} />
+          </Routes>
+        </Stack>
       )}
     </Stack>
   )
