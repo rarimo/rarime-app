@@ -51,10 +51,10 @@ export const typographyTheme: TypographyOptions = {
   },
   h6: {
     fontFamily: TYPOGRAPHY.txtFontFamily,
-    fontWeight: TYPOGRAPHY.txtFontWeightH5,
-    fontSize: TYPOGRAPHY.txtFontSizeH5,
-    lineHeight: TYPOGRAPHY.txtFontLineHeightH5,
-    letterSpacing: TYPOGRAPHY.txtFontLetterSpacingH5,
+    fontWeight: TYPOGRAPHY.txtFontWeightH6,
+    fontSize: TYPOGRAPHY.txtFontSizeH6,
+    lineHeight: TYPOGRAPHY.txtFontLineHeightH6,
+    letterSpacing: TYPOGRAPHY.txtFontLetterSpacingH6,
   },
   subtitle1: {
     fontFamily: TYPOGRAPHY.txtFontFamily,
