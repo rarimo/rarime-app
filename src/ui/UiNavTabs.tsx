@@ -1,6 +1,6 @@
 import { ButtonProps, Stack, StackProps } from '@mui/material'
 import { useCallback } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import UiButton from '@/ui/UiButton'
 
@@ -40,11 +40,10 @@ export default function UiNavTabs({ tabs, ...rest }: Props) {
       })}
       padding={1}
     >
-      {tabs.map(({ route, label }, index) => (
-        <Link key={index} to={route}>
+      {tabs.map(({ route, label }) => (
+        <NavLink key={route} to={route}>
           <UiButton
             sx={theme => ({
-              borderRadius: 25,
               background: theme.palette.background.default,
               px: 7,
               py: 2,
@@ -53,7 +52,7 @@ export default function UiNavTabs({ tabs, ...rest }: Props) {
           >
             {label}
           </UiButton>
-        </Link>
+        </NavLink>
       ))}
     </Stack>
   )

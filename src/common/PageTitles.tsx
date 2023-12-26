@@ -8,7 +8,7 @@ interface Props extends BoxProps {
 export default function PageTitles({ title, subtitle, ...rest }: Props) {
   return (
     <Box {...rest}>
-      <Typography variant='h5' sx={theme => ({ mb: theme.spacing(2) })}>
+      <Typography variant='h5' mb={2}>
         {title}
       </Typography>
       <Typography variant='body2'>{subtitle}</Typography>

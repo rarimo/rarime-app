@@ -1,25 +1,46 @@
 import { config } from '@config'
 import { ButtonProps, Divider, Stack } from '@mui/material'
-import { useCallback } from 'react'
+import { ReactNode, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { Icons, Routes } from '@/enums'
 import { UiButton, UiIcon } from '@/ui'
 
-const AppNavbar = () => {
+interface NavbarLinkProps {
+  to: Routes
+  children: ReactNode
+}
+
+const NavbarLink = ({ children, to }: NavbarLinkProps) => {
   const location = useLocation()
 
-  // FIXME
-  const getLinkProps = useCallback(
-    (route: Routes): Partial<ButtonProps> => {
-      const isRouteActive = location.pathname.includes(route)
+  const linkProps = useMemo((): Partial<ButtonProps> => {
+    const locationRoot = location.pathname.split('/')[1]
 
-      return {
-        variant: isRouteActive ? 'contained' : 'text',
-        color: isRouteActive ? 'primary' : 'secondary',
-      }
-    },
-    [location?.pathname],
+    const isRouteActive = to.includes(locationRoot)
+
+    return {
+      variant: isRouteActive ? 'contained' : 'text',
+      color: isRouteActive ? 'primary' : 'secondary',
+    }
+  }, [location.pathname, to])
+
+  return (
+    <NavLink to={to}>
+      <UiButton component='div' sx={{ p: 3 }} {...linkProps}>
+        {children}
+      </UiButton>
+    </NavLink>
+  )
+}
+
+const AppNavbar = () => {
+  const navbarItems = useMemo(
+    () => [
+      { route: Routes.Profiles, iconComponent: <UiIcon name={Icons.Wallet} size={6} /> },
+      { route: Routes.Orgs, iconComponent: <UiIcon componentName='work' size={6} /> },
+    ],
+    [],
   )
 
   return (
@@ -31,19 +52,12 @@ const AppNavbar = () => {
       </NavLink>
       <Divider />
 
-      {/*FIXME: use array.map*/}
       <Stack py={6} gap={6}>
-        <NavLink to={Routes.Profiles}>
-          <UiButton component='div' sx={{ p: 3 }} {...getLinkProps(Routes.Profiles)}>
-            <UiIcon name={Icons.Wallet} size={6} />
-          </UiButton>
-        </NavLink>
-
-        <NavLink to={Routes.Orgs}>
-          <UiButton component='div' sx={{ p: 3 }} {...getLinkProps(Routes.Orgs)}>
-            <UiIcon componentName='work' size={6} />
-          </UiButton>
-        </NavLink>
+        {navbarItems.map(({ route, iconComponent }, idx) => (
+          <NavbarLink to={route} key={idx}>
+            {iconComponent}
+          </NavbarLink>
+        ))}
       </Stack>
     </Stack>
   )

@@ -6,6 +6,7 @@ interface Props extends StackProps {
     label: string
     content: ReactNode
   }[]
+  ariaLabel?: string
 }
 
 const a11yProps = (index: number) => {
@@ -40,7 +41,7 @@ function CustomTabPanel({
   )
 }
 
-export default function UiTabs({ tabs, ...rest }: Props) {
+export default function UiTabs({ tabs, ariaLabel, ...rest }: Props) {
   const [currentTab, setCurrentTab] = useState(0)
 
   const handleChange = useCallback((event: SyntheticEvent, newValue: number) => {
@@ -50,7 +51,7 @@ export default function UiTabs({ tabs, ...rest }: Props) {
   return (
     <Stack {...rest}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={currentTab} onChange={handleChange} aria-label='basic tabs example'>
+        <Tabs value={currentTab} onChange={handleChange} aria-label={ariaLabel}>
           {tabs.map(({ label }, idx) => (
             <Tab key={idx} label={label} {...a11yProps(idx)} />
           ))}
