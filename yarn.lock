@@ -124,6 +124,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@distributedlab/fetcher@npm:1.0.0-rc.9":
+  version: 1.0.0-rc.9
+  resolution: "@distributedlab/fetcher@npm:1.0.0-rc.9"
+  dependencies:
+    uuid: "npm:^9.0.0"
+  checksum: 7f1da4d3348c76881e7fa954b58e3b5bc55ecf7d04f9916451af0a83ee9da9a694c726b66e549470592bd13045f068aef10a97b920eeb6c6f137167704bea06a
+  languageName: node
+  linkType: hard
+
+"@distributedlab/jac@npm:^1.0.0-rc.9":
+  version: 1.0.0-rc.9
+  resolution: "@distributedlab/jac@npm:1.0.0-rc.9"
+  dependencies:
+    "@distributedlab/fetcher": "npm:1.0.0-rc.9"
+    lodash: "npm:^4.17.21"
+  checksum: 6da9c42004e66be4910d10eca013a9d67c67569b903b3903da665c2adbb3281f4d36e7527143899f38898ad0e30b991d6ee36e42650a8f0170e6a8c87baffd20
+  languageName: node
+  linkType: hard
+
 "@distributedlab/tools@npm:1.0.0-rc.9, @distributedlab/tools@npm:^1.0.0-rc.9":
   version: 1.0.0-rc.9
   resolution: "@distributedlab/tools@npm:1.0.0-rc.9"
@@ -4504,6 +4523,7 @@ __metadata:
   resolution: "dashboard-rarime@workspace:."
   dependencies:
     "@comparaonline/stylelint-config-scss-modules": "npm:^1.1.0"
+    "@distributedlab/jac": "npm:^1.0.0-rc.9"
     "@distributedlab/tools": "npm:^1.0.0-rc.9"
     "@distributedlab/w3p": "npm:^1.0.0-rc.9"
     "@emotion/react": "npm:^11.11.1"
@@ -12822,7 +12842,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^9.0.1":
+"uuid@npm:^9.0.0, uuid@npm:^9.0.1":
   version: 9.0.1
   resolution: "uuid@npm:9.0.1"
   bin:

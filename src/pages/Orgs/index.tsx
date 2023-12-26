@@ -20,7 +20,7 @@ export default function Orgs() {
       <PageListFilters
         tabs={[
           {
-            label: 'All',
+            label: `All (${5})`,
             route: 'all',
           },
           {
