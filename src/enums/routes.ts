@@ -3,7 +3,7 @@ export enum Routes {
   UiKit = '/ui-kit',
   Profiles = '/profiles',
   // FIXME: how to avoid * in the path?
-  OrgList = '/organizations/*',
-  OrgCreate = '/organizations/create',
+  Orgs = '/organisations/*',
+  OrgNew = '/organisations/new',
   SignIn = '/sign-in',
 }

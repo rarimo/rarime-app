@@ -1,8 +1,8 @@
+import { config } from '@config'
 import { ButtonProps, Divider, Stack } from '@mui/material'
 import { useCallback } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { config } from '@/config'
 import { Icons, Routes } from '@/enums'
 import { UiButton, UiIcon } from '@/ui'
 
@@ -39,8 +39,8 @@ const AppNavbar = () => {
           </UiButton>
         </NavLink>
 
-        <NavLink to={Routes.OrgList}>
-          <UiButton component='div' sx={{ p: 3 }} {...getLinkProps(Routes.OrgList)}>
+        <NavLink to={Routes.Orgs}>
+          <UiButton component='div' sx={{ p: 3 }} {...getLinkProps(Routes.Orgs)}>
             <UiIcon componentName='work' size={6} />
           </UiButton>
         </NavLink>

@@ -1,7 +1,7 @@
 import { Box, BoxProps, Divider, Typography } from '@mui/material'
 
 interface Props extends BoxProps {
-  title?: string
+  title: string
   subtitle?: string
 }
 

@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 
-import AppNavbar from '@/components/AppNavbar'
+import { AppNavbar } from '@/common'
 
 const MainLayout = () => {
   return (

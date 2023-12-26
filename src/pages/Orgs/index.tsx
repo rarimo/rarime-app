@@ -3,13 +3,13 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
 
+import { PageListFilters, PageTitles } from '@/common'
 import { Routes as RoutesPaths } from '@/enums'
 import { UiButton, UiIcon, UiSwitch } from '@/ui'
-import { PageListFilters, PageTitles } from '@/views'
 
 import List from './List'
 
-export default function OrgList() {
+export default function Orgs() {
   const { t } = useTranslation()
 
   const [filters, setFilters] = useState({})
@@ -33,7 +33,7 @@ export default function OrgList() {
           <Stack direction='row' gap={4} justifyContent='space-between'>
             <UiSwitch label='Show Only active' />
 
-            <NavLink to={RoutesPaths.OrgCreate}>
+            <NavLink to={RoutesPaths.OrgNew}>
               <UiButton
                 variant='contained'
                 color='primary'
