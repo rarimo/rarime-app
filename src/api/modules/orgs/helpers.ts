@@ -1,12 +1,11 @@
 import {
   api,
-  OrganizationCreate,
-  OrgsRequestQueryParams,
-  OrgUser,
-  OrgVerificationCode,
+  type Organization,
+  type OrganizationCreate,
+  type OrgsRequestQueryParams,
+  type OrgUser,
+  type OrgVerificationCode,
 } from '@/api'
-
-import { Organization } from './types'
 
 export const loadOrgs = async (query: OrgsRequestQueryParams) => {
   return api.get<Organization[]>('/v1/orgs', {

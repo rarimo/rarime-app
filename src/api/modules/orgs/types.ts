@@ -1,4 +1,4 @@
-import { OrgsIncludes, OrgsRequestFilters, OrgsStatuses } from './enums'
+import type { OrgsIncludes, OrgsRequestFilters, OrgsStatuses } from '@/api'
 
 export type OrgMetadata = {
   name: string
