@@ -17,14 +17,14 @@ import {
 import { Routes } from '@/enums'
 import Profiles from '@/pages/Profiles'
 import UiKit from '@/pages/UiKit'
-import { useAuthState } from '@/store'
+import { useAuth } from '@/hooks'
 
 import AuthLayout from './layouts/AuthLayout'
 import MainLayout from './layouts/MainLayout'
 
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
-  const { isAuthenticated } = useAuthState()
+  const { isAuthenticated } = useAuth()
 
   const signInGuard = () => (isAuthenticated ? redirect(Routes.Root) : null)
   const authProtectedGuard = ({ request }: LoaderFunctionArgs) => {
