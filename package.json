@@ -32,6 +32,7 @@
     "rsc": "node scripts/release-sanity-check.mjs"
   },
   "dependencies": {
+    "@distributedlab/jac": "^1.0.0-rc.9",
     "@distributedlab/tools": "^1.0.0-rc.9",
     "@distributedlab/w3p": "^1.0.0-rc.9",
     "@emotion/react": "^11.11.1",
