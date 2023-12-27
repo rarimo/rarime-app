@@ -10,8 +10,8 @@
   "sign-in-page": {
     "title": "Sign in",
     "description": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this dashboard",
-    "button-connect": "Connect Metamask",
-    "button-install": "Install Metamask"
+    "connect-btn": "Connect Metamask",
+    "install-btn": "Install Metamask"
   },
   "validations": {
     "field-error_required": "Please fill out this field",
