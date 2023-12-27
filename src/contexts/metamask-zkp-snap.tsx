@@ -47,6 +47,8 @@ const CONTEXT_NOT_INITIALIZED_ERROR = new ReferenceError('MetamaskZkpSnapContext
 export const MetamaskZkpSnapContext = createContext<MetamaskZkpSnapContextValue>({
   isMetamaskInstalled: false,
   isSnapInstalled: false,
+  userDid: '',
+  userDidBigIntString: '',
 
   isLocalSnap: () => {
     throw CONTEXT_NOT_INITIALIZED_ERROR

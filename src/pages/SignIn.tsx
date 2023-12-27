@@ -1,13 +1,11 @@
-import { config } from '@config'
 import { PROVIDERS } from '@distributedlab/w3p'
 import { Stack, Typography, useTheme } from '@mui/material'
-import { get } from 'lodash'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import { BusEvents, Icons } from '@/enums'
-import { bus, ErrorHandler } from '@/helpers'
+import { bus, ErrorHandler, metamaskLink } from '@/helpers'
 import { useMetamaskZkpSnapContext, useWeb3Context } from '@/hooks'
 import { authStore } from '@/store'
 import { UiButton, UiIcon } from '@/ui'
@@ -36,27 +34,7 @@ export default function SignIn() {
   const installMMLink = useMemo(() => {
     if (isMetamaskInstalled) return ''
 
-    const browserExtensionsLinks = {
-      chrome: config.CHROME_METAMASK_ADDON_LINK,
-      opera: config.OPERA_METAMASK_ADDON_LINK,
-      firefox: config.FIREFOX_METAMASK_ADDON_LINK,
-    }
-
-    // Get the user-agent string
-    const userAgentString = navigator.userAgent
-
-    let chromeAgent = userAgentString.indexOf('Chrome') > -1 ? 'chrome' : ''
-    const firefoxAgent = userAgentString.indexOf('Firefox') > -1 ? 'firefox' : ''
-    const operaAgent = userAgentString.indexOf('OP') > -1 ? 'opera' : ''
-
-    // Discard Chrome since it also matches Opera
-    if (chromeAgent && operaAgent) chromeAgent = ''
-
-    const currentBrowser = chromeAgent || firefoxAgent || operaAgent || ''
-
-    if (!currentBrowser) return config.OTHER_BROWSER_METAMASK_LINK
-
-    return get(browserExtensionsLinks, currentBrowser, '')
+    return metamaskLink()
   }, [isMetamaskInstalled])
 
   const openInstallMetamaskLink = useCallback(() => {

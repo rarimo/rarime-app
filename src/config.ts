@@ -14,9 +14,5 @@ export const config: Config = {
   BUILD_VERSION: packageJson.version || import.meta.env.VITE_APP_BUILD_VERSION,
   SUPPORTED_CHAINS_DETAILS,
   DEFAULT_CHAIN: import.meta.env.VITE_DEFAULT_CHAIN,
-  OTHER_BROWSER_METAMASK_LINK: 'https://metamask.io/download/',
   ROBOTORNOT_LINK: 'https://robotornot.mainnet-beta.rarimo.com/',
-  CHROME_METAMASK_ADDON_LINK: 'https://chrome.google.com/webstore/detail/metamask/',
-  FIREFOX_METAMASK_ADDON_LINK: 'https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/',
-  OPERA_METAMASK_ADDON_LINK: 'https://addons.opera.com/en/extensions/details/metamask-10/',
 }
