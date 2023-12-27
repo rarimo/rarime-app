@@ -11,6 +11,11 @@ import { UiButton, UiIcon, UiSwitch } from '@/ui'
 
 import { List } from './components'
 
+enum OrgsRoutes {
+  All = 'all',
+  My = 'my',
+}
+
 export default function Orgs() {
   const { t } = useTranslation()
 
@@ -33,11 +38,11 @@ export default function Orgs() {
         tabs={[
           {
             label: `All${orgsAmount ? ` (${orgsAmount})` : ''}`,
-            route: 'all',
+            route: OrgsRoutes.All,
           },
           {
             label: 'My Organizations',
-            route: 'mine',
+            route: OrgsRoutes.My,
           },
         ]}
         onSearchInput={(value: string) =>
@@ -68,7 +73,7 @@ export default function Orgs() {
       <Stack flex={1}>
         <Routes>
           <Route
-            path='all'
+            path={OrgsRoutes.All}
             element={
               <List
                 filter={{
@@ -78,7 +83,7 @@ export default function Orgs() {
             }
           />
           <Route
-            path='mine'
+            path={OrgsRoutes.My}
             element={
               <List
                 filter={{
@@ -93,7 +98,7 @@ export default function Orgs() {
             }
           />
 
-          <Route path='*' element={<Navigate replace to='all' />} />
+          <Route path='*' element={<Navigate replace to={OrgsRoutes.All} />} />
         </Routes>
       </Stack>
     </Stack>
