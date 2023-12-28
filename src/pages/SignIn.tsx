@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-import { Routes } from '@/enums'
+import { RoutePaths } from '@/enums'
 import { useMetamaskZkpSnapContext, useWeb3Context } from '@/hooks'
 import { UiButton } from '@/ui'
 
@@ -21,7 +21,7 @@ export default function SignIn() {
 
   useEffect(() => {
     if (provider?.isConnected) {
-      navigate(Routes.Profiles)
+      navigate(RoutePaths.Profiles)
     }
   }, [navigate, provider?.isConnected])
 
