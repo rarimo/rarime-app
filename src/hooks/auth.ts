@@ -6,7 +6,7 @@ import { useWeb3Context } from '@/hooks/web3'
 import { authStore, useAuthState } from '@/store'
 
 export const useAuth = () => {
-  const { jwt } = useAuthState()
+  const { jwt: storeJwt } = useAuthState()
   const { init, provider } = useWeb3Context()
   const { connectOrInstallSnap, isSnapInstalled } = useMetamaskZkpSnapContext()
   const [isJwtValid, setIsJwtValid] = useState(false)
@@ -22,37 +22,50 @@ export const useAuth = () => {
 
   const checkJwtValid = useCallback(async () => {
     //Todo: add real logic
-    setIsJwtValid(true)
+    return true
   }, [])
 
   const logOut = useCallback(async () => {
     await provider?.disconnect()
     _setJwt('')
+    setIsJwtValid(false)
   }, [_setJwt, provider])
 
-  const authorize = useCallback(async () => {
-    if (jwt) {
-      await checkJwtValid()
+  const authorize = useCallback(
+    async (jwt?: string) => {
+      const currentJwt = jwt || storeJwt
+
+      if (!currentJwt) await logOut()
+
+      const isJwtValid = await checkJwtValid()
+
       if (isJwtValid) {
+        setIsJwtValid(true)
+        _setJwt(currentJwt)
         return
       }
+
       logOut()
-    }
-    // TODO: Replace with real auth check
-    _setJwt('mockJwt')
-  }, [_setJwt, checkJwtValid, isJwtValid, jwt, logOut])
+
+      // TODO: Replace with real auth check
+    },
+    [_setJwt, checkJwtValid, storeJwt, logOut],
+  )
 
   const login = useCallback(async () => {
     await init(PROVIDERS.Metamask)
     await connectOrInstallSnap()
-    await authorize()
+    // TODO: generateProof and /login
+    const jwt = 'mockJwt'
+
+    await authorize(jwt)
   }, [authorize, connectOrInstallSnap, init])
 
   return {
     isAuthorized,
-    jwt,
+    storeJwt,
     login,
-    authorization: authorize,
+    authorize,
     logOut,
     checkJwtValid,
   }

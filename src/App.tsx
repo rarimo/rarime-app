@@ -16,7 +16,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = ({ children }) => {
   const { provider, isValidChain, init: initWeb3 } = useWeb3Context()
   const { theme } = useThemeMode()
   const { checkMetamaskExists, checkSnapExists, connectOrInstallSnap } = useMetamaskZkpSnapContext()
-  const { authorization } = useAuth()
+  const { authorize } = useAuth()
 
   useViewportSizes()
 
@@ -32,7 +32,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = ({ children }) => {
         await initWeb3()
         if (await checkSnapExists()) {
           await connectOrInstallSnap()
-          await authorization()
+          await authorize()
         }
       }
     } catch (error) {
@@ -46,7 +46,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = ({ children }) => {
     initWeb3,
     checkSnapExists,
     connectOrInstallSnap,
-    authorization,
+    authorize,
   ])
 
   useEffect(() => {

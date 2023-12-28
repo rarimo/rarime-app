@@ -1,14 +1,13 @@
 import { createStore } from '@/helpers'
 
 interface AuthState {
-  jwt: string | undefined
+  jwt: string
 }
 
 const [authStore, useAuthState] = createStore(
   'auth',
   {
-    jwt: undefined,
-    isAuthorized: false,
+    jwt: '',
   } as AuthState,
   state => ({
     setJwt: (jwt: string) => {
