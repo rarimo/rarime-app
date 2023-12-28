@@ -11,21 +11,33 @@ export const useAuth = () => {
   const { init } = useWeb3Context()
   const { connectOrInstallSnap } = useMetamaskZkpSnapContext()
 
+  //Todo: add real check logic
+  const _isJwtValid = () => true || false
+
+  const _removeJwt = () => {
+    authStore.setJwt('')
+  }
+
+  const authorize = useCallback(async () => {
+    if (jwt) {
+      if (_isJwtValid()) {
+        return
+      }
+      _removeJwt()
+    }
+    // TODO: Replace with real auth check
+    authStore.setJwt('mockJwt')
+  }, [jwt])
+
   const login = useCallback(async () => {
     try {
       await init(PROVIDERS.Metamask)
       await connectOrInstallSnap()
-
-      // TODO: Replace with real auth check
-      authStore.setJwt('mockJwt')
+      await authorize()
     } catch (error) {
       ErrorHandler.process(error)
     }
-  }, [connectOrInstallSnap, init])
+  }, [authorize, connectOrInstallSnap, init])
 
-  const authorization = useCallback(() => {
-    //TODO: Add authorization logic
-  }, [])
-
-  return { isAuthenticated, jwt, setJwt: authStore.setJwt, login, authorization }
+  return { isAuthenticated, jwt, setJwt: authStore.setJwt, login, authorization: authorize }
 }

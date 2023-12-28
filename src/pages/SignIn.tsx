@@ -39,17 +39,19 @@ export default function SignIn() {
 
   return (
     <Stack
-      sx={{
-        background: palette.background.paper,
-        borderRadius: 4,
-        padding: 16,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        maxWidth: '520px',
-      }}
+      maxWidth='520px'
+      borderRadius={4}
+      p={16}
+      flexDirection='column'
+      alignItems='center'
+      bgcolor={palette.background.paper}
     >
-      <UiIcon size={22} name={Icons.User} color='primary' />
+      <UiIcon
+        size={22}
+        name={Icons.User}
+        sx={{ background: palette.background.default, borderRadius: 100 }}
+        color={palette.primary.main}
+      />
       <Typography component='h4' variant='h4' sx={{ my: 4 }}>
         {t('sign-in-page.title')}
       </Typography>

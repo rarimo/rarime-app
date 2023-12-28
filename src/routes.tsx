@@ -15,9 +15,9 @@ import {
   Web3ProviderContextProvider,
 } from '@/contexts'
 import { Routes } from '@/enums'
+import { useAuth } from '@/hooks'
 import Profiles from '@/pages/Profiles'
 import UiKit from '@/pages/UiKit'
-import { useAuth } from '@/hooks'
 
 import AuthLayout from './layouts/AuthLayout'
 import MainLayout from './layouts/MainLayout'
