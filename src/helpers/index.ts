@@ -1,4 +1,5 @@
 export * from './error-handler'
 export * from './event-bus'
+export * from './metamask'
 export * from './promise'
 export * from './store'

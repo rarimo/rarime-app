@@ -2,7 +2,13 @@ import { CircularProgress, CssBaseline, Stack, ThemeProvider } from '@mui/materi
 import { FC, HTMLAttributes, memo, useCallback, useEffect, useState } from 'react'
 
 import { ErrorHandler } from '@/helpers'
-import { useMetamaskZkpSnapContext, useThemeMode, useViewportSizes, useWeb3Context } from '@/hooks'
+import {
+  useAuth,
+  useMetamaskZkpSnapContext,
+  useThemeMode,
+  useViewportSizes,
+  useWeb3Context,
+} from '@/hooks'
 
 const App: FC<HTMLAttributes<HTMLDivElement>> = ({ children }) => {
   const [isAppInitialized, setIsAppInitialized] = useState(false)
@@ -10,6 +16,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = ({ children }) => {
   const { provider, isValidChain, init: initWeb3 } = useWeb3Context()
   const { theme } = useThemeMode()
   const { checkMetamaskExists, checkSnapExists, connectOrInstallSnap } = useMetamaskZkpSnapContext()
+  const { authorize } = useAuth()
 
   useViewportSizes()
 
@@ -23,14 +30,24 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = ({ children }) => {
          * because only want to check is user was connected before
          */
         await initWeb3()
-        if (await checkSnapExists()) await connectOrInstallSnap()
+        if (await checkSnapExists()) {
+          await connectOrInstallSnap()
+          await authorize()
+        }
       }
     } catch (error) {
       ErrorHandler.processWithoutFeedback(error)
     }
 
     setIsAppInitialized(true)
-  }, [provider?.address, checkMetamaskExists, initWeb3, checkSnapExists, connectOrInstallSnap])
+  }, [
+    provider?.address,
+    checkMetamaskExists,
+    initWeb3,
+    checkSnapExists,
+    connectOrInstallSnap,
+    authorize,
+  ])
 
   useEffect(() => {
     let mountingInit = async () => {
