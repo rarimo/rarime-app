@@ -1,17 +1,17 @@
 import { RoutePaths } from '@/enums'
 import { useNestedRoutes } from '@/helpers'
 
-import { CheckProof, Root } from './pages'
+import { OrgCheckProof, OrgRoot } from './pages'
 
-export default function Org() {
+export default function OrgsId() {
   return useNestedRoutes(RoutePaths.OrgsId, [
     {
       index: true,
-      element: <Root />,
+      element: <OrgRoot />,
     },
     {
       path: RoutePaths.OrgsIdCheckProof,
-      element: <CheckProof />,
+      element: <OrgCheckProof />,
     },
   ])
 }

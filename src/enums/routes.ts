@@ -5,8 +5,9 @@ export enum RoutePaths {
   SignIn = '/sign-in',
 
   Orgs = '/organisations',
-  OrgsAll = '/organisations/all',
-  OrgsMy = '/organisations/my',
+  OrgsList = '/organisations/list',
+  OrgsListAll = '/organisations/list/all',
+  OrgsListMy = '/organisations/list/my',
   OrgsNew = '/organisations/new',
   OrgsId = '/organisations/:id',
   OrgsIdCheckProof = '/organisations/:id/check-proof',

@@ -1,2 +1,2 @@
-export { default as CheckProof } from './CheckProof'
-export { default as Root } from './Root'
+export { default as OrgCheckProof } from './OrgCheckProof'
+export { default as OrgRoot } from './OrgRoot'

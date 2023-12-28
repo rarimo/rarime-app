@@ -4,7 +4,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import { PageTitles } from '@/common'
 import { UiButton } from '@/ui'
 
-export default function Root() {
+export default function OrgRoot() {
   const { id } = useParams<{ id: string }>()
 
   return (

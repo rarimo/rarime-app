@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import { loadOrgsAmount, OrgsRequestFilters, OrgsRequestFiltersMap } from '@/api'
 import { PageListFilters, PageTitles } from '@/common'
@@ -12,13 +12,17 @@ import { UiButton, UiIcon, UiSwitch } from '@/ui'
 
 import { List } from './components'
 
-export default function Orgs() {
+export default function OrgsList() {
   const { t } = useTranslation()
 
   const [filter, setFilter] = useState<OrgsRequestFiltersMap>({})
   const routes = useNestedRoutes(RoutePaths.Orgs, [
     {
-      path: RoutePaths.OrgsAll,
+      index: true,
+      element: <Navigate replace to={RoutePaths.OrgsListAll} />,
+    },
+    {
+      path: RoutePaths.OrgsListAll,
       element: (
         <List
           filter={{
@@ -28,7 +32,7 @@ export default function Orgs() {
       ),
     },
     {
-      path: RoutePaths.OrgsMy,
+      path: RoutePaths.OrgsListMy,
       element: (
         <List
           filter={{
@@ -61,11 +65,11 @@ export default function Orgs() {
         tabs={[
           {
             label: `All${orgsAmount ? ` (${orgsAmount})` : ''}`,
-            route: RoutePaths.OrgsAll,
+            route: RoutePaths.OrgsListAll,
           },
           {
             label: 'My Organizations',
-            route: RoutePaths.OrgsMy,
+            route: RoutePaths.OrgsListMy,
           },
         ]}
         onSearchInput={(value: string) =>
