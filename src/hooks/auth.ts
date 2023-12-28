@@ -1,7 +1,6 @@
 import { PROVIDERS } from '@distributedlab/w3p'
 import { useCallback } from 'react'
 
-import { ErrorHandler } from '@/helpers'
 import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
 import { useWeb3Context } from '@/hooks/web3'
 import { authStore, useAuthState } from '@/store'
@@ -30,13 +29,9 @@ export const useAuth = () => {
   }, [jwt])
 
   const login = useCallback(async () => {
-    try {
-      await init(PROVIDERS.Metamask)
-      await connectOrInstallSnap()
-      await authorize()
-    } catch (error) {
-      ErrorHandler.process(error)
-    }
+    await init(PROVIDERS.Metamask)
+    await connectOrInstallSnap()
+    await authorize()
   }, [authorize, connectOrInstallSnap, init])
 
   return { isAuthenticated, jwt, setJwt: authStore.setJwt, login, authorization: authorize }

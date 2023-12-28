@@ -3,7 +3,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { BusEvents, Icons } from '@/enums'
-import { bus, metamaskLink } from '@/helpers'
+import { bus, ErrorHandler, metamaskLink } from '@/helpers'
 import { useAuth, useMetamaskZkpSnapContext } from '@/hooks'
 import { UiButton, UiIcon } from '@/ui'
 
@@ -15,8 +15,12 @@ export default function SignIn() {
   const { palette } = useTheme()
   const { isMetamaskInstalled } = useMetamaskZkpSnapContext()
 
-  const connectProvider = useCallback(async () => {
-    await login()
+  const signIn = useCallback(async () => {
+    try {
+      await login()
+    } catch (error) {
+      ErrorHandler.process(error)
+    }
   }, [login])
 
   const installMMLink = useMemo(() => {
@@ -60,7 +64,7 @@ export default function SignIn() {
       </Typography>
       {isMetamaskInstalled ? (
         <UiButton
-          onClick={connectProvider}
+          onClick={signIn}
           startIcon={<UiIcon name={Icons.Metamask} />}
           disabled={isPending}
         >
