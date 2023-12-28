@@ -1,32 +1,46 @@
 import { PROVIDERS } from '@distributedlab/w3p'
-import { useCallback } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
 import { useWeb3Context } from '@/hooks/web3'
 import { authStore, useAuthState } from '@/store'
 
 export const useAuth = () => {
-  const { isAuthenticated, jwt } = useAuthState()
-  const { init } = useWeb3Context()
-  const { connectOrInstallSnap } = useMetamaskZkpSnapContext()
+  const { jwt } = useAuthState()
+  const { init, provider } = useWeb3Context()
+  const { connectOrInstallSnap, isSnapInstalled } = useMetamaskZkpSnapContext()
+  const [isJwtValid, setIsJwtValid] = useState(false)
 
-  //Todo: add real check logic
-  const _isJwtValid = () => true || false
+  const isAuthorized = useMemo(
+    () => provider?.isConnected && isSnapInstalled && isJwtValid,
+    [isJwtValid, isSnapInstalled, provider?.isConnected],
+  )
 
-  const _removeJwt = () => {
-    authStore.setJwt('')
-  }
+  const _setJwt = useCallback((jwt: string) => {
+    authStore.setJwt(jwt)
+  }, [])
+
+  const checkJwtValid = useCallback(async () => {
+    //Todo: add real logic
+    setIsJwtValid(true)
+  }, [])
+
+  const logOut = useCallback(async () => {
+    await provider?.disconnect()
+    _setJwt('')
+  }, [_setJwt, provider])
 
   const authorize = useCallback(async () => {
     if (jwt) {
-      if (_isJwtValid()) {
+      await checkJwtValid()
+      if (isJwtValid) {
         return
       }
-      _removeJwt()
+      logOut()
     }
     // TODO: Replace with real auth check
-    authStore.setJwt('mockJwt')
-  }, [jwt])
+    _setJwt('mockJwt')
+  }, [_setJwt, checkJwtValid, isJwtValid, jwt, logOut])
 
   const login = useCallback(async () => {
     await init(PROVIDERS.Metamask)
@@ -34,5 +48,12 @@ export const useAuth = () => {
     await authorize()
   }, [authorize, connectOrInstallSnap, init])
 
-  return { isAuthenticated, jwt, setJwt: authStore.setJwt, login, authorization: authorize }
+  return {
+    isAuthorized,
+    jwt,
+    login,
+    authorization: authorize,
+    logOut,
+    checkJwtValid,
+  }
 }

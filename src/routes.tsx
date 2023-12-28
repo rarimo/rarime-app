@@ -28,14 +28,14 @@ export const AppRoutes = () => {
   const OrgNew = lazy(() => import('@/pages/OrgNew'))
 
   // TODO: Replace with real auth check
-  const { isAuthenticated } = useAuth()
+  const { isAuthorized } = useAuth()
 
-  const signInGuard = () => (isAuthenticated ? redirect(Routes.Root) : null)
+  const signInGuard = () => (isAuthorized ? redirect(Routes.Root) : null)
   const authProtectedGuard = ({ request }: LoaderFunctionArgs) => {
     // If the user is not logged in and tries to access protected route, we redirect
     // them to sign in with a `from` parameter that allows login to redirect back
     // to this page upon successful authentication
-    if (!isAuthenticated) {
+    if (!isAuthorized) {
       const params = new URLSearchParams()
       params.set('from', new URL(request.url).pathname)
       return redirect(`${Routes.SignIn}?${params.toString()}`)

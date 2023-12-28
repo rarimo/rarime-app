@@ -16,11 +16,15 @@ export default function SignIn() {
   const { isMetamaskInstalled } = useMetamaskZkpSnapContext()
 
   const signIn = useCallback(async () => {
+    setIsPending(true)
+
     try {
       await login()
     } catch (error) {
       ErrorHandler.process(error)
     }
+
+    setIsPending(false)
   }, [login])
 
   const installMMLink = useMemo(() => {
@@ -43,7 +47,7 @@ export default function SignIn() {
 
   return (
     <Stack
-      maxWidth='520px'
+      maxWidth={520}
       borderRadius={4}
       p={16}
       flexDirection='column'
@@ -56,6 +60,7 @@ export default function SignIn() {
         sx={{ background: palette.background.default, borderRadius: 100 }}
         color={palette.primary.main}
       />
+      {/*Todo: add metamask not found texts*/}
       <Typography component='h4' variant='h4' sx={{ my: 4 }}>
         {t('sign-in-page.title')}
       </Typography>
@@ -76,7 +81,7 @@ export default function SignIn() {
           startIcon={<UiIcon name={Icons.Metamask} />}
           disabled={isPending}
         >
-          {t('sign-in-page.install-btn')}
+          {isPending ? t('sign-in-page.reload-page-btn') : t('sign-in-page.install-btn')}
         </UiButton>
       )}
     </Stack>
