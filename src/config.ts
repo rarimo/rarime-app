@@ -15,9 +15,6 @@ export type Config = {
   SUPPORTED_CHAINS_DETAILS: SupportedChainsDetails
   DEFAULT_CHAIN: SupportedChains
   ROBOTORNOT_LINK: string
-  CHROME_METAMASK_ADDON_LINK: string
-  FIREFOX_METAMASK_ADDON_LINK: string
-  OPERA_METAMASK_ADDON_LINK: string
 }
 
 export const config: Config = {
@@ -27,7 +24,4 @@ export const config: Config = {
   SUPPORTED_CHAINS_DETAILS,
   DEFAULT_CHAIN: import.meta.env.VITE_DEFAULT_CHAIN,
   ROBOTORNOT_LINK: 'https://robotornot.mainnet-beta.rarimo.com/',
-  CHROME_METAMASK_ADDON_LINK: 'https://chrome.google.com/webstore/detail/metamask/',
-  FIREFOX_METAMASK_ADDON_LINK: 'https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/',
-  OPERA_METAMASK_ADDON_LINK: 'https://addons.opera.com/en/extensions/details/metamask-10/',
 }

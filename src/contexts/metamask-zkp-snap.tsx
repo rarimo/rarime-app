@@ -18,6 +18,8 @@ import { createContext, FC, HTMLAttributes, useCallback, useState } from 'react'
 interface MetamaskZkpSnapContextValue {
   isMetamaskInstalled: boolean
   isSnapInstalled: boolean
+  userDid: string
+  userDidBigIntString: string
 
   isLocalSnap: (snapId: string) => boolean
 
@@ -45,6 +47,8 @@ const CONTEXT_NOT_INITIALIZED_ERROR = new ReferenceError('MetamaskZkpSnapContext
 export const MetamaskZkpSnapContext = createContext<MetamaskZkpSnapContextValue>({
   isMetamaskInstalled: false,
   isSnapInstalled: false,
+  userDid: '',
+  userDidBigIntString: '',
 
   isLocalSnap: () => {
     throw CONTEXT_NOT_INITIALIZED_ERROR
@@ -82,6 +86,8 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
 
   const [isMetamaskInstalled, setIsMetamaskInstalled] = useState(false)
   const [isSnapInstalled, setIsSnapInstalled] = useState(false)
+  const [userDid, setUserDid] = useState('')
+  const [userDidBigIntString, setUserDidBigIntString] = useState('')
 
   const isLocalSnap = useCallback((snapId: string) => snapId.startsWith('local:'), [])
 
@@ -91,8 +97,10 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
    */
   const createIdentity = useCallback(async () => {
     if (!connector) throw new TypeError('Connector is not defined')
-
-    return connector.createIdentity()
+    const identity = await connector.createIdentity()
+    setUserDid(identity.identityIdString)
+    setUserDidBigIntString(identity.identityIdBigIntString)
+    return identity
   }, [connector])
 
   /**
@@ -163,6 +171,8 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
       value={{
         isMetamaskInstalled,
         isSnapInstalled,
+        userDid,
+        userDidBigIntString,
 
         isLocalSnap,
 

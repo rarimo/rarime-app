@@ -1,35 +1,89 @@
-import { PROVIDERS } from '@distributedlab/w3p'
-import { Stack, Typography } from '@mui/material'
-import { useEffect } from 'react'
+import { Stack, Typography, useTheme } from '@mui/material'
+import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 
-import { RoutePaths } from '@/enums'
-import { useMetamaskZkpSnapContext, useWeb3Context } from '@/hooks'
-import { UiButton } from '@/ui'
+import { BusEvents, Icons } from '@/enums'
+import { bus, ErrorHandler, metamaskLink } from '@/helpers'
+import { useAuth, useMetamaskZkpSnapContext } from '@/hooks'
+import { UiButton, UiIcon } from '@/ui'
 
 export default function SignIn() {
-  const navigate = useNavigate()
   const { t } = useTranslation()
-  const { init: initWeb3, provider } = useWeb3Context()
-  const { connectOrInstallSnap } = useMetamaskZkpSnapContext()
+  const { login } = useAuth()
+  const [isPending, setIsPending] = useState(false)
 
-  const connectWallet = async () => {
-    await initWeb3(PROVIDERS.Metamask)
-    await connectOrInstallSnap()
-  }
+  const { palette } = useTheme()
+  const { isMetamaskInstalled } = useMetamaskZkpSnapContext()
 
-  useEffect(() => {
-    if (provider?.isConnected) {
-      navigate(RoutePaths.Profiles)
+  const signIn = useCallback(async () => {
+    setIsPending(true)
+
+    try {
+      await login()
+    } catch (error) {
+      ErrorHandler.process(error)
     }
-  }, [navigate, provider?.isConnected])
+
+    setIsPending(false)
+  }, [login])
+
+  const installMMLink = useMemo(() => {
+    if (isMetamaskInstalled) return ''
+
+    return metamaskLink()
+  }, [isMetamaskInstalled])
+
+  const openInstallMetamaskLink = useCallback(() => {
+    if (!installMMLink) {
+      bus.emit(BusEvents.warning, `Your browser is not support Metamask`)
+
+      return
+    }
+
+    setIsPending(true)
+
+    window.open(installMMLink, '_blank', 'noopener noreferrer')
+  }, [installMMLink])
 
   return (
-    <Stack flex={1}>
-      <Typography>{t('sign-in-page.title')}</Typography>
-      <Typography>{t('sign-in-page.description')}</Typography>
-      <UiButton onClick={connectWallet}>Connect</UiButton>
+    <Stack
+      maxWidth={520}
+      borderRadius={4}
+      p={16}
+      flexDirection='column'
+      alignItems='center'
+      bgcolor={palette.background.paper}
+    >
+      <UiIcon
+        size={22}
+        name={Icons.User}
+        sx={{ background: palette.background.default, borderRadius: 100 }}
+        color={palette.primary.main}
+      />
+      {/*Todo: add metamask not found texts*/}
+      <Typography component='h4' variant='h4' sx={{ my: 4 }}>
+        {t('sign-in-page.title')}
+      </Typography>
+      <Typography variant='body2' marginBottom={8} textAlign={'center'}>
+        {t('sign-in-page.description')}
+      </Typography>
+      {isMetamaskInstalled ? (
+        <UiButton
+          onClick={signIn}
+          startIcon={<UiIcon name={Icons.Metamask} />}
+          disabled={isPending}
+        >
+          {t('sign-in-page.connect-btn')}
+        </UiButton>
+      ) : (
+        <UiButton
+          onClick={openInstallMetamaskLink}
+          startIcon={<UiIcon name={Icons.Metamask} />}
+          disabled={isPending}
+        >
+          {isPending ? t('sign-in-page.reload-page-btn') : t('sign-in-page.install-btn')}
+        </UiButton>
+      )}
     </Stack>
   )
 }

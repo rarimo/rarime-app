@@ -1,6 +1,5 @@
-import { Box, SvgIconProps, SxProps } from '@mui/material'
+import { Box, BoxProps, SvgIconProps, SxProps } from '@mui/material'
 import { Theme } from '@mui/material/styles'
-import { HTMLAttributes } from 'react'
 
 import { ICON_COMPONENTS, Icons } from '@/enums'
 
@@ -9,14 +8,14 @@ type Props = {
   sx?: SxProps<Theme>
 } & (
   | ({
-      componentName: keyof typeof ICON_COMPONENTS
-      name?: never
-    } & SvgIconProps)
+  componentName: keyof typeof ICON_COMPONENTS
+  name?: never
+} & SvgIconProps)
   | ({
-      name: Icons
-      componentName?: never
-    } & HTMLAttributes<HTMLOrSVGElement>)
-)
+  name: Icons
+  componentName?: never
+} & BoxProps<'svg'>)
+  )
 
 export default function UiIcon({ size = 6, ...props }: Props) {
   const sx: SxProps<Theme> = {
@@ -47,7 +46,7 @@ export default function UiIcon({ size = 6, ...props }: Props) {
       className={['icon', ...(className ? [className] : [])].join(' ')}
       aria-hidden='true'
     >
-      <use href={`#${name}-icon`} {...rest} />
+      <use href={`#${name}-icon`} />
     </Box>
   )
 }

@@ -15,6 +15,7 @@ import {
   Web3ProviderContextProvider,
 } from '@/contexts'
 import { RoutePaths } from '@/enums'
+import { useAuth } from '@/hooks'
 
 import { createDeepPath } from './helpers'
 import AuthLayout from './layouts/AuthLayout'
@@ -27,7 +28,7 @@ export const AppRoutes = () => {
   const UiKit = lazy(() => import('@/pages/UiKit'))
 
   // TODO: Replace with real auth check
-  const isAuthorized = true
+  const { isAuthorized } = useAuth()
 
   const signInGuard = () => (isAuthorized ? redirect(RoutePaths.Root) : null)
   const authProtectedGuard = ({ request }: LoaderFunctionArgs) => {
