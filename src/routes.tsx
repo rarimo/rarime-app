@@ -9,11 +9,7 @@ import {
 } from 'react-router-dom'
 
 import App from '@/App'
-import {
-  MetamaskZkpSnapContextProvider,
-  ToastsManager,
-  Web3ProviderContextProvider,
-} from '@/contexts'
+import { ToastsManager } from '@/contexts'
 import { Routes } from '@/enums'
 import { useAuth } from '@/hooks'
 import Profiles from '@/pages/Profiles'
@@ -55,13 +51,9 @@ export const AppRoutes = () => {
       element: (
         <Suspense fallback={<></>}>
           <ToastsManager>
-            <Web3ProviderContextProvider>
-              <MetamaskZkpSnapContextProvider>
-                <App>
-                  <Outlet />
-                </App>
-              </MetamaskZkpSnapContextProvider>
-            </Web3ProviderContextProvider>
+            <App>
+              <Outlet />
+            </App>
           </ToastsManager>
         </Suspense>
       ),
