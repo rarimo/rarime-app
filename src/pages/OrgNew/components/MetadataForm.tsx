@@ -26,24 +26,15 @@ const DEFAULT_VALUES = {
 }
 
 export default function MetadataForm({ formProps, ...rest }: Props) {
-  const {
-    formState,
-    handleSubmit,
-    control,
-    isFormDisabled,
-    getErrorMessage,
-    disableForm,
-    enableForm,
-  } = useForm(DEFAULT_VALUES, yup =>
-    yup.object().shape({
-      [FormNames.Logo]: yup.mixed().required(),
-      [FormNames.Name]: yup.string().required(),
-      [FormNames.Description]: yup.string().required(),
-      [FormNames.Domain]: yup.string().url().required(),
-    }),
-  )
-
-  console.log(formState)
+  const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
+    useForm(DEFAULT_VALUES, yup =>
+      yup.object().shape({
+        [FormNames.Logo]: yup.mixed().required(),
+        [FormNames.Name]: yup.string().required(),
+        [FormNames.Description]: yup.string().required(),
+        [FormNames.Domain]: yup.string().url().required(),
+      }),
+    )
 
   const submit = useCallback(
     async (formData: typeof DEFAULT_VALUES) => {
@@ -55,23 +46,25 @@ export default function MetadataForm({ formProps, ...rest }: Props) {
         // FIXME: load to s3 and get url
         const logoUrl = URL.createObjectURL(formData[FormNames.Logo])
 
-        await createOrg({
-          id: 'did:iden3:readonly:blabla',
-          ownerDid: 'did:iden3:readonly:blabla',
-          domain: formData[FormNames.Domain],
-          metadata: {
-            logoUrl,
-            name: formData[FormNames.Name],
-            description: formData[FormNames.Description],
-          },
-        })
+        formProps?.onSubmit?.(
+          await createOrg({
+            id: 'did:iden3:readonly:blabla',
+            ownerDid: 'did:iden3:readonly:blabla',
+            domain: formData[FormNames.Domain],
+            metadata: {
+              logoUrl,
+              name: formData[FormNames.Name],
+              description: formData[FormNames.Description],
+            },
+          }),
+        )
       } catch (error) {
         ErrorHandler.process(error)
       }
 
       enableForm()
     },
-    [disableForm, enableForm],
+    [disableForm, enableForm, formProps],
   )
 
   return (

@@ -12,10 +12,11 @@ export const useStepper = (
     label: string
     content: ReactNode
   }[],
+  initialStep?: number,
 ) => {
   const _rawSteps = useMemo(() => stepsInitiator({} as StepperActions), [stepsInitiator])
 
-  const [activeStep, setActiveStep] = useState(0)
+  const [activeStep, setActiveStep] = useState(initialStep ?? 0)
 
   const isFirst = useMemo(() => {
     return activeStep === 0

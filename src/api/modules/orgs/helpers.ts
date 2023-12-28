@@ -24,19 +24,22 @@ export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => 
 }
 
 export const createOrg = async (body: OrganizationCreate) => {
-  return api.post<Organization>('/v1/orgs', {
-    body: {
-      data: {
-        id: body.id,
-        type: 'organizations-create',
-        attributes: {
-          owner_did: body.ownerDid,
-          domain: body.domain,
-          metadata: body.metadata,
-        },
-      },
-    },
-  })
+  // return api.post<Organization>('/v1/orgs', {
+  //   body: {
+  //     data: {
+  //       id: body.id,
+  //       type: 'organizations-create',
+  //       attributes: {
+  //         owner_did: body.ownerDid,
+  //         domain: body.domain,
+  //         metadata: body.metadata,
+  //       },
+  //     },
+  //   },
+  // })
+  // eslint-disable-next-line no-console
+  console.log('createOrg', body)
+  return body
 }
 
 export const verifyOrg = async (id: string) => {
