@@ -1,13 +1,15 @@
 import { Stack, Typography, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
-import { BusEvents, Icons } from '@/enums'
+import { BusEvents, Icons, Routes } from '@/enums'
 import { bus, ErrorHandler, metamaskLink } from '@/helpers'
 import { useAuth, useMetamaskZkpSnapContext } from '@/hooks'
 import { UiButton, UiIcon } from '@/ui'
 
 export default function SignIn() {
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const { login } = useAuth()
   const [isPending, setIsPending] = useState(false)
@@ -20,12 +22,14 @@ export default function SignIn() {
 
     try {
       await login()
+
+      navigate(Routes.Orgs)
     } catch (error) {
       ErrorHandler.process(error)
     }
 
     setIsPending(false)
-  }, [login])
+  }, [login, navigate])
 
   const installMMLink = useMemo(() => {
     if (isMetamaskInstalled) return ''
