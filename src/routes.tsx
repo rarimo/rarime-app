@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useCallback } from 'react'
 import {
   createBrowserRouter,
   LoaderFunctionArgs,
@@ -9,13 +9,10 @@ import {
 } from 'react-router-dom'
 
 import App from '@/App'
-import {
-  MetamaskZkpSnapContextProvider,
-  ToastsManager,
-  Web3ProviderContextProvider,
-} from '@/contexts'
+import { ToastsManager } from '@/contexts'
 import { Routes } from '@/enums'
-import { useAuth } from '@/hooks'
+import { ErrorHandler } from '@/helpers'
+import { useAuth, useLoading, useMetamaskZkpSnapContext, useWeb3Context } from '@/hooks'
 import Profiles from '@/pages/Profiles'
 import UiKit from '@/pages/UiKit'
 
@@ -44,19 +41,61 @@ export const AppRoutes = () => {
     return null
   }
 
+  const { provider, init: initWeb3 } = useWeb3Context()
+  const { checkMetamaskExists, checkSnapExists, connectOrInstallSnap } = useMetamaskZkpSnapContext()
+  const { authorize } = useAuth()
+
+  const initRouter = useCallback(async () => {
+    if (provider?.address) return
+
+    try {
+      if (await checkMetamaskExists()) {
+        /**
+         * We don't pass providerType here,
+         * because only want to check is user was connected before
+         */
+        await initWeb3()
+        /**
+         * In case if user was connected snap before,
+         * we need to connect it again and authorize after
+         */
+        if (await checkSnapExists()) {
+          await connectOrInstallSnap()
+          await authorize()
+        }
+      }
+    } catch (error) {
+      ErrorHandler.processWithoutFeedback(error)
+    }
+
+    return true
+  }, [
+    provider?.address,
+    checkMetamaskExists,
+    initWeb3,
+    checkSnapExists,
+    connectOrInstallSnap,
+    authorize,
+  ])
+
+  const { data: isAppInitialized } = useLoading(false, initRouter, {
+    loadOnMount: true,
+  })
+
+  if (!isAppInitialized) return <></>
+
+  /**
+   * Once app is initialized, and all auth checks are done, we can keep defining router
+   */
   const router = createBrowserRouter([
     {
       path: Routes.Root,
       element: (
         <Suspense fallback={<></>}>
           <ToastsManager>
-            <Web3ProviderContextProvider>
-              <MetamaskZkpSnapContextProvider>
-                <App>
-                  <Outlet />
-                </App>
-              </MetamaskZkpSnapContextProvider>
-            </Web3ProviderContextProvider>
+            <App>
+              <Outlet />
+            </App>
           </ToastsManager>
         </Suspense>
       ),
