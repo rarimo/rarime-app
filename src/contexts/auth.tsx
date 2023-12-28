@@ -21,7 +21,7 @@ export const AuthContext = createContext<AuthContextValue>({
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const { jwt: storeJwt } = useAuthState()
   const { init, provider } = useWeb3Context()
-  const { connectOrInstallSnap, isSnapInstalled } = useMetamaskZkpSnapContext()
+  const { isSnapInstalled, connectOrInstallSnap, checkSnapStatus } = useMetamaskZkpSnapContext()
   const [isJwtValid, setIsJwtValid] = useState(false)
 
   const isAuthorized = useMemo(
@@ -69,11 +69,13 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     await init(PROVIDERS.Metamask)
     // FIXME: if use disconnect snap, and then click login - nothing will happen
     await connectOrInstallSnap()
+
+    await checkSnapStatus()
     // TODO: generateProof and /login
     const jwt = 'mockJwt'
 
     await authorize(jwt)
-  }, [authorize, connectOrInstallSnap, init])
+  }, [authorize, checkSnapStatus, connectOrInstallSnap, init])
 
   return (
     <AuthContext.Provider

@@ -82,11 +82,8 @@ export const AppRoutes = () => {
     loadOnMount: true,
   })
 
-  if (!isAppInitialized) return <></>
+  if (!isAppInitialized) return null
 
-  /**
-   * Once app is initialized, and all auth checks are done, we can keep defining router
-   */
   const router = createBrowserRouter([
     {
       path: Routes.Root,
