@@ -73,36 +73,37 @@ function ToastsManagerController({ children }: { children: ReactNode }) {
     [defaultTitles, defaultMessages, defaultIcons, enqueueSnackbar],
   )
 
+  const showSuccessToast = useCallback(
+    (payload?: unknown) => showToast(BusEvents.success, payload as ToastPayload),
+    [showToast],
+  )
+
+  const showWarningToast = useCallback(
+    (payload?: unknown) => showToast(BusEvents.warning, payload as ToastPayload),
+    [showToast],
+  )
+  const showErrorToast = useCallback(
+    (payload?: unknown) => showToast(BusEvents.error, payload as ToastPayload),
+    [showToast],
+  )
+  const showInfoToast = useCallback(
+    (payload?: unknown) => showToast(BusEvents.info, payload as ToastPayload),
+    [showToast],
+  )
+
   useEffect(() => {
-    const showSuccessToast = (payload?: unknown) =>
-      showToast(BusEvents.success, payload as ToastPayload)
-    const showWarningToast = (payload?: unknown) =>
-      showToast(BusEvents.warning, payload as ToastPayload)
-    const showErrorToast = (payload?: unknown) =>
-      showToast(BusEvents.error, payload as ToastPayload)
-    const showInfoToast = (payload?: unknown) => showToast(BusEvents.info, payload as ToastPayload)
-
-    let mountingInit = async () => {
-      bus.on(BusEvents.success, showSuccessToast)
-      bus.on(BusEvents.warning, showWarningToast)
-      bus.on(BusEvents.error, showErrorToast)
-      bus.on(BusEvents.info, showInfoToast)
-    }
-
-    mountingInit()
+    bus.on(BusEvents.success, showSuccessToast)
+    bus.on(BusEvents.warning, showWarningToast)
+    bus.on(BusEvents.error, showErrorToast)
+    bus.on(BusEvents.info, showInfoToast)
 
     return () => {
       bus.off(BusEvents.success, showSuccessToast)
       bus.off(BusEvents.warning, showWarningToast)
       bus.off(BusEvents.error, showErrorToast)
       bus.off(BusEvents.info, showInfoToast)
-
-      mountingInit = async () => {
-        /* empty */
-      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [showErrorToast, showInfoToast, showSuccessToast, showWarningToast])
 
   return children
 }

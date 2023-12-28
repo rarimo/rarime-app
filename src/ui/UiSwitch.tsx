@@ -6,7 +6,7 @@ interface Props extends SwitchProps {
 
 export default function UiSwitch({ label, ...rest }: Props) {
   return label ? (
-    <FormControlLabel control={<Switch {...rest} />} label='Label' />
+    <FormControlLabel control={<Switch {...rest} />} label={label} />
   ) : (
     <Switch {...rest} />
   )

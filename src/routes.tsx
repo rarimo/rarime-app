@@ -24,6 +24,10 @@ import MainLayout from './layouts/MainLayout'
 
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
+  const Orgs = lazy(() => import('@/pages/Orgs'))
+  const OrgNew = lazy(() => import('@/pages/OrgNew'))
+
+  // TODO: Replace with real auth check
   const { isAuthenticated } = useAuth()
 
   const signInGuard = () => (isAuthenticated ? redirect(Routes.Root) : null)
@@ -36,6 +40,7 @@ export const AppRoutes = () => {
       params.set('from', new URL(request.url).pathname)
       return redirect(`${Routes.SignIn}?${params.toString()}`)
     }
+
     return null
   }
 
@@ -64,6 +69,16 @@ export const AppRoutes = () => {
               path: Routes.Profiles,
               loader: authProtectedGuard,
               element: <Profiles />,
+            },
+            {
+              path: Routes.Orgs,
+              loader: authProtectedGuard,
+              element: <Orgs />,
+            },
+            {
+              path: Routes.OrgNew,
+              loader: authProtectedGuard,
+              element: <OrgNew />,
             },
           ],
         },

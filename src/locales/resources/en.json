@@ -47,5 +47,12 @@
     "primitive-array-title": "Primitive array",
     "object-array-title": "Object array",
     "object-and-array-combine-title": "Complex array & Object"
+  },
+  "page-list-filters": {
+    "search-input-placeholder": "Search"
+  },
+  "org-list": {
+    "title": "Organizations",
+    "subtitle": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this dashboard"
   }
 }
