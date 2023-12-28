@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom'
 
 import { RoutePaths } from '@/enums'
-import { useNestedRoutes } from '@/helpers'
+import { useNestedRoutes } from '@/hooks'
 
 import { OrgsId, OrgsList, OrgsNew } from './pages'
 

@@ -1,5 +1,5 @@
 import { RoutePaths } from '@/enums'
-import { useNestedRoutes } from '@/helpers'
+import { useNestedRoutes } from '@/hooks'
 
 import { OrgCheckProof, OrgRoot } from './pages'
 
