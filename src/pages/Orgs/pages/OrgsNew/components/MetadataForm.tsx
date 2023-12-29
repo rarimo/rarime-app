@@ -47,7 +47,7 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
       disableForm()
 
       try {
-        // FIXME: load to s3 and get url
+        // TODO: load to s3 and get url
         const logoUrl = URL.createObjectURL(formData[FieldNames.Logo])
 
         await onOrgCreated?.(
