@@ -23,7 +23,7 @@ export default function ProofForm() {
         }}
       />
 
-      <Stack>
+      <Stack spacing={2}>
         <UiTextField
           label={'Checking Telegram'}
           placeholder={"Enter the Telegram Handle of the Person You're Verifying"}
