@@ -1,9 +1,16 @@
 import { PROVIDERS } from '@distributedlab/w3p'
 import { useCallback, useMemo } from 'react'
+import { subscribe } from 'valtio'
 
 import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
 import { useWeb3Context } from '@/hooks/web3'
-import { authStore, useAuthState } from '@/store'
+import { authStore, useAuthState, web3Store } from '@/store'
+
+subscribe(web3Store, () => {
+  if (web3Store.providerType) return
+
+  authStore.setJwt('')
+})
 
 export const useAuth = () => {
   const { jwt } = useAuthState()
@@ -19,10 +26,6 @@ export const useAuth = () => {
     [isJwtValid, isSnapInstalled, provider?.isConnected],
   )
 
-  const _setJwt = useCallback((jwt: string) => {
-    authStore.setJwt(jwt)
-  }, [])
-
   const checkJwtValid = useCallback(() => {
     //Todo: add real logic
     return true
@@ -30,8 +33,9 @@ export const useAuth = () => {
 
   const logOut = useCallback(async () => {
     await provider?.disconnect()
-    _setJwt('')
-  }, [_setJwt, provider])
+    await checkSnapStatus()
+    authStore.setJwt(jwt)
+  }, [checkSnapStatus, jwt, provider])
 
   const authorize = useCallback(
     async (_jwt?: string) => {
@@ -42,7 +46,7 @@ export const useAuth = () => {
       const isJwtValid = checkJwtValid()
 
       if (isJwtValid) {
-        _setJwt(currentJwt)
+        authStore.setJwt(currentJwt)
         return
       }
 
@@ -50,7 +54,7 @@ export const useAuth = () => {
 
       // TODO: Replace with real auth check
     },
-    [jwt, logOut, checkJwtValid, _setJwt],
+    [jwt, logOut, checkJwtValid],
   )
 
   const login = useCallback(async () => {
@@ -59,6 +63,7 @@ export const useAuth = () => {
     await connectOrInstallSnap()
 
     await checkSnapStatus()
+
     // TODO: generateProof and /login
     const jwt = 'mockJwt'
 

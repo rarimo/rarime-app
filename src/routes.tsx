@@ -21,10 +21,14 @@ export const AppRoutes = () => {
   const Profiles = lazy(() => import('@/pages/Profiles'))
   const UiKit = lazy(() => import('@/pages/UiKit'))
 
-  const { isAuthorized } = useAuth()
+  const { isAuthorized, logOut } = useAuth()
 
   const signInGuard = useCallback(
-    () => (isAuthorized ? redirect(RoutePaths.Root) : null),
+    ({ request }: LoaderFunctionArgs) => {
+      const from = new URL(request.url).searchParams.get('from')
+
+      return isAuthorized ? redirect(from ?? RoutePaths.Root) : null
+    },
     [isAuthorized],
   )
   const authProtectedGuard = useCallback(
@@ -33,6 +37,8 @@ export const AppRoutes = () => {
       // them to sign in with a `from` parameter that allows login to redirect back
       // to this page upon successful authentication
       if (!isAuthorized) {
+        logOut()
+
         const params = new URLSearchParams()
         params.set('from', new URL(request.url).pathname)
         return redirect(`${RoutePaths.SignIn}?${params.toString()}`)
@@ -40,7 +46,7 @@ export const AppRoutes = () => {
 
       return null
     },
-    [isAuthorized],
+    [isAuthorized, logOut],
   )
 
   const router = createBrowserRouter([
