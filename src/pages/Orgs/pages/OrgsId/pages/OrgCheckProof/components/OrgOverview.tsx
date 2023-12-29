@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Divider, Stack, Typography } from '@mui/material'
 
 import { UiIcon } from '@/ui'
 
@@ -33,11 +33,18 @@ export default function OrgOverview() {
         www.rarimo.com
       </Typography>
 
-      <Stack display={'grid'} gridTemplateColumns={'1fr 1fr'} gap={6} textAlign={'center'} mt={6}>
+      <Stack
+        mt={6}
+        display={'grid'}
+        gridTemplateColumns={'1fr 1px 1fr'}
+        gap={6}
+        textAlign={'center'}
+      >
         <Box>
           <Typography variant={'h6'}>24</Typography>
           <Typography variant={'body2'}>Associated people</Typography>
         </Box>
+        <Divider orientation={'vertical'} flexItem />
         <Box>
           <Typography variant={'h6'}>76</Typography>
           <Typography variant={'body2'}>Credentials</Typography>
