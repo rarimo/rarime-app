@@ -22,9 +22,8 @@ export default function SignIn() {
       await login()
     } catch (error) {
       ErrorHandler.process(error)
+      setIsPending(false)
     }
-
-    setIsPending(false)
   }, [login])
 
   const installMMLink = useMemo(() => {

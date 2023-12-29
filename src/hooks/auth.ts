@@ -15,7 +15,7 @@ subscribe(web3Store, () => {
 export const useAuth = () => {
   const { jwt } = useAuthState()
   const { init, provider } = useWeb3Context()
-  const { isSnapInstalled, connectOrInstallSnap, checkSnapStatus, createIdentity } =
+  const { userDid, isSnapInstalled, connectOrInstallSnap, checkSnapStatus, createIdentity } =
     useMetamaskZkpSnapContext()
 
   const isJwtValid = useMemo(() => {
@@ -27,54 +27,61 @@ export const useAuth = () => {
     [isJwtValid, isSnapInstalled, provider?.isConnected],
   )
 
-  const checkJwtValid = useCallback(() => {
-    // TODO: add jwt expiration check
-    return true
-  }, [])
+  const checkJwtValid = useCallback(
+    (did?: string) => {
+      const currentDid = did || userDid
 
-  const logOut = useCallback(async () => {
+      // TODO: add jwt expiration and did check
+      return !!currentDid
+    },
+    [userDid],
+  )
+
+  const logout = useCallback(async () => {
     await provider?.disconnect()
     await checkSnapStatus()
     authStore.setJwt(jwt)
   }, [checkSnapStatus, jwt, provider])
 
+  const connectProviders = useCallback(async () => {
+    await init(PROVIDERS.Metamask)
+    const connector = await connectOrInstallSnap()
+
+    await checkSnapStatus()
+
+    return createIdentity(connector)
+  }, [checkSnapStatus, connectOrInstallSnap, createIdentity, init])
+
   const authorize = useCallback(
     async (_jwt?: string) => {
       const currentJwt = _jwt || jwt
 
-      if (!currentJwt) await logOut()
+      if (!currentJwt) await logout()
 
-      // TODO: get did's from this method for jwt checking method
-      await createIdentity()
+      const { identityIdString } = await connectProviders()
 
-      const isJwtValid = checkJwtValid()
+      const isJwtValid = checkJwtValid(identityIdString)
 
-      if (isJwtValid) {
-        authStore.setJwt(currentJwt)
-        return
+      if (!isJwtValid) {
+        logout()
       }
-
-      logOut()
     },
-    [jwt, logOut, createIdentity, checkJwtValid],
+    [jwt, logout, connectProviders, checkJwtValid],
   )
 
   const login = useCallback(async () => {
-    await init(PROVIDERS.Metamask)
-    await connectOrInstallSnap()
-
-    await checkSnapStatus()
+    const { identityIdString } = await connectProviders()
 
     // TODO: generateProof and /login
-    const jwt = 'mockJwt'
+    const jwt = identityIdString
 
-    await authorize(jwt)
-  }, [authorize, checkSnapStatus, connectOrInstallSnap, init])
+    authStore.setJwt(jwt)
+  }, [connectProviders])
 
   return {
     isAuthorized,
     login,
     authorize,
-    logOut,
+    logout,
   }
 }
