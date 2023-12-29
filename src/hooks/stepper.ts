@@ -4,7 +4,7 @@ interface StepperActions {
   nextStep: () => void
   prevStep: () => void
   setStep: (step: number) => void
-  resetStepper: () => void
+  reset: () => void
 }
 
 export const useStepper = (
@@ -45,7 +45,7 @@ export const useStepper = (
     [setActiveStep],
   )
 
-  const resetStepper = useCallback(() => {
+  const reset = useCallback(() => {
     setActiveStep(0)
   }, [setActiveStep])
 
@@ -54,9 +54,9 @@ export const useStepper = (
       nextStep,
       prevStep,
       setStep,
-      resetStepper,
+      reset,
     })
-  }, [prevStep, nextStep, resetStepper, setStep, stepsInitiator])
+  }, [prevStep, nextStep, reset, setStep, stepsInitiator])
 
   const activeComponent = useMemo(() => {
     return steps[activeStep].content
@@ -73,6 +73,6 @@ export const useStepper = (
     nextStep,
     prevStep,
     setStep,
-    resetStepper,
+    reset,
   }
 }
