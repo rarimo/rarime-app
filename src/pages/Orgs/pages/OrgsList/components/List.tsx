@@ -11,9 +11,7 @@ interface Props extends StackProps {
 export default function List({ filter, ...rest }: Props) {
   // TODO: add pagination
   const loadList = useCallback(async () => {
-    const { data } = await loadOrgs({ filter })
-
-    return data
+    return loadOrgs({ filter })
   }, [filter])
 
   const {

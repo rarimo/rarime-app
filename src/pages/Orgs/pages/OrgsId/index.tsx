@@ -1,10 +1,11 @@
 import { RoutePaths } from '@/enums'
 import { useNestedRoutes } from '@/hooks'
+import { OrgDetailsContextProvider } from '@/pages/Orgs/pages/OrgsId/contexts'
 
 import { OrgCheckProof, OrgRoot } from './pages'
 
 export default function OrgsId() {
-  return useNestedRoutes(RoutePaths.OrgsId, [
+  const nestedRoutes = useNestedRoutes(RoutePaths.OrgsId, [
     {
       index: true,
       element: <OrgRoot />,
@@ -14,4 +15,6 @@ export default function OrgsId() {
       element: <OrgCheckProof />,
     },
   ])
+
+  return <OrgDetailsContextProvider>{nestedRoutes}</OrgDetailsContextProvider>
 }
