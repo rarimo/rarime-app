@@ -8,23 +8,23 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import { Routes } from '@/enums'
+import { RoutePaths } from '@/enums'
 import { useAuth } from '@/hooks'
-import Profiles from '@/pages/Profiles'
-import UiKit from '@/pages/UiKit'
 
+import { createDeepPath } from './helpers'
 import AuthLayout from './layouts/AuthLayout'
 import MainLayout from './layouts/MainLayout'
 
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
   const Orgs = lazy(() => import('@/pages/Orgs'))
-  const OrgNew = lazy(() => import('@/pages/OrgNew'))
+  const Profiles = lazy(() => import('@/pages/Profiles'))
+  const UiKit = lazy(() => import('@/pages/UiKit'))
 
   const { isAuthorized } = useAuth()
 
   const signInGuard = useCallback(
-    () => (isAuthorized ? redirect(Routes.Root) : null),
+    () => (isAuthorized ? redirect(RoutePaths.Root) : null),
     [isAuthorized],
   )
   const authProtectedGuard = useCallback(
@@ -35,7 +35,7 @@ export const AppRoutes = () => {
       if (!isAuthorized) {
         const params = new URLSearchParams()
         params.set('from', new URL(request.url).pathname)
-        return redirect(`${Routes.SignIn}?${params.toString()}`)
+        return redirect(`${RoutePaths.SignIn}?${params.toString()}`)
       }
 
       return null
@@ -45,7 +45,7 @@ export const AppRoutes = () => {
 
   const router = createBrowserRouter([
     {
-      path: Routes.Root,
+      path: RoutePaths.Root,
       element: (
         <Suspense fallback={<></>}>
           <Outlet />
@@ -56,19 +56,14 @@ export const AppRoutes = () => {
           element: <MainLayout />,
           children: [
             {
-              path: Routes.Profiles,
+              path: createDeepPath(RoutePaths.Profiles),
               loader: authProtectedGuard,
               element: <Profiles />,
             },
             {
-              path: Routes.Orgs,
+              path: createDeepPath(RoutePaths.Orgs),
               loader: authProtectedGuard,
               element: <Orgs />,
-            },
-            {
-              path: Routes.OrgNew,
-              loader: authProtectedGuard,
-              element: <OrgNew />,
             },
           ],
         },
@@ -76,23 +71,24 @@ export const AppRoutes = () => {
           element: <AuthLayout />,
           children: [
             {
-              path: Routes.SignIn,
+              index: true,
+              path: createDeepPath(RoutePaths.SignIn),
               loader: signInGuard,
               element: <SignIn />,
             },
             {
-              path: Routes.UiKit,
+              path: createDeepPath(RoutePaths.UiKit),
               element: <UiKit />,
             },
           ],
         },
         {
-          path: Routes.Root,
-          element: <Navigate replace to={Routes.Profiles} />,
+          path: RoutePaths.Root,
+          element: <Navigate replace to={RoutePaths.Profiles} />,
         },
         {
           path: '*',
-          element: <Navigate replace to={Routes.Root} />,
+          element: <Navigate replace to={RoutePaths.Root} />,
         },
       ],
     },
