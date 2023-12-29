@@ -1,6 +1,7 @@
 import type { OrgsIncludes, OrgsRequestFilters, OrgsStatuses } from '@/api'
 
 export type OrgMetadata = {
+  logoUrl: string
   name: string
   description: string
 }
@@ -37,7 +38,6 @@ export type Organization = {
 }
 
 export type OrganizationCreate = {
-  id: string
   ownerDid: string
   domain: string
   metadata: OrgMetadata
