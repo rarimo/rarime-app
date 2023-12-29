@@ -1,14 +1,22 @@
 import { Stack } from '@mui/material'
-import { useParams } from 'react-router-dom'
 
-import { PageTitles } from '@/common'
+import { CheckProofHead, OrgOverview, ProofForm } from './components'
 
 export default function OrgCheckProof() {
-  const { id } = useParams<{ id: string }>()
-
   return (
-    <Stack flex={1}>
-      <PageTitles title={`OrgCheckProof ${id}`} subtitle='Some organization description' />
+    <Stack>
+      <CheckProofHead />
+      <Stack
+        justifyContent={'center'}
+        spacing={8}
+        maxWidth={500}
+        width={'100%'}
+        my={16}
+        mx={'auto'}
+      >
+        <OrgOverview />
+        <ProofForm />
+      </Stack>
     </Stack>
   )
 }

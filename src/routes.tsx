@@ -71,7 +71,6 @@ export const AppRoutes = () => {
             },
             {
               path: createDeepPath(RoutePaths.Orgs),
-              loader: authProtectedGuard,
               element: <Orgs />,
             },
           ],
