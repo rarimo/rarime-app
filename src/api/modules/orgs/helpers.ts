@@ -7,24 +7,25 @@ import {
   type OrgUser,
   type OrgVerificationCode,
 } from '@/api'
+import { sleep } from '@/helpers'
 
 export const DUMMY_ORG: Organization = {
   id: '3a798290-caf1-496a-a7e5-4db32551b13d',
   type: 'organizations',
   did: 'did:iden3:readonly:tUDjWxnVJNi7t3FudukqrUcNwF5KVGoWgim5pp2jV',
-  domain: 'https://organization-domain.com',
+  domain: 'www.rarimo.com',
   metadata: {
-    logoUrl: 'https://organization-domain.com/logo.png',
-    name: 'Organization Name',
-    description: 'Organization Description',
+    logoUrl: 'https://rarimo.com/favicon/favicon-dark.png',
+    name: 'Rarimo',
+    description: 'Organization description',
   },
   status: {
-    name: 'unverified',
-    value: OrgsStatuses.Unverified,
+    name: 'verified',
+    value: OrgsStatuses.Verified,
   },
   verification_code: '6A4GSfUNKwM9hHuZVg4aUw==',
-  issued_claims_count: '0',
-  members_count: '1',
+  issued_claims_count: '12',
+  members_count: '52',
   created_at: '2021-08-12T12:00:00Z',
   updated_at: '2021-08-12T13:00:00Z',
   owner: {
@@ -60,6 +61,8 @@ export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => 
   // return api.get<Organization>(`/v1/orgs/${id}`, {
   //   query,
   // })
+  // TODO: remove after BE is ready
+  await sleep(1000)
   return DUMMY_ORG
 }
 

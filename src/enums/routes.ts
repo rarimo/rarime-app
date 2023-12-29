@@ -11,4 +11,6 @@ export enum RoutePaths {
   OrgsNew = '/organisations/new',
   OrgsId = '/organisations/:id',
   OrgsIdCheckProof = '/organisations/:id/check-proof',
+
+  VerifyProofAlias = '/v/:id',
 }

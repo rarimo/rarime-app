@@ -13,13 +13,16 @@ export const OrgDetailsContext = createContext<OrgDetailsContextValue>({} as Org
 export const OrgDetailsContextProvider = ({ children }: { children: ReactNode }) => {
   const { id = null } = useParams<{ id: string }>()
 
-  const { org, isAccountOwner, isLoadingError, isEmpty } = useOrg(id ?? '')
+  const { org, isAccountOwner, isLoading, isLoadingError, isEmpty } = useOrg(id ?? '')
 
-  // TODO: add error message
-  if (isLoadingError) return <></>
+  // TODO: add proper loader
+  if (isLoading) return 'Loading...'
+
+  // TODO: add proper error message
+  if (isLoadingError) return 'Loading error'
 
   // TODO: add no data message
-  if (isEmpty || !org) return <></>
+  if (isEmpty || !org) return 'No data'
 
   return (
     <OrgDetailsContext.Provider value={{ org, isAccountOwner }}>
