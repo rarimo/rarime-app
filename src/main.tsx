@@ -7,7 +7,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { MetamaskZkpSnapContextProvider, Web3ProviderContextProvider } from '@/contexts'
-import { AppRoutes } from '@/routes'
+
+import App from './App'
 
 const root = createRoot(document.getElementById('root') as Element)
 
@@ -15,7 +16,7 @@ root.render(
   <StrictMode>
     <Web3ProviderContextProvider>
       <MetamaskZkpSnapContextProvider>
-        <AppRoutes />
+        <App />
       </MetamaskZkpSnapContextProvider>
     </Web3ProviderContextProvider>
   </StrictMode>,

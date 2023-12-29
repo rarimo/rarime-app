@@ -10,7 +10,10 @@ import {
   useWeb3Context,
 } from '@/hooks'
 
-const App: FC<HTMLAttributes<HTMLDivElement>> = ({ children }) => {
+import { ToastsManager } from './contexts'
+import { AppRoutes } from './routes'
+
+const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
   const [isAppInitialized, setIsAppInitialized] = useState(false)
 
   const { provider, isValidChain, init: initWeb3 } = useWeb3Context()
@@ -57,15 +60,17 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className='App' key={provider?.isConnected ? Number(isValidChain) : 'app_main'}>
-        {isAppInitialized ? (
-          children
-        ) : (
-          <Stack alignItems='center' justifyContent='center' flex={1}>
-            <CircularProgress />
-          </Stack>
-        )}
-      </div>
+      <ToastsManager>
+        <div className='App' key={provider?.isConnected ? Number(isValidChain) : 'app_main'}>
+          {isAppInitialized ? (
+            <AppRoutes />
+          ) : (
+            <Stack alignItems='center' justifyContent='center' flex={1}>
+              <CircularProgress />
+            </Stack>
+          )}
+        </div>
+      </ToastsManager>
     </ThemeProvider>
   )
 }

@@ -8,8 +8,6 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import App from '@/App'
-import { ToastsManager } from '@/contexts'
 import { Routes } from '@/enums'
 import { useAuth } from '@/hooks'
 import Profiles from '@/pages/Profiles'
@@ -50,11 +48,7 @@ export const AppRoutes = () => {
       path: Routes.Root,
       element: (
         <Suspense fallback={<></>}>
-          <ToastsManager>
-            <App>
-              <Outlet />
-            </App>
-          </ToastsManager>
+          <Outlet />
         </Suspense>
       ),
       children: [
@@ -62,7 +56,6 @@ export const AppRoutes = () => {
           element: <MainLayout />,
           children: [
             {
-              index: true,
               path: Routes.Profiles,
               loader: authProtectedGuard,
               element: <Profiles />,
@@ -83,7 +76,6 @@ export const AppRoutes = () => {
           element: <AuthLayout />,
           children: [
             {
-              index: true,
               path: Routes.SignIn,
               loader: signInGuard,
               element: <SignIn />,
