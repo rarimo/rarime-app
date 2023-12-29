@@ -48,9 +48,7 @@ export default function OrgsList() {
   ])
 
   const init = useCallback(async () => {
-    const { data } = await loadOrgsAmount()
-
-    return data
+    return loadOrgsAmount()
   }, [])
 
   const { data: orgsAmount } = useLoading<number | undefined>(undefined, init, {

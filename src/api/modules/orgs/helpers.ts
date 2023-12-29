@@ -42,19 +42,25 @@ export const DUMMY_ORG: Organization = {
 }
 
 export const loadOrgs = async (query: OrgsRequestQueryParams) => {
-  return api.get<Organization[]>('/v1/orgs', {
+  const { data } = await api.get<Organization[]>('/v1/orgs', {
     query,
   })
+
+  return data
 }
 
 export const loadOrgsAmount = async () => {
-  return api.get<number>('/v1/orgs/amount')
+  const { data } = await api.get<number>('/v1/orgs/amount')
+
+  return data
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => {
-  return api.get<Organization>(`/v1/orgs/${id}`, {
-    query,
-  })
+  // return api.get<Organization>(`/v1/orgs/${id}`, {
+  //   query,
+  // })
+  return DUMMY_ORG
 }
 
 export const createOrg = async (body: OrganizationCreate) => {
@@ -78,15 +84,21 @@ export const createOrg = async (body: OrganizationCreate) => {
 }
 
 export const verifyOrg = async (id: string) => {
-  return api.post<Organization>(`/v1/orgs/${id}`)
+  const { data } = await api.post<Organization>(`/v1/orgs/${id}`)
+
+  return data
 }
 
 export const loadOrgUsers = async (id: string, query: OrgsRequestQueryParams) => {
-  return api.get<OrgUser[]>(`/v1/orgs/${id}/users`, {
+  const { data } = await api.get<OrgUser[]>(`/v1/orgs/${id}/users`, {
     query,
   })
+
+  return data
 }
 
 export const getOrgVerificationCode = async (id: string) => {
-  return api.get<OrgVerificationCode>(`/v1/orgs/${id}/verification-code`)
+  const { data } = await api.get<OrgVerificationCode>(`/v1/orgs/${id}/verification-code`)
+
+  return data
 }
