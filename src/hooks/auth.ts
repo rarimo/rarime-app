@@ -15,7 +15,8 @@ subscribe(web3Store, () => {
 export const useAuth = () => {
   const { jwt } = useAuthState()
   const { init, provider } = useWeb3Context()
-  const { isSnapInstalled, connectOrInstallSnap, checkSnapStatus } = useMetamaskZkpSnapContext()
+  const { isSnapInstalled, connectOrInstallSnap, checkSnapStatus, createIdentity } =
+    useMetamaskZkpSnapContext()
 
   const isJwtValid = useMemo(() => {
     return !!jwt
@@ -43,6 +44,9 @@ export const useAuth = () => {
 
       if (!currentJwt) await logOut()
 
+      // TODO: get did's from this method for jwt checking method
+      await createIdentity()
+
       const isJwtValid = checkJwtValid()
 
       if (isJwtValid) {
@@ -52,7 +56,7 @@ export const useAuth = () => {
 
       logOut()
     },
-    [jwt, logOut, checkJwtValid],
+    [jwt, logOut, createIdentity, checkJwtValid],
   )
 
   const login = useCallback(async () => {
