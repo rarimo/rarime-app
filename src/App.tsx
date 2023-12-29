@@ -16,9 +16,9 @@ import { AppRoutes } from './routes'
 const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
   const [isAppInitialized, setIsAppInitialized] = useState(false)
 
-  const { provider, isValidChain, init: initWeb3 } = useWeb3Context()
+  const { provider, isValidChain } = useWeb3Context()
   const { theme } = useThemeMode()
-  const { checkMetamaskExists, checkSnapExists, connectOrInstallSnap } = useMetamaskZkpSnapContext()
+  const { checkSnapStatus } = useMetamaskZkpSnapContext()
   const { authorize } = useAuth()
 
   useViewportSizes()
@@ -27,30 +27,17 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
     if (provider?.address) return
 
     try {
-      if (await checkMetamaskExists()) {
-        /**
-         * We don't pass providerType here,
-         * because only want to check is user was connected before
-         */
-        await initWeb3()
-        if (await checkSnapExists()) {
-          await connectOrInstallSnap()
-          await authorize()
-        }
+      const { isMetamaskInstalled, isSnapInstalled } = await checkSnapStatus()
+
+      if (isMetamaskInstalled && isSnapInstalled) {
+        await authorize()
       }
     } catch (error) {
       ErrorHandler.processWithoutFeedback(error)
     }
 
     setIsAppInitialized(true)
-  }, [
-    provider?.address,
-    checkMetamaskExists,
-    initWeb3,
-    checkSnapExists,
-    connectOrInstallSnap,
-    authorize,
-  ])
+  }, [provider?.address, checkSnapStatus, authorize])
 
   useEffect(() => {
     init()
