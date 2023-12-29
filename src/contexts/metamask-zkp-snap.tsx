@@ -97,9 +97,12 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
    */
   const createIdentity = useCallback(async () => {
     if (!connector) throw new TypeError('Connector is not defined')
+
     const identity = await connector.createIdentity()
+
     setUserDid(identity.identityIdString)
     setUserDidBigIntString(identity.identityIdBigIntString)
+
     return identity
   }, [connector])
 
