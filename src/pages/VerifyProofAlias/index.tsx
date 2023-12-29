@@ -1,5 +1,5 @@
 import { CircularProgress, Stack } from '@mui/material'
-import { generatePath, useNavigate, useParams } from 'react-router-dom'
+import { generatePath, useNavigate } from 'react-router-dom'
 import { useEffectOnce } from 'react-use'
 
 import { RoutePaths } from '@/enums'
@@ -7,15 +7,19 @@ import { sleep } from '@/helpers'
 
 export default function VerifyProofAlias() {
   const navigate = useNavigate()
-  const { id = '' } = useParams<{ id: string }>()
+  // TODO: use link ID from URL
+  // const { id = '' } = useParams<{ id: string }>()
 
   const redirectToCheckProof = async () => {
     // TODO: get proof info
     await sleep(500)
+    const orgId = 'test-org-id'
+    const proofId = 'test-proof-id'
 
     const searchParams = new URLSearchParams()
-    searchParams.append('proof', 'proof')
-    const path = generatePath(RoutePaths.OrgsIdCheckProof, { id })
+    searchParams.append('proof', proofId)
+
+    const path = generatePath(RoutePaths.OrgsIdCheckProof, { id: orgId })
     navigate(`${path}?${searchParams.toString()}`)
   }
 
