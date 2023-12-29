@@ -27,7 +27,7 @@ export const useAuth = () => {
   )
 
   const checkJwtValid = useCallback(() => {
-    //Todo: add real logic
+    // TODO: add jwt expiration check
     return true
   }, [])
 
@@ -51,15 +51,12 @@ export const useAuth = () => {
       }
 
       logOut()
-
-      // TODO: Replace with real auth check
     },
     [jwt, logOut, checkJwtValid],
   )
 
   const login = useCallback(async () => {
     await init(PROVIDERS.Metamask)
-    // FIXME: if use disconnect snap, and then click login - nothing will happen
     await connectOrInstallSnap()
 
     await checkSnapStatus()
