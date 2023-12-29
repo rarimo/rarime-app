@@ -1,10 +1,10 @@
 import { type ReactNode, useCallback, useMemo, useState } from 'react'
 
 interface StepperActions {
-  next: () => void
-  back: () => void
-  set: (step: number) => void
-  reset: () => void
+  nextStep: () => void
+  prevStep: () => void
+  setStep: (step: number) => void
+  resetStepper: () => void
 }
 
 export const useStepper = (
@@ -18,45 +18,45 @@ export const useStepper = (
 
   const [activeStep, setActiveStep] = useState(initialStep ?? 0)
 
-  const isFirst = useMemo(() => {
+  const isFirstStep = useMemo(() => {
     return activeStep === 0
   }, [activeStep])
 
-  const isLast = useMemo(() => {
+  const isLastStep = useMemo(() => {
     return activeStep === _rawSteps.length - 1
   }, [_rawSteps.length, activeStep])
 
-  const next = useCallback(() => {
-    if (isLast) return
+  const nextStep = useCallback(() => {
+    if (isLastStep) return
 
     setActiveStep(prev => prev + 1)
-  }, [isLast, setActiveStep])
+  }, [isLastStep, setActiveStep])
 
-  const back = useCallback(() => {
-    if (isFirst) return
+  const prevStep = useCallback(() => {
+    if (isFirstStep) return
 
     setActiveStep(prev => prev - 1)
-  }, [isFirst, setActiveStep])
+  }, [isFirstStep, setActiveStep])
 
-  const set = useCallback(
+  const setStep = useCallback(
     (step: number) => {
       setActiveStep(step)
     },
     [setActiveStep],
   )
 
-  const reset = useCallback(() => {
+  const resetStepper = useCallback(() => {
     setActiveStep(0)
   }, [setActiveStep])
 
   const steps = useMemo(() => {
     return stepsInitiator({
-      next,
-      back,
-      set,
-      reset,
+      nextStep,
+      prevStep,
+      setStep,
+      resetStepper,
     })
-  }, [back, next, reset, set, stepsInitiator])
+  }, [prevStep, nextStep, resetStepper, setStep, stepsInitiator])
 
   const activeComponent = useMemo(() => {
     return steps[activeStep].content
@@ -67,12 +67,12 @@ export const useStepper = (
 
     activeStep,
     activeComponent,
-    isFirst,
-    isLast,
+    isFirstStep,
+    isLastStep,
 
-    next,
-    back,
-    set,
-    reset,
+    nextStep,
+    prevStep,
+    setStep,
+    resetStepper,
   }
 }

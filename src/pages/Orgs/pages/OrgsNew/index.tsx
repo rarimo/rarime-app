@@ -11,13 +11,13 @@ import { UiStepper } from '@/ui'
 import { MetadataForm, VerifyForm } from './components'
 
 export default function OrgsNew() {
-  const [draftedOrg, setDraftedOrg] = useState<Organization>()
+  const [draftOrg, setDraftOrg] = useState<Organization>()
 
   const navigate = useNavigate()
 
   const handleOrgCreated = useCallback(async (org: Organization, cb: () => void) => {
     try {
-      setDraftedOrg(org)
+      setDraftOrg(org)
 
       cb()
     } catch (error) {
@@ -26,20 +26,20 @@ export default function OrgsNew() {
   }, [])
 
   const { steps, activeStep, activeComponent } = useStepper(
-    ({ next }) => [
+    ({ nextStep }) => [
       {
         label: 'Details',
-        content: <MetadataForm onOrgCreated={org => handleOrgCreated(org, next)} />,
+        content: <MetadataForm onOrgCreated={org => handleOrgCreated(org, nextStep)} />,
       },
       {
         label: 'Verify',
-        content: draftedOrg ? (
+        content: draftOrg ? (
           <VerifyForm
-            org={draftedOrg}
+            org={draftOrg}
             onSubmit={() =>
               navigate(
                 generatePath(RoutePaths.OrgsId, {
-                  id: draftedOrg.id,
+                  id: draftOrg.id,
                 }),
               )
             }
@@ -49,7 +49,7 @@ export default function OrgsNew() {
         ),
       },
     ],
-    draftedOrg ? 1 : 0,
+    draftOrg ? 1 : 0,
   )
 
   return (

@@ -67,6 +67,10 @@ const UiImageUploader = forwardRef<HTMLInputElement, Props>(
             opacity: 0,
           }}
           type='file'
+          inputProps={{
+            accept: 'image/*',
+            multiple: false,
+          }}
         />
       </Stack>
     )
