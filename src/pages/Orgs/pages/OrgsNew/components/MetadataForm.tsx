@@ -13,18 +13,18 @@ interface Props extends StackProps {
   onOrgCreated?: (org: Organization) => Promise<void>
 }
 
-enum FormNames {
-  Logo = 'LogoUrl',
+enum FieldNames {
+  Logo = 'logo',
   Name = 'name',
   Description = 'description',
   Domain = 'domain',
 }
 
 const DEFAULT_VALUES = {
-  [FormNames.Logo]: null as File | null,
-  [FormNames.Name]: '',
-  [FormNames.Description]: '',
-  [FormNames.Domain]: '',
+  [FieldNames.Logo]: null as File | null,
+  [FieldNames.Name]: '',
+  [FieldNames.Description]: '',
+  [FieldNames.Domain]: '',
 }
 
 export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props) {
@@ -33,31 +33,31 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
       yup.object().shape({
-        [FormNames.Logo]: yup.mixed().required(),
-        [FormNames.Name]: yup.string().required(),
-        [FormNames.Description]: yup.string().required(),
-        [FormNames.Domain]: yup.string().url().required(),
+        [FieldNames.Logo]: yup.mixed().required(),
+        [FieldNames.Name]: yup.string().required(),
+        [FieldNames.Description]: yup.string().required(),
+        [FieldNames.Domain]: yup.string().url().required(),
       }),
     )
 
   const submit = useCallback(
     async (formData: typeof DEFAULT_VALUES) => {
-      if (!formData[FormNames.Logo]) return
+      if (!formData[FieldNames.Logo]) return
 
       disableForm()
 
       try {
         // FIXME: load to s3 and get url
-        const logoUrl = URL.createObjectURL(formData[FormNames.Logo])
+        const logoUrl = URL.createObjectURL(formData[FieldNames.Logo])
 
         await onOrgCreated?.(
           await createOrg({
             ownerDid: userDid,
-            domain: formData[FormNames.Domain],
+            domain: formData[FieldNames.Domain],
             metadata: {
               logoUrl,
-              name: formData[FormNames.Name],
-              description: formData[FormNames.Description],
+              name: formData[FieldNames.Name],
+              description: formData[FieldNames.Description],
             },
           }),
         )
@@ -74,14 +74,14 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
     <Stack {...rest}>
       <form {...formProps} onSubmit={handleSubmit(submit)}>
         <Controller
-          name={FormNames.Logo}
+          name={FieldNames.Logo}
           control={control}
           render={({ field }) => (
             <FormControl>
               <UiImageUploader
                 {...field}
-                label={FormNames.Logo}
-                // errorMessage={getErrorMessage(FormNames.Logo)}
+                label={FieldNames.Logo}
+                // errorMessage={getErrorMessage(FieldNames.Logo)}
                 disabled={isFormDisabled}
               />
             </FormControl>
@@ -89,14 +89,14 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
         />
 
         <Controller
-          name={FormNames.Name}
+          name={FieldNames.Name}
           control={control}
           render={({ field }) => (
             <FormControl>
               <UiTextField
                 {...field}
-                label={FormNames.Name}
-                errorMessage={getErrorMessage(FormNames.Name)}
+                label={FieldNames.Name}
+                errorMessage={getErrorMessage(FieldNames.Name)}
                 disabled={isFormDisabled}
               />
             </FormControl>
@@ -104,14 +104,14 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
         />
 
         <Controller
-          name={FormNames.Description}
+          name={FieldNames.Description}
           control={control}
           render={({ field }) => (
             <FormControl>
               <UiTextField
                 {...field}
-                label={FormNames.Description}
-                errorMessage={getErrorMessage(FormNames.Description)}
+                label={FieldNames.Description}
+                errorMessage={getErrorMessage(FieldNames.Description)}
                 disabled={isFormDisabled}
               />
             </FormControl>
@@ -119,14 +119,14 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
         />
 
         <Controller
-          name={FormNames.Domain}
+          name={FieldNames.Domain}
           control={control}
           render={({ field }) => (
             <FormControl>
               <UiTextField
                 {...field}
-                label={FormNames.Domain}
-                errorMessage={getErrorMessage(FormNames.Domain)}
+                label={FieldNames.Domain}
+                errorMessage={getErrorMessage(FieldNames.Domain)}
                 disabled={isFormDisabled}
               />
             </FormControl>
