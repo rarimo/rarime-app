@@ -13,7 +13,7 @@ export type OrgGroupRule = {
 
 export type GroupUser = {
   id: string
-  type: 'group-users' // FIXME: mb "group-user"?
+  type: 'group-users'
   group_id: string
   user_id: string
   role: {
