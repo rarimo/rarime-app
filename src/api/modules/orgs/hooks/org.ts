@@ -12,7 +12,12 @@ export const useOrg = (id: string) => {
     })
   }, [id])
 
-  const { data: org } = useLoading(undefined, loadOrg, {
+  const {
+    data: org,
+    isLoading,
+    isLoadingError,
+    isEmpty,
+  } = useLoading(undefined, loadOrg, {
     loadOnMount: true,
     loadArgs: [id],
   })
@@ -23,6 +28,9 @@ export const useOrg = (id: string) => {
 
   return {
     org,
+    isLoading,
+    isLoadingError,
+    isEmpty,
     isAccountOwner,
   }
 }

@@ -11,11 +11,10 @@ export default function OrgRoot() {
 
   return (
     <Stack flex={1}>
-      <PageTitles title={`Organization ${org?.id}`} subtitle='Some organization description' />
+      <PageTitles title={`Organization ${org.id}`} subtitle='Some organization description' />
 
       <Box mt={6}>
-        {/*FIXME: add more safety for org `undefined` checks and lets avoid "entity" ?? '' way*/}
-        <NavLink to={generatePath(RoutePaths.OrgsIdCheckProof, { id: org?.id ?? '' })}>
+        <NavLink to={generatePath(RoutePaths.OrgsIdCheckProof, { id: org.id })}>
           <UiButton component='div'>Check proof</UiButton>
         </NavLink>
       </Box>
