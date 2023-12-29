@@ -7,6 +7,7 @@ import {
   type OrgUser,
   type OrgVerificationCode,
 } from '@/api'
+import { sleep } from '@/helpers'
 
 export const DUMMY_ORG: Organization = {
   id: '3a798290-caf1-496a-a7e5-4db32551b13d',
@@ -60,6 +61,8 @@ export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => 
   // return api.get<Organization>(`/v1/orgs/${id}`, {
   //   query,
   // })
+  // TODO: remove after BE is ready
+  await sleep(1000)
   return DUMMY_ORG
 }
 

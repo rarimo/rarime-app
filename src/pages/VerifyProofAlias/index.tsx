@@ -14,10 +14,10 @@ export default function VerifyProofAlias() {
     // TODO: get proof info
     await sleep(500)
     const orgId = 'test-org-id'
-    const proofId = 'test-proof-id'
+    const linkId = 'test-link-id'
 
     const searchParams = new URLSearchParams()
-    searchParams.append('proof', proofId)
+    searchParams.append('linkId', linkId)
 
     const path = generatePath(RoutePaths.OrgsIdCheckProof, { id: orgId })
     navigate(`${path}?${searchParams.toString()}`)
