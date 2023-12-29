@@ -9,16 +9,19 @@ import { UiButton } from '@/ui'
 interface Props extends StackProps {
   org: Organization
   formProps?: HTMLAttributes<HTMLFormElement>
+  onOrgVerified?: () => Promise<void>
 }
 
-export default function VerifyForm({ org, formProps, ...rest }: Props) {
+export default function VerifyForm({ org, formProps, onOrgVerified, ...rest }: Props) {
   const submit = useCallback(async () => {
     try {
-      formProps?.onSubmit(await verifyOrg(org.id))
+      await verifyOrg(org.id)
+
+      await onOrgVerified?.()
     } catch (error) {
       ErrorHandler.process(error)
     }
-  }, [formProps, org.id])
+  }, [onOrgVerified, org.id])
 
   const loadOrgVerificationCode = useCallback(async () => {
     const { data } = await getOrgVerificationCode(org.id)
@@ -32,7 +35,7 @@ export default function VerifyForm({ org, formProps, ...rest }: Props) {
 
   return (
     <Stack {...rest}>
-      <form onSubmit={submit}>
+      <form {...formProps} onSubmit={submit}>
         <Typography textAlign='center'>{verificationCode}</Typography>
         <Typography textAlign='center'>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium ad aliquid

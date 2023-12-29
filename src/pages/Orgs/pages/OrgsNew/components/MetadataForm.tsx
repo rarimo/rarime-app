@@ -2,13 +2,15 @@ import { FormControl, Stack, StackProps } from '@mui/material'
 import { HTMLAttributes, useCallback } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { createOrg } from '@/api'
+import { createOrg, Organization } from '@/api'
 import { ErrorHandler } from '@/helpers'
-import { useForm } from '@/hooks'
+import { useForm, useMetamaskZkpSnapContext } from '@/hooks'
 import { UiButton, UiImageUploader, UiTextField } from '@/ui'
 
 interface Props extends StackProps {
   formProps?: HTMLAttributes<HTMLFormElement>
+
+  onOrgCreated?: (org: Organization) => Promise<void>
 }
 
 enum FormNames {
@@ -25,7 +27,9 @@ const DEFAULT_VALUES = {
   [FormNames.Domain]: '',
 }
 
-export default function MetadataForm({ formProps, ...rest }: Props) {
+export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props) {
+  const { userDid } = useMetamaskZkpSnapContext()
+
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
       yup.object().shape({
@@ -46,10 +50,9 @@ export default function MetadataForm({ formProps, ...rest }: Props) {
         // FIXME: load to s3 and get url
         const logoUrl = URL.createObjectURL(formData[FormNames.Logo])
 
-        formProps?.onSubmit?.(
+        await onOrgCreated?.(
           await createOrg({
-            id: 'did:iden3:readonly:blabla',
-            ownerDid: 'did:iden3:readonly:blabla',
+            ownerDid: userDid,
             domain: formData[FormNames.Domain],
             metadata: {
               logoUrl,
@@ -64,7 +67,7 @@ export default function MetadataForm({ formProps, ...rest }: Props) {
 
       enableForm()
     },
-    [disableForm, enableForm, formProps],
+    [disableForm, enableForm, onOrgCreated, userDid],
   )
 
   return (
