@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useCallback } from 'react'
 import {
   createBrowserRouter,
   LoaderFunctionArgs,
@@ -8,12 +8,6 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-import App from '@/App'
-import {
-  MetamaskZkpSnapContextProvider,
-  ToastsManager,
-  Web3ProviderContextProvider,
-} from '@/contexts'
 import { RoutePaths } from '@/enums'
 import { useAuth } from '@/hooks'
 
@@ -27,37 +21,40 @@ export const AppRoutes = () => {
   const Profiles = lazy(() => import('@/pages/Profiles'))
   const UiKit = lazy(() => import('@/pages/UiKit'))
 
-  // TODO: Replace with real auth check
-  const { isAuthorized } = useAuth()
+  const { isAuthorized, logOut } = useAuth()
 
-  const signInGuard = () => (isAuthorized ? redirect(RoutePaths.Root) : null)
-  const authProtectedGuard = ({ request }: LoaderFunctionArgs) => {
-    // If the user is not logged in and tries to access protected route, we redirect
-    // them to sign in with a `from` parameter that allows login to redirect back
-    // to this page upon successful authentication
-    if (!isAuthorized) {
-      const params = new URLSearchParams()
-      params.set('from', new URL(request.url).pathname)
-      return redirect(`${RoutePaths.SignIn}?${params.toString()}`)
-    }
+  const signInGuard = useCallback(
+    ({ request }: LoaderFunctionArgs) => {
+      const from = new URL(request.url).searchParams.get('from')
 
-    return null
-  }
+      return isAuthorized ? redirect(from ?? RoutePaths.Root) : null
+    },
+    [isAuthorized],
+  )
+  const authProtectedGuard = useCallback(
+    ({ request }: LoaderFunctionArgs) => {
+      // If the user is not logged in and tries to access protected route, we redirect
+      // them to sign in with a `from` parameter that allows login to redirect back
+      // to this page upon successful authentication
+      if (!isAuthorized) {
+        logOut()
+
+        const params = new URLSearchParams()
+        params.set('from', new URL(request.url).pathname)
+        return redirect(`${RoutePaths.SignIn}?${params.toString()}`)
+      }
+
+      return null
+    },
+    [isAuthorized, logOut],
+  )
 
   const router = createBrowserRouter([
     {
       path: RoutePaths.Root,
       element: (
         <Suspense fallback={<></>}>
-          <ToastsManager>
-            <Web3ProviderContextProvider>
-              <MetamaskZkpSnapContextProvider>
-                <App>
-                  <Outlet />
-                </App>
-              </MetamaskZkpSnapContextProvider>
-            </Web3ProviderContextProvider>
-          </ToastsManager>
+          <Outlet />
         </Suspense>
       ),
       children: [
