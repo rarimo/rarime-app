@@ -1,72 +1,76 @@
 import { PROVIDERS } from '@distributedlab/w3p'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
+import { subscribe } from 'valtio'
 
 import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
 import { useWeb3Context } from '@/hooks/web3'
-import { authStore, useAuthState } from '@/store'
+import { authStore, useAuthState, web3Store } from '@/store'
+
+subscribe(web3Store, () => {
+  if (web3Store.providerType) return
+
+  authStore.setJwt('')
+})
 
 export const useAuth = () => {
-  const { jwt: storeJwt } = useAuthState()
+  const { jwt } = useAuthState()
   const { init, provider } = useWeb3Context()
-  const { connectOrInstallSnap, isSnapInstalled } = useMetamaskZkpSnapContext()
-  const [isJwtValid, setIsJwtValid] = useState(false)
+  const { isSnapInstalled, connectOrInstallSnap, checkSnapStatus } = useMetamaskZkpSnapContext()
+
+  const isJwtValid = useMemo(() => {
+    return !!jwt
+  }, [jwt])
 
   const isAuthorized = useMemo(
-    () => provider?.isConnected && isSnapInstalled && isJwtValid,
+    () => (provider?.isConnected && isSnapInstalled && isJwtValid) || false,
     [isJwtValid, isSnapInstalled, provider?.isConnected],
   )
 
-  const _setJwt = useCallback((jwt: string) => {
-    authStore.setJwt(jwt)
-  }, [])
-
-  const checkJwtValid = useCallback(async () => {
-    //Todo: add real logic
+  const checkJwtValid = useCallback(() => {
+    // TODO: add jwt expiration check
     return true
   }, [])
 
   const logOut = useCallback(async () => {
     await provider?.disconnect()
-    _setJwt('')
-    setIsJwtValid(false)
-  }, [_setJwt, provider])
+    await checkSnapStatus()
+    authStore.setJwt(jwt)
+  }, [checkSnapStatus, jwt, provider])
 
   const authorize = useCallback(
-    async (jwt?: string) => {
-      const currentJwt = jwt || storeJwt
+    async (_jwt?: string) => {
+      const currentJwt = _jwt || jwt
 
       if (!currentJwt) await logOut()
 
-      const isJwtValid = await checkJwtValid()
+      const isJwtValid = checkJwtValid()
 
       if (isJwtValid) {
-        setIsJwtValid(true)
-        _setJwt(currentJwt)
+        authStore.setJwt(currentJwt)
         return
       }
 
       logOut()
-
-      // TODO: Replace with real auth check
     },
-    [_setJwt, checkJwtValid, storeJwt, logOut],
+    [jwt, logOut, checkJwtValid],
   )
 
   const login = useCallback(async () => {
     await init(PROVIDERS.Metamask)
     await connectOrInstallSnap()
+
+    await checkSnapStatus()
+
     // TODO: generateProof and /login
     const jwt = 'mockJwt'
 
     await authorize(jwt)
-  }, [authorize, connectOrInstallSnap, init])
+  }, [authorize, checkSnapStatus, connectOrInstallSnap, init])
 
   return {
     isAuthorized,
-    storeJwt,
     login,
     authorize,
     logOut,
-    checkJwtValid,
   }
 }
