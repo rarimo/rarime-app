@@ -14,22 +14,23 @@ import {
   ToastsManager,
   Web3ProviderContextProvider,
 } from '@/contexts'
-import { Routes } from '@/enums'
-import Profiles from '@/pages/Profiles'
-import UiKit from '@/pages/UiKit'
+import { RoutePaths } from '@/enums'
+import { useAuth } from '@/hooks'
 
+import { createDeepPath } from './helpers'
 import AuthLayout from './layouts/AuthLayout'
 import MainLayout from './layouts/MainLayout'
 
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
   const Orgs = lazy(() => import('@/pages/Orgs'))
-  const OrgNew = lazy(() => import('@/pages/OrgNew'))
+  const Profiles = lazy(() => import('@/pages/Profiles'))
+  const UiKit = lazy(() => import('@/pages/UiKit'))
 
   // TODO: Replace with real auth check
-  const isAuthorized = true
+  const { isAuthorized } = useAuth()
 
-  const signInGuard = () => (isAuthorized ? redirect(Routes.Root) : null)
+  const signInGuard = () => (isAuthorized ? redirect(RoutePaths.Root) : null)
   const authProtectedGuard = ({ request }: LoaderFunctionArgs) => {
     // If the user is not logged in and tries to access protected route, we redirect
     // them to sign in with a `from` parameter that allows login to redirect back
@@ -37,7 +38,7 @@ export const AppRoutes = () => {
     if (!isAuthorized) {
       const params = new URLSearchParams()
       params.set('from', new URL(request.url).pathname)
-      return redirect(`${Routes.SignIn}?${params.toString()}`)
+      return redirect(`${RoutePaths.SignIn}?${params.toString()}`)
     }
 
     return null
@@ -45,7 +46,7 @@ export const AppRoutes = () => {
 
   const router = createBrowserRouter([
     {
-      path: Routes.Root,
+      path: RoutePaths.Root,
       element: (
         <Suspense fallback={<></>}>
           <ToastsManager>
@@ -64,20 +65,14 @@ export const AppRoutes = () => {
           element: <MainLayout />,
           children: [
             {
-              index: true,
-              path: Routes.Profiles,
+              path: createDeepPath(RoutePaths.Profiles),
               loader: authProtectedGuard,
               element: <Profiles />,
             },
             {
-              path: Routes.Orgs,
+              path: createDeepPath(RoutePaths.Orgs),
               loader: authProtectedGuard,
               element: <Orgs />,
-            },
-            {
-              path: Routes.OrgNew,
-              loader: authProtectedGuard,
-              element: <OrgNew />,
             },
           ],
         },
@@ -86,23 +81,23 @@ export const AppRoutes = () => {
           children: [
             {
               index: true,
-              path: Routes.SignIn,
+              path: createDeepPath(RoutePaths.SignIn),
               loader: signInGuard,
               element: <SignIn />,
             },
             {
-              path: Routes.UiKit,
+              path: createDeepPath(RoutePaths.UiKit),
               element: <UiKit />,
             },
           ],
         },
         {
-          path: Routes.Root,
-          element: <Navigate replace to={Routes.Profiles} />,
+          path: RoutePaths.Root,
+          element: <Navigate replace to={RoutePaths.Profiles} />,
         },
         {
           path: '*',
-          element: <Navigate replace to={Routes.Root} />,
+          element: <Navigate replace to={RoutePaths.Root} />,
         },
       ],
     },

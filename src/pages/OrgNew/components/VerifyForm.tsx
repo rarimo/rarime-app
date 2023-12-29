@@ -1,5 +1,5 @@
 import { Stack, StackProps, Typography } from '@mui/material'
-import { HTMLAttributes, useCallback, useState } from 'react'
+import { HTMLAttributes, useCallback } from 'react'
 
 import { getOrgVerificationCode, Organization, verifyOrg } from '@/api'
 import { ErrorHandler } from '@/helpers'

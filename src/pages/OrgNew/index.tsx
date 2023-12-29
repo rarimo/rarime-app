@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Organization } from '@/api'
-import { Routes } from '@/enums'
+import { RoutePaths } from '@/enums'
 import { ErrorHandler } from '@/helpers'
 import { useStepper } from '@/hooks'
 import { UiStepper } from '@/ui'
@@ -40,7 +40,7 @@ export default function OrgNew() {
       {
         label: 'Verify',
         content: draftedOrg ? (
-          <VerifyForm org={draftedOrg} onSubmit={() => navigate(Routes.Orgs)} />
+          <VerifyForm org={draftedOrg} onSubmit={() => navigate(RoutePaths.Orgs)} />
         ) : (
           <></>
         ),
