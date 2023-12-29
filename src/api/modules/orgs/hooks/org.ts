@@ -8,7 +8,7 @@ export const useOrg = (id: string) => {
 
   const loadOrg = useCallback(async () => {
     return loadOrgById(id, {
-      include: OrgsIncludes.owner,
+      include: OrgsIncludes.Owner,
     })
   }, [id])
 
