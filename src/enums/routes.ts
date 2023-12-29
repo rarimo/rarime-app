@@ -1,9 +1,14 @@
-export enum Routes {
+export enum RoutePaths {
   Root = '/',
   UiKit = '/ui-kit',
   Profiles = '/profiles',
-  // FIXME: how to avoid * in the path?
-  Orgs = '/organisations/*',
-  OrgNew = '/organisations/new',
   SignIn = '/sign-in',
+
+  Orgs = '/organisations',
+  OrgsList = '/organisations/list',
+  OrgsListAll = '/organisations/list/all',
+  OrgsListMy = '/organisations/list/my',
+  OrgsNew = '/organisations/new',
+  OrgsId = '/organisations/:id',
+  OrgsIdCheckProof = '/organisations/:id/check-proof',
 }

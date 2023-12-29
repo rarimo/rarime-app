@@ -3,11 +3,11 @@ import { ButtonProps, Divider, Stack } from '@mui/material'
 import { ReactNode, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { Icons, Routes } from '@/enums'
+import { Icons, RoutePaths } from '@/enums'
 import { UiButton, UiIcon } from '@/ui'
 
 interface NavbarLinkProps {
-  to: Routes
+  to: RoutePaths
   children: ReactNode
 }
 
@@ -37,15 +37,15 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
 const AppNavbar = () => {
   const navbarItems = useMemo(
     () => [
-      { route: Routes.Profiles, iconComponent: <UiIcon name={Icons.Wallet} size={6} /> },
-      { route: Routes.Orgs, iconComponent: <UiIcon componentName='work' size={6} /> },
+      { route: RoutePaths.Profiles, iconComponent: <UiIcon name={Icons.Wallet} size={6} /> },
+      { route: RoutePaths.Orgs, iconComponent: <UiIcon componentName='work' size={6} /> },
     ],
     [],
   )
 
   return (
     <Stack spacing={4} py={1}>
-      <NavLink to={Routes.Profiles}>
+      <NavLink to={RoutePaths.Profiles}>
         <Stack alignItems='center'>
           <img src='/branding/logo.svg' alt={config.APP_NAME} />
         </Stack>
