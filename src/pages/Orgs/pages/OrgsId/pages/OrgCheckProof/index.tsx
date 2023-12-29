@@ -1,10 +1,10 @@
-import { Stack } from '@mui/material'
+import { Box, Stack } from '@mui/material'
 
 import { CheckProofHead, OrgOverview, ProofForm } from './components'
 
 export default function OrgCheckProof() {
   return (
-    <Stack>
+    <Box>
       <CheckProofHead />
       <Stack
         justifyContent={'center'}
@@ -17,6 +17,6 @@ export default function OrgCheckProof() {
         <OrgOverview />
         <ProofForm />
       </Stack>
-    </Stack>
+    </Box>
   )
 }

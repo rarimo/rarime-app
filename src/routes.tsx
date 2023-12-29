@@ -20,6 +20,7 @@ export const AppRoutes = () => {
   const Orgs = lazy(() => import('@/pages/Orgs'))
   const Profiles = lazy(() => import('@/pages/Profiles'))
   const UiKit = lazy(() => import('@/pages/UiKit'))
+  const VerifyProofAlias = lazy(() => import('@/pages/VerifyProofAlias'))
 
   const { isAuthorized, logOut } = useAuth()
 
@@ -86,6 +87,10 @@ export const AppRoutes = () => {
               element: <UiKit />,
             },
           ],
+        },
+        {
+          path: RoutePaths.VerifyProofAlias,
+          element: <VerifyProofAlias />,
         },
         {
           path: RoutePaths.Root,

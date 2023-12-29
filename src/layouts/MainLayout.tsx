@@ -12,6 +12,7 @@ const MainLayout = () => {
         borderRadius={4}
         px={8}
         py={6}
+        overflow={'auto'}
         sx={{ backgroundColor: 'background.paper' }}
       >
         <Outlet />
