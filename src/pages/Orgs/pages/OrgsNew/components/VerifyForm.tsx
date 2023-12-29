@@ -24,9 +24,9 @@ export default function VerifyForm({ org, formProps, onOrgVerified, ...rest }: P
   }, [onOrgVerified, org.id])
 
   const loadOrgVerificationCode = useCallback(async () => {
-    const verificationCode = await getOrgVerificationCode(org.id)
+    const { code } = await getOrgVerificationCode(org.id)
 
-    return verificationCode.code
+    return code
   }, [org.id])
 
   const { data: verificationCode } = useLoading('', loadOrgVerificationCode, {

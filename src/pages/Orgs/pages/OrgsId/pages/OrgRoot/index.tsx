@@ -14,7 +14,7 @@ export default function OrgRoot() {
       <PageTitles title={`Organization ${org?.id}`} subtitle='Some organization description' />
 
       <Box mt={6}>
-        {/*FIXME*/}
+        {/*FIXME: add more safety for org `undefined` checks and lets avoid "entity" ?? '' way*/}
         <NavLink to={generatePath(RoutePaths.OrgsIdCheckProof, { id: org?.id ?? '' })}>
           <UiButton component='div'>Check proof</UiButton>
         </NavLink>
