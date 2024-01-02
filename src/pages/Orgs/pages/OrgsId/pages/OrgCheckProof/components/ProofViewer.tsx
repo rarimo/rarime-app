@@ -8,13 +8,17 @@ interface ProofDetail {
   value: ReactNode
 }
 
-export default function ProofViewer() {
+interface Props {
+  isValid?: boolean
+}
+
+export default function ProofViewer({ isValid }: Props) {
   const { palette } = useTheme()
 
   const proofDetails: ProofDetail[] = [
     {
       text: 'Type:',
-      value: <ProofValidityBadge valid />,
+      value: <ProofValidityBadge valid={isValid} />,
     },
     {
       text: 'Issued:',

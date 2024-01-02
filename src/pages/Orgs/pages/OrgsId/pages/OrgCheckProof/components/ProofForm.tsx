@@ -1,17 +1,29 @@
 import { InputAdornment, Stack, useTheme } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { sleep } from '@/helpers'
 import { useLoading } from '@/hooks'
-import { UiButton, UiIcon, UiTextField } from '@/ui'
+import { UiIcon, UiTextField } from '@/ui'
 
-import ProofViewer from './ProofViewer'
+import CredentialField from './CredentialField'
+
+// TODO: add credential types
+export enum CredentialTypes {
+  FirstName = 'firstName',
+  LastName = 'lastName',
+  Age = 'age',
+  Telegram = 'telegram',
+}
 
 export default function ProofForm() {
   const { palette } = useTheme()
   const [params] = useSearchParams()
   const [link, setLink] = useState<string | undefined>(params.get('linkId') ?? undefined)
+
+  const credentialTypes = useMemo(() => {
+    return Object.values(CredentialTypes)
+  }, [])
 
   const loadProofs = useCallback(async () => {
     await sleep(1000)
@@ -38,26 +50,9 @@ export default function ProofForm() {
         }}
       />
 
-      {isLoading ? (
-        'Loading...'
-      ) : (
-        <Stack spacing={2}>
-          <UiTextField
-            label={'Checking Telegram'}
-            placeholder={"Enter the Telegram Handle of the Person You're Verifying"}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <UiButton variant='text' color='primary'>
-                    Check
-                  </UiButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <ProofViewer />
-        </Stack>
-      )}
+      {isLoading
+        ? 'Loading...'
+        : credentialTypes.map(type => <CredentialField key={type} type={type} />)}
     </Stack>
   )
 }

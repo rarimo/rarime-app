@@ -18,6 +18,7 @@ export const useLoading = <T>(
   reload: () => Promise<void>
   isEmpty: boolean
   update: () => Promise<void>
+  reset: () => void
 } => {
   const { loadArgs, loadOnMount: _loadOnMount } = options ?? {}
   const loadOnMount = useMemo(() => _loadOnMount ?? true, [_loadOnMount])
@@ -61,5 +62,11 @@ export const useLoading = <T>(
     }
   }
 
-  return { data, isLoading, isLoadingError, isEmpty, reload, update }
+  const reset = () => {
+    setIsLoading(false)
+    setIsLoadingError(false)
+    setData(initialState as T)
+  }
+
+  return { data, isLoading, isLoadingError, isEmpty, reload, update, reset }
 }
