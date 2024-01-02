@@ -30,7 +30,7 @@ export const DUMMY_ORG: Organization = {
   owner: {
     id: '81c32ef4-2878-4f86-9277-4c3c82913b87',
     type: 'users',
-    did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
+    did: 'did:iden3:tUxw1kwfVZMVa4A4ji3mLRYwiy9aVqzGG1kmY46tZ',
     role: {
       name: 'undefined',
       value: 0,
@@ -77,9 +77,6 @@ export const createOrg = async (body: OrganizationCreate) => {
   //     },
   //   },
   // })
-  // TODO: remove after BE is ready
-  // eslint-disable-next-line no-console
-  console.log('createOrg', body)
   return DUMMY_ORG
 }
 

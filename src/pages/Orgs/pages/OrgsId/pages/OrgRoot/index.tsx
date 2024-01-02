@@ -7,11 +7,15 @@ import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiButton } from '@/ui'
 
 export default function OrgRoot() {
-  const { org } = useOrgDetails()
+  const { org, isAccountOwner, orgTabs } = useOrgDetails()
 
   return (
     <Stack flex={1}>
-      <PageTitles title={`Organization ${org.id}`} subtitle='Some organization description' />
+      {isAccountOwner ? (
+        orgTabs
+      ) : (
+        <PageTitles title={`Organization ${org.id}`} subtitle='Some organization description' />
+      )}
 
       <Box mt={6}>
         <NavLink to={generatePath(RoutePaths.OrgsIdCheckProof, { id: org.id })}>

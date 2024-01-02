@@ -1,11 +1,17 @@
-import { createContext, ReactNode } from 'react'
-import { useParams } from 'react-router-dom'
+import { createContext, ReactNode, useMemo } from 'react'
+import { generatePath, useParams } from 'react-router-dom'
 
-import { type Organization, useOrg } from '@/api'
+import { type Organization, OrgGroup, useOrg } from '@/api'
+import { useOrgGroups } from '@/api/modules/orgs/hooks/org-groups'
+import { RoutePaths } from '@/enums'
+import { UiNavTabs } from '@/ui'
 
 interface OrgDetailsContextValue {
   org: Organization
+  orgGroups: OrgGroup[]
   isAccountOwner?: boolean
+
+  orgTabs?: ReactNode
 }
 
 export const OrgDetailsContext = createContext<OrgDetailsContextValue>({} as OrgDetailsContextValue)
@@ -13,7 +19,46 @@ export const OrgDetailsContext = createContext<OrgDetailsContextValue>({} as Org
 export const OrgDetailsContextProvider = ({ children }: { children: ReactNode }) => {
   const { id = null } = useParams<{ id: string }>()
 
-  const { org, isAccountOwner, isLoadingError, isEmpty } = useOrg(id ?? '')
+  const {
+    org,
+    isAccountOwner,
+    isLoadingError: orgIsLoadingError,
+    isEmpty: orgIsEmpty,
+  } = useOrg(id ?? '')
+
+  // FIXME: isAdminOnly?
+  const {
+    orgGroups,
+    isLoadingError: orgGroupsIsLoadingError,
+    isEmpty: orgGroupsIsEmpty,
+  } = useOrgGroups(id ?? '')
+
+  const isLoadingError = useMemo(
+    () => orgIsLoadingError || orgGroupsIsLoadingError,
+    [orgGroupsIsLoadingError, orgIsLoadingError],
+  )
+  const isEmpty = useMemo(() => orgIsEmpty || orgGroupsIsEmpty, [orgGroupsIsEmpty, orgIsEmpty])
+
+  const orgTabs = useMemo(
+    () =>
+      org ? (
+        <UiNavTabs
+          tabs={[
+            {
+              label: 'Public',
+              route: generatePath(RoutePaths.OrgsId, { id: org.id }),
+            },
+            {
+              label: 'Private',
+              route: generatePath(RoutePaths.OrgsIdGroups, { id: org.id }),
+            },
+          ]}
+        />
+      ) : (
+        <></>
+      ),
+    [org],
+  )
 
   // TODO: add error message
   if (isLoadingError) return <></>
@@ -22,7 +67,7 @@ export const OrgDetailsContextProvider = ({ children }: { children: ReactNode })
   if (isEmpty || !org) return <></>
 
   return (
-    <OrgDetailsContext.Provider value={{ org, isAccountOwner }}>
+    <OrgDetailsContext.Provider value={{ org, orgGroups, isAccountOwner, orgTabs }}>
       {children}
     </OrgDetailsContext.Provider>
   )

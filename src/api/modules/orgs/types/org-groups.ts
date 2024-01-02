@@ -31,7 +31,7 @@ export type OrgGroup = {
   metadata: OrgGroupMetadata
   rules: OrgGroupRule[]
   created_at: string
-  group_users: GroupUser[]
+  group_users?: GroupUser[]
 }
 
 export type OrgGroupCreate = {
@@ -42,6 +42,6 @@ export type OrgGroupCreate = {
   }
 }
 
-export type OrgGroupRequestQueryParams = {
+export type OrgGroupQueryParams = {
   include?: OrgGroupIncludes
 }
