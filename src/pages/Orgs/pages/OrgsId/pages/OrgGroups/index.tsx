@@ -10,48 +10,38 @@ import { OrgGroupsId, OrgGroupsNew } from '@/pages/Orgs/pages/OrgsId/pages/OrgGr
 export default function OrgGroups() {
   const { org, orgGroups, orgTabs } = useOrgDetails()
 
-  const routes = useNestedRoutes(
-    generatePath(RoutePaths.OrgsIdGroups, {
-      id: org.id,
-    }),
-    [
-      {
-        index: true,
-        element: (
-          <Navigate
-            replace
-            to={
-              orgGroups.length
-                ? generatePath(RoutePaths.OrgsIdGroupsIdList, {
-                    id: org.id,
-                    groupId: orgGroups[0].id,
-                  })
-                : generatePath(RoutePaths.OrgsIdGroupsNew, {
-                    id: org.id,
-                  })
-            }
-          />
-        ),
-      },
-      {
-        path: generatePath(RoutePaths.OrgsIdGroupsIdList, {
-          id: org.id,
-          groupId: orgGroups[0].id,
-        }),
-        element: (
-          <OrgGroupDetailsContextProvider>
-            <OrgGroupsId />
-          </OrgGroupDetailsContextProvider>
-        ),
-      },
-      {
-        path: generatePath(RoutePaths.OrgsIdGroupsNew, {
-          id: org.id,
-        }),
-        element: <OrgGroupsNew />,
-      },
-    ],
-  )
+  const routes = useNestedRoutes(RoutePaths.OrgsIdGroups, [
+    {
+      index: true,
+      element: (
+        <Navigate
+          replace
+          to={
+            orgGroups.length
+              ? generatePath(RoutePaths.OrgsIdGroupsIdList, {
+                  id: org.id,
+                  groupId: orgGroups[0].id,
+                })
+              : generatePath(RoutePaths.OrgsIdGroupsNew, {
+                  id: org.id,
+                })
+          }
+        />
+      ),
+    },
+    {
+      path: RoutePaths.OrgsIdGroupsIdList,
+      element: (
+        <OrgGroupDetailsContextProvider>
+          <OrgGroupsId />
+        </OrgGroupDetailsContextProvider>
+      ),
+    },
+    {
+      path: RoutePaths.OrgsIdGroupsNew,
+      element: <OrgGroupsNew />,
+    },
+  ])
 
   return (
     <Stack flex={1}>

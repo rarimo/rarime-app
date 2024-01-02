@@ -15,11 +15,7 @@ export const OrgGroupDetailsContext = createContext<OrgGroupDetailsContextValue>
 export const OrgGroupDetailsContextProvider = ({ children }: { children: ReactNode }) => {
   const { orgGroups } = useOrgDetails()
 
-  const params = useParams<{ groupId: string }>()
-  // FIXME: group id not in the params
   const { groupId } = useParams<{ groupId: string }>()
-
-  console.log('groupId', params)
 
   const orgGroup = useMemo(
     () => orgGroups.find(orgGroup => orgGroup.id === groupId),

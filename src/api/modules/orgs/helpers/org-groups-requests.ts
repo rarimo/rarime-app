@@ -9,6 +9,7 @@ import {
   OrgsStatuses,
 } from '@/api'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
   {
     id: '9d6a5063-684e-4ab4-b49a-82cdceadf63f',
@@ -417,23 +418,19 @@ export const acceptInvitation = async ({
 }
 
 export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) => {
-  // const { data } = await api.get<OrgGroupRequest[]>(`/v1/orgs/requests`, {
-  //   query: query,
-  // })
-  //
-  // return data
+  const { data } = await api.get<OrgGroupRequest[]>(`/v1/orgs/requests`, {
+    query: query,
+  })
 
-  return DUMMY_ORG_GROUP_REQUESTS
+  return data
 }
 
 export const loadOrgGroupRequestById = async (orgId: string, groupId: string, reqId: string) => {
-  // const { data } = await api.get<OrgGroupRequest>(
-  //   `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
-  // )
-  //
-  // return data
+  const { data } = await api.get<OrgGroupRequest>(
+    `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+  )
 
-  return DUMMY_ORG_GROUP_REQUESTS[0]
+  return data
 }
 
 export const fillOrgGroupRequest = async ({

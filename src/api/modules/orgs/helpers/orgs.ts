@@ -55,29 +55,25 @@ export const loadOrgsAmount = async () => {
   return data
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => {
-  // return api.get<Organization>(`/v1/orgs/${id}`, {
-  //   query,
-  // })
-  return DUMMY_ORG
+  return api.get<Organization>(`/v1/orgs/${id}`, {
+    query,
+  })
 }
 
 export const createOrg = async (body: OrganizationCreate) => {
-  // return api.post<Organization>('/v1/orgs', {
-  //   body: {
-  //     data: {
-  //       id: body.id,
-  //       type: 'organizations-create',
-  //       attributes: {
-  //         owner_did: body.ownerDid,
-  //         domain: body.domain,
-  //         metadata: body.metadata,
-  //       },
-  //     },
-  //   },
-  // })
-  return DUMMY_ORG
+  return api.post<Organization>('/v1/orgs', {
+    body: {
+      data: {
+        type: 'organizations-create',
+        attributes: {
+          owner_did: body.ownerDid,
+          domain: body.domain,
+          metadata: body.metadata,
+        },
+      },
+    },
+  })
 }
 
 export const verifyOrg = async (id: string) => {

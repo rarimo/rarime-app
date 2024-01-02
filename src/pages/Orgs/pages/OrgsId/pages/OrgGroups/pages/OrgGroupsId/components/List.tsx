@@ -1,4 +1,4 @@
-import { Stack, StackProps } from '@mui/material'
+import { Divider, Stack, StackProps } from '@mui/material'
 import { useCallback } from 'react'
 
 import { OrgGroupRequest, OrgGroupRequestFiltersMap } from '@/api'
@@ -33,7 +33,16 @@ export default function List({ filter, ...rest }: Props) {
       ) : isEmpty ? (
         <></>
       ) : (
-        orgGroupRequests.map(el => <div key={el.id}>{el.id}</div>)
+        orgGroupRequests.map((el, idx) => (
+          <div key={idx}>
+            {el.id}
+            <Divider />
+            {el.status.name}
+            <Divider />
+            <br />
+            <Divider />
+          </div>
+        ))
       )}
     </Stack>
   )

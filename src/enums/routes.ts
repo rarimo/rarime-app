@@ -13,8 +13,6 @@ export enum RoutePaths {
   OrgsIdCheckProof = '/organisations/:id/check-proof',
   OrgsIdGroupsNew = '/organisations/:id/groups/new',
   OrgsIdGroups = '/organisations/:id/groups',
-  // TODO: maybe here should be:
-  // OrgsIdGroupsId = '/organisations/:id/groups/:groupId',
   OrgsIdGroupsIdList = '/organisations/:id/groups/:groupId/list',
   OrgsIdGroupsIdListStatusSubmitted = '/organisations/:id/groups/:groupId/list/issued',
   OrgsIdGroupsIdListStatusCreated = '/organisations/:id/groups/:groupId/list/pending',

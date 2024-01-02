@@ -1,5 +1,6 @@
 import { api, OrgGroup, OrgGroupCreate, OrgGroupQueryParams, OrgGroupRequestStatuses } from '@/api'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DUMMY_ORG_GROUP: OrgGroup[] = [
   {
     id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
@@ -34,13 +35,11 @@ const DUMMY_ORG_GROUP: OrgGroup[] = [
 ]
 
 export const loadOrgGroups = async (orgId: string, query?: OrgGroupQueryParams) => {
-  // const { data } = await api.get<OrgGroup[]>(`/v1/orgs/${orgId}/groups`, {
-  //   query,
-  // })
-  //
-  // return data
+  const { data } = await api.get<OrgGroup[]>(`/v1/orgs/${orgId}/groups`, {
+    query,
+  })
 
-  return DUMMY_ORG_GROUP
+  return data
 }
 
 export const createOrgGroup = async (orgId: string, createOpts: OrgGroupCreate) => {
@@ -67,7 +66,10 @@ export const loadOrgGroupById = async (
   return data
 }
 
-export const loadOrgGroupRequestsCount = async (orgId: string, groupId: string) => {
+export const loadOrgGroupRequestsCount = async (
+  orgId: string,
+  groupId: string,
+): Promise<Record<OrgGroupRequestStatuses, number>> => {
   const { data } = await api.get<Record<OrgGroupRequestStatuses, number>>(
     `/v1/orgs/${orgId}/groups/${groupId}/requests/count`,
   )

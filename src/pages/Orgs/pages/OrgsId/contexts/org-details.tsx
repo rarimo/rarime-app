@@ -47,6 +47,7 @@ export const OrgDetailsContextProvider = ({ children }: { children: ReactNode })
             {
               label: 'Public',
               route: generatePath(RoutePaths.OrgsId, { id: org.id }),
+              isExact: true,
             },
             {
               label: 'Private',

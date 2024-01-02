@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material'
 import { trimEnd } from 'lodash'
-import { useCallback, useState } from 'react'
-import { generatePath, Navigate, NavLink } from 'react-router-dom'
+import { useCallback, useMemo, useState } from 'react'
+import { generatePath, Navigate } from 'react-router-dom'
 
 import {
   loadOrgGroupRequestsCount,
@@ -24,73 +24,58 @@ export default function OrgGroupsId() {
 
   const [filter, setFilter] = useState<OrgGroupRequestFiltersMap>({} as OrgGroupRequestFiltersMap)
 
-  const routes = useNestedRoutes(
-    generatePath(RoutePaths.OrgsIdGroupsIdList, {
-      id: org.id,
-      groupId: orgGroup.id,
-    }),
-    [
-      {
-        index: true,
-        element: (
-          <Navigate
-            replace
-            to={generatePath(RoutePaths.OrgsIdGroupsIdListStatusSubmitted, {
-              groupId: orgGroup.id,
-              id: org.id,
-            })}
-          />
-        ),
-      },
-      {
-        path: generatePath(RoutePaths.OrgsIdGroupsIdListStatusSubmitted, {
-          groupId: orgGroup.id,
-          id: org.id,
-        }),
-        element: (
-          <List
-            filter={{
-              ...filter,
+  const routes = useNestedRoutes(RoutePaths.OrgsIdGroupsIdList, [
+    {
+      index: true,
+      element: (
+        <Navigate
+          replace
+          to={generatePath(RoutePaths.OrgsIdGroupsIdListStatusSubmitted, {
+            groupId: orgGroup.id,
+            id: org.id,
+          })}
+        />
+      ),
+    },
+    {
+      path: RoutePaths.OrgsIdGroupsIdListStatusSubmitted,
+      element: (
+        <List
+          filter={{
+            ...filter,
 
-              [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Submitted,
-            }}
-          />
-        ),
-      },
+            [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Submitted,
+          }}
+        />
+      ),
+    },
 
-      {
-        path: generatePath(RoutePaths.OrgsIdGroupsIdListStatusCreated, {
-          groupId: orgGroup.id,
-          id: org.id,
-        }),
-        element: (
-          <List
-            filter={{
-              ...filter,
+    {
+      path: RoutePaths.OrgsIdGroupsIdListStatusCreated,
+      element: (
+        <List
+          filter={{
+            ...filter,
 
-              [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Created,
-            }}
-          />
-        ),
-      },
+            [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Created,
+          }}
+        />
+      ),
+    },
 
-      {
-        path: generatePath(RoutePaths.OrgsIdGroupsIdListStatusFilled, {
-          groupId: orgGroup.id,
-          id: org.id,
-        }),
-        element: (
-          <List
-            filter={{
-              ...filter,
+    {
+      path: RoutePaths.OrgsIdGroupsIdListStatusFilled,
+      element: (
+        <List
+          filter={{
+            ...filter,
 
-              [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Filled,
-            }}
-          />
-        ),
-      },
-    ],
-  )
+            [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Filled,
+          }}
+        />
+      ),
+    },
+  ])
 
   const loadRequestCounts = useCallback(async () => {
     return loadOrgGroupRequestsCount(org.id, orgGroup.id)
@@ -104,6 +89,36 @@ export default function OrgGroupsId() {
     },
   )
 
+  const filterTabs = useMemo(() => {
+    const submittedCount = reqsCount?.[OrgGroupRequestStatuses.Submitted] ?? 0
+    const createdCount = reqsCount?.[OrgGroupRequestStatuses.Created] ?? 0
+    const filledCount = reqsCount?.[OrgGroupRequestStatuses.Filled] ?? 0
+
+    return [
+      {
+        label: trimEnd(`Issued (${submittedCount})`),
+        route: generatePath(RoutePaths.OrgsIdGroupsIdListStatusSubmitted, {
+          groupId: orgGroup.id,
+          id: org.id,
+        }),
+      },
+      {
+        label: trimEnd(`Pending (${createdCount})`),
+        route: generatePath(RoutePaths.OrgsIdGroupsIdListStatusCreated, {
+          groupId: orgGroup.id,
+          id: org.id,
+        }),
+      },
+      {
+        label: trimEnd(`Filled (${filledCount})`),
+        route: generatePath(RoutePaths.OrgsIdGroupsIdListStatusFilled, {
+          groupId: orgGroup.id,
+          id: org.id,
+        }),
+      },
+    ]
+  }, [org.id, orgGroup.id, reqsCount])
+
   return (
     <Stack flex={1}>
       <PageTitles
@@ -112,29 +127,7 @@ export default function OrgGroupsId() {
       />
 
       <PageListFilters
-        tabs={[
-          {
-            label: trimEnd(`Issued ${reqsCount?.[OrgGroupRequestStatuses.Submitted]}`),
-            route: generatePath(RoutePaths.OrgsIdGroupsIdListStatusSubmitted, {
-              groupId: orgGroup.id,
-              id: org.id,
-            }),
-          },
-          {
-            label: trimEnd(`Pending ${reqsCount?.[OrgGroupRequestStatuses.Created]}`),
-            route: generatePath(RoutePaths.OrgsIdGroupsIdListStatusCreated, {
-              groupId: orgGroup.id,
-              id: org.id,
-            }),
-          },
-          {
-            label: trimEnd(`Filled ${reqsCount?.[OrgGroupRequestStatuses.Filled]}`),
-            route: generatePath(RoutePaths.OrgsIdGroupsIdListStatusFilled, {
-              groupId: orgGroup.id,
-              id: org.id,
-            }),
-          },
-        ]}
+        tabs={filterTabs}
         onSearchInput={(value: string) =>
           setFilter(prev => ({
             ...(prev || {}),
@@ -145,15 +138,14 @@ export default function OrgGroupsId() {
         }
         actionBar={
           <Stack direction='row' gap={4} justifyContent='space-between'>
-            <NavLink to={RoutePaths.OrgsNew}>
-              <UiButton
-                variant='contained'
-                color='primary'
-                startIcon={<UiIcon componentName='add' />}
-              >
-                New Organization
-              </UiButton>
-            </NavLink>
+            <UiButton
+              variant='contained'
+              color='primary'
+              startIcon={<UiIcon componentName='accountCircle' />}
+              sx={{ ml: 'auto' }}
+            >
+              Invite Member
+            </UiButton>
           </Stack>
         }
       />
