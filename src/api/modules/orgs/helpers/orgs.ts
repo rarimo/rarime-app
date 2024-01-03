@@ -30,7 +30,7 @@ export const DUMMY_ORG: Organization = {
   owner: {
     id: '81c32ef4-2878-4f86-9277-4c3c82913b87',
     type: 'users',
-    did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
+    did: 'did:iden3:tUxw1kwfVZMVa4A4ji3mLRYwiy9aVqzGG1kmY46tZ',
     role: {
       name: 'undefined',
       value: 0,
@@ -55,32 +55,29 @@ export const loadOrgsAmount = async () => {
   return data
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => {
-  // return api.get<Organization>(`/v1/orgs/${id}`, {
-  //   query,
-  // })
-  return DUMMY_ORG
+  const { data } = await api.get<Organization>(`/v1/orgs/${id}`, {
+    query,
+  })
+
+  return data
 }
 
 export const createOrg = async (body: OrganizationCreate) => {
-  // return api.post<Organization>('/v1/orgs', {
-  //   body: {
-  //     data: {
-  //       id: body.id,
-  //       type: 'organizations-create',
-  //       attributes: {
-  //         owner_did: body.ownerDid,
-  //         domain: body.domain,
-  //         metadata: body.metadata,
-  //       },
-  //     },
-  //   },
-  // })
-  // TODO: remove after BE is ready
-  // eslint-disable-next-line no-console
-  console.log('createOrg', body)
-  return DUMMY_ORG
+  const { data } = await api.post<Organization>('/v1/orgs', {
+    body: {
+      data: {
+        type: 'organizations-create',
+        attributes: {
+          owner_did: body.ownerDid,
+          domain: body.domain,
+          metadata: body.metadata,
+        },
+      },
+    },
+  })
+
+  return data
 }
 
 export const verifyOrg = async (id: string) => {

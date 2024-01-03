@@ -6,15 +6,17 @@ import { Navigate, NavLink } from 'react-router-dom'
 import { loadOrgsAmount, OrgsRequestFilters, OrgsRequestFiltersMap } from '@/api'
 import { PageListFilters, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
-import { useLoading, useNestedRoutes } from '@/hooks'
+import { useLoading, useMetamaskZkpSnapContext, useNestedRoutes } from '@/hooks'
 import { UiButton, UiIcon, UiSwitch } from '@/ui'
 
 import { List } from './components'
 
 export default function OrgsList() {
   const { t } = useTranslation()
+  const { userDid } = useMetamaskZkpSnapContext()
 
   const [filter, setFilter] = useState<OrgsRequestFiltersMap>({})
+
   const routes = useNestedRoutes(RoutePaths.Orgs, [
     {
       index: true,
@@ -37,10 +39,7 @@ export default function OrgsList() {
           filter={{
             ...filter,
 
-            /**
-             * FIXME: get userDid from {@link useMetamaskZkpSnapContext}
-             */
-            [OrgsRequestFilters.UserDid]: 'did:iden3:readonly:blabla',
+            [OrgsRequestFilters.UserDid]: userDid,
           }}
         />
       ),

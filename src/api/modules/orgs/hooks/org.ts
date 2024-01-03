@@ -22,7 +22,7 @@ export const useOrg = (id: string) => {
     loadArgs: [id],
   })
 
-  const isAccountOwner = useMemo(() => {
+  const isOrgOwner = useMemo(() => {
     return org?.owner?.did === userDid
   }, [org?.owner?.did, userDid])
 
@@ -31,6 +31,6 @@ export const useOrg = (id: string) => {
     isLoading,
     isLoadingError,
     isEmpty,
-    isAccountOwner,
+    isOrgOwner,
   }
 }
