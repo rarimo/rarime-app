@@ -7,11 +7,11 @@ import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiButton } from '@/ui'
 
 export default function OrgRoot() {
-  const { org, isAccountOwner, orgTabs } = useOrgDetails()
+  const { org, isOrgOwner, orgTabs } = useOrgDetails()
 
   return (
     <Stack flex={1}>
-      {isAccountOwner ? (
+      {isOrgOwner ? (
         orgTabs
       ) : (
         <PageTitles title={`Organization ${org.id}`} subtitle='Some organization description' />

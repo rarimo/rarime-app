@@ -9,7 +9,7 @@ import { UiNavTabs } from '@/ui'
 interface OrgDetailsContextValue {
   org: Organization
   orgGroups: OrgGroup[]
-  isAccountOwner?: boolean
+  isOrgOwner?: boolean
 
   orgTabs?: ReactNode
 }
@@ -21,7 +21,7 @@ export const OrgDetailsContextProvider = ({ children }: { children: ReactNode })
 
   const {
     org,
-    isAccountOwner,
+    isOrgOwner,
     isLoadingError: orgIsLoadingError,
     isEmpty: orgIsEmpty,
   } = useOrg(id ?? '')
@@ -68,7 +68,7 @@ export const OrgDetailsContextProvider = ({ children }: { children: ReactNode })
   if (isEmpty || !org) return <></>
 
   return (
-    <OrgDetailsContext.Provider value={{ org, orgGroups, isAccountOwner, orgTabs }}>
+    <OrgDetailsContext.Provider value={{ org, orgGroups, isOrgOwner, orgTabs }}>
       {children}
     </OrgDetailsContext.Provider>
   )
