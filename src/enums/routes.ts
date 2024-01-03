@@ -11,10 +11,10 @@ export enum RoutePaths {
   OrgsNew = '/organisations/new',
   OrgsId = '/organisations/:id',
   OrgsIdCheckProof = '/organisations/:id/check-proof',
-  OrgsIdGroupsNew = '/organisations/:id/groups/new',
   OrgsIdGroups = '/organisations/:id/groups',
   OrgsIdGroupsIdList = '/organisations/:id/groups/:groupId/list',
   OrgsIdGroupsIdListStatusSubmitted = '/organisations/:id/groups/:groupId/list/issued',
   OrgsIdGroupsIdListStatusCreated = '/organisations/:id/groups/:groupId/list/pending',
   OrgsIdGroupsIdListStatusFilled = '/organisations/:id/groups/:groupId/list/filled',
+  OrgsIdGroupsNew = '/organisations/:id/groups/new',
 }

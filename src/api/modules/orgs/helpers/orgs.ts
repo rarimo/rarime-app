@@ -56,13 +56,15 @@ export const loadOrgsAmount = async () => {
 }
 
 export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => {
-  return api.get<Organization>(`/v1/orgs/${id}`, {
+  const { data } = await api.get<Organization>(`/v1/orgs/${id}`, {
     query,
   })
+
+  return data
 }
 
 export const createOrg = async (body: OrganizationCreate) => {
-  return api.post<Organization>('/v1/orgs', {
+  const { data } = await api.post<Organization>('/v1/orgs', {
     body: {
       data: {
         type: 'organizations-create',
@@ -74,6 +76,8 @@ export const createOrg = async (body: OrganizationCreate) => {
       },
     },
   })
+
+  return data
 }
 
 export const verifyOrg = async (id: string) => {
