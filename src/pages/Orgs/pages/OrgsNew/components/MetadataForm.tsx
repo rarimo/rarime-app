@@ -21,7 +21,7 @@ enum FieldNames {
 }
 
 const DEFAULT_VALUES = {
-  [FieldNames.Logo]: null as File | null,
+  [FieldNames.Logo]: undefined as File | undefined,
   [FieldNames.Name]: '',
   [FieldNames.Description]: '',
   [FieldNames.Domain]: '',
