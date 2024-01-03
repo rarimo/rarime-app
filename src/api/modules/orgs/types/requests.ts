@@ -4,7 +4,6 @@ import {
   OrgGroupRequestFilters,
   OrgGroupRequestIncludes,
   OrgGroupRequestStatuses,
-  OrgGroupRule,
 } from '@/api'
 
 export type OrgGroupRequestMetadata = {
@@ -34,11 +33,16 @@ export type OrgGroupRequest = {
   group?: OrgGroup
 }
 
+export type OrgGroupCreateRequestRule = {
+  scheme: string
+  value: string
+}
+
 export type OrgGroupCreateRequest = {
   orgId: string
   groupId: string
   email: string
-  rules: OrgGroupRule[]
+  rules: OrgGroupCreateRequestRule[]
 }
 
 export type OrgGroupCreatedRequest = {
