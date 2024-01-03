@@ -12,6 +12,7 @@ const DUMMY_ORG_GROUP: OrgGroup[] = [
     },
     rules: [
       {
+        name: 'Rule name',
         scheme: 'https://ipfs.io/ipfs/QmZTR5bcpQD7cFgTorqxZDYaew1Wqgfbd2ud9QqGPAkK2V',
         required: true,
       },
@@ -46,7 +47,11 @@ export const createOrgGroup = async (orgId: string, createOpts: OrgGroupCreate) 
   const { data } = await api.post<OrgGroup>(`/v1/orgs/${orgId}/groups`, {
     body: {
       data: {
-        ...createOpts,
+        type: 'groups-create',
+        attributes: {
+          metadata: createOpts.metadata,
+          rules: createOpts.rules,
+        },
       },
     },
   })

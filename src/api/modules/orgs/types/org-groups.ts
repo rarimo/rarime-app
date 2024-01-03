@@ -7,6 +7,7 @@ export type OrgGroupMetadata = {
 }
 
 export type OrgGroupRule = {
+  name: string
   scheme: string
   required: boolean
 }
@@ -35,11 +36,8 @@ export type OrgGroup = {
 }
 
 export type OrgGroupCreate = {
-  type: 'groups-create'
-  attributes: {
-    metadata: OrgGroupMetadata
-    rules: OrgGroupRule[]
-  }
+  metadata: OrgGroupMetadata
+  rules: OrgGroupRule[]
 }
 
 export type OrgGroupQueryParams = {
