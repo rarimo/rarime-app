@@ -12,7 +12,22 @@ const DUMMY_ORG_GROUP: OrgGroup[] = [
     },
     rules: [
       {
-        name: 'Rule name',
+        name: 'Rule name 1',
+        scheme: 'https://ipfs.io/ipfs/QmZTR5bcpQD7cFgTorqxZDYaew1Wqgfbd2ud9QqGPAkK2V',
+        required: true,
+      },
+      {
+        name: 'Rule name 2',
+        scheme: 'https://ipfs.io/ipfs/QmZTR5bcpQD7cFgTorqxZDYaew1Wqgfbd2ud9QqGPAkK2V',
+        required: true,
+      },
+      {
+        name: 'Rule name 3',
+        scheme: 'https://ipfs.io/ipfs/QmZTR5bcpQD7cFgTorqxZDYaew1Wqgfbd2ud9QqGPAkK2V',
+        required: true,
+      },
+      {
+        name: 'Rule name 4',
         scheme: 'https://ipfs.io/ipfs/QmZTR5bcpQD7cFgTorqxZDYaew1Wqgfbd2ud9QqGPAkK2V',
         required: true,
       },
@@ -80,4 +95,13 @@ export const loadOrgGroupRequestsCount = async (
   )
 
   return data
+
+  // return {
+  //   [OrgGroupRequestStatuses.Accepted]: 2,
+  //   [OrgGroupRequestStatuses.Approved]: 2,
+  //   [OrgGroupRequestStatuses.Rejected]: 3,
+  //   [OrgGroupRequestStatuses.Created]: 5,
+  //   [OrgGroupRequestStatuses.Filled]: 2,
+  //   [OrgGroupRequestStatuses.Submitted]: 5,
+  // }
 }

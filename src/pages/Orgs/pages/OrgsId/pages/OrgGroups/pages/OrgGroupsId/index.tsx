@@ -14,15 +14,17 @@ import { RoutePaths } from '@/enums'
 import { useLoading, useNestedRoutes } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { useOrgGroupDetails } from '@/pages/Orgs/pages/OrgsId/pages/OrgGroups/hooks'
-import { UiButton, UiIcon } from '@/ui'
+import { UiButton, UiDrawer, UiIcon } from '@/ui'
 
-import { List } from './components'
+import { InviteMemberForm, List } from './components'
 
 export default function OrgGroupsId() {
   const { org } = useOrgDetails()
   const { orgGroup } = useOrgGroupDetails()
 
   const [filter, setFilter] = useState<OrgGroupRequestFiltersMap>({} as OrgGroupRequestFiltersMap)
+
+  const [isInviteDrawerShown, setIsInviteDrawerShown] = useState(false)
 
   const routes = useNestedRoutes(RoutePaths.OrgsIdGroupsIdList, [
     {
@@ -89,6 +91,12 @@ export default function OrgGroupsId() {
     },
   )
 
+  // memberInvite: OrgGroupCreatedRequest
+  const handleMemberInviteCreated = useCallback(() => {
+    setIsInviteDrawerShown(false)
+    // TODO: update requests list
+  }, [])
+
   const filterTabs = useMemo(() => {
     const submittedCount = reqsCount?.[OrgGroupRequestStatuses.Submitted] ?? 0
     const createdCount = reqsCount?.[OrgGroupRequestStatuses.Created] ?? 0
@@ -143,6 +151,7 @@ export default function OrgGroupsId() {
               color='primary'
               startIcon={<UiIcon componentName='accountCircle' />}
               sx={{ ml: 'auto' }}
+              onClick={() => setIsInviteDrawerShown(true)}
             >
               Invite Member
             </UiButton>
@@ -150,6 +159,18 @@ export default function OrgGroupsId() {
         }
       />
       <Stack flex={1}>{routes}</Stack>
+
+      <UiDrawer
+        open={isInviteDrawerShown}
+        anchor='right'
+        onClose={() => setIsInviteDrawerShown(false)}
+      >
+        <InviteMemberForm
+          onMemberInviteCreated={handleMemberInviteCreated}
+          maxWidth={theme => theme.spacing(100)}
+          p={6}
+        />
+      </UiDrawer>
     </Stack>
   )
 }

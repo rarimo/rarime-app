@@ -153,6 +153,7 @@ export default function CreateGroupForm({ formProps, onGroupCreated, ...rest }: 
                 {...register(`${FieldNames.GroupRules}.${idx}.selected`)}
               />
 
+              {/*TODO: add autoselect on required change*/}
               <UiCheckbox
                 label='Required'
                 {...register(`${FieldNames.GroupRules}.${idx}.required`)}

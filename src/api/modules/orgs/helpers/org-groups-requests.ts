@@ -365,6 +365,18 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
   },
 ]
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const DUMMY_CREATED_REQUEST: OrgGroupCreatedRequest = {
+  id: '9d6a5063-684e-4ab4-b49a-82cdceadf63f',
+  type: 'invitations-email',
+  org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
+  group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
+  email: 'yopta@gmail.com',
+  req_id: '9d6a5063-684e-4ab4-b49a-82cdceadf63f',
+  created_at: '2021-08-12T14:00:00Z',
+  request: DUMMY_ORG_GROUP_REQUESTS[0],
+}
+
 export const createInvitation = async ({ orgId, groupId, email, rules }: OrgGroupCreateRequest) => {
   const { data } = await api.post<OrgGroupCreatedRequest>(
     `/v1/orgs/${orgId}/groups/${groupId}/emails`,
