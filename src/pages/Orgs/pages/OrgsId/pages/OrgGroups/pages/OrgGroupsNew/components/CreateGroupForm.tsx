@@ -23,7 +23,7 @@ const HARDCODED_RULES: OrgGroupRule[] = [
   {
     name: 'Last name',
     scheme: '',
-    required: true,
+    required: false,
   },
   {
     name: 'Date of birth',

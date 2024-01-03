@@ -27,7 +27,7 @@ export default function InviteMemberForm({ formProps, onMemberInviteCreated, ...
   const DEFAULT_VALUES = useMemo(
     () => ({
       [FieldNames.Email]: '',
-      [FieldNames.Rules]: orgGroup.rules.map(el => ({ ...el, value: '' })),
+      [FieldNames.Rules]: orgGroup.rules.map(rule => ({ ...rule, value: '' })),
     }),
     [orgGroup.rules],
   )

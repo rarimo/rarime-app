@@ -96,6 +96,7 @@ export const loadOrgGroupRequestsCount = async (
 
   return data
 
+  // TODO: remove this when API is ready
   // return {
   //   [OrgGroupRequestStatuses.Accepted]: 2,
   //   [OrgGroupRequestStatuses.Approved]: 2,
