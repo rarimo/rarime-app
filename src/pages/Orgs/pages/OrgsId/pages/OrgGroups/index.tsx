@@ -31,10 +31,16 @@ export default function OrgGroups() {
     },
     {
       path: RoutePaths.OrgsIdGroupsIdList,
-      element: (
+      element: orgGroups.length ? (
         <OrgGroupDetailsContextProvider>
           <OrgGroupsId />
         </OrgGroupDetailsContextProvider>
+      ) : (
+        <Navigate
+          to={generatePath(RoutePaths.OrgsIdGroupsNew, {
+            id: org.id,
+          })}
+        />
       ),
     },
     {

@@ -23,21 +23,20 @@ export const OrgDetailsContextProvider = ({ children }: { children: ReactNode })
     org,
     isOrgOwner,
     isLoadingError: orgIsLoadingError,
-    isEmpty: orgIsEmpty,
+    isEmpty: isOrgEmpty,
   } = useOrg(id ?? '')
 
   // FIXME: isAdminOnly?
   const {
     orgGroups,
+    isLoading: isOrgGroupsLoading,
     isLoadingError: orgGroupsIsLoadingError,
-    isEmpty: orgGroupsIsEmpty,
-  } = useOrgGroups(id ?? '')
+  } = useOrgGroups((isOrgOwner && id) || '')
 
   const isLoadingError = useMemo(
     () => orgIsLoadingError || orgGroupsIsLoadingError,
     [orgGroupsIsLoadingError, orgIsLoadingError],
   )
-  const isEmpty = useMemo(() => orgIsEmpty || orgGroupsIsEmpty, [orgGroupsIsEmpty, orgIsEmpty])
 
   const orgTabs = useMemo(
     () =>
@@ -65,7 +64,7 @@ export const OrgDetailsContextProvider = ({ children }: { children: ReactNode })
   if (isLoadingError) return <></>
 
   // TODO: add no data message
-  if (isEmpty || !org) return <></>
+  if (isOrgEmpty || !org || isOrgGroupsLoading) return <></>
 
   return (
     <OrgDetailsContext.Provider value={{ org, orgGroups, isOrgOwner, orgTabs }}>
