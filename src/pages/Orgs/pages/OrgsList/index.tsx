@@ -76,9 +76,10 @@ export default function OrgsList() {
             [OrgsRequestFilters.UserDid]: value,
           }))
         }
+        textFieldSize={'small'}
         actionBar={
           <Stack direction='row' gap={4} justifyContent='space-between'>
-            <UiSwitch label='Show Only active' />
+            <UiSwitch label='Show Only active' variant={'outlined'} />
 
             <NavLink to={RoutePaths.OrgsNew}>
               <UiButton
@@ -91,7 +92,6 @@ export default function OrgsList() {
             </NavLink>
           </Stack>
         }
-        textFieldSX={{ borderRadius: '100px' }}
       />
 
       <Stack flex={1}>{routes}</Stack>

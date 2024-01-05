@@ -11,14 +11,14 @@ export default function ListCard({ org, ...rest }: Props) {
   return (
     <Card {...rest} sx={{ py: 5, px: 6, borderRadius: 3 }} variant='outlined'>
       <Avatar src={org.metadata.logoUrl} sx={{ width: 64, height: 64 }} />
-      <Typography color={palette.text.primary} variant={'h6'} mt={5}>
+      <Typography color={palette.text.primary} variant={'h6'} mt={5} fontWeight={500}>
         {org.metadata.name}
       </Typography>
       <Typography color={palette.text.secondary} fontSize={typography.body2} my={3}>
         {org.metadata.description}
       </Typography>
       <Grid container mt={5} pt={5} borderTop={1} borderColor={palette.text.secondary}>
-        <Grid item xs={5}>
+        <Grid item xs={7}>
           <Typography
             fontSize={10}
             fontWeight={typography.fontWeightBold}
