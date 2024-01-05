@@ -3,7 +3,8 @@ import { useCallback } from 'react'
 
 import { loadOrgs, Organization, type OrgsRequestFiltersMap } from '@/api'
 import { useLoading } from '@/hooks'
-import { ListCard } from '@/pages/Orgs/pages/OrgsList/components/index'
+
+import ListCard from './ListCard'
 
 interface Props extends StackProps {
   filter: OrgsRequestFiltersMap
