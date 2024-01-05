@@ -30,12 +30,12 @@ export const AppRoutes = () => {
   // TODO: Replace with real auth check
   const { isAuthorized } = useAuth()
 
-  const signInGuard = () => (isAuthorized ? redirect(RoutePaths.Root) : null)
+  const signInGuard = () => (!isAuthorized ? redirect(RoutePaths.Root) : null)
   const authProtectedGuard = ({ request }: LoaderFunctionArgs) => {
     // If the user is not logged in and tries to access protected route, we redirect
     // them to sign in with a `from` parameter that allows login to redirect back
     // to this page upon successful authentication
-    if (!isAuthorized) {
+    if (isAuthorized) {
       const params = new URLSearchParams()
       params.set('from', new URL(request.url).pathname)
       return redirect(`${RoutePaths.SignIn}?${params.toString()}`)

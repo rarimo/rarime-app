@@ -8,14 +8,14 @@ type Props = {
   sx?: SxProps<Theme>
 } & (
   | ({
-  componentName: keyof typeof ICON_COMPONENTS
-  name?: never
-} & SvgIconProps)
+      componentName: keyof typeof ICON_COMPONENTS
+      name?: never
+    } & SvgIconProps)
   | ({
-  name: Icons
-  componentName?: never
-} & BoxProps<'svg'>)
-  )
+      name: Icons
+      componentName?: never
+    } & BoxProps<'svg'>)
+)
 
 export default function UiIcon({ size = 6, ...props }: Props) {
   const sx: SxProps<Theme> = {
