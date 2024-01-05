@@ -1,12 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
-import {
-  DefaultValues,
-  FieldError,
-  FieldErrorsImpl,
-  Merge,
-  useForm as useFormHook,
-} from 'react-hook-form'
+import { DefaultValues, FieldErrorsImpl, Merge, useForm as useFormHook } from 'react-hook-form'
 import * as Yup from 'yup'
 
 export const useForm = <T extends Yup.AnyObjectSchema, R extends object>(
@@ -21,7 +15,7 @@ export const useForm = <T extends Yup.AnyObjectSchema, R extends object>(
     handleSubmit,
     watch,
     formState: { errors },
-  } = useFormHook({
+  } = useFormHook<R>({
     mode: 'onTouched',
     reValidateMode: 'onChange',
     criteriaMode: 'firstError',
@@ -30,11 +24,8 @@ export const useForm = <T extends Yup.AnyObjectSchema, R extends object>(
     resolver: yupResolver(schemaBuilder(Yup)),
   })
 
-  const getErrorMessage = (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>>,
-  ): string => {
-    return error?.message?.toString() ?? ''
+  const getErrorMessage = (fieldName: keyof Merge<R, FieldErrorsImpl<R>>): string => {
+    return errors[fieldName]?.message?.toString() ?? ''
   }
 
   const disableForm = () => {

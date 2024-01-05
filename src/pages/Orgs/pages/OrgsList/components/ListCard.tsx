@@ -10,7 +10,6 @@ export default function ListCard({ org, ...rest }: Props) {
   const { palette, typography } = useTheme()
   return (
     <Card {...rest} sx={{ py: 5, px: 6, borderRadius: 3 }} variant='outlined'>
-      {/*TODO: add real logo*/}
       <Avatar src={org.metadata.logoUrl} sx={{ width: 64, height: 64 }} />
       <Typography color={palette.text.primary} variant={'h6'} mt={5}>
         {org.metadata.name}

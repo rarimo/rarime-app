@@ -8,32 +8,27 @@ import {
   SelectProps,
   Stack,
 } from '@mui/material'
-import { ReactNode, useMemo } from 'react'
+import { forwardRef, ReactNode, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-type Props<T extends string> = Omit<SelectProps<T>, 'error'> & {
+type Props = Omit<SelectProps<string>, 'error'> & {
   options: {
-    value: T
+    value: string
     label: string
     adornmentLeft?: ReactNode
     adornmentRight?: ReactNode
   }[]
-  updateValue?: (value: T) => void
+  updateValue?: (value: string) => void
   errorMessage?: string
 }
 
-export default function UiSelect<T extends string>({
-  options,
-  updateValue,
-  errorMessage,
-  ...rest
-}: Props<T>) {
+const UiSelect = forwardRef(({ options, updateValue, errorMessage, ...rest }: Props, ref) => {
   const id = useMemo(() => rest.id ?? `ui-select-field-${uuidv4()}`, [rest.id])
 
   const labelId = useMemo(() => rest.labelId ?? `${id}-label`, [id, rest.labelId])
 
-  const handleChange = (e: SelectChangeEvent<T>, child: ReactNode) => {
-    updateValue?.(e.target.value as T)
+  const handleChange = (e: SelectChangeEvent<string>, child: ReactNode) => {
+    updateValue?.(e.target.value as string)
 
     rest?.onChange?.(e, child)
   }
@@ -42,7 +37,14 @@ export default function UiSelect<T extends string>({
     <FormControl fullWidth error={!!errorMessage}>
       {rest.label && <InputLabel id={labelId}>{rest.label}</InputLabel>}
 
-      <Select {...rest} id={id} labelId={labelId} value={rest.value || ''} onChange={handleChange}>
+      <Select
+        {...rest}
+        inputRef={ref}
+        id={id}
+        labelId={labelId}
+        value={rest.value || ''}
+        onChange={handleChange}
+      >
         {options.map(({ value, label, adornmentLeft, adornmentRight }, idx) => (
           <MenuItem key={idx} value={value}>
             <Stack
@@ -63,4 +65,6 @@ export default function UiSelect<T extends string>({
       {errorMessage && <FormHelperText>Error</FormHelperText>}
     </FormControl>
   )
-}
+})
+
+export default UiSelect

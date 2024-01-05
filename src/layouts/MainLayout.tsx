@@ -5,7 +5,7 @@ import { AppNavbar } from '@/common'
 
 const MainLayout = () => {
   return (
-    <Stack direction='row' px={4} py={5} spacing={4} height='calc(100 * var(--vh, 1vh))'>
+    <Stack direction='row' px={4} py={5} spacing={4} minHeight='calc(100 * var(--vh, 1vh))'>
       <AppNavbar />
       <Stack
         width='100%'

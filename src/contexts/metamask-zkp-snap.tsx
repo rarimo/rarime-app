@@ -23,23 +23,27 @@ interface MetamaskZkpSnapContextValue {
 
   isLocalSnap: (snapId: string) => boolean
 
-  createIdentity: () => Promise<{
+  createIdentity: (connector?: SnapConnector) => Promise<{
     identityIdString: string
     identityIdBigIntString: string
   }>
   getVerifiableCredentials: (
     params: SaveCredentialsRequestParams,
+    connector?: SnapConnector,
   ) => Promise<W3CCredential[] | undefined>
-  createProof: (params: CreateProofRequestParams) => Promise<ZKPProofResponse | undefined>
-  checkMetamaskExists: () => Promise<boolean>
+  createProof: (
+    params: CreateProofRequestParams,
+    connector?: SnapConnector,
+  ) => Promise<ZKPProofResponse | undefined>
+  checkMetamaskExists: (connector?: SnapConnector) => Promise<boolean>
   checkSnapExists: () => Promise<boolean>
   checkSnapStatus: () => Promise<{
     isMetamaskInstalled: boolean
     isSnapInstalled: boolean
   }>
 
-  connectOrInstallSnap: () => Promise<void>
-  getCredentials: () => Promise<W3CCredential[]>
+  connectOrInstallSnap: () => Promise<SnapConnector>
+  getCredentials: (connector?: SnapConnector) => Promise<W3CCredential[]>
 }
 
 const CONTEXT_NOT_INITIALIZED_ERROR = new ReferenceError('MetamaskZkpSnapContext not initialized')
@@ -95,40 +99,57 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
    * create identity and return did if it doesn't exist
    * or return the existing one
    */
-  const createIdentity = useCallback(async () => {
-    if (!connector) throw new TypeError('Connector is not defined')
-    const identity = await connector.createIdentity()
-    setUserDid(identity.identityIdString)
-    setUserDidBigIntString(identity.identityIdBigIntString)
-    return identity
-  }, [connector])
+  const createIdentity = useCallback(
+    async (_connector?: SnapConnector) => {
+      const currentConnector = _connector || connector
+
+      if (!currentConnector) throw new TypeError('Connector is not defined')
+
+      const identity = await currentConnector.createIdentity()
+
+      setUserDid(identity.identityIdString)
+      setUserDidBigIntString(identity.identityIdBigIntString)
+
+      return identity
+    },
+    [connector],
+  )
 
   /**
    * Get the verifiable credentials from the snap.
    */
   const getVerifiableCredentials = useCallback(
-    async (params: SaveCredentialsRequestParams) => {
-      if (!connector) throw new TypeError('Connector is not defined')
+    async (params: SaveCredentialsRequestParams, _connector?: SnapConnector) => {
+      const currentConnector = _connector || connector
 
-      return connector.saveCredentials?.(params)
+      if (!currentConnector) throw new TypeError('Connector is not defined')
+
+      return currentConnector.saveCredentials?.(params)
     },
     [connector],
   )
 
   const createProof = useCallback(
-    async (params: CreateProofRequestParams) => {
-      if (!connector) throw new TypeError('Connector is not defined')
+    async (params: CreateProofRequestParams, _connector?: SnapConnector) => {
+      const currentConnector = _connector || connector
 
-      return connector.createProof(params)
+      if (!currentConnector) throw new TypeError('Connector is not defined')
+
+      return currentConnector.createProof(params)
     },
     [connector],
   )
 
-  const getCredentials = useCallback(async () => {
-    if (!connector) throw new TypeError('Connector is not defined')
+  const getCredentials = useCallback(
+    async (_connector?: SnapConnector) => {
+      const currentConnector = _connector || connector
 
-    return await connector.getCredentials()
-  }, [connector])
+      if (!currentConnector) throw new TypeError('Connector is not defined')
+
+      return await currentConnector.getCredentials()
+    },
+    [connector],
+  )
 
   const checkMetamaskExists = useCallback(async () => {
     const _isMetamaskInstalled = await detectMetamaskInstalled()
@@ -151,6 +172,8 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
     const connector = await snap.getConnector()
 
     setConnector(connector)
+
+    return connector
   }, [])
 
   const checkSnapStatus = useCallback(async () => {

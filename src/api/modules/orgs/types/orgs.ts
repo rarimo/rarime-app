@@ -38,7 +38,6 @@ export type Organization = {
 }
 
 export type OrganizationCreate = {
-  id: string
   ownerDid: string
   domain: string
   metadata: OrgMetadata

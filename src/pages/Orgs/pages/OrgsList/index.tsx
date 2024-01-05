@@ -6,15 +6,17 @@ import { Navigate, NavLink } from 'react-router-dom'
 import { loadOrgsAmount, OrgsRequestFilters, OrgsRequestFiltersMap } from '@/api'
 import { PageListFilters, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
-import { useLoading, useNestedRoutes } from '@/hooks'
+import { useLoading, useMetamaskZkpSnapContext, useNestedRoutes } from '@/hooks'
 import { UiButton, UiIcon, UiSwitch } from '@/ui'
 
 import { List } from './components'
 
 export default function OrgsList() {
   const { t } = useTranslation()
+  const { userDid } = useMetamaskZkpSnapContext()
 
   const [filter, setFilter] = useState<OrgsRequestFiltersMap>({})
+
   const routes = useNestedRoutes(RoutePaths.OrgsList, [
     {
       index: true,
@@ -37,10 +39,7 @@ export default function OrgsList() {
           filter={{
             ...filter,
 
-            /**
-             * FIXME: get userDid from {@link useMetamaskZkpSnapContext}
-             */
-            [OrgsRequestFilters.UserDid]: 'did:iden3:readonly:blabla',
+            [OrgsRequestFilters.UserDid]: userDid,
           }}
         />
       ),
@@ -48,9 +47,7 @@ export default function OrgsList() {
   ])
 
   const init = useCallback(async () => {
-    const { data } = await loadOrgsAmount()
-
-    return data
+    return loadOrgsAmount()
   }, [])
 
   const { data: orgsAmount } = useLoading<number | undefined>(undefined, init, {
@@ -94,6 +91,7 @@ export default function OrgsList() {
             </NavLink>
           </Stack>
         }
+        textFieldSX={{ borderRadius: '100px' }}
       />
 
       <Stack flex={1}>{routes}</Stack>

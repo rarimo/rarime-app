@@ -1,17 +1,45 @@
+import { generatePath, Navigate } from 'react-router-dom'
+
 import { RoutePaths } from '@/enums'
 import { useNestedRoutes } from '@/hooks'
+import { OrgDetailsContextProvider } from '@/pages/Orgs/pages/OrgsId/contexts'
+import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 
-import { OrgCheckProof, OrgRoot } from './pages'
+import { OrgCheckProof, OrgGroups, OrgRoot } from './pages'
 
-export default function OrgsId() {
-  return useNestedRoutes(RoutePaths.OrgsId, [
+function OrgsIdRouter() {
+  const { isOrgOwner, org } = useOrgDetails()
+
+  const nestedRoutes = useNestedRoutes(RoutePaths.OrgsId, [
     {
       index: true,
       element: <OrgRoot />,
+    },
+    {
+      path: RoutePaths.OrgsIdGroups,
+      element: isOrgOwner ? (
+        <OrgGroups />
+      ) : (
+        <Navigate
+          to={generatePath(RoutePaths.OrgsId, {
+            id: org.id,
+          })}
+        />
+      ),
     },
     {
       path: RoutePaths.OrgsIdCheckProof,
       element: <OrgCheckProof />,
     },
   ])
+
+  return <OrgDetailsContextProvider>{nestedRoutes}</OrgDetailsContextProvider>
+}
+
+export default function OrgsId() {
+  return (
+    <OrgDetailsContextProvider>
+      <OrgsIdRouter />
+    </OrgDetailsContextProvider>
+  )
 }
