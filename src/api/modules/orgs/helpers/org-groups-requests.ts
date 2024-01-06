@@ -3,10 +3,11 @@ import {
   OrgGroupCreatedRequest,
   OrgGroupCreateRequest,
   OrgGroupRequest,
-  OrgGroupRequestMetadata,
+  OrgGroupRequestPerCredentialMetadata,
   OrgGroupRequestQueryParams,
   OrgGroupRequestStatuses,
   OrgsStatuses,
+  OrgUserRoles,
 } from '@/api'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -430,11 +431,13 @@ export const acceptInvitation = async ({
 }
 
 export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) => {
-  const { data } = await api.get<OrgGroupRequest[]>(`/v1/orgs/requests`, {
-    query: query,
-  })
+  // const { data } = await api.get<OrgGroupRequest[]>(`/v1/orgs/requests`, {
+  //   query: query,
+  // })
+  //
+  // return data
 
-  return data
+  return DUMMY_ORG_GROUP_REQUESTS
 }
 
 export const loadOrgGroupRequestById = async (orgId: string, groupId: string, reqId: string) => {
@@ -449,12 +452,12 @@ export const fillOrgGroupRequest = async ({
   orgId,
   groupId,
   reqId,
-  orgGroupRequestMetadata,
+  credMetadata,
 }: {
   orgId: string
   groupId: string
   reqId: string
-  orgGroupRequestMetadata: OrgGroupRequestMetadata
+  credMetadata: OrgGroupRequestPerCredentialMetadata[]
 }) => {
   const { data } = await api.patch<OrgGroupRequest>(
     `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
@@ -463,7 +466,7 @@ export const fillOrgGroupRequest = async ({
         data: {
           type: 'requests-fill',
           attributes: {
-            metadata: orgGroupRequestMetadata,
+            metadata: credMetadata,
           },
         },
       },
@@ -477,14 +480,14 @@ export const verifyOrgGroupRequest = async ({
   orgId,
   groupId,
   reqId,
-  orgGroupRequestMetadata,
+  credMetadata,
   role,
 }: {
   orgId: string
   groupId: string
   reqId: string
-  orgGroupRequestMetadata: OrgGroupRequestMetadata
-  role: number
+  credMetadata: OrgGroupRequestPerCredentialMetadata[]
+  role: OrgUserRoles
 }) => {
   const { data } = await api.post<OrgGroupRequest>(
     `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
@@ -494,7 +497,7 @@ export const verifyOrgGroupRequest = async ({
           type: 'requests-verify',
           attributes: {
             approved: true,
-            metadata: orgGroupRequestMetadata,
+            metadata: credMetadata,
             role: role,
           },
         },

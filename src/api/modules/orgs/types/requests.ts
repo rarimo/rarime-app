@@ -6,15 +6,17 @@ import {
   OrgGroupRequestStatuses,
 } from '@/api'
 
-export type OrgGroupRequestMetadata = {
+export type OrgGroupRequestPerCredentialMetadata = {
   schema: string
+  fields: Record<string, string>
   metadata: {
-    metadata1: string
+    startDate?: string
+    endDate?: string
+    appearance: {
+      background: string
+    }
   }
-  fields: {
-    field1: string
-  }
-}[]
+}
 
 export type OrgGroupRequest = {
   id: string
@@ -22,7 +24,7 @@ export type OrgGroupRequest = {
   org_id: string
   group_id: string
   user_did: string
-  metadata: OrgGroupRequestMetadata
+  metadata: OrgGroupRequestPerCredentialMetadata[]
   status: {
     name: string
     value: OrgGroupRequestStatuses
