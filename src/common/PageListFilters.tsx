@@ -1,4 +1,4 @@
-import { InputAdornment, Stack, StackProps, type TextFieldProps } from '@mui/material'
+import { InputAdornment, Stack, StackProps, SxProps } from '@mui/material'
 import debounce from 'lodash/debounce'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,14 +12,14 @@ interface Props extends StackProps {
   }[]
   onSearchInput?: (value: string) => void
   actionBar?: ReactNode
-  textFieldSize?: TextFieldProps['size']
+  inputSx?: SxProps
 }
 
 export default function PageListFilters({
   tabs,
   onSearchInput,
   actionBar,
-  textFieldSize,
+  inputSx,
   ...rest
 }: Props) {
   const { t } = useTranslation()
@@ -40,7 +40,8 @@ export default function PageListFilters({
         }}
         placeholder={t('page-list-filters.search-input-placeholder')}
         onChange={e => handleSearchInput(e.target.value)}
-        size={textFieldSize}
+        size={'small'}
+        sx={{ borderColor: theme => theme.palette.grey[300], ...inputSx }}
       />
 
       <Stack flex={1}>{actionBar}</Stack>

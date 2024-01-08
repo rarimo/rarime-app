@@ -76,10 +76,9 @@ export default function OrgsList() {
             [OrgsRequestFilters.UserDid]: value,
           }))
         }
-        textFieldSize={'small'}
         actionBar={
           <Stack direction='row' gap={4} justifyContent='space-between'>
-            <UiSwitch label='Show Only active' variant={'outlined'} />
+            <UiSwitch label='Show Only active' />
 
             <NavLink to={RoutePaths.OrgsNew}>
               <UiButton
