@@ -12,6 +12,7 @@ import { default as Work } from '@mui/icons-material/Work'
 
 export enum Icons {
   Metamask = 'metamask',
+  Verified = 'verified',
   User = 'user',
   Wallet = 'wallet',
 }
