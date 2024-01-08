@@ -80,4 +80,13 @@ export const componentsTheme: Components<BaseTheme> = {
       animation: 'wave',
     },
   },
+  MuiTextField: {
+    styleOverrides: {
+      root: {
+        '& fieldset': {
+          borderRadius: '1000px',
+        },
+      },
+    },
+  },
 }
