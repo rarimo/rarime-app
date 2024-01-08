@@ -22,7 +22,14 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
       {
         schema: 'https://schema.url',
         metadata: {
-          metadata1: 'value1',
+          startDate: '2021-08-12T12:00:00Z',
+          endDate: '2021-08-12T13:00:00Z',
+          title: 'title',
+          subtitle: 'subtitle',
+          orgId: 'orgId',
+          appearance: {
+            background: '',
+          },
         },
         fields: {
           field1: 'value1',
@@ -66,7 +73,14 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
       {
         schema: 'https://schema.url',
         metadata: {
-          metadata1: 'value1',
+          startDate: '2021-08-12T12:00:00Z',
+          endDate: '2021-08-12T13:00:00Z',
+          title: 'title',
+          subtitle: 'subtitle',
+          orgId: 'orgId',
+          appearance: {
+            background: '',
+          },
         },
         fields: {
           field1: 'value1',
@@ -110,7 +124,14 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
       {
         schema: 'https://schema.url',
         metadata: {
-          metadata1: 'value1',
+          startDate: '2021-08-12T12:00:00Z',
+          endDate: '2021-08-12T13:00:00Z',
+          title: 'title',
+          subtitle: 'subtitle',
+          orgId: 'orgId',
+          appearance: {
+            background: '',
+          },
         },
         fields: {
           field1: 'value1',
@@ -154,7 +175,14 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
       {
         schema: 'https://schema.url',
         metadata: {
-          metadata1: 'value1',
+          startDate: '2021-08-12T12:00:00Z',
+          endDate: '2021-08-12T13:00:00Z',
+          title: 'title',
+          subtitle: 'subtitle',
+          orgId: 'orgId',
+          appearance: {
+            background: '',
+          },
         },
         fields: {
           field1: 'value1',
@@ -198,7 +226,14 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
       {
         schema: 'https://schema.url',
         metadata: {
-          metadata1: 'value1',
+          startDate: '2021-08-12T12:00:00Z',
+          endDate: '2021-08-12T13:00:00Z',
+          title: 'title',
+          subtitle: 'subtitle',
+          orgId: 'orgId',
+          appearance: {
+            background: '',
+          },
         },
         fields: {
           field1: 'value1',
@@ -242,7 +277,14 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
       {
         schema: 'https://schema.url',
         metadata: {
-          metadata1: 'value1',
+          startDate: '2021-08-12T12:00:00Z',
+          endDate: '2021-08-12T13:00:00Z',
+          title: 'title',
+          subtitle: 'subtitle',
+          orgId: 'orgId',
+          appearance: {
+            background: '',
+          },
         },
         fields: {
           field1: 'value1',
@@ -286,7 +328,14 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
       {
         schema: 'https://schema.url',
         metadata: {
-          metadata1: 'value1',
+          startDate: '2021-08-12T12:00:00Z',
+          endDate: '2021-08-12T13:00:00Z',
+          title: 'title',
+          subtitle: 'subtitle',
+          orgId: 'orgId',
+          appearance: {
+            background: '',
+          },
         },
         fields: {
           field1: 'value1',
@@ -330,7 +379,14 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
       {
         schema: 'https://schema.url',
         metadata: {
-          metadata1: 'value1',
+          startDate: '2021-08-12T12:00:00Z',
+          endDate: '2021-08-12T13:00:00Z',
+          title: 'title',
+          subtitle: 'subtitle',
+          orgId: 'orgId',
+          appearance: {
+            background: '',
+          },
         },
         fields: {
           field1: 'value1',

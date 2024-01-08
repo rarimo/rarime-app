@@ -12,6 +12,9 @@ export type OrgGroupRequestPerCredentialMetadata = {
   metadata: {
     startDate?: string
     endDate?: string
+    title?: string
+    subtitle?: string
+    orgId: string
     appearance: {
       background: string
     }
