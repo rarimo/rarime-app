@@ -41,7 +41,7 @@ export default function PageListFilters({
         placeholder={t('page-list-filters.search-input-placeholder')}
         onChange={e => handleSearchInput(e.target.value)}
         size={'small'}
-        sx={{ borderColor: theme => theme.palette.grey[300], ...inputSx }}
+        sx={{ ...inputSx }}
       />
 
       <Stack flex={1}>{actionBar}</Stack>

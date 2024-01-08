@@ -82,11 +82,12 @@ export const componentsTheme: Components<BaseTheme> = {
   },
   MuiTextField: {
     styleOverrides: {
-      root: {
+      root: ({ theme }) => ({
         '& fieldset': {
           borderRadius: '1000px',
+          borderColor: theme.palette.grey[300],
         },
-      },
+      }),
     },
   },
 }
