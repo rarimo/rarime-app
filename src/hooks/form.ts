@@ -15,7 +15,7 @@ export const useForm = <T extends Yup.AnyObjectSchema, R extends object>(
     handleSubmit,
     watch,
     formState: { errors },
-  } = useFormHook({
+  } = useFormHook<R>({
     mode: 'onTouched',
     reValidateMode: 'onChange',
     criteriaMode: 'firstError',

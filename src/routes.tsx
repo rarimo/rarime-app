@@ -22,7 +22,7 @@ export const AppRoutes = () => {
   const UiKit = lazy(() => import('@/pages/UiKit'))
   const VerifyProofAlias = lazy(() => import('@/pages/VerifyProofAlias'))
 
-  const { isAuthorized, logOut } = useAuth()
+  const { isAuthorized, logout } = useAuth()
 
   const signInGuard = useCallback(
     ({ request }: LoaderFunctionArgs) => {
@@ -38,7 +38,7 @@ export const AppRoutes = () => {
       // them to sign in with a `from` parameter that allows login to redirect back
       // to this page upon successful authentication
       if (!isAuthorized) {
-        logOut()
+        logout()
 
         const params = new URLSearchParams()
         params.set('from', new URL(request.url).pathname)
@@ -47,7 +47,7 @@ export const AppRoutes = () => {
 
       return null
     },
-    [isAuthorized, logOut],
+    [isAuthorized, logout],
   )
 
   const router = createBrowserRouter([

@@ -1,4 +1,4 @@
-import { InputAdornment, Stack, useTheme } from '@mui/material'
+import { InputAdornment, Stack } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 
 import { sleep } from '@/helpers'

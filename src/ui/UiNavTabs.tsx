@@ -8,20 +8,28 @@ interface Props extends StackProps {
   tabs: {
     label: string
     route: string
+    isExact?: boolean
   }[]
 }
 
-function NavTab({ to, label, ...rest }: { label: string } & NavLinkProps) {
+function NavTab({
+  to,
+  label,
+  isExact = false,
+  ...rest
+}: { label: string; isExact?: boolean } & NavLinkProps) {
   const location = useLocation()
 
   const getLinkProps = useMemo((): Partial<ButtonProps> => {
-    const isRouteActive = location.pathname.includes(to as string)
+    const isRouteActive = isExact
+      ? location.pathname === (to as string)
+      : location.pathname.includes(to as string)
 
     return {
       variant: isRouteActive ? 'contained' : 'text',
       color: isRouteActive ? 'primary' : 'secondary',
     }
-  }, [location.pathname, to])
+  }, [isExact, location.pathname, to])
 
   return (
     <NavLink {...rest} to={to}>
@@ -53,8 +61,8 @@ export default function UiNavTabs({ tabs, ...rest }: Props) {
       })}
       padding={1}
     >
-      {tabs.map(({ route, label }, idx) => (
-        <NavTab key={idx} to={route} label={label} />
+      {tabs.map(({ route, label, isExact }, idx) => (
+        <NavTab key={idx} to={route} label={label} isExact={isExact} />
       ))}
     </Stack>
   )
