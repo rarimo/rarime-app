@@ -1,43 +1,41 @@
-import { Stack, StackProps, Typography } from '@mui/material'
+import { Avatar, Stack, StackProps, Typography } from '@mui/material'
+import { W3CCredential } from '@rarimo/rarime-connector'
 import { useMemo } from 'react'
 
-import { OrgGroupRequestPerCredentialMetadata } from '@/api'
+import { CredentialRequest, Organization, OrgGroupVCsMetadata } from '@/api'
 
 interface Props extends StackProps {
-  VCMetadataPreview: OrgGroupRequestPerCredentialMetadata[]
+  VCMetadataPreview: OrgGroupVCsMetadata
+  VCs: CredentialRequest[] | W3CCredential[]
+  org: Organization
 }
 
-/*
-This card is a group of credentials with different schemas and it's metadata
-TODO: get common things from metadata and reduce schemas
-
-props for this component could be received by loading all
-
-how to load org metadata here? e. g. logo, name, etc.
- */
-export default function VCGroupOverviewCard({ VCMetadataPreview, ...rest }: Props) {
-  const appearance = useMemo(() => {
-    return {
-      title: VCMetadataPreview[0].metadata.title,
-      subtitle: VCMetadataPreview[0].metadata.subtitle,
-      startDate: VCMetadataPreview[0].metadata.startDate,
-      endDate: VCMetadataPreview[0].metadata.endDate,
-      background: VCMetadataPreview[0].metadata.appearance.background,
+export default function VCGroupOverviewCard({ org, VCMetadataPreview, ...rest }: Props) {
+  const isBgImage = useMemo(() => {
+    try {
+      return Boolean(new URL(VCMetadataPreview.appearance.background))
+    } catch (error) {
+      return false
     }
-  }, [VCMetadataPreview])
+  }, [VCMetadataPreview.appearance.background])
+
+  const bg = useMemo(() => {
+    return isBgImage
+      ? `url("${VCMetadataPreview.appearance.background}") no-repeat center center / cover`
+      : VCMetadataPreview.appearance.background
+  }, [VCMetadataPreview.appearance.background, isBgImage])
 
   return (
     <Stack
       {...rest}
       sx={{
-        background: `url("${appearance.background}") no-repeat center center / cover`,
+        background: bg,
         minWidth: 300,
       }}
     >
-      <Typography>{appearance.title}</Typography>
-      <Typography>{appearance.subtitle}</Typography>
-      <Typography>{appearance.startDate}</Typography>
-      <Typography>{appearance.endDate}</Typography>
+      <Typography>{VCMetadataPreview.title}</Typography>
+      <Typography>{VCMetadataPreview.subtitle}</Typography>
+      <Avatar src={org.metadata.logoUrl} alt={org.metadata.name} />
     </Stack>
   )
 }

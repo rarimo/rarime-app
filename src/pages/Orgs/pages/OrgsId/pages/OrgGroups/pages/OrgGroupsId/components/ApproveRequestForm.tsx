@@ -3,15 +3,11 @@ import { FormControl, Stack, StackProps } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
-import {
-  OrgGroupRequest,
-  OrgGroupRequestPerCredentialMetadata,
-  OrgUserRoles,
-  verifyOrgGroupRequest,
-} from '@/api'
+import { OrgGroupRequest, OrgGroupVCsMetadata, OrgUserRoles, verifyOrgGroupRequest } from '@/api'
 import { VCGroupOverviewCard } from '@/common'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
+import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiBasicModal, UiButton, UiDatePicker, UiImageUploader, UiSelect, UiTextField } from '@/ui'
 
 interface Props extends StackProps {
@@ -26,25 +22,21 @@ enum FieldNames {
   StartDate = 'startDate',
   EndDate = 'endDate',
   Role = 'role',
-  Background = 'background',
+  BackgroundImage = 'background-image',
+  BackgroundHex = 'background-hex',
 }
 
-/* TODO:
-    implement https://www.figma.com/file/fiiwEsdA0WhvcBeJCexqso/PROOF?type=design&node-id=3033-50564&mode=dev form
-    define metadata for request and how it will work
-    how does "custom" metadata will appear in kyc-svc to publish VCs?
-    how do we receive VCs after that in employee side?
-    How to manage it's metadata
-* */
-
 function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...rest }: Props) {
+  const { org } = useOrgDetails()
+
   const DEFAULT_VALUES = useMemo<{
     [FieldNames.Title]: string
     [FieldNames.Subtitle]: string
     [FieldNames.StartDate]: string
     [FieldNames.EndDate]: string
     [FieldNames.Role]: OrgUserRoles
-    [FieldNames.Background]?: File
+    [FieldNames.BackgroundImage]?: File
+    [FieldNames.BackgroundHex]?: string
   }>(
     () => ({
       [FieldNames.Title]: '',
@@ -52,7 +44,8 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
       [FieldNames.StartDate]: '',
       [FieldNames.EndDate]: '',
       [FieldNames.Role]: OrgUserRoles.Employee,
-      [FieldNames.Background]: undefined,
+      [FieldNames.BackgroundImage]: undefined,
+      [FieldNames.BackgroundHex]: '',
     }),
     [],
   )
@@ -67,6 +60,20 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
     control,
   } = useForm(DEFAULT_VALUES, yup => yup.object().shape({}))
 
+  const VCMetadataPreview = useMemo<OrgGroupVCsMetadata>(() => {
+    return {
+      title: formState[FieldNames.Title],
+      subtitle: formState[FieldNames.Subtitle],
+      appearance: {
+        background:
+          (formState[FieldNames.BackgroundImage] &&
+            URL.createObjectURL(formState[FieldNames.BackgroundImage])) ||
+          formState[FieldNames.BackgroundHex] ||
+          '',
+      },
+    }
+  }, [formState])
+
   const submit = useCallback(async () => {
     disableForm()
 
@@ -76,20 +83,7 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
         groupId: orgGroupRequest.group_id,
         reqId: orgGroupRequest.id,
         role: formState[FieldNames.Role],
-        credMetadata: orgGroupRequest.metadata.map(el => ({
-          schema: el.schema,
-          fields: el.fields,
-          metadata: {
-            startDate: formState[FieldNames.StartDate]?.toString(), // TODO: refactor!
-            endDate: formState[FieldNames.EndDate]?.toString(),
-            title: formState[FieldNames.Title],
-            subtitle: formState[FieldNames.Subtitle],
-            orgId: orgGroupRequest.org_id,
-            appearance: {
-              background: '', // FIXME
-            },
-          },
-        })),
+        metadata: VCMetadataPreview,
       })
 
       await onRequestApproved?.()
@@ -99,40 +93,15 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
 
     enableForm()
   }, [
+    VCMetadataPreview,
     disableForm,
     enableForm,
     formState,
     onRequestApproved,
     orgGroupRequest.group_id,
     orgGroupRequest.id,
-    orgGroupRequest.metadata,
     orgGroupRequest.org_id,
   ])
-
-  /*
-  Request contains all VC details which will be implemented for employee
-  So we need to prepare appearance for card, and an array for detailed VCs properties
-   */
-  const VCMetadataPreview = useMemo<OrgGroupRequestPerCredentialMetadata[]>(() => {
-    return orgGroupRequest.metadata.map(el => ({
-      schema: el.schema,
-      fields: el.fields,
-      metadata: {
-        startDate: formState[FieldNames.StartDate]?.toString(),
-        endDate: formState[FieldNames.EndDate]?.toString(),
-        title: formState[FieldNames.Title],
-        subtitle: formState[FieldNames.Subtitle],
-        orgId: orgGroupRequest.org_id,
-        appearance: {
-          background: formState[FieldNames.Background]
-            ? URL.createObjectURL(formState[FieldNames.Background])
-            : '',
-        },
-      },
-    }))
-  }, [formState, orgGroupRequest.metadata, orgGroupRequest.org_id])
-
-  console.log(formState)
 
   return (
     <Stack {...rest} direction='row' gap={6}>
@@ -167,19 +136,15 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
             <Controller
               name={FieldNames.StartDate}
               control={control}
-              render={({ field }) => {
-                console.log(field)
-
-                return (
-                  <UiDatePicker
-                    {...field}
-                    label='Start date'
-                    disablePast={true}
-                    disabled={isFormDisabled}
-                    errorMessage={getErrorMessage(FieldNames.StartDate)}
-                  />
-                )
-              }}
+              render={({ field }) => (
+                <UiDatePicker
+                  {...field}
+                  label='Start date'
+                  disablePast={true}
+                  disabled={isFormDisabled}
+                  errorMessage={getErrorMessage(FieldNames.StartDate)}
+                />
+              )}
             />
 
             <Controller
@@ -214,14 +179,29 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
           />
 
           <Controller
-            name={FieldNames.Background}
+            name={FieldNames.BackgroundHex}
+            control={control}
+            render={({ field }) => (
+              <FormControl>
+                <UiTextField
+                  {...field}
+                  label={FieldNames.BackgroundHex}
+                  errorMessage={getErrorMessage(FieldNames.BackgroundHex)}
+                  disabled={isFormDisabled}
+                />
+              </FormControl>
+            )}
+          />
+
+          <Controller
+            name={FieldNames.BackgroundImage}
             control={control}
             render={({ field }) => (
               <FormControl>
                 <UiImageUploader
                   {...field}
-                  label={FieldNames.Background}
-                  // errorMessage={getErrorMessage(FieldNames.Logo)}
+                  label={FieldNames.BackgroundImage}
+                  // errorMessage={getErrorMessage(FieldNames.BackgroundImage)}
                   disabled={isFormDisabled}
                 />
               </FormControl>
@@ -233,7 +213,11 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
           </UiButton>
         </Stack>
       </form>
-      <VCGroupOverviewCard VCMetadataPreview={VCMetadataPreview} />
+      <VCGroupOverviewCard
+        VCMetadataPreview={VCMetadataPreview}
+        VCs={orgGroupRequest.credential_requests}
+        org={org}
+      />
     </Stack>
   )
 }
@@ -244,9 +228,9 @@ export default function ApproveRequestForm({ orgGroupRequest, onRequestApproved,
   return (
     <Stack {...rest} flex={1} p={5}>
       <Stack>
-        {orgGroupRequest.metadata.map((el, idx) => (
+        {orgGroupRequest.credential_requests.map((credReq, idx) => (
           <div key={idx}>
-            <div>{el.fields.field1}</div>
+            <div>{JSON.stringify(credReq.credential_subject)}</div>
           </div>
         ))}
       </Stack>

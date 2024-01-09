@@ -1,11 +1,13 @@
 import {
   api,
+  CredentialRequest,
   OrgGroupCreatedRequest,
   OrgGroupCreateRequest,
   OrgGroupRequest,
-  OrgGroupRequestPerCredentialMetadata,
+  OrgGroupRequestFilters,
   OrgGroupRequestQueryParams,
   OrgGroupRequestStatuses,
+  OrgGroupVCsMetadata,
   OrgsStatuses,
   OrgUserRoles,
 } from '@/api'
@@ -18,22 +20,26 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          startDate: '2021-08-12T12:00:00Z',
-          endDate: '2021-08-12T13:00:00Z',
-          title: 'title',
-          subtitle: 'subtitle',
-          orgId: 'orgId',
-          appearance: {
-            background: '',
-          },
+        credential_schema: '',
+        credential_subject: {
+          discord: '',
         },
-        fields: {
-          field1: 'value1',
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
+      },
+      {
+        credential_schema: '',
+        credential_subject: {
+          telegram: '',
         },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -69,22 +75,26 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          startDate: '2021-08-12T12:00:00Z',
-          endDate: '2021-08-12T13:00:00Z',
-          title: 'title',
-          subtitle: 'subtitle',
-          orgId: 'orgId',
-          appearance: {
-            background: '',
-          },
+        credential_schema: '',
+        credential_subject: {
+          discord: '',
         },
-        fields: {
-          field1: 'value1',
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
+      },
+      {
+        credential_schema: '',
+        credential_subject: {
+          telegram: '',
         },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -120,22 +130,26 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          startDate: '2021-08-12T12:00:00Z',
-          endDate: '2021-08-12T13:00:00Z',
-          title: 'title',
-          subtitle: 'subtitle',
-          orgId: 'orgId',
-          appearance: {
-            background: '',
-          },
+        credential_schema: '',
+        credential_subject: {
+          discord: '',
         },
-        fields: {
-          field1: 'value1',
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
+      },
+      {
+        credential_schema: '',
+        credential_subject: {
+          telegram: '',
         },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -171,22 +185,26 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          startDate: '2021-08-12T12:00:00Z',
-          endDate: '2021-08-12T13:00:00Z',
-          title: 'title',
-          subtitle: 'subtitle',
-          orgId: 'orgId',
-          appearance: {
-            background: '',
-          },
+        credential_schema: '',
+        credential_subject: {
+          discord: '',
         },
-        fields: {
-          field1: 'value1',
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
+      },
+      {
+        credential_schema: '',
+        credential_subject: {
+          telegram: '',
         },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -222,22 +240,26 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          startDate: '2021-08-12T12:00:00Z',
-          endDate: '2021-08-12T13:00:00Z',
-          title: 'title',
-          subtitle: 'subtitle',
-          orgId: 'orgId',
-          appearance: {
-            background: '',
-          },
+        credential_schema: '',
+        credential_subject: {
+          discord: '',
         },
-        fields: {
-          field1: 'value1',
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
+      },
+      {
+        credential_schema: '',
+        credential_subject: {
+          telegram: '',
         },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -273,22 +295,26 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          startDate: '2021-08-12T12:00:00Z',
-          endDate: '2021-08-12T13:00:00Z',
-          title: 'title',
-          subtitle: 'subtitle',
-          orgId: 'orgId',
-          appearance: {
-            background: '',
-          },
+        credential_schema: '',
+        credential_subject: {
+          discord: '',
         },
-        fields: {
-          field1: 'value1',
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
+      },
+      {
+        credential_schema: '',
+        credential_subject: {
+          telegram: '',
         },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -324,22 +350,26 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          startDate: '2021-08-12T12:00:00Z',
-          endDate: '2021-08-12T13:00:00Z',
-          title: 'title',
-          subtitle: 'subtitle',
-          orgId: 'orgId',
-          appearance: {
-            background: '',
-          },
+        credential_schema: '',
+        credential_subject: {
+          discord: '',
         },
-        fields: {
-          field1: 'value1',
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
+      },
+      {
+        credential_schema: '',
+        credential_subject: {
+          telegram: '',
         },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -375,22 +405,26 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          startDate: '2021-08-12T12:00:00Z',
-          endDate: '2021-08-12T13:00:00Z',
-          title: 'title',
-          subtitle: 'subtitle',
-          orgId: 'orgId',
-          appearance: {
-            background: '',
-          },
+        credential_schema: '',
+        credential_subject: {
+          discord: '',
         },
-        fields: {
-          field1: 'value1',
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
+      },
+      {
+        credential_schema: '',
+        credential_subject: {
+          telegram: '',
         },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -432,6 +466,30 @@ const DUMMY_CREATED_REQUEST: OrgGroupCreatedRequest = {
   req_id: '9d6a5063-684e-4ab4-b49a-82cdceadf63f',
   created_at: '2021-08-12T14:00:00Z',
   request: DUMMY_ORG_GROUP_REQUESTS[0],
+}
+
+const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {
+  return DUMMY_ORG_GROUP_REQUESTS.filter(req => {
+    if (
+      query?.filter?.[OrgGroupRequestFilters.Status] &&
+      query.filter?.[OrgGroupRequestFilters.UserDid]
+    ) {
+      return (
+        req.status.value === query.filter[OrgGroupRequestFilters.Status] &&
+        req.user_did === query.filter[OrgGroupRequestFilters.UserDid]
+      )
+    }
+
+    if (query?.filter?.[OrgGroupRequestFilters.Status]) {
+      return req.status.value === query.filter[OrgGroupRequestFilters.Status]
+    }
+
+    if (query?.filter?.[OrgGroupRequestFilters.UserDid]) {
+      return req.user_did === query.filter[OrgGroupRequestFilters.UserDid]
+    }
+
+    return false
+  })
 }
 
 export const createInvitation = async ({ orgId, groupId, email, rules }: OrgGroupCreateRequest) => {
@@ -493,7 +551,7 @@ export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) =
   //
   // return data
 
-  return DUMMY_ORG_GROUP_REQUESTS
+  return fakeLoadRequestsAll(query)
 }
 
 export const loadOrgGroupRequestById = async (orgId: string, groupId: string, reqId: string) => {
@@ -504,16 +562,17 @@ export const loadOrgGroupRequestById = async (orgId: string, groupId: string, re
   return data
 }
 
+// FIXME: not finished backend endpoint
 export const fillOrgGroupRequest = async ({
   orgId,
   groupId,
   reqId,
-  credMetadata,
+  credReq,
 }: {
   orgId: string
   groupId: string
   reqId: string
-  credMetadata: OrgGroupRequestPerCredentialMetadata[]
+  credReq: CredentialRequest[]
 }) => {
   const { data } = await api.patch<OrgGroupRequest>(
     `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
@@ -522,7 +581,7 @@ export const fillOrgGroupRequest = async ({
         data: {
           type: 'requests-fill',
           attributes: {
-            metadata: credMetadata,
+            metadata: credReq,
           },
         },
       },
@@ -536,14 +595,18 @@ export const verifyOrgGroupRequest = async ({
   orgId,
   groupId,
   reqId,
-  credMetadata,
+  activationDate,
+  expirationDate,
   role,
+  metadata,
 }: {
   orgId: string
   groupId: string
   reqId: string
-  credMetadata: OrgGroupRequestPerCredentialMetadata[]
+  activationDate?: string
+  expirationDate?: string
   role: OrgUserRoles
+  metadata: OrgGroupVCsMetadata
 }) => {
   const { data } = await api.post<OrgGroupRequest>(
     `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
@@ -552,9 +615,11 @@ export const verifyOrgGroupRequest = async ({
         data: {
           type: 'requests-verify',
           attributes: {
+            ...(activationDate && { activation_date: activationDate }),
+            ...(expirationDate && { expiration_date: expirationDate }),
             approved: true,
-            metadata: credMetadata,
             role: role,
+            metadata,
           },
         },
       },
