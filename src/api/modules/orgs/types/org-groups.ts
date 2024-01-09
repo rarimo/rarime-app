@@ -7,8 +7,8 @@ export type OrgGroupMetadata = {
 }
 
 export type OrgGroupVCsMetadata = {
-  title?: string
-  subtitle?: string
+  title: string
+  subtitle: string
   appearance: {
     background: string
   }

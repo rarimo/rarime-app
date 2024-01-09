@@ -43,7 +43,6 @@
     "@mui/x-date-pickers": "^6.18.7",
     "@rarimo/rarime-connector": "^2.0.0-rc.1",
     "@walletconnect/modal": "^2.6.2",
-    "dayjs": "^1.11.10",
     "i18next": "^22.4.3",
     "lodash": "^4.17.21",
     "loglevel": "^1.8.1",

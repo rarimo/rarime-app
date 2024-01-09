@@ -1,29 +1,36 @@
 import { Avatar, Stack, StackProps, Typography } from '@mui/material'
-import { W3CCredential } from '@rarimo/rarime-connector'
 import { useMemo } from 'react'
 
-import { CredentialRequest, Organization, OrgGroupVCsMetadata } from '@/api'
+import { Organization } from '@/api'
 
 interface Props extends StackProps {
-  VCMetadataPreview: OrgGroupVCsMetadata
-  VCs: CredentialRequest[] | W3CCredential[]
+  title: string
+  subtitle: string
+  background: string
+  expirationDate: string
+
   org: Organization
 }
 
-export default function VCGroupOverviewCard({ org, VCMetadataPreview, ...rest }: Props) {
+export default function VCGroupOverviewCard({
+  title,
+  subtitle,
+  background,
+  expirationDate,
+  org,
+  ...rest
+}: Props) {
   const isBgImage = useMemo(() => {
     try {
-      return Boolean(new URL(VCMetadataPreview.appearance.background))
+      return Boolean(new URL(background))
     } catch (error) {
       return false
     }
-  }, [VCMetadataPreview.appearance.background])
+  }, [background])
 
   const bg = useMemo(() => {
-    return isBgImage
-      ? `url("${VCMetadataPreview.appearance.background}") no-repeat center center / cover`
-      : VCMetadataPreview.appearance.background
-  }, [VCMetadataPreview.appearance.background, isBgImage])
+    return isBgImage ? `url("${background}") no-repeat center center / cover` : background
+  }, [background, isBgImage])
 
   return (
     <Stack
@@ -33,8 +40,10 @@ export default function VCGroupOverviewCard({ org, VCMetadataPreview, ...rest }:
         minWidth: 300,
       }}
     >
-      <Typography>{VCMetadataPreview.title}</Typography>
-      <Typography>{VCMetadataPreview.subtitle}</Typography>
+      <Typography>{title}</Typography>
+      <Typography>{subtitle}</Typography>
+      <Typography>{expirationDate}</Typography>
+      <Typography>{org.metadata.name}</Typography>
       <Avatar src={org.metadata.logoUrl} alt={org.metadata.name} />
     </Stack>
   )

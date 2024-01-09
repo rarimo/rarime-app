@@ -1,3 +1,7 @@
+import { fetcher } from '@distributedlab/fetcher'
+import { W3CCredential } from '@rarimo/rarime-connector'
+import omit from 'lodash/omit'
+
 import {
   api,
   CredentialRequest,
@@ -10,6 +14,7 @@ import {
   OrgGroupVCsMetadata,
   OrgsStatuses,
   OrgUserRoles,
+  VCSchema,
 } from '@/api'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -22,19 +27,10 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
     credential_requests: [
       {
-        credential_schema: '',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
-          discord: '',
-        },
-        type: '',
-        expiration: '',
-        mt_proof: true,
-        signature_proof: false,
-      },
-      {
-        credential_schema: '',
-        credential_subject: {
-          telegram: '',
+          birthday: '1704810332',
         },
         type: '',
         expiration: '',
@@ -77,19 +73,10 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
     credential_requests: [
       {
-        credential_schema: '',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
-          discord: '',
-        },
-        type: '',
-        expiration: '',
-        mt_proof: true,
-        signature_proof: false,
-      },
-      {
-        credential_schema: '',
-        credential_subject: {
-          telegram: '',
+          birthday: '1704810332',
         },
         type: '',
         expiration: '',
@@ -132,19 +119,10 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
     credential_requests: [
       {
-        credential_schema: '',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
-          discord: '',
-        },
-        type: '',
-        expiration: '',
-        mt_proof: true,
-        signature_proof: false,
-      },
-      {
-        credential_schema: '',
-        credential_subject: {
-          telegram: '',
+          birthday: '1704810332',
         },
         type: '',
         expiration: '',
@@ -187,19 +165,10 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
     credential_requests: [
       {
-        credential_schema: '',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
-          discord: '',
-        },
-        type: '',
-        expiration: '',
-        mt_proof: true,
-        signature_proof: false,
-      },
-      {
-        credential_schema: '',
-        credential_subject: {
-          telegram: '',
+          birthday: '1704810332',
         },
         type: '',
         expiration: '',
@@ -242,19 +211,10 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
     credential_requests: [
       {
-        credential_schema: '',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
-          discord: '',
-        },
-        type: '',
-        expiration: '',
-        mt_proof: true,
-        signature_proof: false,
-      },
-      {
-        credential_schema: '',
-        credential_subject: {
-          telegram: '',
+          birthday: '1704810332',
         },
         type: '',
         expiration: '',
@@ -297,19 +257,10 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
     credential_requests: [
       {
-        credential_schema: '',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
-          discord: '',
-        },
-        type: '',
-        expiration: '',
-        mt_proof: true,
-        signature_proof: false,
-      },
-      {
-        credential_schema: '',
-        credential_subject: {
-          telegram: '',
+          birthday: '1704810332',
         },
         type: '',
         expiration: '',
@@ -352,19 +303,10 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
     credential_requests: [
       {
-        credential_schema: '',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
-          discord: '',
-        },
-        type: '',
-        expiration: '',
-        mt_proof: true,
-        signature_proof: false,
-      },
-      {
-        credential_schema: '',
-        credential_subject: {
-          telegram: '',
+          birthday: '1704810332',
         },
         type: '',
         expiration: '',
@@ -407,19 +349,10 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
     credential_requests: [
       {
-        credential_schema: '',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
-          discord: '',
-        },
-        type: '',
-        expiration: '',
-        mt_proof: true,
-        signature_proof: false,
-      },
-      {
-        credential_schema: '',
-        credential_subject: {
-          telegram: '',
+          birthday: '1704810332',
         },
         type: '',
         expiration: '',
@@ -627,4 +560,32 @@ export const verifyOrgGroupRequest = async ({
   )
 
   return data
+}
+
+export const parseRequestCredentialSchemas = async (
+  request: OrgGroupRequest,
+): Promise<
+  {
+    key: string
+    value: string
+    type: string
+  }[]
+> => {
+  return Promise.all(
+    request.credential_requests.map(async el => {
+      const { data } = await fetcher.get<VCSchema>(el.credential_schema)
+
+      const field = Object.entries(omit(data?.properties.credentialSubject.properties, 'id'))[0]
+
+      const fieldKey = field[0]
+      const fieldType = field[1].type
+      const fieldValue = el.credential_subject[fieldKey]
+
+      return {
+        key: fieldKey,
+        value: fieldValue,
+        type: fieldType,
+      }
+    }),
+  )
 }

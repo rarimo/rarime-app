@@ -1,12 +1,18 @@
 import { time } from '@distributedlab/tools'
-import { FormControl, Stack, StackProps } from '@mui/material'
+import { FormControl, Stack, StackProps, Typography } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { OrgGroupRequest, OrgGroupVCsMetadata, OrgUserRoles, verifyOrgGroupRequest } from '@/api'
+import {
+  OrgGroupRequest,
+  OrgGroupVCsMetadata,
+  OrgUserRoles,
+  parseRequestCredentialSchemas,
+  verifyOrgGroupRequest,
+} from '@/api'
 import { VCGroupOverviewCard } from '@/common'
 import { ErrorHandler } from '@/helpers'
-import { useForm } from '@/hooks'
+import { useForm, useLoading } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiBasicModal, UiButton, UiDatePicker, UiImageUploader, UiSelect, UiTextField } from '@/ui'
 
@@ -36,7 +42,7 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
     [FieldNames.EndDate]: string
     [FieldNames.Role]: OrgUserRoles
     [FieldNames.BackgroundImage]?: File
-    [FieldNames.BackgroundHex]?: string
+    [FieldNames.BackgroundHex]: string
   }>(
     () => ({
       [FieldNames.Title]: '',
@@ -68,8 +74,7 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
         background:
           (formState[FieldNames.BackgroundImage] &&
             URL.createObjectURL(formState[FieldNames.BackgroundImage])) ||
-          formState[FieldNames.BackgroundHex] ||
-          '',
+          formState[FieldNames.BackgroundHex],
       },
     }
   }, [formState])
@@ -214,8 +219,10 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
         </Stack>
       </form>
       <VCGroupOverviewCard
-        VCMetadataPreview={VCMetadataPreview}
-        VCs={orgGroupRequest.credential_requests}
+        title={VCMetadataPreview.title ?? ''}
+        subtitle={VCMetadataPreview.subtitle ?? ''}
+        background={VCMetadataPreview.appearance.background}
+        expirationDate={formState[FieldNames.EndDate]}
         org={org}
       />
     </Stack>
@@ -225,13 +232,19 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
 export default function ApproveRequestForm({ orgGroupRequest, onRequestApproved, ...rest }: Props) {
   const [isModalShown, setIsModalShown] = useState(false)
 
+  const { data: VCsFields } = useLoading([], () => parseRequestCredentialSchemas(orgGroupRequest), {
+    loadOnMount: true,
+    loadArgs: [orgGroupRequest],
+  })
+
   return (
     <Stack {...rest} flex={1} p={5}>
       <Stack>
-        {orgGroupRequest.credential_requests.map((credReq, idx) => (
-          <div key={idx}>
-            <div>{JSON.stringify(credReq.credential_subject)}</div>
-          </div>
+        {VCsFields.map((el, idx) => (
+          <Stack key={idx}>
+            <Typography>{el.key}</Typography>
+            <Typography>{el.value}</Typography>
+          </Stack>
         ))}
       </Stack>
 
