@@ -8,6 +8,7 @@ import {
   OrgGroupVCsMetadata,
   OrgUserRoles,
   parseRequestCredentialSchemas,
+  rejectOrgGroupRequest,
   verifyOrgGroupRequest,
 } from '@/api'
 import { VCGroupOverviewCard } from '@/common'
@@ -20,6 +21,7 @@ interface Props extends StackProps {
   orgGroupRequest: OrgGroupRequest
 
   onRequestApproved?: () => Promise<void>
+  onRequestRejected?: () => Promise<void>
 }
 
 enum FieldNames {
@@ -229,13 +231,32 @@ function CredentialsMetadataBuilder({ orgGroupRequest, onRequestApproved, ...res
   )
 }
 
-export default function ApproveRequestForm({ orgGroupRequest, onRequestApproved, ...rest }: Props) {
+export default function ApproveRequestForm({
+  orgGroupRequest,
+  onRequestApproved,
+  onRequestRejected,
+  ...rest
+}: Props) {
   const [isModalShown, setIsModalShown] = useState(false)
 
   const { data: VCsFields } = useLoading([], () => parseRequestCredentialSchemas(orgGroupRequest), {
     loadOnMount: true,
     loadArgs: [orgGroupRequest],
   })
+
+  const rejectRequest = useCallback(async () => {
+    try {
+      await rejectOrgGroupRequest({
+        orgId: orgGroupRequest.org_id,
+        groupId: orgGroupRequest.group_id,
+        reqId: orgGroupRequest.id,
+      })
+
+      onRequestRejected?.()
+    } catch (error) {
+      ErrorHandler.process(error)
+    }
+  }, [onRequestRejected, orgGroupRequest.group_id, orgGroupRequest.id, orgGroupRequest.org_id])
 
   return (
     <Stack {...rest} flex={1} p={5}>
@@ -250,7 +271,9 @@ export default function ApproveRequestForm({ orgGroupRequest, onRequestApproved,
 
       <Stack mt='auto' gap={2}>
         <UiButton onClick={() => setIsModalShown(true)}>Create Credential</UiButton>
-        <UiButton color='error'>Reject</UiButton>
+        <UiButton onClick={rejectRequest} color='error'>
+          Reject
+        </UiButton>
       </Stack>
 
       <UiBasicModal open={isModalShown} onClose={() => setIsModalShown(false)}>

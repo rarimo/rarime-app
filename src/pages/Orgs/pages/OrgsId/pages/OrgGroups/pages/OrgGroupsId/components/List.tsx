@@ -36,6 +36,18 @@ export default function List({ filter, ...rest }: Props) {
     loadOnMount: true,
   })
 
+  const handleRequestApproved = useCallback(async () => {
+    setIsDrawerShown(false)
+
+    await reload()
+  }, [reload])
+
+  const handleRequestRejected = useCallback(async () => {
+    setIsDrawerShown(false)
+
+    await reload()
+  }, [reload])
+
   const DrawerContent = useMemo(() => {
     if (!selectedOrgGroupRequest) return <></>
 
@@ -43,13 +55,17 @@ export default function List({ filter, ...rest }: Props) {
       [OrgGroupRequestStatuses.Created]: <></>,
       [OrgGroupRequestStatuses.Accepted]: <></>,
       [OrgGroupRequestStatuses.Filled]: (
-        <ApproveRequestForm orgGroupRequest={selectedOrgGroupRequest} onRequestApproved={reload} />
+        <ApproveRequestForm
+          orgGroupRequest={selectedOrgGroupRequest}
+          onRequestApproved={handleRequestApproved}
+          onRequestRejected={handleRequestRejected}
+        />
       ),
       [OrgGroupRequestStatuses.Approved]: <></>,
       [OrgGroupRequestStatuses.Rejected]: <></>,
       [OrgGroupRequestStatuses.Submitted]: <></>,
     }[selectedOrgGroupRequest.status.value]
-  }, [reload, selectedOrgGroupRequest])
+  }, [handleRequestApproved, selectedOrgGroupRequest])
 
   const handleRequestClick = useCallback((orgGroupRequest: OrgGroupRequest) => {
     setIsDrawerShown(true)
