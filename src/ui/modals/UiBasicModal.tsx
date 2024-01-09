@@ -8,13 +8,7 @@ interface Props extends BoxProps {
   modalProps?: ModalProps
 }
 
-export default function functionUiBasicModal({
-  open,
-  onClose,
-  children,
-  modalProps,
-  ...rest
-}: Props) {
+export default function UiBasicModal({ open, onClose, children, modalProps, ...rest }: Props) {
   return (
     <UiModal {...modalProps} open={open} onClose={onClose}>
       <Box

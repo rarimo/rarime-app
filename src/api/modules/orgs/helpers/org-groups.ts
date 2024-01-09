@@ -51,11 +51,13 @@ const DUMMY_ORG_GROUP: OrgGroup[] = [
 ]
 
 export const loadOrgGroups = async (orgId: string, query?: OrgGroupQueryParams) => {
-  const { data } = await api.get<OrgGroup[]>(`/v1/orgs/${orgId}/groups`, {
-    query,
-  })
+  // const { data } = await api.get<OrgGroup[]>(`/v1/orgs/${orgId}/groups`, {
+  //   query,
+  // })
+  //
+  // return data
 
-  return data
+  return DUMMY_ORG_GROUP
 }
 
 export const createOrgGroup = async (orgId: string, createOpts: OrgGroupCreate) => {
@@ -90,19 +92,19 @@ export const loadOrgGroupRequestsCount = async (
   orgId: string,
   groupId: string,
 ): Promise<Record<OrgGroupRequestStatuses, number>> => {
-  const { data } = await api.get<Record<OrgGroupRequestStatuses, number>>(
-    `/v1/orgs/${orgId}/groups/${groupId}/requests/count`,
-  )
-
-  return data
+  // const { data } = await api.get<Record<OrgGroupRequestStatuses, number>>(
+  //   `/v1/orgs/${orgId}/groups/${groupId}/requests/count`,
+  // )
+  //
+  // return data
 
   // TODO: remove this when API is ready
-  // return {
-  //   [OrgGroupRequestStatuses.Accepted]: 2,
-  //   [OrgGroupRequestStatuses.Approved]: 2,
-  //   [OrgGroupRequestStatuses.Rejected]: 3,
-  //   [OrgGroupRequestStatuses.Created]: 5,
-  //   [OrgGroupRequestStatuses.Filled]: 2,
-  //   [OrgGroupRequestStatuses.Submitted]: 5,
-  // }
+  return {
+    [OrgGroupRequestStatuses.Accepted]: 2,
+    [OrgGroupRequestStatuses.Approved]: 2,
+    [OrgGroupRequestStatuses.Rejected]: 3,
+    [OrgGroupRequestStatuses.Created]: 5,
+    [OrgGroupRequestStatuses.Filled]: 2,
+    [OrgGroupRequestStatuses.Submitted]: 5,
+  }
 }

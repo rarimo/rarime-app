@@ -1,5 +1,5 @@
 import { Avatar, Input, type InputProps, Stack, type StackProps, Typography } from '@mui/material'
-import { ChangeEvent, forwardRef, useCallback } from 'react'
+import { ChangeEvent, forwardRef, useCallback, useMemo } from 'react'
 
 import { useThemeMode } from '@/hooks'
 import UiIcon from '@/ui/UiIcon'
@@ -33,11 +33,21 @@ const UiImageUploader = forwardRef<HTMLInputElement, Props>(
       [onChange],
     )
 
+    const validValue = useMemo(() => {
+      if (!value) return ''
+
+      try {
+        return URL.createObjectURL(value)
+      } catch (error) {
+        return ''
+      }
+    }, [value])
+
     return (
       <Stack {...stackProps} position='relative' direction='row' alignItems='center' gap={6}>
-        {(!!value && (
+        {(!!validValue && (
           <Avatar
-            src={URL.createObjectURL(value)}
+            src={validValue}
             sx={{
               ...avatarSize,
             }}
