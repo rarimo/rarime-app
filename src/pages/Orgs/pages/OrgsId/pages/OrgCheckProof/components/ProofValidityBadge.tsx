@@ -10,13 +10,13 @@ export default function ProofValidityBadge({ valid = false }: Props) {
   return (
     <Typography
       variant={'caption'}
+      px={3}
+      py={1}
       bgcolor={valid ? palette.success.light : palette.error.light}
+      color={valid ? palette.success.dark : palette.error.dark}
       border={1}
       borderColor={valid ? palette.success.light : palette.error.light}
       borderRadius={2}
-      color={valid ? palette.success.dark : palette.error.dark}
-      px={3}
-      py={1}
     >
       {valid ? 'Valid' : 'Invalid'}
     </Typography>

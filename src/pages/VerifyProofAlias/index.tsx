@@ -1,34 +1,37 @@
 import { CircularProgress, Stack } from '@mui/material'
-import { generatePath, useNavigate, useParams } from 'react-router-dom'
-import { useEffectOnce } from 'react-use'
+import { useMemo } from 'react'
+import { generatePath, Navigate, useParams } from 'react-router-dom'
 
+import { useLinkProofs } from '@/api'
 import { RoutePaths } from '@/enums'
-import { sleep } from '@/helpers'
 
 export default function VerifyProofAlias() {
-  const navigate = useNavigate()
   const { id = '' } = useParams<{ id: string }>()
+  const { proofs, isLoading, isLoadingError, isEmpty } = useLinkProofs(id)
 
-  const redirectToCheckProof = async () => {
-    // TODO: get link by id
-    await sleep(500)
-    // TODO: get orgId from link
-    const orgId = 'test-org-id'
+  const orgId = useMemo(() => {
+    return proofs?.[0]?.organization_id ?? ''
+  }, [proofs])
 
+  const redirectPath = useMemo(() => {
     const searchParams = new URLSearchParams()
     searchParams.append('linkId', id)
 
     const path = generatePath(RoutePaths.OrgsIdCheckProof, { id: orgId })
-    navigate(`${path}?${searchParams.toString()}`)
+    return `${path}?${searchParams.toString()}`
+  }, [id, orgId])
+
+  if (isLoading) {
+    return (
+      <Stack alignItems='center' justifyContent='center' flex={1}>
+        <CircularProgress />
+      </Stack>
+    )
   }
 
-  useEffectOnce(() => {
-    redirectToCheckProof()
-  })
+  // TODO: Add proper UI for error and empty states
+  if (isLoadingError) return <></>
+  if (isEmpty || !orgId) return <></>
 
-  return (
-    <Stack alignItems='center' justifyContent='center' flex={1}>
-      <CircularProgress />
-    </Stack>
-  )
+  return <Navigate to={redirectPath} replace />
 }

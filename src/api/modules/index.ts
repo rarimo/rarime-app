@@ -1,2 +1,2 @@
-export * from './orgs'
 export * from './link'
+export * from './orgs'

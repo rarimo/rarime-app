@@ -1,6 +1,8 @@
 import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { ReactNode } from 'react'
 
+import { Proof } from '@/api'
+
 import ProofValidityBadge from './ProofValidityBadge'
 
 interface ProofDetail {
@@ -9,10 +11,11 @@ interface ProofDetail {
 }
 
 interface Props {
-  isValid?: boolean
+  proof: Proof
+  isValid: boolean
 }
 
-export default function ProofViewer({ isValid }: Props) {
+export default function ProofResult({ proof, isValid }: Props) {
   const { palette } = useTheme()
 
   const proofDetails: ProofDetail[] = [
@@ -22,15 +25,15 @@ export default function ProofViewer({ isValid }: Props) {
     },
     {
       text: 'Issued:',
-      value: '13 Dec, 2023',
+      value: proof.created_at,
     },
     {
       text: 'Issuer:',
-      value: 'Rarimo',
+      value: proof.creator,
     },
     {
       text: 'Proof ID:',
-      value: 'Dawnfuwabufb3wb',
+      value: proof.id,
     },
   ]
 
@@ -63,7 +66,12 @@ export default function ProofViewer({ isValid }: Props) {
             sx={{ borderStyle: 'dashed' }}
           />
           {typeof detail.value === 'string' ? (
-            <Typography variant={'caption'} color={palette.text.primary}>
+            <Typography
+              variant={'caption'}
+              // TODO: fix colors
+              color={palette.text.primary}
+              sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
+            >
               {detail.value}
             </Typography>
           ) : (

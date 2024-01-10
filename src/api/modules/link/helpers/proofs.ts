@@ -1,8 +1,35 @@
-import {
-  api,
-  type Proof,
-  type ProofLink,
-} from '@/api'
+import { api, type Proof, type ProofLink } from '@/api'
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const DUMMY_PROOFS: Proof[] = [
+  {
+    id: '550e8400-e29b-41d4-a716-446655440000',
+    type: 'proofs',
+    creator: 'did:ethr:0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef',
+    created_at: '1702480643',
+    proof: '{"pub_signals":[...],"proof":{"pi_a":[...],"pi_b":[],"pi_c":[...]}}',
+    proof_type: 'firstName',
+    organization_id: '550e8400-e29b-41d4-a716-446655440000',
+  },
+  {
+    id: '550e8400-e29b-41d4-a716-446655440001',
+    type: 'proofs',
+    creator: 'did:ethr:0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef',
+    created_at: '1702480643',
+    proof: '{"pub_signals":[...],"proof":{"pi_a":[...],"pi_b":[],"pi_c":[...]}}',
+    proof_type: 'lastName',
+    organization_id: '550e8400-e29b-41d4-a716-446655440000',
+  },
+  {
+    id: '550e8400-e29b-41d4-a716-446655440002',
+    type: 'proofs',
+    creator: 'did:ethr:0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef',
+    created_at: '1702480643',
+    proof: '{"pub_signals":[...],"proof":{"pi_a":[...],"pi_b":[],"pi_c":[...]}}',
+    proof_type: 'telegram',
+    organization_id: '550e8400-e29b-41d4-a716-446655440000',
+  },
+]
 
 export const createProof = async (proof: string) => {
   const { data } = await api.post<Proof>('/v1/proofs', {

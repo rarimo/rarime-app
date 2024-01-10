@@ -1,46 +1,25 @@
 import { InputAdornment, Stack, useTheme } from '@mui/material'
-import { useCallback, useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { sleep } from '@/helpers'
-import { useLoading } from '@/hooks'
+import { useLinkProofs } from '@/api'
 import { UiIcon, UiTextField } from '@/ui'
 
-import CredentialField from './CredentialField'
-
-// TODO: add credential types
-export enum CredentialTypes {
-  FirstName = 'firstName',
-  LastName = 'lastName',
-  Age = 'age',
-  Telegram = 'telegram',
-}
+import ProofField from './ProofField'
 
 export default function ProofForm() {
   const { palette } = useTheme()
   const [params] = useSearchParams()
-  const [link, setLink] = useState<string | undefined>(params.get('linkId') ?? undefined)
+  const [linkId, setLinkId] = useState<string>(params.get('linkId') ?? '')
 
-  const credentialTypes = useMemo(() => {
-    return Object.values(CredentialTypes)
-  }, [])
-
-  const loadProofs = useCallback(async () => {
-    await sleep(1000)
-    return [{ link }] as { link: string }[]
-  }, [link])
-
-  const { isLoading } = useLoading<{ link: string }[]>([], loadProofs, {
-    loadOnMount: true,
-    loadArgs: [link],
-  })
+  const { proofs, isLoading } = useLinkProofs(linkId)
 
   return (
     <Stack spacing={8}>
       <UiTextField
-        value={link}
-        onChange={e => setLink(e.target.value)}
-        placeholder={'Enter the proof link here'}
+        value={linkId}
+        onChange={e => setLinkId(e.target.value)}
+        placeholder={'Enter the Proof Link ID'}
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>
@@ -50,9 +29,9 @@ export default function ProofForm() {
         }}
       />
 
-      {isLoading
+      {isLoading || !proofs
         ? 'Loading...'
-        : credentialTypes.map(type => <CredentialField key={type} type={type} />)}
+        : proofs.map(proof => <ProofField key={proof.id} proof={proof} />)}
     </Stack>
   )
 }
