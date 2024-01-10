@@ -28,8 +28,7 @@ export default function ListCard({ org, ...rest }: Props) {
           <UiIcon
             componentName={'verified'}
             sx={{ ml: 1, color: palette.success.light }}
-            width={16}
-            height={16}
+            size={4}
           />
         )}
       </Stack>
