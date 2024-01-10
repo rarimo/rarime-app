@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Typography, useTheme } from '@mui/material'
+import { Avatar, Box, Divider, Stack, Typography, useTheme } from '@mui/material'
 
 import { Organization, OrgsStatuses } from '@/api'
 import { UiIcon } from '@/ui'
@@ -12,14 +12,15 @@ export default function OrgOverview({ org }: Props) {
 
   return (
     <Stack alignItems={'center'}>
-      <Box
-        component={'img'}
+      <Avatar
         src={org.metadata.logoUrl}
         alt={org.metadata.name}
-        width={spacing(20)}
-        height={spacing(20)}
-        borderRadius={'9999px'}
-        sx={{ objectFit: 'cover' }}
+        sx={{
+          width: spacing(20),
+          height: spacing(20),
+          borderRadius: 250,
+          objectFit: 'cover',
+        }}
       />
 
       <Stack direction={'row'} spacing={1} alignItems={'center'} mt={4}>
