@@ -1,41 +1,38 @@
 import { Box, Stack, Typography, useTheme } from '@mui/material'
-import { ReactNode } from 'react'
+import { ReactNode, useMemo } from 'react'
 
 import { Proof } from '@/api'
 
 import ProofValidityBadge from './ProofValidityBadge'
-
-interface ProofDetail {
-  text: string
-  value: ReactNode
-}
 
 interface Props {
   proof: Proof
   isValid: boolean
 }
 
-export default function ProofResult({ proof, isValid }: Props) {
+export default function ProofValidationResult({ proof, isValid }: Props) {
   const { palette } = useTheme()
 
-  const proofDetails: ProofDetail[] = [
-    {
-      text: 'Type:',
-      value: <ProofValidityBadge valid={isValid} />,
-    },
-    {
-      text: 'Issued:',
-      value: proof.created_at,
-    },
-    {
-      text: 'Issuer:',
-      value: proof.creator,
-    },
-    {
-      text: 'Proof ID:',
-      value: proof.id,
-    },
-  ]
+  const validationDetails = useMemo<{ text: string; value: ReactNode }[]>(() => {
+    return [
+      {
+        text: 'Type:',
+        value: <ProofValidityBadge valid={isValid} />,
+      },
+      {
+        text: 'Issued:',
+        value: proof.created_at,
+      },
+      {
+        text: 'Issuer:',
+        value: proof.creator,
+      },
+      {
+        text: 'Proof ID:',
+        value: proof.id,
+      },
+    ]
+  }, [proof, isValid])
 
   return (
     <Stack
@@ -47,7 +44,7 @@ export default function ProofResult({ proof, isValid }: Props) {
       borderRadius={2}
       spacing={2}
     >
-      {proofDetails.map((detail, index) => (
+      {validationDetails.map((detail, index) => (
         <Stack
           key={index}
           direction={'row'}

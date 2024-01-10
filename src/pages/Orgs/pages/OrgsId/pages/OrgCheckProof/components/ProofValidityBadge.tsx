@@ -1,10 +1,10 @@
 import { Typography, useTheme } from '@mui/material'
 
 interface Props {
-  valid?: boolean
+  valid: boolean
 }
 
-export default function ProofValidityBadge({ valid = false }: Props) {
+export default function ProofValidityBadge({ valid }: Props) {
   const { palette } = useTheme()
 
   return (

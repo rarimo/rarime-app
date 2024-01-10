@@ -34,13 +34,7 @@ export default function OrgOverview({ org }: Props) {
         {org.domain}
       </Typography>
 
-      <Stack
-        mt={6}
-        display={'grid'}
-        gridTemplateColumns={'1fr 1px 1fr'}
-        gap={6}
-        textAlign={'center'}
-      >
+      <Box mt={6} display={'grid'} gridTemplateColumns={'1fr 1px 1fr'} gap={6} textAlign={'center'}>
         <Box>
           <Typography variant={'h6'}>{org.members_count}</Typography>
           <Typography variant={'body2'}>Associated people</Typography>
@@ -50,7 +44,7 @@ export default function OrgOverview({ org }: Props) {
           <Typography variant={'h6'}>{org.issued_claims_count}</Typography>
           <Typography variant={'body2'}>Credentials</Typography>
         </Box>
-      </Stack>
+      </Box>
     </Stack>
   )
 }
