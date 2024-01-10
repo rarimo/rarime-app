@@ -1,4 +1,5 @@
 import { Avatar, Card, CardProps, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { useTranslation } from 'react-i18next'
 
 import { Organization, OrgsStatuses } from '@/api'
 import { UiIcon } from '@/ui'
@@ -8,11 +9,14 @@ interface Props extends CardProps {
 }
 
 export default function ListCard({ org, ...rest }: Props) {
-  const { palette, typography } = useTheme()
+  const { palette } = useTheme()
+  const { t } = useTranslation()
+
   return (
     <Card
       {...rest}
-      sx={{ py: 5, px: 6, borderRadius: 3, borderColor: palette.grey[300] }}
+      // TODO: change color
+      sx={{ py: 5, px: 6, borderRadius: 3, borderColor: palette.grey[300], ...rest.sx }}
       variant='outlined'
     >
       <Avatar src={org.metadata.logoUrl} sx={{ width: 64, height: 64 }} />
@@ -29,33 +33,31 @@ export default function ListCard({ org, ...rest }: Props) {
           />
         )}
       </Stack>
-      <Typography color={palette.text.secondary} fontSize={typography.body2} my={3}>
+      <Typography color={palette.text.secondary} variant={'body2'} my={3}>
         {org.metadata.description}
       </Typography>
-      <Grid container mt={5} pt={5} borderTop={1} borderColor={palette.grey[300]}>
+
+      <Grid
+        container
+        mt={5}
+        pt={5}
+        borderTop={1}
+        // TODO: change color
+        borderColor={palette.grey[300]}
+      >
         <Grid item xs={7}>
-          <Typography
-            fontSize={10}
-            fontWeight={typography.fontWeightBold}
-            color={palette.text.secondary}
-            textTransform={'uppercase'}
-          >
-            Asocciated people
+          <Typography variant={'body3'} as={'p'} color={palette.text.secondary}>
+            {t('org-list.card-footer-people')}
           </Typography>
-          <Typography mt={2} color={palette.text.primary} fontSize={typography.overline}>
+          <Typography mt={2} color={palette.text.primary} variant={'overline'}>
             {org.members_count}
           </Typography>
         </Grid>
         <Grid item xs={5}>
-          <Typography
-            fontSize={10}
-            fontWeight={typography.fontWeightBold}
-            color={palette.text.secondary}
-            textTransform={'uppercase'}
-          >
-            Credential
+          <Typography variant={'body3'} as={'p'} color={palette.text.secondary}>
+            {t('org-list.card-footer-credentials')}
           </Typography>
-          <Typography mt={2} color={palette.text.primary} fontSize={typography.overline}>
+          <Typography mt={2} color={palette.text.primary} variant={'overline'}>
             {org.issued_claims_count}
           </Typography>
         </Grid>

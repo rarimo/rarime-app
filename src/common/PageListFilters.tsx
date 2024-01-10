@@ -37,6 +37,8 @@ export default function PageListFilters({
               <UiIcon componentName='search' />
             </InputAdornment>
           ),
+          // TODO: change color
+          sx: { borderRadius: 25, borderColor: theme => theme.palette.grey[300] },
         }}
         placeholder={t('page-list-filters.search-input-placeholder')}
         onChange={e => handleSearchInput(e.target.value)}

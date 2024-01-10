@@ -54,6 +54,8 @@
   },
   "org-list": {
     "title": "Organizations",
-    "subtitle": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this dashboard"
+    "subtitle": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this dashboard",
+    "card-footer-people": "Associated people",
+    "card-footer-credentials": "Credentials"
   }
 }

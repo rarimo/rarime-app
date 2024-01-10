@@ -55,6 +55,7 @@ export default function UiNavTabs({ tabs, ...rest }: Props) {
       justifyContent='center'
       alignItems='center'
       sx={theme => ({
+        // TODO: change color
         background: theme.palette.grey.A200,
         borderRadius: 25,
         overflow: 'hidden',
