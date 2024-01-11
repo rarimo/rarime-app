@@ -7,8 +7,10 @@ import { useLoading } from '@/hooks'
  *
  * @param id - organization id {@link Organization#id}
  */
-export const useOrgGroups = (id: string) => {
+export const useOrgGroups = (id?: string) => {
   const loadList = useCallback(async () => {
+    if (!id) return []
+
     return loadOrgGroups(id)
   }, [id])
 
@@ -18,7 +20,7 @@ export const useOrgGroups = (id: string) => {
     isLoadingError,
     isEmpty,
   } = useLoading([], loadList, {
-    loadOnMount: true,
+    loadOnMount: !!id,
     loadArgs: [id],
   })
 

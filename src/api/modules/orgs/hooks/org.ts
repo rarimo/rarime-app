@@ -7,6 +7,8 @@ export const useOrg = (id: string) => {
   const { userDid } = useMetamaskZkpSnapContext()
 
   const loadOrg = useCallback(async () => {
+    if (!id) return undefined
+
     return loadOrgById(id, {
       include: OrgsIncludes.Owner,
     })
@@ -18,7 +20,7 @@ export const useOrg = (id: string) => {
     isLoadingError,
     isEmpty,
   } = useLoading(undefined, loadOrg, {
-    loadOnMount: true,
+    loadOnMount: !!id,
     loadArgs: [id],
   })
 
