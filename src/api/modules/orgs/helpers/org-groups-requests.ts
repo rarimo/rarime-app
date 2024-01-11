@@ -587,7 +587,7 @@ export const rejectOrgGroupRequest = async ({
   return data
 }
 
-export const parseRequestCredentialSchemas = async (
+export const loadAndParseRequestCredentialSchemas = async (
   request: OrgGroupRequest,
 ): Promise<
   {
@@ -600,16 +600,16 @@ export const parseRequestCredentialSchemas = async (
     request.credential_requests.map(async el => {
       const { data } = await fetcher.get<VCSchema>(el.credential_schema)
 
-      const field = Object.entries(omit(data?.properties.credentialSubject.properties, 'id'))[0]
+      const [key, { type }] = Object.entries(
+        omit(data?.properties.credentialSubject.properties, 'id'),
+      )[0]
 
-      const fieldKey = field[0]
-      const fieldType = field[1].type
-      const fieldValue = el.credential_subject[fieldKey]
+      const value = el.credential_subject[key]
 
       return {
-        key: fieldKey,
-        value: fieldValue,
-        type: fieldType,
+        key,
+        value,
+        type,
       }
     }),
   )

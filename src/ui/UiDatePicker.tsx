@@ -41,7 +41,7 @@ const UiDatePicker = forwardRef<HTMLInputElement, Props>(
       [rest],
     )
 
-    const commonProps = useMemo<DatePickerProps<TimeDate>>(() => {
+    const pickerProps = useMemo<DatePickerProps<TimeDate>>(() => {
       return {
         ...rest,
         inputRef: ref,
@@ -62,7 +62,7 @@ const UiDatePicker = forwardRef<HTMLInputElement, Props>(
     return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['DatePicker']}>
-          <DatePicker {...commonProps} />
+          <DatePicker {...pickerProps} />
         </DemoContainer>
       </LocalizationProvider>
     )

@@ -48,7 +48,7 @@ export default function List({ filter, ...rest }: Props) {
     await reload()
   }, [reload])
 
-  const DrawerContent = useMemo(() => {
+  const drawerContent = useMemo(() => {
     if (!selectedOrgGroupRequest) return <></>
 
     return {
@@ -65,7 +65,7 @@ export default function List({ filter, ...rest }: Props) {
       [OrgGroupRequestStatuses.Rejected]: <></>,
       [OrgGroupRequestStatuses.Submitted]: <></>,
     }[selectedOrgGroupRequest.status.value]
-  }, [handleRequestApproved, selectedOrgGroupRequest])
+  }, [handleRequestApproved, handleRequestRejected, selectedOrgGroupRequest])
 
   const handleRequestClick = useCallback((orgGroupRequest: OrgGroupRequest) => {
     setIsDrawerShown(true)
@@ -74,7 +74,7 @@ export default function List({ filter, ...rest }: Props) {
 
   return (
     <>
-      <Stack {...rest} gap={4} direction='row' flexWrap='wrap'>
+      <Stack {...rest} spacing={4} direction='row' flexWrap='wrap'>
         {isLoading ? (
           <></>
         ) : isLoadingError ? (
@@ -96,7 +96,7 @@ export default function List({ filter, ...rest }: Props) {
                     <UiIcon componentName='close' />
                   </UiButton>
                 </Stack>
-                {DrawerContent}
+                {drawerContent}
               </Stack>
             </UiDrawer>
           </>
