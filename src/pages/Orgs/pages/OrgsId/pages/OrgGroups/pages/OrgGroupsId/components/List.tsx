@@ -60,29 +60,24 @@ export default function List({ filter, ...rest }: Props) {
       ),
       [OrgGroupRequestStatuses.Accepted]: undefined,
       [OrgGroupRequestStatuses.Filled]: (
-        <RequestDetails
-          orgGroupRequest={selectedOrgGroupRequest}
-          actionsSlot={
-            <ApproveRequestForm
-              orgGroupRequest={selectedOrgGroupRequest}
-              onRequestApproved={handleRequestApproved}
-              onRequestRejected={handleRequestRejected}
-            />
-          }
-        />
+        <RequestDetails orgGroupRequest={selectedOrgGroupRequest}>
+          <ApproveRequestForm
+            orgGroupRequest={selectedOrgGroupRequest}
+            onRequestApproved={handleRequestApproved}
+            onRequestRejected={handleRequestRejected}
+          />
+        </RequestDetails>
       ),
       [OrgGroupRequestStatuses.Approved]: (
-        <RequestDetails
-          orgGroupRequest={selectedOrgGroupRequest}
-          bodySlot={<PublishingCard orgGroupRequest={selectedOrgGroupRequest} />}
-        />
+        <RequestDetails orgGroupRequest={selectedOrgGroupRequest}>
+          <PublishingCard orgGroupRequest={selectedOrgGroupRequest} />
+        </RequestDetails>
       ),
       [OrgGroupRequestStatuses.Rejected]: undefined,
       [OrgGroupRequestStatuses.Submitted]: (
-        <RequestDetails
-          orgGroupRequest={selectedOrgGroupRequest}
-          bodySlot={<ApprovedCard orgGroupRequest={selectedOrgGroupRequest} />}
-        />
+        <RequestDetails orgGroupRequest={selectedOrgGroupRequest}>
+          <ApprovedCard orgGroupRequest={selectedOrgGroupRequest} />
+        </RequestDetails>
       ),
     }[selectedOrgGroupRequest.status.value]
   }, [handleRequestApproved, handleRequestRejected, selectedOrgGroupRequest])

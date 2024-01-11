@@ -1,18 +1,13 @@
 import { Divider, Stack, StackProps, Typography } from '@mui/material'
-import { ReactNode } from 'react'
 
 import { loadAndParseRequestCredentialSchemas, OrgGroupRequest } from '@/api'
 import { useLoading } from '@/hooks'
 
 interface Props extends StackProps {
   orgGroupRequest: OrgGroupRequest
-
-  bodySlot?: ReactNode
-
-  actionsSlot?: ReactNode
 }
 
-export default function RequestDetails({ orgGroupRequest, bodySlot, actionsSlot, ...rest }: Props) {
+export default function RequestDetails({ orgGroupRequest, children, ...rest }: Props) {
   const { data: VCsFields } = useLoading(
     [],
     () => loadAndParseRequestCredentialSchemas(orgGroupRequest),
@@ -34,14 +29,8 @@ export default function RequestDetails({ orgGroupRequest, bodySlot, actionsSlot,
       </Stack>
 
       <Divider />
-      <Stack mb='auto' gap={2}>
-        {bodySlot}
-      </Stack>
+      <Stack flex={1}>{children}</Stack>
       <Divider />
-
-      <Stack mt='auto' gap={2}>
-        {actionsSlot}
-      </Stack>
     </Stack>
   )
 }
