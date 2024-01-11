@@ -30,7 +30,7 @@ export const DUMMY_ORG: Organization = {
   owner: {
     id: '81c32ef4-2878-4f86-9277-4c3c82913b87',
     type: 'users',
-    did: 'did:iden3:tUxw1kwfVZMVa4A4ji3mLRYwiy9aVqzGG1kmY46tZ',
+    did: 'did:iden3:readonly:tTNsD7orsf2f5So34v3RMpektAZerLmHhaLZYddhZ',
     role: {
       name: 'undefined',
       value: 0,

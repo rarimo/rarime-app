@@ -3,12 +3,13 @@ import {
   OrgGroup,
   OrgGroupRequestFilters,
   OrgGroupRequestIncludes,
+  OrgGroupRequestPublishingStatuses,
   OrgGroupRequestStatuses,
 } from '@/api'
 
 export type CredentialRequest = {
   credential_schema: string
-  credential_subject: Record<string, string>
+  credential_subject: Record<string, string> & { metadata_id: string }
   type: string
   expiration: string
   mt_proof: boolean
@@ -154,4 +155,15 @@ export type VCSchema = {
       }
     }
   }
+}
+
+export type OrgGroupRequestPublishing = {
+  id: string
+  type: 'claims'
+  claim_id: string
+  request_id: string
+  created_at: string
+  updated_at: string
+  schema_url: string
+  status: OrgGroupRequestPublishingStatuses
 }

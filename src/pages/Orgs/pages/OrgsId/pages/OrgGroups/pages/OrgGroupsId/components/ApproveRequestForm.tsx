@@ -1,5 +1,5 @@
 import { time } from '@distributedlab/tools'
-import { FormControl, Stack, StackProps, Typography } from '@mui/material'
+import { FormControl, Stack, StackProps } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
@@ -7,13 +7,12 @@ import {
   OrgGroupRequest,
   OrgGroupVCsMetadata,
   OrgUserRoles,
-  parseRequestCredentialSchemas,
   rejectOrgGroupRequest,
   verifyOrgGroupRequest,
 } from '@/api'
 import { VCGroupOverviewCard } from '@/common'
 import { ErrorHandler } from '@/helpers'
-import { useForm, useLoading } from '@/hooks'
+import { useForm } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiBasicModal, UiButton, UiDatePicker, UiImageUploader, UiSelect, UiTextField } from '@/ui'
 
@@ -239,11 +238,6 @@ export default function ApproveRequestForm({
 }: Props) {
   const [isModalShown, setIsModalShown] = useState(false)
 
-  const { data: VCsFields } = useLoading([], () => parseRequestCredentialSchemas(orgGroupRequest), {
-    loadOnMount: true,
-    loadArgs: [orgGroupRequest],
-  })
-
   const rejectRequest = useCallback(async () => {
     try {
       await rejectOrgGroupRequest({
@@ -260,21 +254,10 @@ export default function ApproveRequestForm({
 
   return (
     <Stack {...rest} flex={1} p={5}>
-      <Stack>
-        {VCsFields.map((el, idx) => (
-          <Stack key={idx}>
-            <Typography>{el.key}</Typography>
-            <Typography>{el.value}</Typography>
-          </Stack>
-        ))}
-      </Stack>
-
-      <Stack mt='auto' gap={2}>
-        <UiButton onClick={() => setIsModalShown(true)}>Create Credential</UiButton>
-        <UiButton onClick={rejectRequest} color='error'>
-          Reject
-        </UiButton>
-      </Stack>
+      <UiButton onClick={() => setIsModalShown(true)}>Create Credential</UiButton>
+      <UiButton onClick={rejectRequest} color='error'>
+        Reject
+      </UiButton>
 
       <UiBasicModal open={isModalShown} onClose={() => setIsModalShown(false)}>
         <CredentialsMetadataBuilder

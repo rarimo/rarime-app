@@ -8,6 +8,7 @@ import {
   OrgGroupCreateRequest,
   OrgGroupRequest,
   OrgGroupRequestFilters,
+  OrgGroupRequestPublishing,
   OrgGroupRequestQueryParams,
   OrgGroupRequestStatuses,
   OrgGroupVCsMetadata,
@@ -30,6 +31,7 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
           'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
           birthday: '1704810332',
+          metadata_id: 'uuid-1234-5678-9101',
         },
         type: '',
         expiration: '',
@@ -76,6 +78,7 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
           'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
           birthday: '1704810332',
+          metadata_id: 'uuid-1234-5678-9101',
         },
         type: '',
         expiration: '',
@@ -122,6 +125,7 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
           'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
           birthday: '1704810332',
+          metadata_id: 'uuid-1234-5678-9101',
         },
         type: '',
         expiration: '',
@@ -168,6 +172,7 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
           'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
           birthday: '1704810332',
+          metadata_id: 'uuid-1234-5678-9101',
         },
         type: '',
         expiration: '',
@@ -214,6 +219,7 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
           'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
           birthday: '1704810332',
+          metadata_id: 'uuid-1234-5678-9101',
         },
         type: '',
         expiration: '',
@@ -260,6 +266,7 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
           'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
           birthday: '1704810332',
+          metadata_id: 'uuid-1234-5678-9101',
         },
         type: '',
         expiration: '',
@@ -306,6 +313,7 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
           'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
           birthday: '1704810332',
+          metadata_id: 'uuid-1234-5678-9101',
         },
         type: '',
         expiration: '',
@@ -352,6 +360,7 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
           'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
         credential_subject: {
           birthday: '1704810332',
+          metadata_id: 'uuid-1234-5678-9101',
         },
         type: '',
         expiration: '',
@@ -595,6 +604,22 @@ export const rejectOrgGroupRequest = async ({
   return data
 }
 
+export const getOrgGroupRequestPublishStatus = async ({
+  orgId,
+  groupId,
+  reqId,
+}: {
+  orgId: string
+  groupId: string
+  reqId: string
+}) => {
+  const { data } = await api.get<OrgGroupRequestPublishing[]>(
+    `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}/publishing`,
+  )
+
+  return data
+}
+
 export const parseRequestCredentialSchemas = async (
   request: OrgGroupRequest,
 ): Promise<
@@ -621,4 +646,20 @@ export const parseRequestCredentialSchemas = async (
       }
     }),
   )
+}
+
+export const loadOrgGroupReqMetadataById = async (
+  metadataId: string,
+): Promise<OrgGroupVCsMetadata> => {
+  // const { data } = await api.get<OrgGroupVCsMetadata>(`/v1/orgs/metadata/${metadataId}`)
+  //
+  // return data
+
+  return {
+    title: 'title',
+    subtitle: 'subtitle',
+    appearance: {
+      background: '#ffffff',
+    },
+  }
 }
