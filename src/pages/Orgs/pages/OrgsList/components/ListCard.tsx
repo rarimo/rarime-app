@@ -46,7 +46,7 @@ export default function ListCard({ org, ...rest }: Props) {
           borderColor={palette.grey[300]}
         >
           <Grid item xs={7}>
-            <Typography variant={'body3'} as={'p'} color={palette.text.secondary}>
+            <Typography variant={'body3'} paragraph={true} color={palette.text.secondary}>
               {'Associated people'}
             </Typography>
             <Typography mt={2} color={palette.text.primary} variant={'overline'}>
@@ -54,7 +54,7 @@ export default function ListCard({ org, ...rest }: Props) {
             </Typography>
           </Grid>
           <Grid item xs={5}>
-            <Typography variant={'body3'} as={'p'} color={palette.text.secondary}>
+            <Typography variant={'body3'} paragraph={true} color={palette.text.secondary}>
               {'Credentials'}
             </Typography>
             <Typography mt={2} color={palette.text.primary} variant={'overline'}>

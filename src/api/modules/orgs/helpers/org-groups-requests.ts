@@ -596,7 +596,7 @@ export const rejectOrgGroupRequest = async ({
   return data
 }
 
-export const getOrgGroupRequestPublishStatus = async ({
+export const getOrgGroupPublishingRequests = async ({
   orgId,
   groupId,
   reqId,

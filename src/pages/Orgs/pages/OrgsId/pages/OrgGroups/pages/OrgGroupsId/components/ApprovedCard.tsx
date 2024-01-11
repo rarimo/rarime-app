@@ -23,7 +23,7 @@ export default function ApprovedCard({ orgGroupRequest, ...rest }: Props) {
 
   const { data: orgGroupVCsMetadata } = useLoading(
     {} as OrgGroupVCsMetadata,
-    async () => {
+    () => {
       return loadOrgGroupReqMetadataById(metadataId)
     },
     {

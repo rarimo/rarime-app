@@ -1,7 +1,7 @@
 import { Divider, Stack, StackProps, Typography } from '@mui/material'
 import { ReactNode } from 'react'
 
-import { OrgGroupRequest, parseRequestCredentialSchemas } from '@/api'
+import { loadAndParseRequestCredentialSchemas, OrgGroupRequest } from '@/api'
 import { useLoading } from '@/hooks'
 
 interface Props extends StackProps {
@@ -13,10 +13,14 @@ interface Props extends StackProps {
 }
 
 export default function RequestDetails({ orgGroupRequest, bodySlot, actionsSlot, ...rest }: Props) {
-  const { data: VCsFields } = useLoading([], () => parseRequestCredentialSchemas(orgGroupRequest), {
-    loadOnMount: true,
-    loadArgs: [orgGroupRequest],
-  })
+  const { data: VCsFields } = useLoading(
+    [],
+    () => loadAndParseRequestCredentialSchemas(orgGroupRequest),
+    {
+      loadOnMount: true,
+      loadArgs: [orgGroupRequest],
+    },
+  )
 
   return (
     <Stack {...rest} flex={1} p={5}>

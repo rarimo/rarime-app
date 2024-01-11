@@ -2,7 +2,7 @@ import { alpha, LinearProgress, Stack, StackProps, Typography } from '@mui/mater
 import { useMemo } from 'react'
 
 import {
-  getOrgGroupRequestPublishStatus,
+  getOrgGroupPublishingRequests,
   OrgGroupRequest,
   OrgGroupRequestPublishing,
   OrgGroupRequestPublishingStatuses,
@@ -18,8 +18,8 @@ interface Props extends StackProps {
 export default function PublishingCard({ orgGroupRequest, ...rest }: Props) {
   const { data: publishingCreds } = useLoading(
     [] as OrgGroupRequestPublishing[],
-    async () => {
-      return getOrgGroupRequestPublishStatus({
+    () => {
+      return getOrgGroupPublishingRequests({
         orgId: orgGroupRequest.org_id,
         groupId: orgGroupRequest.group_id,
         reqId: orgGroupRequest.id,
@@ -34,11 +34,11 @@ export default function PublishingCard({ orgGroupRequest, ...rest }: Props) {
   const progress = useMemo(() => {
     if (!publishingCreds?.length) return 0
 
-    const confirmed = publishingCreds.filter(
+    const confirmedCreds = publishingCreds.filter(
       cred => cred.status === OrgGroupRequestPublishingStatuses.Confirmed,
     )
 
-    return (confirmed.length / publishingCreds.length) * 100
+    return (confirmedCreds.length / publishingCreds.length) * 100
   }, [publishingCreds])
 
   return (
@@ -58,14 +58,12 @@ export default function PublishingCard({ orgGroupRequest, ...rest }: Props) {
       >
         <Stack
           sx={theme => ({
-            display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             width: '100%',
             background: theme.palette.background.paper,
             p: 6,
             boxShadow: theme.shadows[1],
-            gap: 2,
+            spacing: 2,
           })}
         >
           <Typography color='primary'>{progress}%</Typography>
