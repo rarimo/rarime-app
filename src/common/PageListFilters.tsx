@@ -30,9 +30,12 @@ export default function PageListFilters({ tabs, onSearchInput, actionBar, ...res
               <UiIcon componentName='search' />
             </InputAdornment>
           ),
+          // TODO: change color
+          sx: { borderRadius: 25, borderColor: theme => theme.palette.grey[300] },
         }}
         placeholder={t('page-list-filters.search-input-placeholder')}
         onChange={e => handleSearchInput(e.target.value)}
+        size={'small'}
       />
 
       <Stack flex={1}>{actionBar}</Stack>

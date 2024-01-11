@@ -1,9 +1,9 @@
 // eslint-disable-next-line no-restricted-imports
-import { TypographyOptions } from '@mui/material/styles/createTypography'
 
 import { TYPOGRAPHY } from '@/theme/variables'
+import { ExtendedTypographyOptions } from '@/types'
 
-export const typographyTheme: TypographyOptions = {
+export const typographyTheme: ExtendedTypographyOptions = {
   htmlFontSize: 16,
 
   fontFamily: TYPOGRAPHY.txtFontFamily,
@@ -83,6 +83,14 @@ export const typographyTheme: TypographyOptions = {
     fontSize: TYPOGRAPHY.txtFontSizeBody2,
     lineHeight: TYPOGRAPHY.txtFontLineHeightBody2,
     letterSpacing: TYPOGRAPHY.txtFontLetterSpacingBody2,
+  },
+  body3: {
+    fontFamily: TYPOGRAPHY.txtFontFamily,
+    fontWeight: TYPOGRAPHY.txtFontWeightBody3,
+    fontSize: TYPOGRAPHY.txtFontSizeBody3,
+    lineHeight: TYPOGRAPHY.txtFontLineHeightBody3,
+    letterSpacing: TYPOGRAPHY.txtFontLetterSpacingBody3,
+    textTransform: 'uppercase',
   },
   button: {
     fontFamily: TYPOGRAPHY.txtFontFamily,

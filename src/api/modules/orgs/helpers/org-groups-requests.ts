@@ -540,33 +540,25 @@ export const verifyOrgGroupRequest = async ({
   role: OrgUserRoles
   metadata: OrgGroupVCsMetadata
 }) => {
-  // const { data } = await api.post<OrgGroupRequest>(
-  //   `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
-  //   {
-  //     body: {
-  //       data: {
-  //         type: 'requests-verify',
-  //         attributes: {
-  //           ...(activationDate && { activation_date: activationDate }),
-  //           ...(expirationDate && { expiration_date: expirationDate }),
-  //           approved: true,
-  //           role: role,
-  //           metadata,
-  //         },
-  //       },
-  //     },
-  //   },
-  // )
-  //
-  // return data
-
-  return {
-    ...DUMMY_ORG_GROUP_REQUESTS[0],
-    status: {
-      name: 'approved',
-      value: OrgGroupRequestStatuses.Approved,
+  const { data } = await api.post<OrgGroupRequest>(
+    `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    {
+      body: {
+        data: {
+          type: 'requests-verify',
+          attributes: {
+            ...(activationDate && { activation_date: activationDate }),
+            ...(expirationDate && { expiration_date: expirationDate }),
+            approved: true,
+            role: role,
+            metadata,
+          },
+        },
+      },
     },
-  } as OrgGroupRequest
+  )
+
+  return data
 }
 
 export const rejectOrgGroupRequest = async ({

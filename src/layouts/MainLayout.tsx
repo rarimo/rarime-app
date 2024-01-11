@@ -8,7 +8,9 @@ const MainLayout = () => {
     <Stack direction='row' px={4} py={5} spacing={4} height='calc(100 * var(--vh, 1vh))'>
       <AppNavbar />
       <Stack
+        overflow='hidden auto'
         width='100%'
+        height='100%'
         borderRadius={4}
         px={8}
         py={6}
