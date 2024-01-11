@@ -47,7 +47,10 @@ export default function OrgGroupsId() {
           filter={{
             ...filter,
 
-            [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Submitted,
+            [OrgGroupRequestFilters.Status]: [
+              OrgGroupRequestStatuses.Submitted,
+              OrgGroupRequestStatuses.Approved,
+            ],
           }}
         />
       ),
@@ -61,7 +64,7 @@ export default function OrgGroupsId() {
           filter={{
             ...filter,
 
-            [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Created,
+            [OrgGroupRequestFilters.Status]: [OrgGroupRequestStatuses.Created],
           }}
         />
       ),
@@ -75,7 +78,7 @@ export default function OrgGroupsId() {
           filter={{
             ...filter,
 
-            [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Filled,
+            [OrgGroupRequestFilters.Status]: [OrgGroupRequestStatuses.Filled],
           }}
         />
       ),

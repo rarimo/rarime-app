@@ -181,8 +181,8 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
       },
     ],
     status: {
-      name: 'submitted',
-      value: OrgGroupRequestStatuses.Submitted,
+      name: 'approved',
+      value: OrgGroupRequestStatuses.Approved,
     },
     created_at: '2021-08-12T14:00:00Z',
     updated_at: '2021-08-12T13:00:00Z',
@@ -416,13 +416,13 @@ const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {
       query.filter?.[OrgGroupRequestFilters.UserDid]
     ) {
       return (
-        req.status.value === query.filter[OrgGroupRequestFilters.Status] &&
+        query.filter[OrgGroupRequestFilters.Status].includes(req.status.value) &&
         req.user_did === query.filter[OrgGroupRequestFilters.UserDid]
       )
     }
 
     if (query?.filter?.[OrgGroupRequestFilters.Status]) {
-      return req.status.value === query.filter[OrgGroupRequestFilters.Status]
+      return query.filter[OrgGroupRequestFilters.Status].includes(req.status.value)
     }
 
     if (query?.filter?.[OrgGroupRequestFilters.UserDid]) {
@@ -612,7 +612,7 @@ export const getOrgGroupRequestPublishStatus = async ({
   orgId: string
   groupId: string
   reqId: string
-}) => {
+}): Promise<OrgGroupRequestPublishing[]> => {
   const { data } = await api.get<OrgGroupRequestPublishing[]>(
     `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}/publishing`,
   )
