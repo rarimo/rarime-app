@@ -10,7 +10,7 @@ export default function VerifyProofAlias() {
   const { proofs, isLoading, isLoadingError, isEmpty } = useLinkProofs(id)
 
   const orgId = useMemo(() => {
-    return proofs?.[0]?.organization_id ?? ''
+    return proofs?.[0]?.org_id ?? ''
   }, [proofs])
 
   const redirectPath = useMemo(() => {

@@ -9,7 +9,7 @@ const DUMMY_PROOFS: Proof[] = [
     created_at: '1702480643',
     proof: '{"pub_signals":[...],"proof":{"pi_a":[...],"pi_b":[],"pi_c":[...]}}',
     proof_type: 'firstName',
-    organization_id: '550e8400-e29b-41d4-a716-446655440000',
+    org_id: '550e8400-e29b-41d4-a716-446655440000',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440001',
@@ -18,7 +18,7 @@ const DUMMY_PROOFS: Proof[] = [
     created_at: '1702480643',
     proof: '{"pub_signals":[...],"proof":{"pi_a":[...],"pi_b":[],"pi_c":[...]}}',
     proof_type: 'lastName',
-    organization_id: '550e8400-e29b-41d4-a716-446655440000',
+    org_id: '550e8400-e29b-41d4-a716-446655440000',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440002',
@@ -27,7 +27,7 @@ const DUMMY_PROOFS: Proof[] = [
     created_at: '1702480643',
     proof: '{"pub_signals":[...],"proof":{"pi_a":[...],"pi_b":[],"pi_c":[...]}}',
     proof_type: 'telegram',
-    organization_id: '550e8400-e29b-41d4-a716-446655440000',
+    org_id: '550e8400-e29b-41d4-a716-446655440000',
   },
 ]
 
