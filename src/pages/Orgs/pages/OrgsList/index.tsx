@@ -17,7 +17,7 @@ export default function OrgsList() {
 
   const [filter, setFilter] = useState<OrgsRequestFiltersMap>({})
 
-  const routes = useNestedRoutes(RoutePaths.Orgs, [
+  const routes = useNestedRoutes(RoutePaths.OrgsList, [
     {
       index: true,
       element: <Navigate replace to={RoutePaths.OrgsListAll} />,
