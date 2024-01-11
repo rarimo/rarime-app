@@ -1,12 +1,19 @@
+import { fetcher } from '@distributedlab/fetcher'
+import omit from 'lodash/omit'
+
 import {
   api,
+  CredentialRequest,
   OrgGroupCreatedRequest,
   OrgGroupCreateRequest,
   OrgGroupRequest,
-  OrgGroupRequestMetadata,
+  OrgGroupRequestFilters,
   OrgGroupRequestQueryParams,
   OrgGroupRequestStatuses,
+  OrgGroupVCsMetadata,
   OrgsStatuses,
+  OrgUserRoles,
+  VCSchema,
 } from '@/api'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -17,15 +24,17 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          metadata1: 'value1',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
+        credential_subject: {
+          birthday: '1704810332',
         },
-        fields: {
-          field1: 'value1',
-        },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -61,15 +70,17 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          metadata1: 'value1',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
+        credential_subject: {
+          birthday: '1704810332',
         },
-        fields: {
-          field1: 'value1',
-        },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -105,15 +116,17 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          metadata1: 'value1',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
+        credential_subject: {
+          birthday: '1704810332',
         },
-        fields: {
-          field1: 'value1',
-        },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -149,15 +162,17 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          metadata1: 'value1',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
+        credential_subject: {
+          birthday: '1704810332',
         },
-        fields: {
-          field1: 'value1',
-        },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -193,15 +208,17 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          metadata1: 'value1',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
+        credential_subject: {
+          birthday: '1704810332',
         },
-        fields: {
-          field1: 'value1',
-        },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -237,15 +254,17 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          metadata1: 'value1',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
+        credential_subject: {
+          birthday: '1704810332',
         },
-        fields: {
-          field1: 'value1',
-        },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -281,15 +300,17 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          metadata1: 'value1',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
+        credential_subject: {
+          birthday: '1704810332',
         },
-        fields: {
-          field1: 'value1',
-        },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -325,15 +346,17 @@ const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
     user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
-    metadata: [
+    credential_requests: [
       {
-        schema: 'https://schema.url',
-        metadata: {
-          metadata1: 'value1',
+        credential_schema:
+          'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
+        credential_subject: {
+          birthday: '1704810332',
         },
-        fields: {
-          field1: 'value1',
-        },
+        type: '',
+        expiration: '',
+        mt_proof: true,
+        signature_proof: false,
       },
     ],
     status: {
@@ -375,6 +398,30 @@ const DUMMY_CREATED_REQUEST: OrgGroupCreatedRequest = {
   req_id: '9d6a5063-684e-4ab4-b49a-82cdceadf63f',
   created_at: '2021-08-12T14:00:00Z',
   request: DUMMY_ORG_GROUP_REQUESTS[0],
+}
+
+const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {
+  return DUMMY_ORG_GROUP_REQUESTS.filter(req => {
+    if (
+      query?.filter?.[OrgGroupRequestFilters.Status] &&
+      query.filter?.[OrgGroupRequestFilters.UserDid]
+    ) {
+      return (
+        req.status.value === query.filter[OrgGroupRequestFilters.Status] &&
+        req.user_did === query.filter[OrgGroupRequestFilters.UserDid]
+      )
+    }
+
+    if (query?.filter?.[OrgGroupRequestFilters.Status]) {
+      return req.status.value === query.filter[OrgGroupRequestFilters.Status]
+    }
+
+    if (query?.filter?.[OrgGroupRequestFilters.UserDid]) {
+      return req.user_did === query.filter[OrgGroupRequestFilters.UserDid]
+    }
+
+    return false
+  })
 }
 
 export const createInvitation = async ({ orgId, groupId, email, rules }: OrgGroupCreateRequest) => {
@@ -430,11 +477,13 @@ export const acceptInvitation = async ({
 }
 
 export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) => {
-  const { data } = await api.get<OrgGroupRequest[]>(`/v1/orgs/requests`, {
-    query: query,
-  })
+  // const { data } = await api.get<OrgGroupRequest[]>(`/v1/orgs/requests`, {
+  //   query: query,
+  // })
+  //
+  // return data
 
-  return data
+  return fakeLoadRequestsAll(query)
 }
 
 export const loadOrgGroupRequestById = async (orgId: string, groupId: string, reqId: string) => {
@@ -445,16 +494,17 @@ export const loadOrgGroupRequestById = async (orgId: string, groupId: string, re
   return data
 }
 
+// FIXME: not finished backend endpoint
 export const fillOrgGroupRequest = async ({
   orgId,
   groupId,
   reqId,
-  orgGroupRequestMetadata,
+  credReq,
 }: {
   orgId: string
   groupId: string
   reqId: string
-  orgGroupRequestMetadata: OrgGroupRequestMetadata
+  credReq: CredentialRequest[]
 }) => {
   const { data } = await api.patch<OrgGroupRequest>(
     `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
@@ -463,7 +513,7 @@ export const fillOrgGroupRequest = async ({
         data: {
           type: 'requests-fill',
           attributes: {
-            metadata: orgGroupRequestMetadata,
+            metadata: credReq,
           },
         },
       },
@@ -477,14 +527,48 @@ export const verifyOrgGroupRequest = async ({
   orgId,
   groupId,
   reqId,
-  orgGroupRequestMetadata,
+  activationDate,
+  expirationDate,
   role,
+  metadata,
 }: {
   orgId: string
   groupId: string
   reqId: string
-  orgGroupRequestMetadata: OrgGroupRequestMetadata
-  role: number
+  activationDate?: string
+  expirationDate?: string
+  role: OrgUserRoles
+  metadata: OrgGroupVCsMetadata
+}) => {
+  const { data } = await api.post<OrgGroupRequest>(
+    `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    {
+      body: {
+        data: {
+          type: 'requests-verify',
+          attributes: {
+            ...(activationDate && { activation_date: activationDate }),
+            ...(expirationDate && { expiration_date: expirationDate }),
+            approved: true,
+            role: role,
+            metadata,
+          },
+        },
+      },
+    },
+  )
+
+  return data
+}
+
+export const rejectOrgGroupRequest = async ({
+  orgId,
+  groupId,
+  reqId,
+}: {
+  orgId: string
+  groupId: string
+  reqId: string
 }) => {
   const { data } = await api.post<OrgGroupRequest>(
     `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
@@ -494,8 +578,6 @@ export const verifyOrgGroupRequest = async ({
           type: 'requests-verify',
           attributes: {
             approved: true,
-            metadata: orgGroupRequestMetadata,
-            role: role,
           },
         },
       },
@@ -503,4 +585,32 @@ export const verifyOrgGroupRequest = async ({
   )
 
   return data
+}
+
+export const loadAndParseRequestCredentialSchemas = async (
+  request: OrgGroupRequest,
+): Promise<
+  {
+    key: string
+    value: string
+    type: string
+  }[]
+> => {
+  return Promise.all(
+    request.credential_requests.map(async el => {
+      const { data } = await fetcher.get<VCSchema>(el.credential_schema)
+
+      const [key, { type }] = Object.entries(
+        omit(data?.properties.credentialSubject.properties, 'id'),
+      )[0]
+
+      const value = el.credential_subject[key]
+
+      return {
+        key,
+        value,
+        type,
+      }
+    }),
+  )
 }

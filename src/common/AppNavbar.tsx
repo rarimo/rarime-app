@@ -52,7 +52,7 @@ const AppNavbar = () => {
       </NavLink>
       <Divider />
 
-      <Stack py={6} gap={6}>
+      <Stack py={6} spacing={6}>
         {navbarItems.map(({ route, iconComponent }, idx) => (
           <NavbarLink to={route} key={idx}>
             {iconComponent}

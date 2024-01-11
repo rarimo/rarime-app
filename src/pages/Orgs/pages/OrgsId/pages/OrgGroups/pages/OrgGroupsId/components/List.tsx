@@ -1,15 +1,26 @@
-import { Divider, Stack, StackProps } from '@mui/material'
-import { useCallback } from 'react'
+import { Stack, StackProps, Typography } from '@mui/material'
+import { useCallback, useMemo, useState } from 'react'
 
-import { OrgGroupRequest, OrgGroupRequestFiltersMap } from '@/api'
-import { loadOrgGroupRequests } from '@/api/modules/orgs/helpers/org-groups-requests'
+import {
+  loadOrgGroupRequests,
+  OrgGroupRequest,
+  OrgGroupRequestFiltersMap,
+  OrgGroupRequestStatuses,
+} from '@/api'
 import { useLoading } from '@/hooks'
+import { UiButton, UiDrawer, UiIcon } from '@/ui'
+
+import ApproveRequestForm from './ApproveRequestForm'
+import ListItem from './ListItem'
 
 interface Props extends StackProps {
   filter: OrgGroupRequestFiltersMap
 }
 
 export default function List({ filter, ...rest }: Props) {
+  const [isDrawerShown, setIsDrawerShown] = useState(false)
+  const [selectedOrgGroupRequest, setSelectedOrgGroupRequest] = useState<OrgGroupRequest>()
+
   // TODO: add pagination
   const loadList = useCallback(async () => {
     return loadOrgGroupRequests({ filter })
@@ -20,30 +31,77 @@ export default function List({ filter, ...rest }: Props) {
     isLoading,
     isLoadingError,
     isEmpty,
+    reload,
   } = useLoading<OrgGroupRequest[]>([], loadList, {
     loadOnMount: true,
   })
 
+  const handleRequestApproved = useCallback(async () => {
+    setIsDrawerShown(false)
+
+    await reload()
+  }, [reload])
+
+  const handleRequestRejected = useCallback(async () => {
+    setIsDrawerShown(false)
+
+    await reload()
+  }, [reload])
+
+  const drawerContent = useMemo(() => {
+    if (!selectedOrgGroupRequest) return <></>
+
+    return {
+      [OrgGroupRequestStatuses.Created]: <></>,
+      [OrgGroupRequestStatuses.Accepted]: <></>,
+      [OrgGroupRequestStatuses.Filled]: (
+        <ApproveRequestForm
+          orgGroupRequest={selectedOrgGroupRequest}
+          onRequestApproved={handleRequestApproved}
+          onRequestRejected={handleRequestRejected}
+        />
+      ),
+      [OrgGroupRequestStatuses.Approved]: <></>,
+      [OrgGroupRequestStatuses.Rejected]: <></>,
+      [OrgGroupRequestStatuses.Submitted]: <></>,
+    }[selectedOrgGroupRequest.status.value]
+  }, [handleRequestApproved, handleRequestRejected, selectedOrgGroupRequest])
+
+  const handleRequestClick = useCallback((orgGroupRequest: OrgGroupRequest) => {
+    setIsDrawerShown(true)
+    setSelectedOrgGroupRequest(orgGroupRequest)
+  }, [])
+
   return (
-    <Stack {...rest}>
-      {isLoading ? (
-        <></>
-      ) : isLoadingError ? (
-        <></>
-      ) : isEmpty ? (
-        <></>
-      ) : (
-        orgGroupRequests.map((el, idx) => (
-          <div key={idx}>
-            {el.id}
-            <Divider />
-            {el.status.name}
-            <Divider />
-            <br />
-            <Divider />
-          </div>
-        ))
-      )}
-    </Stack>
+    <>
+      <Stack {...rest} spacing={4} direction='row' flexWrap='wrap'>
+        {isLoading ? (
+          <></>
+        ) : isLoadingError ? (
+          <></>
+        ) : isEmpty ? (
+          <></>
+        ) : (
+          <>
+            {orgGroupRequests.map((el, idx) => (
+              <ListItem orgGroupRequest={el} key={idx} onClick={() => handleRequestClick(el)} />
+            ))}
+
+            <UiDrawer open={isDrawerShown} onClose={() => setIsDrawerShown(false)} anchor='right'>
+              <Stack>
+                <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
+                  <Typography>Member Details</Typography>
+
+                  <UiButton variant={`text`} onClick={() => setIsDrawerShown(false)}>
+                    <UiIcon componentName='close' />
+                  </UiButton>
+                </Stack>
+                {drawerContent}
+              </Stack>
+            </UiDrawer>
+          </>
+        )}
+      </Stack>
+    </>
   )
 }

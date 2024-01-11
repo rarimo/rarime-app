@@ -6,6 +6,14 @@ export type OrgGroupMetadata = {
   // TODO: other metadata e. g. styles
 }
 
+export type OrgGroupVCsMetadata = {
+  title: string
+  subtitle: string
+  appearance: {
+    background: string
+  }
+}
+
 export type OrgGroupRule = {
   name: string
   scheme: string
