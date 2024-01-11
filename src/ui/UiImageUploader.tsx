@@ -9,6 +9,7 @@ interface Props extends Omit<InputProps, 'value' | 'onChange'> {
   stackProps?: StackProps
   value?: File
   onChange?: (value: File) => void
+  // TODO: add errorMessage
 }
 
 const AVATAR_SIZE = 19
@@ -33,7 +34,7 @@ const UiImageUploader = forwardRef<HTMLInputElement, Props>(
       [onChange],
     )
 
-    const validValue = useMemo(() => {
+    const valueUrl = useMemo(() => {
       if (!value) return ''
 
       try {
@@ -44,10 +45,10 @@ const UiImageUploader = forwardRef<HTMLInputElement, Props>(
     }, [value])
 
     return (
-      <Stack {...stackProps} position='relative' direction='row' alignItems='center' gap={6}>
-        {(!!validValue && (
+      <Stack {...stackProps} position='relative' direction='row' alignItems='center' spacing={6}>
+        {(!!valueUrl && (
           <Avatar
-            src={validValue}
+            src={valueUrl}
             sx={{
               ...avatarSize,
             }}

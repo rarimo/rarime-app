@@ -549,33 +549,25 @@ export const verifyOrgGroupRequest = async ({
   role: OrgUserRoles
   metadata: OrgGroupVCsMetadata
 }) => {
-  // const { data } = await api.post<OrgGroupRequest>(
-  //   `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
-  //   {
-  //     body: {
-  //       data: {
-  //         type: 'requests-verify',
-  //         attributes: {
-  //           ...(activationDate && { activation_date: activationDate }),
-  //           ...(expirationDate && { expiration_date: expirationDate }),
-  //           approved: true,
-  //           role: role,
-  //           metadata,
-  //         },
-  //       },
-  //     },
-  //   },
-  // )
-  //
-  // return data
-
-  return {
-    ...DUMMY_ORG_GROUP_REQUESTS[0],
-    status: {
-      name: 'approved',
-      value: OrgGroupRequestStatuses.Approved,
+  const { data } = await api.post<OrgGroupRequest>(
+    `/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    {
+      body: {
+        data: {
+          type: 'requests-verify',
+          attributes: {
+            ...(activationDate && { activation_date: activationDate }),
+            ...(expirationDate && { expiration_date: expirationDate }),
+            approved: true,
+            role: role,
+            metadata,
+          },
+        },
+      },
     },
-  } as OrgGroupRequest
+  )
+
+  return data
 }
 
 export const rejectOrgGroupRequest = async ({
@@ -620,7 +612,7 @@ export const getOrgGroupRequestPublishStatus = async ({
   return data
 }
 
-export const parseRequestCredentialSchemas = async (
+export const loadAndParseRequestCredentialSchemas = async (
   request: OrgGroupRequest,
 ): Promise<
   {
@@ -633,16 +625,16 @@ export const parseRequestCredentialSchemas = async (
     request.credential_requests.map(async el => {
       const { data } = await fetcher.get<VCSchema>(el.credential_schema)
 
-      const field = Object.entries(omit(data?.properties.credentialSubject.properties, 'id'))[0]
+      const [key, { type }] = Object.entries(
+        omit(data?.properties.credentialSubject.properties, 'id'),
+      )[0]
 
-      const fieldKey = field[0]
-      const fieldType = field[1].type
-      const fieldValue = el.credential_subject[fieldKey]
+      const value = el.credential_subject[key]
 
       return {
-        key: fieldKey,
-        value: fieldValue,
-        type: fieldType,
+        key,
+        value,
+        type,
       }
     }),
   )
@@ -651,15 +643,16 @@ export const parseRequestCredentialSchemas = async (
 export const loadOrgGroupReqMetadataById = async (
   metadataId: string,
 ): Promise<OrgGroupVCsMetadata> => {
-  // const { data } = await api.get<OrgGroupVCsMetadata>(`/v1/orgs/metadata/${metadataId}`)
-  //
-  // return data
+  const { data } = await api.get<OrgGroupVCsMetadata>(`/v1/orgs/metadata/${metadataId}`)
 
-  return {
-    title: 'title',
-    subtitle: 'subtitle',
-    appearance: {
-      background: '#ffffff',
-    },
-  }
+  return data
+
+  // TODO: remove once backend is ready
+  // return {
+  //   title: 'title',
+  //   subtitle: 'subtitle',
+  //   appearance: {
+  //     background: '#ffffff',
+  //   },
+  // }
 }

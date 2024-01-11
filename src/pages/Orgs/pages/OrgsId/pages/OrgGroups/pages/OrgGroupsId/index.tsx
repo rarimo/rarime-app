@@ -151,7 +151,7 @@ export default function OrgGroupsId() {
           }))
         }
         actionBar={
-          <Stack direction='row' gap={4} justifyContent='space-between'>
+          <Stack direction='row' spacing={4} justifyContent='space-between'>
             <UiButton
               variant='contained'
               color='primary'

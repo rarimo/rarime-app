@@ -20,7 +20,7 @@ export default function PageListFilters({ tabs, onSearchInput, actionBar, ...res
   const handleSearchInput = debounce((value: string) => onSearchInput?.(value), 500)
 
   return (
-    <Stack {...rest} direction='row' alignItems='center' gap={5}>
+    <Stack {...rest} direction='row' alignItems='center' spacing={5}>
       {tabs && <UiNavTabs tabs={tabs} />}
 
       <UiTextField
@@ -30,9 +30,12 @@ export default function PageListFilters({ tabs, onSearchInput, actionBar, ...res
               <UiIcon componentName='search' />
             </InputAdornment>
           ),
+          // TODO: change color
+          sx: { borderRadius: 25, borderColor: theme => theme.palette.grey[300] },
         }}
         placeholder={t('page-list-filters.search-input-placeholder')}
         onChange={e => handleSearchInput(e.target.value)}
+        size={'small'}
       />
 
       <Stack flex={1}>{actionBar}</Stack>

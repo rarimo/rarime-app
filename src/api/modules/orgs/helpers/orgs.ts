@@ -42,31 +42,25 @@ export const DUMMY_ORG: Organization = {
 }
 
 export const loadOrgs = async (query: OrgsRequestQueryParams) => {
-  // const { data } = await api.get<Organization[]>('/v1/orgs', {
-  //   query,
-  // })
-  //
-  // return data
+  const { data } = await api.get<Organization[]>('/v1/orgs', {
+    query,
+  })
 
-  return [DUMMY_ORG]
+  return data
 }
 
 export const loadOrgsAmount = async () => {
-  // const { data } = await api.get<number>('/v1/orgs/amount')
-  //
-  // return data
+  const { data } = await api.get<number>('/v1/orgs/amount')
 
-  return 25
+  return data
 }
 
 export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => {
-  // const { data } = await api.get<Organization>(`/v1/orgs/${id}`, {
-  //   query,
-  // })
-  //
-  // return data
+  const { data } = await api.get<Organization>(`/v1/orgs/${id}`, {
+    query,
+  })
 
-  return DUMMY_ORG
+  return data
 }
 
 export const createOrg = async (body: OrganizationCreate) => {
