@@ -4,6 +4,7 @@ import omit from 'lodash/omit'
 import {
   api,
   CredentialRequest,
+  CredentialSubject,
   OrgGroupCreatedRequest,
   OrgGroupCreateRequest,
   OrgGroupRequest,
@@ -612,32 +613,25 @@ export const getOrgGroupPublishingRequests = async ({
   return data
 }
 
-export const loadAndParseRequestCredentialSchemas = async (
-  request: OrgGroupRequest,
-): Promise<
-  {
-    key: string
-    value: string
-    type: string
-  }[]
-> => {
-  return Promise.all(
-    request.credential_requests.map(async el => {
-      const { data } = await fetcher.get<VCSchema>(el.credential_schema)
+export const loadAndParseCredentialSchema = async (
+  schemaUrl: string,
+  credentialSubject?: CredentialSubject,
+): Promise<{
+  key: string
+  type: string
+  value: string
+}> => {
+  const { data } = await fetcher.get<VCSchema>(schemaUrl)
 
-      const [key, { type }] = Object.entries(
-        omit(data?.properties.credentialSubject.properties, 'id'),
-      )[0]
+  const [key, { type }] = Object.entries(
+    omit(data?.properties.credentialSubject.properties, 'id'),
+  )[0]
 
-      const value = el.credential_subject[key]
-
-      return {
-        key,
-        value,
-        type,
-      }
-    }),
-  )
+  return {
+    key,
+    type,
+    value: credentialSubject?.[key] ?? '',
+  }
 }
 
 export const loadOrgGroupReqMetadataById = async (

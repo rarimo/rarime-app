@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material'
-import { trimEnd } from 'lodash'
+import trimEnd from 'lodash/trimEnd'
 import { useCallback, useMemo, useState } from 'react'
 import { generatePath, Navigate } from 'react-router-dom'
 

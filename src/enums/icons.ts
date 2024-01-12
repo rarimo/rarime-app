@@ -2,6 +2,7 @@ import { default as AccountCircleIcon } from '@mui/icons-material/AccountCircle'
 import { default as Add } from '@mui/icons-material/Add'
 import { default as AddPhotoAlternateOutlined } from '@mui/icons-material/AddPhotoAlternateOutlined'
 import { default as CheckIcon } from '@mui/icons-material/Check'
+import { default as ChevronLeft } from '@mui/icons-material/ChevronLeft'
 import { default as Close } from '@mui/icons-material/Close'
 import { default as DeleteIcon } from '@mui/icons-material/Delete'
 import { default as ErrorOutlineIcon } from '@mui/icons-material/ErrorOutline'
@@ -32,4 +33,5 @@ export const ICON_COMPONENTS = {
   addPhotoAlternativeOutlined: AddPhotoAlternateOutlined,
   verified: Verified,
   close: Close,
+  chevronLeft: ChevronLeft,
 }
