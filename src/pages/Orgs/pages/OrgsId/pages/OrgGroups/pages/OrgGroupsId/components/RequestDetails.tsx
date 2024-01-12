@@ -21,8 +21,8 @@ export default function RequestDetails({ orgGroupRequest, children, ...rest }: P
     <Stack {...rest} flex={1} p={5}>
       <Stack>
         {vcFields.map((el, idx) => (
-          <Stack key={idx}>
-            <Typography is={'p'}>{el.key}</Typography>
+          <Stack key={idx} spacing={4}>
+            <Typography>{el.key}</Typography>
             <Typography>{el.value}</Typography>
           </Stack>
         ))}
