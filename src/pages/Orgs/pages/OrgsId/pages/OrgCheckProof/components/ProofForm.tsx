@@ -1,5 +1,5 @@
 import { InputAdornment, Stack, useTheme } from '@mui/material'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { useLinkProofs } from '@/api'
@@ -10,16 +10,24 @@ import ProofField from './ProofField'
 export default function ProofForm() {
   const { palette } = useTheme()
   const [params] = useSearchParams()
-  const [linkId, setLinkId] = useState<string>(params.get('linkId') ?? '')
+  const [linkOrLinkId, setLinkOrLinkId] = useState<string>(params.get('linkId') ?? '')
+
+  const linkId = useMemo(() => {
+    try {
+      const url = new URL(linkOrLinkId)
+      return url.pathname.split('/').pop() ?? ''
+    } catch {
+      return linkOrLinkId
+    }
+  }, [linkOrLinkId])
 
   const { proofs, isLoading, isLoadingError, isEmpty } = useLinkProofs(linkId)
 
   return (
     <Stack spacing={8}>
       <UiTextField
-        value={linkId}
-        onChange={e => setLinkId(e.target.value)}
-        placeholder={'Enter the Proof Link ID'}
+        value={linkOrLinkId}
+        placeholder={'Enter the Proof Link ID or URL'}
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>
@@ -27,8 +35,8 @@ export default function ProofForm() {
             </InputAdornment>
           ),
         }}
+        onChange={e => setLinkOrLinkId(e.target.value)}
       />
-
       {/* TODO: Handle states properly */}
       {isLoading ? (
         <></>
