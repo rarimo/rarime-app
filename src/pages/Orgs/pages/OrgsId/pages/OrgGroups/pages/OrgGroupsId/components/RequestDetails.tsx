@@ -8,7 +8,7 @@ interface Props extends StackProps {
 }
 
 export default function RequestDetails({ orgGroupRequest, children, ...rest }: Props) {
-  const { data: VCsFields } = useLoading(
+  const { data: vcFields } = useLoading(
     [],
     () => loadAndParseRequestCredentialSchemas(orgGroupRequest),
     {
@@ -20,9 +20,9 @@ export default function RequestDetails({ orgGroupRequest, children, ...rest }: P
   return (
     <Stack {...rest} flex={1} p={5}>
       <Stack>
-        {VCsFields.map((el, idx) => (
+        {vcFields.map((el, idx) => (
           <Stack key={idx}>
-            <Typography>{el.key}</Typography>
+            <Typography is={'p'}>{el.key}</Typography>
             <Typography>{el.value}</Typography>
           </Stack>
         ))}

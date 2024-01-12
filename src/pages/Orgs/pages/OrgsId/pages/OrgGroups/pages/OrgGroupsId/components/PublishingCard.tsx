@@ -57,13 +57,13 @@ export default function PublishingCard({ orgGroupRequest, ...rest }: Props) {
         })}
       >
         <Stack
+          spacing={2}
           sx={theme => ({
             alignItems: 'center',
             width: '100%',
             background: theme.palette.background.paper,
             p: 6,
             boxShadow: theme.shadows[1],
-            spacing: 2,
           })}
         >
           <Typography color='primary'>{progress}%</Typography>
