@@ -104,7 +104,7 @@ export const typographyTheme: ExtendedTypographyOptions = {
     fontSize: TYPOGRAPHY.txtFontSizeBody3,
     lineHeight: TYPOGRAPHY.txtFontLineHeightBody3,
     letterSpacing: TYPOGRAPHY.txtFontLetterSpacingBody3,
-    textTransform: 'uppercase',
+    textTransform: 'none',
   },
   body4: {
     fontFamily: TYPOGRAPHY.txtFontFamily,

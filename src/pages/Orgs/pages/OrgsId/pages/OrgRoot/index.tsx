@@ -13,33 +13,31 @@ export default function OrgRoot() {
 
   return (
     <Stack flex={1}>
-      {isOrgOwner ? (
-        orgTabs
-      ) : (
-        <Box position={'relative'}>
-          <Box position={'absolute'}>
-            <NavLink to={RoutePaths.Orgs}>
-              <Stack
-                direction={'row'}
-                alignItems={'center'}
-                spacing={2}
-                color={palette.text.secondary}
-              >
-                <UiIcon componentName={'chevronLeft'} size={5} />
-                <Typography variant='button' color={'inherit'}>
-                  Back
-                </Typography>
-              </Stack>
-            </NavLink>
-          </Box>
+      {isOrgOwner && orgTabs}
 
-          <Stack mt={2} spacing={6} width={'100%'} maxWidth={spacing(200)} mx={'auto'}>
-            <OrgOverview org={org} />
-            <VerifyProofsBlock />
-            <LinksBlock />
-          </Stack>
+      <Box position={'relative'}>
+        <Box position={'absolute'}>
+          <NavLink to={RoutePaths.Orgs}>
+            <Stack
+              direction={'row'}
+              alignItems={'center'}
+              spacing={2}
+              color={palette.text.secondary}
+            >
+              <UiIcon componentName={'chevronLeft'} size={5} />
+              <Typography variant='button' color={'inherit'}>
+                Back
+              </Typography>
+            </Stack>
+          </NavLink>
         </Box>
-      )}
+
+        <Stack mt={2} spacing={6} width={'100%'} maxWidth={spacing(200)} mx={'auto'}>
+          <OrgOverview org={org} />
+          <VerifyProofsBlock />
+          <LinksBlock />
+        </Stack>
+      </Box>
     </Stack>
   )
 }

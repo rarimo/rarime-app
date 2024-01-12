@@ -27,7 +27,7 @@ export default function OrgOverview({ org, ...rest }: Props) {
             {org.metadata.name}
           </Typography>
 
-          {org.status.value !== OrgsStatuses.Verified && (
+          {org.status.value === OrgsStatuses.Verified && (
             <UiIcon componentName={'verified'} size={5} sx={{ color: palette.success.main }} />
           )}
         </Stack>
