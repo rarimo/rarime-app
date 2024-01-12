@@ -43,10 +43,14 @@ export default function OrgGroupsId() {
       path: RoutePaths.OrgsIdGroupsIdListStatusSubmitted,
       element: (
         <List
+          key={OrgGroupRequestStatuses.Submitted}
           filter={{
             ...filter,
 
-            [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Submitted,
+            [OrgGroupRequestFilters.Status]: [
+              OrgGroupRequestStatuses.Submitted,
+              OrgGroupRequestStatuses.Approved,
+            ],
           }}
         />
       ),
@@ -56,10 +60,11 @@ export default function OrgGroupsId() {
       path: RoutePaths.OrgsIdGroupsIdListStatusCreated,
       element: (
         <List
+          key={OrgGroupRequestStatuses.Created}
           filter={{
             ...filter,
 
-            [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Created,
+            [OrgGroupRequestFilters.Status]: [OrgGroupRequestStatuses.Created],
           }}
         />
       ),
@@ -69,10 +74,11 @@ export default function OrgGroupsId() {
       path: RoutePaths.OrgsIdGroupsIdListStatusFilled,
       element: (
         <List
+          key={OrgGroupRequestStatuses.Filled}
           filter={{
             ...filter,
 
-            [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses.Filled,
+            [OrgGroupRequestFilters.Status]: [OrgGroupRequestStatuses.Filled],
           }}
         />
       ),
@@ -145,7 +151,7 @@ export default function OrgGroupsId() {
           }))
         }
         actionBar={
-          <Stack direction='row' gap={4} justifyContent='space-between'>
+          <Stack direction='row' spacing={4} justifyContent='space-between'>
             <UiButton
               variant='contained'
               color='primary'

@@ -88,9 +88,7 @@ export default function ProofField({ proof }: Props) {
         onChange={e => handleChange(e.target.value)}
       />
 
-      {!isLoading && isValid !== undefined && (
-        <ProofValidationResult proof={proof} isValid={isValid} />
-      )}
+      {isValid !== undefined && <ProofValidationResult proof={proof} isValid={isValid} />}
     </Stack>
   )
 }

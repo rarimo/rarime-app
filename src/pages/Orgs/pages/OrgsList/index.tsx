@@ -17,7 +17,7 @@ export default function OrgsList() {
 
   const [filter, setFilter] = useState<OrgsRequestFiltersMap>({})
 
-  const routes = useNestedRoutes(RoutePaths.Orgs, [
+  const routes = useNestedRoutes(RoutePaths.OrgsList, [
     {
       index: true,
       element: <Navigate replace to={RoutePaths.OrgsListAll} />,
@@ -55,7 +55,7 @@ export default function OrgsList() {
   })
 
   return (
-    <Stack flex={1} gap={6}>
+    <Stack flex={1} spacing={6}>
       <PageTitles title={t('org-list.title')} subtitle={t('org-list.subtitle')} />
       <PageListFilters
         tabs={[
@@ -77,7 +77,7 @@ export default function OrgsList() {
           }))
         }
         actionBar={
-          <Stack direction='row' gap={4} justifyContent='space-between'>
+          <Stack direction='row' spacing={4} justifyContent='space-between'>
             <UiSwitch label='Show Only active' />
 
             <NavLink to={RoutePaths.OrgsNew}>
