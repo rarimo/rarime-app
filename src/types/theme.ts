@@ -9,12 +9,16 @@ import { ColorString } from './base'
 export type BaseTheme = Omit<Theme, 'components'>
 
 export interface ExtendedTypographyOptions extends TypographyOptions {
+  subtitle3: React.CSSProperties
+  subtitle4: React.CSSProperties
   body3: React.CSSProperties
   body4: React.CSSProperties
 }
 
 declare module '@mui/material/Typography/Typography' {
   interface TypographyPropsVariantOverrides {
+    subtitle3: true
+    subtitle4: true
     body3: true
     body4: true
   }
@@ -38,6 +42,8 @@ export type Typography = {
   txtFontSizeH6: string
   txtFontSizeSubtitle1: string
   txtFontSizeSubtitle2: string
+  txtFontSizeSubtitle3: string
+  txtFontSizeSubtitle4: string
   txtFontSizeBody1: string
   txtFontSizeBody2: string
   txtFontSizeBody3: string
@@ -54,6 +60,8 @@ export type Typography = {
   txtFontLineHeightH6: number
   txtFontLineHeightSubtitle1: number
   txtFontLineHeightSubtitle2: number
+  txtFontLineHeightSubtitle3: number
+  txtFontLineHeightSubtitle4: number
   txtFontLineHeightBody1: number
   txtFontLineHeightBody2: number
   txtFontLineHeightBody3: number
@@ -70,6 +78,8 @@ export type Typography = {
   txtFontLetterSpacingH6: string | number
   txtFontLetterSpacingSubtitle1: string | number
   txtFontLetterSpacingSubtitle2: string | number
+  txtFontLetterSpacingSubtitle3: string | number
+  txtFontLetterSpacingSubtitle4: string | number
   txtFontLetterSpacingBody1: string | number
   txtFontLetterSpacingBody2: string | number
   txtFontLetterSpacingBody3: string | number
@@ -86,6 +96,8 @@ export type Typography = {
   txtFontWeightH6: number
   txtFontWeightSubtitle1: number
   txtFontWeightSubtitle2: number
+  txtFontWeightSubtitle3: number
+  txtFontWeightSubtitle4: number
   txtFontWeightBody1: number
   txtFontWeightBody2: number
   txtFontWeightBody3: number

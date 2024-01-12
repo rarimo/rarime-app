@@ -1,10 +1,10 @@
 /* stylelint-disable scss/dollar-variable-empty-line-before */
-$col-dark: rgba(31, 33, 36, 0.87);
+$col-dark: #1f2124;
 $col-light: #ffffff;
 
 $col-txt-primary: $col-dark;
-$col-txt-secondary: rgba(31, 33, 36, 0.6);
-$col-txt-disabled: rgba(31, 33, 36, 0.38);
+$col-txt-secondary: #636a74;
+$col-txt-disabled: #636a74;
 
 $col-primary-light: #3044fe;
 $col-primary-main: #3044fe;
@@ -32,7 +32,7 @@ $col-success-dark: #2ca74b;
 
 $col-bg-default: #e0e1f8;
 $col-bg-paper: $col-light;
-$col-bg-divider: rgba(0, 0, 0, 0.06);
+$col-bg-divider: #f1f2f4;
 
 $col-action-active: $col-bg-divider;
 $col-action-hover: rgba(31, 33, 36, 0.04);

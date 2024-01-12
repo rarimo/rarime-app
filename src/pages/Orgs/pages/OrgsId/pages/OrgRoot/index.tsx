@@ -1,11 +1,11 @@
 import { Box, Stack, Typography, useTheme } from '@mui/material'
-import { generatePath, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { RoutePaths } from '@/enums'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
-import { UiButton, UiIcon } from '@/ui'
+import { UiIcon } from '@/ui'
 
-import { OrgOverview } from './components'
+import { LinksBlock, OrgOverview, VerifyProofsBlock } from './components'
 
 export default function OrgRoot() {
   const { org, isOrgOwner, orgTabs } = useOrgDetails()
@@ -33,15 +33,11 @@ export default function OrgRoot() {
             </NavLink>
           </Box>
 
-          <Box mt={2} width={'100%'} maxWidth={spacing(200)} mx={'auto'}>
+          <Stack mt={2} spacing={6} width={'100%'} maxWidth={spacing(200)} mx={'auto'}>
             <OrgOverview org={org} />
-
-            <Box mt={6}>
-              <NavLink to={generatePath(RoutePaths.OrgsIdCheckProof, { id: org.id })}>
-                <UiButton component='div'>Check proof</UiButton>
-              </NavLink>
-            </Box>
-          </Box>
+            <VerifyProofsBlock />
+            <LinksBlock />
+          </Stack>
         </Box>
       )}
     </Stack>
