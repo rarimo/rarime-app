@@ -1,6 +1,6 @@
 import { Divider, Stack, StackProps, Typography } from '@mui/material'
 
-import { loadAndParseRequestCredentialSchemas, OrgGroupRequest } from '@/api'
+import { loadAndParseCredentialSchema, OrgGroupRequest } from '@/api'
 import { useLoading } from '@/hooks'
 
 interface Props extends StackProps {
@@ -10,7 +10,12 @@ interface Props extends StackProps {
 export default function RequestDetails({ orgGroupRequest, children, ...rest }: Props) {
   const { data: vcFields } = useLoading(
     [],
-    () => loadAndParseRequestCredentialSchemas(orgGroupRequest),
+    () =>
+      Promise.all(
+        orgGroupRequest.credential_requests.map(req =>
+          loadAndParseCredentialSchema(req.credential_schema, req.credential_subject),
+        ),
+      ),
     {
       loadOnMount: true,
       loadArgs: [orgGroupRequest],

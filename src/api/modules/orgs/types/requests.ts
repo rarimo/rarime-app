@@ -7,9 +7,13 @@ import {
   OrgGroupRequestStatuses,
 } from '@/api'
 
+export type CredentialSubject = Record<string, string> & {
+  metadata_id: string
+}
+
 export type CredentialRequest = {
   credential_schema: string
-  credential_subject: Record<string, string> & { metadata_id: string }
+  credential_subject: CredentialSubject
   type: string
   expiration: string
   mt_proof: boolean

@@ -6,28 +6,34 @@ const DUMMY_PROOFS: Proof[] = [
     id: '550e8400-e29b-41d4-a716-446655440000',
     type: 'proofs',
     creator: 'did:ethr:0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef',
-    created_at: '1702480643',
+    created_at: '2021-08-12T14:00:00Z',
     proof: '{"pub_signals":[...],"proof":{"pi_a":[...],"pi_b":[],"pi_c":[...]}}',
     proof_type: 'firstName',
     org_id: '550e8400-e29b-41d4-a716-446655440000',
+    schema_url:
+      'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440001',
     type: 'proofs',
     creator: 'did:ethr:0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef',
-    created_at: '1702480643',
+    created_at: '2021-08-12T14:00:00Z',
     proof: '{"pub_signals":[...],"proof":{"pi_a":[...],"pi_b":[],"pi_c":[...]}}',
     proof_type: 'lastName',
     org_id: '550e8400-e29b-41d4-a716-446655440000',
+    schema_url:
+      'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCCountryOfResidenceCredential-v4.json',
   },
   {
     id: '550e8400-e29b-41d4-a716-446655440002',
     type: 'proofs',
     creator: 'did:ethr:0x123456789abcdef123456789abcdef123456789abcdef123456789abcdef',
-    created_at: '1702480643',
+    created_at: '2021-08-12T14:00:00Z',
     proof: '{"pub_signals":[...],"proof":{"pi_a":[...],"pi_b":[],"pi_c":[...]}}',
     proof_type: 'telegram',
     org_id: '550e8400-e29b-41d4-a716-446655440000',
+    schema_url:
+      'https://raw.githubusercontent.com/iden3/claim-schema-vocab/main/schemas/json/KYCAgeCredential-v3.json',
   },
 ]
 

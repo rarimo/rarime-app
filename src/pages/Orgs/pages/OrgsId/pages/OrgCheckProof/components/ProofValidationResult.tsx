@@ -1,4 +1,5 @@
-import { Box, Stack, Typography, useTheme } from '@mui/material'
+import { time } from '@distributedlab/tools'
+import { Box, Stack, Typography, TypographyProps, useTheme } from '@mui/material'
 import { ReactNode, useMemo } from 'react'
 
 import { Proof } from '@/api'
@@ -13,6 +14,15 @@ interface Props {
 export default function ProofValidationResult({ proof, isValid }: Props) {
   const { palette } = useTheme()
 
+  const valueTypographyProps: TypographyProps = useMemo(() => {
+    return {
+      variant: 'caption',
+      // TODO: fix colors
+      color: palette.text.primary,
+      sx: { overflow: 'hidden', textOverflow: 'ellipsis' },
+    }
+  }, [palette.text.primary])
+
   const validationDetails = useMemo<{ text: string; value: ReactNode }[]>(() => {
     return [
       {
@@ -21,18 +31,22 @@ export default function ProofValidationResult({ proof, isValid }: Props) {
       },
       {
         text: 'Issued:',
-        value: proof.created_at,
+        value: (
+          <Typography {...valueTypographyProps}>
+            {time(proof.created_at).format('DD MMM, YYYY')}
+          </Typography>
+        ),
       },
       {
         text: 'Issuer:',
-        value: proof.creator,
+        value: <Typography {...valueTypographyProps}>{proof.creator}</Typography>,
       },
       {
         text: 'Proof ID:',
-        value: proof.id,
+        value: <Typography {...valueTypographyProps}>{proof.id}</Typography>,
       },
     ]
-  }, [proof, isValid])
+  }, [proof, isValid, valueTypographyProps])
 
   return (
     <Stack
@@ -62,18 +76,7 @@ export default function ProofValidationResult({ proof, isValid }: Props) {
             borderColor={palette.divider}
             sx={{ borderStyle: 'dashed' }}
           />
-          {typeof detail.value === 'string' ? (
-            <Typography
-              variant={'caption'}
-              // TODO: fix colors
-              color={palette.text.primary}
-              sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
-            >
-              {detail.value}
-            </Typography>
-          ) : (
-            detail.value
-          )}
+          {detail.value}
         </Stack>
       ))}
     </Stack>

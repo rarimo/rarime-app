@@ -6,6 +6,8 @@ export type Proof = {
   proof: string
   proof_type: string
   org_id: string
+  // TODO: add proper type when BE is ready
+  schema_url: string
 }
 
 export type ProofLink = {
