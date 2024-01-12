@@ -92,6 +92,13 @@ export const typographyTheme: ExtendedTypographyOptions = {
     letterSpacing: TYPOGRAPHY.txtFontLetterSpacingBody3,
     textTransform: 'uppercase',
   },
+  body4: {
+    fontFamily: TYPOGRAPHY.txtFontFamily,
+    fontWeight: TYPOGRAPHY.txtFontWeightBody4,
+    fontSize: TYPOGRAPHY.txtFontSizeBody4,
+    lineHeight: TYPOGRAPHY.txtFontLineHeightBody4,
+    letterSpacing: TYPOGRAPHY.txtFontLetterSpacingBody4,
+  },
   button: {
     fontFamily: TYPOGRAPHY.txtFontFamily,
     fontWeight: TYPOGRAPHY.txtFontWeightButton,
