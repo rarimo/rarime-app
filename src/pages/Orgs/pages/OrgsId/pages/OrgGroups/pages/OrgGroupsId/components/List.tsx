@@ -10,8 +10,11 @@ import {
 import { useLoading } from '@/hooks'
 import { UiButton, UiDrawer, UiIcon } from '@/ui'
 
+import ApprovedCard from './ApprovedCard'
 import ApproveRequestForm from './ApproveRequestForm'
 import ListItem from './ListItem'
+import PublishingCard from './PublishingCard'
+import RequestDetails from './RequestDetails'
 
 interface Props extends StackProps {
   filter: OrgGroupRequestFiltersMap
@@ -52,18 +55,30 @@ export default function List({ filter, ...rest }: Props) {
     if (!selectedOrgGroupRequest) return <></>
 
     return {
-      [OrgGroupRequestStatuses.Created]: <></>,
-      [OrgGroupRequestStatuses.Accepted]: <></>,
-      [OrgGroupRequestStatuses.Filled]: (
-        <ApproveRequestForm
-          orgGroupRequest={selectedOrgGroupRequest}
-          onRequestApproved={handleRequestApproved}
-          onRequestRejected={handleRequestRejected}
-        />
+      [OrgGroupRequestStatuses.Created]: (
+        <RequestDetails orgGroupRequest={selectedOrgGroupRequest} />
       ),
-      [OrgGroupRequestStatuses.Approved]: <></>,
-      [OrgGroupRequestStatuses.Rejected]: <></>,
-      [OrgGroupRequestStatuses.Submitted]: <></>,
+      [OrgGroupRequestStatuses.Accepted]: undefined,
+      [OrgGroupRequestStatuses.Filled]: (
+        <RequestDetails orgGroupRequest={selectedOrgGroupRequest}>
+          <ApproveRequestForm
+            orgGroupRequest={selectedOrgGroupRequest}
+            onRequestApproved={handleRequestApproved}
+            onRequestRejected={handleRequestRejected}
+          />
+        </RequestDetails>
+      ),
+      [OrgGroupRequestStatuses.Approved]: (
+        <RequestDetails orgGroupRequest={selectedOrgGroupRequest}>
+          <PublishingCard orgGroupRequest={selectedOrgGroupRequest} />
+        </RequestDetails>
+      ),
+      [OrgGroupRequestStatuses.Rejected]: undefined,
+      [OrgGroupRequestStatuses.Submitted]: (
+        <RequestDetails orgGroupRequest={selectedOrgGroupRequest}>
+          <ApprovedCard orgGroupRequest={selectedOrgGroupRequest} />
+        </RequestDetails>
+      ),
     }[selectedOrgGroupRequest.status.value]
   }, [handleRequestApproved, handleRequestRejected, selectedOrgGroupRequest])
 
@@ -87,18 +102,20 @@ export default function List({ filter, ...rest }: Props) {
               <ListItem orgGroupRequest={el} key={idx} onClick={() => handleRequestClick(el)} />
             ))}
 
-            <UiDrawer open={isDrawerShown} onClose={() => setIsDrawerShown(false)} anchor='right'>
-              <Stack>
-                <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
-                  <Typography>Member Details</Typography>
+            {drawerContent && (
+              <UiDrawer open={isDrawerShown} onClose={() => setIsDrawerShown(false)} anchor='right'>
+                <Stack>
+                  <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
+                    <Typography>Member Details</Typography>
 
-                  <UiButton variant={`text`} onClick={() => setIsDrawerShown(false)}>
-                    <UiIcon componentName='close' />
-                  </UiButton>
+                    <UiButton variant={`text`} onClick={() => setIsDrawerShown(false)}>
+                      <UiIcon componentName='close' />
+                    </UiButton>
+                  </Stack>
+                  {drawerContent}
                 </Stack>
-                {drawerContent}
-              </Stack>
-            </UiDrawer>
+              </UiDrawer>
+            )}
           </>
         )}
       </Stack>

@@ -1,9 +1,8 @@
-import { Stack, StackProps, Typography } from '@mui/material'
+import { Stack, StackProps } from '@mui/material'
 import { useCallback, useState } from 'react'
 
-import { loadAndParseRequestCredentialSchemas, OrgGroupRequest, rejectOrgGroupRequest } from '@/api'
+import { OrgGroupRequest, rejectOrgGroupRequest } from '@/api'
 import { ErrorHandler } from '@/helpers'
-import { useLoading } from '@/hooks'
 import { UiBasicModal, UiButton } from '@/ui'
 
 import CredentialsMetadataBuilder from './CredentialsMetadataBuilder'
@@ -23,15 +22,6 @@ export default function ApproveRequestForm({
 }: Props) {
   const [isModalShown, setIsModalShown] = useState(false)
 
-  const { data: vcFields } = useLoading(
-    [],
-    () => loadAndParseRequestCredentialSchemas(orgGroupRequest),
-    {
-      loadOnMount: true,
-      loadArgs: [orgGroupRequest],
-    },
-  )
-
   const rejectRequest = useCallback(async () => {
     try {
       await rejectOrgGroupRequest({
@@ -48,21 +38,10 @@ export default function ApproveRequestForm({
 
   return (
     <Stack {...rest} flex={1} p={5}>
-      <Stack>
-        {vcFields.map((el, idx) => (
-          <Stack key={idx}>
-            <Typography>{el.key}</Typography>
-            <Typography>{el.value}</Typography>
-          </Stack>
-        ))}
-      </Stack>
-
-      <Stack mt='auto' spacing={2}>
-        <UiButton onClick={() => setIsModalShown(true)}>Create Credential</UiButton>
-        <UiButton onClick={rejectRequest} color='error'>
-          Reject
-        </UiButton>
-      </Stack>
+      <UiButton onClick={() => setIsModalShown(true)}>Create Credential</UiButton>
+      <UiButton onClick={rejectRequest} color='error'>
+        Reject
+      </UiButton>
 
       <UiBasicModal open={isModalShown} onClose={() => setIsModalShown(false)}>
         <CredentialsMetadataBuilder
