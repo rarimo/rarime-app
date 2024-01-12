@@ -20,8 +20,8 @@ export const DUMMY_ORGS: Organization[] = [
       description: 'Organization description',
     },
     status: {
-      name: 'unverified',
-      value: OrgsStatuses.Unverified,
+      name: 'verified',
+      value: OrgsStatuses.Verified,
     },
     verification_code: '6A4GSfUNKwM9hHuZVg4aUw==',
     issued_claims_count: '0',

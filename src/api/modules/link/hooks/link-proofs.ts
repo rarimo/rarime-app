@@ -5,6 +5,8 @@ import { useLoading } from '@/hooks'
 
 export const useLinkProofs = (id: string) => {
   const loadProofs = useCallback(async () => {
+    if (!id) return []
+
     return getProofsByLinkId(id)
   }, [id])
 
@@ -13,8 +15,8 @@ export const useLinkProofs = (id: string) => {
     isLoading,
     isLoadingError,
     isEmpty,
-  } = useLoading(undefined, loadProofs, {
-    loadOnMount: true,
+  } = useLoading([], loadProofs, {
+    loadOnMount: !!id,
     loadArgs: [id],
   })
 

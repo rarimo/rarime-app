@@ -12,7 +12,7 @@ export default function ProofForm() {
   const [params] = useSearchParams()
   const [linkId, setLinkId] = useState<string>(params.get('linkId') ?? '')
 
-  const { proofs, isLoading } = useLinkProofs(linkId)
+  const { proofs, isLoading, isLoadingError, isEmpty } = useLinkProofs(linkId)
 
   return (
     <Stack spacing={8}>
@@ -29,9 +29,16 @@ export default function ProofForm() {
         }}
       />
 
-      {isLoading || !proofs
-        ? 'Loading...'
-        : proofs.map(proof => <ProofField key={proof.id} proof={proof} />)}
+      {/* TODO: Handle states properly */}
+      {isLoading ? (
+        <></>
+      ) : isLoadingError ? (
+        <></>
+      ) : isEmpty ? (
+        <></>
+      ) : (
+        proofs.map(proof => <ProofField key={proof.id} proof={proof} />)
+      )}
     </Stack>
   )
 }

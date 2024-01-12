@@ -39,7 +39,7 @@ export default function OrgOverview({ org }: Props) {
           <Typography variant={'h6'}>{org.members_count}</Typography>
           <Typography variant={'body2'}>Associated people</Typography>
         </Box>
-        <Divider orientation={'vertical'} flexItem />
+        <Divider orientation={'vertical'} />
         <Box>
           <Typography variant={'h6'}>{org.issued_claims_count}</Typography>
           <Typography variant={'body2'}>Credentials</Typography>
