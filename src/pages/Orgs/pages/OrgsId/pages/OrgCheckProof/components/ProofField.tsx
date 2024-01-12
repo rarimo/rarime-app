@@ -1,5 +1,5 @@
 import { InputAdornment, Stack } from '@mui/material'
-import { startCase } from 'lodash'
+import startCase from 'lodash/startCase'
 import { useCallback, useMemo, useState } from 'react'
 
 import { loadAndParseCredentialSchema, Proof } from '@/api'
@@ -54,7 +54,7 @@ export default function ProofField({ proof }: Props) {
     <></>
   ) : isSchemaLoadingError ? (
     <></>
-  ) : isSchemaEmpty || !parsedSchema ? (
+  ) : isSchemaEmpty || !formattedFieldKey ? (
     <></>
   ) : (
     <Stack spacing={2}>
