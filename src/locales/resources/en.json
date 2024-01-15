@@ -1,7 +1,7 @@
 {
   "profile-page": {
     "title" : "Profiles & Wallets",
-    "description": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this dashboard",
+    "description": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this app",
     "wallet": "Wallet",
     "filter": "Filter",
     "empty-title": "Add Credentials",
@@ -9,7 +9,7 @@
   },
   "sign-in-page": {
     "title": "Sign in",
-    "description": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this dashboard",
+    "description": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this app",
     "connect-btn": "Connect Metamask",
     "install-btn": "Install Metamask",
     "reload-page-btn": "Please, reload page"
@@ -54,6 +54,6 @@
   },
   "org-list": {
     "title": "Organizations",
-    "subtitle": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this dashboard"
+    "subtitle": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this app"
   }
 }
