@@ -2,13 +2,14 @@ import { Box, Stack } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 
 import { config } from '@/config'
+import { vh } from '@/theme/helpers'
 
 const AuthLayout = () => {
   return (
     <Stack
       alignItems='center'
       justifyContent='center'
-      height='calc(100 * var(--vh, 1vh))'
+      height={vh(100)}
       width='100%'
       sx={{
         backgroundImage: 'url("/imgs/app-bg.png")',
