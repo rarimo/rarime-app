@@ -8,15 +8,15 @@ import { UiIcon } from '@/ui'
 import { LinksBlock, OrgOverview, VerifyProofsBlock } from './components'
 
 export default function OrgRoot() {
-  const { org, isOrgOwner, orgTabs } = useOrgDetails()
+  const { isOrgOwner, orgTabs } = useOrgDetails()
   const { palette, spacing } = useTheme()
 
   return (
-    <Stack flex={1}>
+    <Stack flex={1} spacing={6}>
       {isOrgOwner && orgTabs}
 
       <Box position={'relative'}>
-        <Box position={'absolute'}>
+        <Box position={'absolute'} top={0} left={0}>
           <NavLink to={RoutePaths.Orgs}>
             <Stack
               direction={'row'}
@@ -25,7 +25,7 @@ export default function OrgRoot() {
               color={palette.text.secondary}
             >
               <UiIcon componentName={'chevronLeft'} size={5} />
-              <Typography variant='button' color={'inherit'}>
+              <Typography variant={'button'} color={'inherit'}>
                 Back
               </Typography>
             </Stack>
@@ -33,7 +33,7 @@ export default function OrgRoot() {
         </Box>
 
         <Stack mt={2} spacing={6} width={'100%'} maxWidth={spacing(200)} mx={'auto'}>
-          <OrgOverview org={org} />
+          <OrgOverview />
           <VerifyProofsBlock />
           <LinksBlock />
         </Stack>

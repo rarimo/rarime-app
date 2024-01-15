@@ -54,7 +54,7 @@ export default function LinkItem({ link }: Props) {
     >
       <UiIcon {...iconProps} size={6} sx={{ color: palette.text.primary }} />
       <Typography
-        variant='body3'
+        variant={'body3'}
         color={palette.text.primary}
         sx={{
           overflow: 'hidden',

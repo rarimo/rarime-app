@@ -102,7 +102,7 @@ export const loadOrgs = async (query: OrgsRequestQueryParams) => {
 }
 
 export const loadOrgsAmount = async () => {
-  const { data } = await api.get<number>('v1/orgs/amount')
+  const { data } = await api.get<number>('/v1/orgs/amount')
 
   return data
 }

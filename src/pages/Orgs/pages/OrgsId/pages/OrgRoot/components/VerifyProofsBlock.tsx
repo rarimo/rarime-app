@@ -22,10 +22,8 @@ export default function VerifyProofsBlock() {
 
   return (
     <Stack border={1} borderColor={palette.divider} borderRadius={2} p={6} spacing={5}>
-      <Typography variant='subtitle4'>Verify Organisational Proofs</Typography>
-
+      <Typography variant='subtitle4'>Verify Organizational Proofs</Typography>
       <Divider />
-
       <UiTextField
         value={linkOrLinkId}
         placeholder={'Enter the Proof Link ID or URL'}

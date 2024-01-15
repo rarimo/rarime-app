@@ -1,13 +1,11 @@
-import { Avatar, Box, Stack, StackProps, Typography, useTheme } from '@mui/material'
+import { Avatar, Box, Stack, Typography, useTheme } from '@mui/material'
 
-import { Organization, OrgsStatuses } from '@/api'
+import { OrgsStatuses } from '@/api'
+import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiIcon } from '@/ui'
 
-interface Props extends StackProps {
-  org: Organization
-}
-
-export default function OrgOverview({ org, ...rest }: Props) {
+export default function OrgOverview() {
+  const { org } = useOrgDetails()
   const { palette, spacing } = useTheme()
 
   return (
@@ -19,7 +17,6 @@ export default function OrgOverview({ org, ...rest }: Props) {
       borderColor={palette.divider}
       borderRadius={2}
       p={6}
-      {...rest}
     >
       <Stack spacing={2}>
         <Stack direction={'row'} spacing={1} alignItems={'center'} mt={4}>
