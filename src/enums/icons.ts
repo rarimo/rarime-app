@@ -8,6 +8,7 @@ import { default as DeleteIcon } from '@mui/icons-material/Delete'
 import { default as ErrorOutlineIcon } from '@mui/icons-material/ErrorOutline'
 import { default as InfoIcon } from '@mui/icons-material/Info'
 import { default as KeyboardArrowDownOutlinedIcon } from '@mui/icons-material/KeyboardArrowDownOutlined'
+import { default as Link } from '@mui/icons-material/Link'
 import { default as Search } from '@mui/icons-material/Search'
 import { default as Verified } from '@mui/icons-material/Verified'
 import { default as WarningAmberIcon } from '@mui/icons-material/WarningAmber'
@@ -17,6 +18,9 @@ export enum Icons {
   Metamask = 'metamask',
   User = 'user',
   Wallet = 'wallet',
+  Facebook = 'facebook',
+  Instagram = 'instagram',
+  Twitter = 'twitter',
 }
 
 export const ICON_COMPONENTS = {
@@ -34,4 +38,5 @@ export const ICON_COMPONENTS = {
   verified: Verified,
   close: Close,
   chevronLeft: ChevronLeft,
+  link: Link,
 }

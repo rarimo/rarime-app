@@ -18,6 +18,24 @@ export const DUMMY_ORGS: Organization[] = [
       logoUrl: 'https://rarimo.com/favicon/favicon-dark.png',
       name: 'Rarimo',
       description: 'Organization description',
+      links: [
+        {
+          title: 'Facebook.com/rarimo',
+          url: 'https://www.facebook.com/rarimo',
+        },
+        {
+          title: '@Rarimo_Protocol',
+          url: 'https://instagram.com/rarimo_protocol',
+        },
+        {
+          title: '@Rarimo_Protocol',
+          url: 'https://twitter.com/rarimo_protocol',
+        },
+        {
+          title: 'Official website',
+          url: 'https://rarimo.com',
+        },
+      ],
     },
     status: {
       name: 'verified',
@@ -84,7 +102,7 @@ export const loadOrgs = async (query: OrgsRequestQueryParams) => {
 }
 
 export const loadOrgsAmount = async () => {
-  const { data } = await api.get<number>('/v1/orgs/amount')
+  const { data } = await api.get<number>('v1/orgs/amount')
 
   return data
 }
