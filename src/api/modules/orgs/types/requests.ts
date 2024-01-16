@@ -57,7 +57,8 @@ export type OrgGroupCreatedRequest = {
   group_id: string
   email: string
   created_at: string
-  request: OrgGroupRequest
+  claim_id: string
+  request?: OrgGroupRequest
 }
 
 export type OrgGroupRequestFiltersMap = {

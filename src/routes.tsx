@@ -27,9 +27,11 @@ export const AppRoutes = () => {
 
   const signInGuard = useCallback(
     ({ request }: LoaderFunctionArgs) => {
-      const from = new URL(request.url).searchParams.get('from')
+      const requestUrl = new URL(request.url)
 
-      return isAuthorized ? redirect(from ?? RoutePaths.Root) : null
+      const from = requestUrl.searchParams.get('from')
+
+      return isAuthorized ? redirect(`${from}${requestUrl.search}` ?? RoutePaths.Root) : null
     },
     [isAuthorized],
   )
@@ -41,9 +43,10 @@ export const AppRoutes = () => {
       if (!isAuthorized) {
         logout()
 
-        const params = new URLSearchParams()
-        params.set('from', new URL(request.url).pathname)
-        return redirect(`${RoutePaths.SignIn}?${params.toString()}`)
+        const requestUrl = new URL(request.url)
+        requestUrl.searchParams.set('from', requestUrl.pathname)
+
+        return redirect(`${RoutePaths.SignIn}${requestUrl.search}`)
       }
 
       return null
@@ -94,7 +97,7 @@ export const AppRoutes = () => {
           element: <VerifyProofAlias />,
         },
         {
-          path: RoutePaths.AcceptInvite,
+          path: createDeepPath(RoutePaths.AcceptInvite),
           element: <AcceptInvite />,
           loader: authProtectedGuard,
         },
