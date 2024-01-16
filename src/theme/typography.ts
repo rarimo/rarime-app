@@ -1,9 +1,7 @@
-import { FontWeight } from '@/enums'
 import { ExtendedTypographyOptions } from '@/types'
 
+import { FONT_FAMILY, FontWeight } from './constants'
 import { toRem } from './helpers'
-
-const FONT_FAMILY = "'EuclidCircularB', sans-serif"
 
 export const typography: ExtendedTypographyOptions = {
   htmlFontSize: 16,

@@ -1,3 +1,5 @@
+export const FONT_FAMILY = "'EuclidCircularB', sans-serif"
+
 export enum FontWeight {
   Light = 300,
   Regular = 400,
