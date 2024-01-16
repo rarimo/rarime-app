@@ -1,5 +1,5 @@
 VITE_MODE=production
 VITE_PORT=8000
-VITE_APP_NAME='Rarime Dashboard'
-VITE_APP_DOMAIN='https://dashboard.rarime.com'
+VITE_APP_NAME='Rarime App'
+VITE_APP_DOMAIN='https://app.rarime.com'
 VITE_DEFAULT_CHAIN='SEPOLIA'

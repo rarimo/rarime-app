@@ -2,22 +2,16 @@ import { CircularProgress, CssBaseline, Stack, ThemeProvider } from '@mui/materi
 import { FC, HTMLAttributes, memo, useCallback, useEffect, useState } from 'react'
 
 import { ErrorHandler } from '@/helpers'
-import {
-  useAuth,
-  useMetamaskZkpSnapContext,
-  useThemeMode,
-  useViewportSizes,
-  useWeb3Context,
-} from '@/hooks'
+import { useAuth, useMetamaskZkpSnapContext, useViewportSizes, useWeb3Context } from '@/hooks'
 
 import { ToastsManager } from './contexts'
 import { AppRoutes } from './routes'
+import { theme } from './theme'
 
 const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
   const [isAppInitialized, setIsAppInitialized] = useState(false)
 
   const { provider, isValidChain } = useWeb3Context()
-  const { theme } = useThemeMode()
   const { checkSnapStatus } = useMetamaskZkpSnapContext()
   const { authorize } = useAuth()
 

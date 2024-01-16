@@ -1,15 +1,46 @@
-import { Components } from '@mui/material'
+import { Components, Theme } from '@mui/material'
 
 import { ICON_COMPONENTS } from '@/enums'
-import { BaseTheme } from '@/types'
 
-export const componentsTheme: Components<BaseTheme> = {
+import { vh } from './helpers'
+
+export const components: Components<Omit<Theme, 'components'>> = {
+  MuiCssBaseline: {
+    styleOverrides: `
+      html {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+        min-height: ${vh(100)};
+        -webkit-overflow-scrolling: touch !important;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body, #root, .App {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+      }
+      
+      a {
+        outline: none;
+        text-decoration: none;
+      
+        &:hover,
+        &:focus,
+        &:active {
+          text-decoration: none;
+        }
+      }
+    `,
+  },
   MuiSnackbar: {
     styleOverrides: {
       root: ({ theme }) => ({
         '& > .MuiPaper-root': {
           borderRadius: theme.spacing(1),
-          border: 'var(--ui-border)',
         },
       }),
     },

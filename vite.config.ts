@@ -56,17 +56,6 @@ export default defineConfig(({ mode }) => {
           ]
         : []),
     ],
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: `
-            @import "@/styles/_mixins.scss";
-            @import "@/styles/_placeholders.scss";
-            @import "@/styles/_functions.scss";
-          `,
-        },
-      },
-    },
     resolve: {
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
       dedupe: ['react', 'lodash'],

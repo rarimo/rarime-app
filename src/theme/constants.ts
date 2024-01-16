@@ -1,7 +1,4 @@
-export enum ThemeMode {
-  Light = 'light',
-  Dark = 'dark',
-}
+export const FONT_FAMILY = "'EuclidCircularB', sans-serif"
 
 export enum FontWeight {
   Light = 300,

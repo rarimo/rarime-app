@@ -67,7 +67,7 @@ function validateChangelogHasVersionOnTop () {
 }
 
 function validateChangelogAnchorsLegend () {
-  const baseRepoUrl = 'https://github.com/rarimo/dashboard-rarime'
+  const baseRepoUrl = 'https://github.com/rarimo/rarime-app'
   const anyReleaseTagRe =
     /## \[\d+\.\d+\.\d+((-rc|-x)\.\d+)?\] - \d{4}-\d{2}-\d{2}/gi
 

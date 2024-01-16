@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next'
 
 import resources from './resources'
 
-const STORAGE_KEY = 'dashboard-rarime-locale'
+const STORAGE_KEY = 'rarime-app-locale'
 const DEFAULT_LOCALE = 'en-US'
 
 const locale = localStorage?.getItem(STORAGE_KEY) ?? DEFAULT_LOCALE
