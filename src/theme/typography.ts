@@ -70,6 +70,20 @@ export const typographyTheme: ExtendedTypographyOptions = {
     lineHeight: TYPOGRAPHY.txtFontLineHeightSubtitle2,
     letterSpacing: TYPOGRAPHY.txtFontLetterSpacingSubtitle2,
   },
+  subtitle3: {
+    fontFamily: TYPOGRAPHY.txtFontFamily,
+    fontWeight: TYPOGRAPHY.txtFontWeightSubtitle3,
+    fontSize: TYPOGRAPHY.txtFontSizeSubtitle3,
+    lineHeight: TYPOGRAPHY.txtFontLineHeightSubtitle3,
+    letterSpacing: TYPOGRAPHY.txtFontLetterSpacingSubtitle3,
+  },
+  subtitle4: {
+    fontFamily: TYPOGRAPHY.txtFontFamily,
+    fontWeight: TYPOGRAPHY.txtFontWeightSubtitle4,
+    fontSize: TYPOGRAPHY.txtFontSizeSubtitle4,
+    lineHeight: TYPOGRAPHY.txtFontLineHeightSubtitle4,
+    letterSpacing: TYPOGRAPHY.txtFontLetterSpacingSubtitle4,
+  },
   body1: {
     fontFamily: TYPOGRAPHY.txtFontFamily,
     fontWeight: TYPOGRAPHY.txtFontWeightBody1,
@@ -90,7 +104,14 @@ export const typographyTheme: ExtendedTypographyOptions = {
     fontSize: TYPOGRAPHY.txtFontSizeBody3,
     lineHeight: TYPOGRAPHY.txtFontLineHeightBody3,
     letterSpacing: TYPOGRAPHY.txtFontLetterSpacingBody3,
-    textTransform: 'uppercase',
+    textTransform: 'none',
+  },
+  body4: {
+    fontFamily: TYPOGRAPHY.txtFontFamily,
+    fontWeight: TYPOGRAPHY.txtFontWeightBody4,
+    fontSize: TYPOGRAPHY.txtFontSizeBody4,
+    lineHeight: TYPOGRAPHY.txtFontLineHeightBody4,
+    letterSpacing: TYPOGRAPHY.txtFontLetterSpacingBody4,
   },
   button: {
     fontFamily: TYPOGRAPHY.txtFontFamily,
