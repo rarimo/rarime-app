@@ -456,13 +456,11 @@ export const createInvitation = async ({ orgId, groupId, email, rules }: OrgGrou
 export const acceptInvitation = async ({
   orgId,
   groupId,
-  reqId,
   otp,
   userDid,
 }: {
   orgId: string
   groupId: string
-  reqId: string
   otp: string
   userDid: string
 }) => {
@@ -471,7 +469,6 @@ export const acceptInvitation = async ({
     {
       body: {
         data: {
-          id: reqId,
           type: 'invitations-accept-email',
           attributes: {
             otp: otp,
