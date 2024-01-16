@@ -1,7 +1,14 @@
-import { Avatar, Input, type InputProps, Stack, type StackProps, Typography } from '@mui/material'
+import {
+  Avatar,
+  Input,
+  type InputProps,
+  Stack,
+  type StackProps,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import { ChangeEvent, forwardRef, useCallback, useMemo } from 'react'
 
-import { useThemeMode } from '@/hooks'
 import UiIcon from '@/ui/UiIcon'
 
 interface Props extends Omit<InputProps, 'value' | 'onChange'> {
@@ -16,11 +23,11 @@ const AVATAR_SIZE = 19
 
 const UiImageUploader = forwardRef<HTMLInputElement, Props>(
   ({ label, stackProps, value, onChange, ...rest }: Props, ref) => {
-    const { theme } = useThemeMode()
+    const { palette, spacing } = useTheme()
 
     const avatarSize = {
-      width: theme.spacing(AVATAR_SIZE),
-      height: theme.spacing(AVATAR_SIZE),
+      width: spacing(AVATAR_SIZE),
+      height: spacing(AVATAR_SIZE),
     }
 
     const handleChange = useCallback(
@@ -58,7 +65,7 @@ const UiImageUploader = forwardRef<HTMLInputElement, Props>(
             {...avatarSize}
             justifyContent='center'
             alignItems='center'
-            bgcolor={theme.palette.background.default}
+            bgcolor={palette.background.default}
             borderRadius={'50%'}
           >
             <UiIcon componentName='addPhotoAlternativeOutlined' size={6} />
