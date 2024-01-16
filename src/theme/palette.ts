@@ -1,9 +1,7 @@
 import { PaletteOptions } from '@mui/material/styles'
 
-import { ThemeMode } from '@/enums'
-
 export const palette: PaletteOptions = {
-  mode: ThemeMode.Light,
+  mode: 'light',
   common: {
     black: '#1f2124',
     white: '#ffffff',

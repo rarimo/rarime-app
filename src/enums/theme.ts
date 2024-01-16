@@ -1,8 +1,3 @@
-export enum ThemeMode {
-  Light = 'light',
-  Dark = 'dark',
-}
-
 export enum FontWeight {
   Light = 300,
   Regular = 400,
