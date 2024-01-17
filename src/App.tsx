@@ -13,7 +13,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
 
   const { provider, isValidChain } = useWeb3Context()
   const { checkSnapStatus } = useMetamaskZkpSnapContext()
-  const { authorize } = useAuth()
+  const { connectProviders } = useAuth()
 
   useViewportSizes()
 
@@ -24,14 +24,14 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
       const { isMetamaskInstalled, isSnapInstalled } = await checkSnapStatus()
 
       if (isMetamaskInstalled && isSnapInstalled) {
-        await authorize()
+        await connectProviders()
       }
     } catch (error) {
       ErrorHandler.processWithoutFeedback(error)
     }
 
     setIsAppInitialized(true)
-  }, [provider?.address, checkSnapStatus, authorize])
+  }, [provider?.address, checkSnapStatus, connectProviders])
 
   useEffect(() => {
     init()

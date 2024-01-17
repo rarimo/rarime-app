@@ -1,17 +1,31 @@
+import { AuthTokens } from '@/api/modules/auth'
 import { createStore } from '@/helpers'
 
 interface AuthState {
-  jwt: string
+  tokens: {
+    orgId: string
+    groupId: string
+    accessToken: string
+    refreshToken: string
+  }[]
 }
 
 const [authStore, useAuthState] = createStore(
   'auth',
   {
-    jwt: '',
+    tokens: [],
   } as AuthState,
   state => ({
-    setJwt: (jwt: string) => {
-      state.jwt = jwt
+    addToken: (tokens: AuthTokens, orgId: string, groupId: string) => {
+      state.tokens = [
+        ...state.tokens,
+        {
+          orgId,
+          groupId,
+          accessToken: tokens.accessToken.token,
+          refreshToken: tokens.refreshToken.token,
+        },
+      ]
     },
   }),
 )

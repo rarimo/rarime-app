@@ -4,7 +4,6 @@ import omit from 'lodash/omit'
 import {
   api,
   CredentialRequest,
-  CredentialSubject,
   OrgGroupCreatedRequest,
   OrgGroupCreateRequest,
   OrgGroupRequest,
@@ -15,8 +14,8 @@ import {
   OrgGroupVCsMetadata,
   OrgsStatuses,
   OrgUserRoles,
-  VCSchema,
 } from '@/api'
+import { CredentialSubject, VCSchema } from '@/api/modules/zkp'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
@@ -408,6 +407,7 @@ const DUMMY_CREATED_REQUEST: OrgGroupCreatedRequest = {
   req_id: '9d6a5063-684e-4ab4-b49a-82cdceadf63f',
   created_at: '2021-08-12T14:00:00Z',
   request: DUMMY_ORG_GROUP_REQUESTS[0],
+  claim_id: '',
 }
 
 const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {

@@ -9,7 +9,7 @@ import { UiButton, UiIcon } from '@/ui'
 
 export default function SignIn() {
   const { t } = useTranslation()
-  const { login } = useAuth()
+  const { connectProviders } = useAuth()
   const [isPending, setIsPending] = useState(false)
 
   const { palette } = useTheme()
@@ -19,12 +19,12 @@ export default function SignIn() {
     setIsPending(true)
 
     try {
-      await login()
+      await connectProviders()
     } catch (error) {
       ErrorHandler.process(error)
       setIsPending(false)
     }
-  }, [login])
+  }, [connectProviders])
 
   const installMMLink = useMemo(() => {
     if (isMetamaskInstalled) return ''

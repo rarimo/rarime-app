@@ -1,23 +1,18 @@
-import { useCallback, useMemo } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useCallback, useEffect, useMemo } from 'react'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { acceptInvitation } from '@/api'
-import { useLoading, useMetamaskZkpSnapContext, useWeb3Context } from '@/hooks'
+import { RoutePaths } from '@/enums'
+import { useAuth, useMetamaskZkpSnapContext } from '@/hooks'
+import { authStore } from '@/store'
 
-/**
- * run acceptInvitation
- * subscribe to authRoleClaim
- * saveCredential
- * generate proof
- * get jwt from auth-svc
- * redirect to fulfilling form
- * @constructor
- */
 export default function EmailVerification() {
+  const location = useLocation()
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
 
-  const { userDid, getVerifiableCredentials, createProof } = useMetamaskZkpSnapContext()
-  const { provider } = useWeb3Context()
+  const { userDid } = useMetamaskZkpSnapContext()
+  const { authorize } = useAuth()
 
   const inviteDetails = useMemo<{
     group_id: string
@@ -26,6 +21,7 @@ export default function EmailVerification() {
     otp: string
   }>(() => {
     try {
+      // TODO: add searchParameter const
       return JSON.parse(atob(searchParams.get('q') || ''))
     } catch (error) {
       return null
@@ -40,50 +36,31 @@ export default function EmailVerification() {
       otp: inviteDetails.otp,
     })
 
-    const claimOffer = await createdRequest.claim_id // TODO: get claimOffer from issuer admin api
-
-    const vc = await getVerifiableCredentials(claimOffer)
-
-    if (!vc?.[0]?.issuer) throw new TypeError('VC issuer is undefined')
-
-    const proof = await createProof({
-      circuitId: 'credentialAtomicQueryMTPV2',
-      accountAddress: provider?.address,
-      issuerDid: vc?.[0]?.issuer,
-
-      query: {
-        allowedIssuers: ['*'],
-        credentialSubject: {
-          isNatural: {
-            $eq: 1,
-          },
-        },
-        type: 'IdentityProviders',
-      },
+    const jwtTokens = await authorize({
+      claimId: createdRequest.claim_id,
+      orgId: inviteDetails.org_id,
+      groupId: inviteDetails.group_id,
     })
 
-    return getJwt(proof)
+    authStore.addToken(jwtTokens, inviteDetails.org_id, inviteDetails.group_id)
+
+    navigate(`${RoutePaths.AcceptInviteFulfillRequest}${location.search}`)
   }, [
-    createProof,
-    getVerifiableCredentials,
+    authorize,
     inviteDetails.group_id,
     inviteDetails.org_id,
     inviteDetails.otp,
-    provider?.address,
+    location.search,
+    navigate,
     userDid,
   ])
 
-  const {
-    data: jwt,
-    isLoading,
-    isLoadingError,
-  } = useLoading('', acceptInvite, {
-    loadOnMount: true,
-  })
+  useEffect(() => {
+    if (!inviteDetails) return
 
-  if (isLoading) return <></>
-
-  if (isLoadingError) return <></>
+    acceptInvite()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inviteDetails])
 
   return <></>
 }
