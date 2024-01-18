@@ -48,3 +48,31 @@ declare module '@mui/material/Typography/Typography' {
     overline: false
   }
 }
+
+declare module '@mui/material/styles' {
+  interface PaletteColor {
+    darker?: string
+    lighter?: string
+  }
+
+  interface SimplePaletteColorOptions {
+    darker?: string
+    lighter?: string
+  }
+
+  interface TypeText {
+    placeholder: string
+  }
+
+  interface TypeBackground {
+    light: string
+  }
+
+  interface PaletteOptions {
+    additional: {
+      layerBorder: string
+      pureDark: string
+      gradient: string
+    }
+  }
+}

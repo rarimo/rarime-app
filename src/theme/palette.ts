@@ -2,62 +2,80 @@ import { PaletteOptions } from '@mui/material/styles'
 
 export const palette: PaletteOptions = {
   mode: 'light',
+  // DesignSystem: base
   common: {
-    black: '#1f2124',
-    white: '#ffffff',
-  },
-  text: {
-    primary: '#1f2124',
-    secondary: '#636a74',
-    disabled: '#636a74',
+    black: '#202020',
+    white: '#FFFFFF',
   },
   primary: {
-    light: '#3044fe',
-    main: '#3044fe',
-    dark: '#2839d5',
-    contrastText: '#ffffff',
+    darker: '#8BAC32',
+    dark: '#ACD53E',
+    main: '#CDFD4A',
+    light: '#E5FEA1',
+    lighter: '#F5FFDB',
+    contrastText: '#202020',
   },
   secondary: {
-    light: '#a37cd3',
-    main: '#9163cb',
-    dark: '#7a53ab',
-    contrastText: '#ffffff',
-  },
-  error: {
-    light: '#ff5a51',
-    main: '#ff3b30',
-    dark: '#d63228',
-    contrastText: '#ffffff',
-  },
-  warning: {
-    light: '#ffa629',
-    main: '#ff9500',
-    dark: '#d67d00',
-    contrastText: '#ffffff',
-  },
-  info: {
-    light: '#03a9f4',
-    main: '#0288d1',
-    dark: '#01579b',
-    contrastText: '#ffffff',
+    darker: '#0C0C0C',
+    dark: '#161616',
+    main: '#202020',
+    light: '#D2D2D2',
+    lighter: '#F4F4F4',
+    contrastText: '#FFFFFF',
   },
   success: {
-    light: '#54d074',
-    main: '#34c759',
-    dark: '#2ca74b',
-    contrastText: '#ffffff',
+    darker: '#268764',
+    dark: '#2FA77B',
+    main: '#38C793',
+    light: '#C7EFE1',
+    lighter: '#EBF9F4',
+    contrastText: '#FFFFFF',
   },
+  error: {
+    darker: '#98132C',
+    dark: '#BB1837',
+    main: '#DF1C41',
+    light: '#F9D2D9',
+    lighter: '#FDEFF2',
+    contrastText: '#FFFFFF',
+  },
+  warning: {
+    darker: '#A4541E',
+    dark: '#CA6725',
+    main: '#F17B2C',
+    light: '#FCE5D5',
+    lighter: '#FEF6F0',
+    contrastText: '#FFFFFF',
+  },
+  // DesignSystem: text & icons
+  text: {
+    primary: '#202020',
+    secondary: 'rgba(32, 32, 32, 0.56)',
+    placeholder: 'rgba(32, 32, 32, 0.44)',
+    disabled: 'rgba(32, 32, 32, 0.28)',
+  },
+  // DesignSystem: background/bg
   background: {
-    default: '#e0e1f8',
-    paper: '#ffffff',
+    // DesignSystem: background/bg/primary
+    default: '#EFEFEF',
+    // DesignSystem: background/bg/opacity
+    light: 'rgba(255, 255, 255, 0.70)',
+    // DesignSystem: background/pure
+    paper: '#FFFFFF',
   },
-  divider: '#f1f2f4',
+  // DesignSystem: background/component
   action: {
-    active: '#f1f2f4',
-    hover: 'rgba(31, 33, 36, 0.04)',
-    selected: 'rgba(31, 33, 36, 0.08)',
-    disabled: 'rgba(31, 33, 36, 0.12)',
-    disabledBackground: 'rgba(31, 33, 36, 0.12)',
-    focus: '#636a74',
+    // DesignSystem: background/component/primary
+    active: 'rgba(32, 32, 32, 0.05)',
+    hover: 'rgba(32, 32, 32, 0.10)',
+    focus: 'rgba(32, 32, 32, 0.15)',
+    selected: 'rgba(32, 32, 32, 0.05)',
+    disabled: 'rgba(32, 32, 32, 0.05)',
+  },
+  divider: 'rgba(32, 32, 32, 0.05)',
+  additional: {
+    layerBorder: '#FFFFFF',
+    pureDark: '#262626',
+    gradient: 'linear-gradient(180deg, #EFEFEF 0%, #EBEFF3 100%)',
   },
 }

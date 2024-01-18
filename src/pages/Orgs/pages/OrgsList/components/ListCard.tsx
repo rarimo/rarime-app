@@ -28,7 +28,7 @@ export default function ListCard({ org, ...rest }: Props) {
           {org.status.value === OrgsStatuses.Verified && (
             <UiIcon
               componentName={'verified'}
-              sx={{ ml: 1, color: palette.success.light }}
+              sx={{ ml: 1, color: palette.success.main }}
               size={4}
             />
           )}
