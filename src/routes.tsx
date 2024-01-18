@@ -21,7 +21,7 @@ export const AppRoutes = () => {
   const Profiles = lazy(() => import('@/pages/Profiles'))
   const UiKit = lazy(() => import('@/pages/UiKit'))
   const VerifyProofAlias = lazy(() => import('@/pages/VerifyProofAlias'))
-  const AcceptInvite = lazy(() => import('@/pages/AcceptInvite'))
+  const AcceptInvitation = lazy(() => import('@/pages/AcceptInvitation'))
 
   const { isAuthorized, logout } = useAuth()
 
@@ -97,8 +97,8 @@ export const AppRoutes = () => {
           element: <VerifyProofAlias />,
         },
         {
-          path: createDeepPath(RoutePaths.AcceptInvite),
-          element: <AcceptInvite />,
+          path: createDeepPath(RoutePaths.AcceptInvitation),
+          element: <AcceptInvitation />,
           loader: authProtectedGuard,
         },
         {

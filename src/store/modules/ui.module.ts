@@ -2,7 +2,7 @@ import { PaletteMode } from '@mui/material'
 
 import { createStore } from '@/helpers'
 
-interface UiStore {
+type UiStore = {
   viewportWidth: number
   paletteMode?: PaletteMode
 }

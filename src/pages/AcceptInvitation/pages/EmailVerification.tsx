@@ -1,10 +1,13 @@
 import { useCallback, useMemo } from 'react'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
-import { acceptInvitation } from '@/api'
+import { acceptInvitation, OrgUserRoles } from '@/api'
 import { RoutePaths } from '@/enums'
 import { useAuth, useLoading, useMetamaskZkpSnapContext } from '@/hooks'
 import { authStore } from '@/store'
+
+// DUMMY_INVITATION_LINK
+// http://localhost:8095/i?q=eyJvcmdfaWQiOiJlZmM3MjhmMC0zMzEwLTQxOWEtODdlZi01ZTVlNDAyOGI4YzAiLCJncm91cF9pZCI6IjU0NGQxNmY0LWQ4YzMtNDYyYy05NjIxLWVjYzg3OTQ5NGQ0MSIsImludml0ZV9lbWFpbF9pZCI6IjVjMmFmZWIwLWRmYjYtNDdiNS1iNmE1LWQ1NmIzOTVkNmU5MyIsIm90cCI6IjEyMzQ1NiJ9
 
 export default function EmailVerification() {
   const [searchParams] = useSearchParams()
@@ -12,7 +15,7 @@ export default function EmailVerification() {
   const { userDid } = useMetamaskZkpSnapContext()
   const { authorize } = useAuth()
 
-  const inviteDetails = useMemo<{
+  const invitationDetails = useMemo<{
     group_id: string
     invite_email_id: string
     org_id: string
@@ -26,32 +29,39 @@ export default function EmailVerification() {
     }
   }, [searchParams])
 
-  const acceptInvite = useCallback(async () => {
+  const authorizeAndGetCreatedRequest = useCallback(async () => {
     const createdRequest = await acceptInvitation({
-      groupId: inviteDetails.group_id,
-      orgId: inviteDetails.org_id,
+      groupId: invitationDetails.group_id,
+      orgId: invitationDetails.org_id,
       userDid: userDid,
-      otp: inviteDetails.otp,
+      otp: invitationDetails.otp,
     })
 
     const jwtTokens = await authorize({
       claimId: createdRequest.claim_id,
-      orgId: inviteDetails.org_id,
-      groupId: inviteDetails.group_id,
+      orgId: invitationDetails.org_id,
+      groupId: invitationDetails.group_id,
+      role: OrgUserRoles.Undefined,
     })
 
-    authStore.addToken(jwtTokens, inviteDetails.org_id, inviteDetails.group_id)
+    authStore.addToken(jwtTokens, invitationDetails.org_id, invitationDetails.group_id)
 
     return createdRequest
-  }, [authorize, inviteDetails.group_id, inviteDetails.org_id, inviteDetails.otp, userDid])
+  }, [
+    authorize,
+    invitationDetails.group_id,
+    invitationDetails.org_id,
+    invitationDetails.otp,
+    userDid,
+  ])
 
   const {
     data: createdRequest,
     isLoading,
     isLoadingError,
-  } = useLoading(null, acceptInvite, {
+  } = useLoading(null, authorizeAndGetCreatedRequest, {
     loadOnMount: true,
-    loadArgs: [inviteDetails],
+    loadArgs: [invitationDetails],
   })
 
   const redirectPath = useMemo(() => {
@@ -60,7 +70,7 @@ export default function EmailVerification() {
     const params = new URLSearchParams()
     params.set('req_id', createdRequest.req_id)
 
-    return `${RoutePaths.AcceptInviteFulfillRequest}${params.toString()}`
+    return `${RoutePaths.AcceptInvitationFillRequest}${params.toString()}`
   }, [createdRequest])
 
   if (isLoading) return <></>

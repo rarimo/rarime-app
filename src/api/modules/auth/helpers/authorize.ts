@@ -1,6 +1,7 @@
+import type { ZKProof } from '@rarimo/rarime-connector'
+
 import { api, OrgUserRoles } from '@/api'
 import { AuthTokens } from '@/api/modules/auth'
-import { ZKProof } from '@/api/modules/zkp'
 
 export const authorizeUser = async ({
   role,

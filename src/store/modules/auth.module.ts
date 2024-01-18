@@ -1,7 +1,7 @@
 import { AuthTokens } from '@/api/modules/auth'
 import { createStore } from '@/helpers'
 
-interface AuthState {
+type AuthState = {
   tokens: {
     orgId: string
     groupId: string
@@ -16,14 +16,14 @@ const [authStore, useAuthState] = createStore(
     tokens: [],
   } as AuthState,
   state => ({
-    addToken: (tokens: AuthTokens, orgId: string, groupId: string) => {
+    addToken: (authTokens: AuthTokens, orgId: string, groupId: string) => {
       state.tokens = [
         ...state.tokens,
         {
           orgId,
           groupId,
-          accessToken: tokens.accessToken.token,
-          refreshToken: tokens.refreshToken.token,
+          accessToken: authTokens.accessToken.token,
+          refreshToken: authTokens.refreshToken.token,
         },
       ]
     },

@@ -50,9 +50,6 @@ const DUMMY_ORG_GROUP: OrgGroup[] = [
   },
 ]
 
-// DUMMY_INVITE_LINK
-// http://localhost:8095/i?q=eyJvcmdfaWQiOiJlZmM3MjhmMC0zMzEwLTQxOWEtODdlZi01ZTVlNDAyOGI4YzAiLCJncm91cF9pZCI6IjU0NGQxNmY0LWQ4YzMtNDYyYy05NjIxLWVjYzg3OTQ5NGQ0MSIsImludml0ZV9lbWFpbF9pZCI6IjVjMmFmZWIwLWRmYjYtNDdiNS1iNmE1LWQ1NmIzOTVkNmU5MyIsIm90cCI6IjEyMzQ1NiJ9
-
 export const loadOrgGroups = async (orgId: string, query?: OrgGroupQueryParams) => {
   const { data } = await api.get<OrgGroup[]>(`/v1/orgs/${orgId}/groups`, {
     query,

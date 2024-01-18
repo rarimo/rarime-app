@@ -1,6 +1,7 @@
 import { PROVIDERS } from '@distributedlab/w3p'
 import { useCallback, useMemo } from 'react'
 
+import { OrgUserRoles } from '@/api'
 import { authorizeUser } from '@/api/modules/auth'
 import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp'
 import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
@@ -41,7 +42,17 @@ export const useAuth = () => {
   }, [checkSnapStatus, connectOrInstallSnap, createIdentity, init])
 
   const authorize = useCallback(
-    async ({ claimId, orgId, groupId }: { claimId: string; orgId: string; groupId: string }) => {
+    async ({
+      claimId,
+      orgId,
+      groupId,
+      role,
+    }: {
+      claimId: string
+      orgId: string
+      groupId: string
+      role: OrgUserRoles
+    }) => {
       const claimOffer = await getClaimOffer(userDid, claimId)
 
       const vc = await getVerifiableCredentials(claimOffer)
@@ -61,6 +72,7 @@ export const useAuth = () => {
       if (!proofResponse?.zkpProof) throw new TypeError('Proof is undefined')
 
       return authorizeUser({
+        role,
         orgDid: orgId,
         groupId: groupId,
         userDid: userDid,

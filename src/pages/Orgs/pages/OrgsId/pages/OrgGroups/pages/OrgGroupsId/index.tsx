@@ -98,7 +98,7 @@ export default function OrgGroupsId() {
   )
 
   // memberInvite: OrgGroupCreatedRequest
-  const handleMemberInviteCreated = useCallback(() => {
+  const handleMemberInvitationCreated = useCallback(() => {
     setIsInviteDrawerShown(false)
     // TODO: update requests list
   }, [])
@@ -172,7 +172,7 @@ export default function OrgGroupsId() {
         onClose={() => setIsInviteDrawerShown(false)}
       >
         <InviteMemberForm
-          onMemberInviteCreated={handleMemberInviteCreated}
+          onMemberInvitationCreated={handleMemberInvitationCreated}
           maxWidth={theme => theme.spacing(100)}
           p={6}
         />

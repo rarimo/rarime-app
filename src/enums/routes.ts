@@ -21,7 +21,7 @@ export enum RoutePaths {
 
   VerifyProofAlias = '/v/:id',
 
-  AcceptInvite = '/i',
-  AcceptInviteEmailVerification = '/i/verify-email',
-  AcceptInviteFulfillRequest = '/i/fulfill-request',
+  AcceptInvitation = '/i',
+  AcceptInvitationEmailVerification = '/i/verify-email',
+  AcceptInvitationFillRequest = '/i/fill-request',
 }
