@@ -1,8 +1,7 @@
 import { fetcher } from '@distributedlab/fetcher'
-import { CreateProofRequestParams } from '@rarimo/rarime-connector/dist/types'
 import omit from 'lodash/omit'
 
-import { api, OrgUserRoles } from '@/api'
+import { api } from '@/api'
 import { CredentialSubject, SaveCredentialsRequestParams, VCSchema } from '@/api/modules/zkp'
 
 export const getClaimOffer = async (userDid: string, claimTypeUrn: string) => {
@@ -11,32 +10,6 @@ export const getClaimOffer = async (userDid: string, claimTypeUrn: string) => {
   )
 
   return data
-}
-
-// FIXME: move to proper place
-export const buildAuthorizeRequest = ({
-  providerAddress,
-  isAdmin,
-}: {
-  providerAddress: string
-  isAdmin: boolean
-}): CreateProofRequestParams => {
-  return {
-    circuitId: 'credentialAtomicQueryMTPV2',
-    accountAddress: providerAddress,
-    issuerDid: 'config.issuerDid', // TODO: implement
-
-    query: {
-      allowedIssuers: ['*'],
-      credentialSubject: {
-        role: {
-          // FIXME: how to other roles will work
-          $eq: isAdmin ? OrgUserRoles.Admin : OrgUserRoles.Undefined,
-        },
-      },
-      type: ['VerifiableCredentials', 'Role'],
-    },
-  }
 }
 
 export const loadAndParseCredentialSchema = async (
@@ -59,3 +32,5 @@ export const loadAndParseCredentialSchema = async (
     value: credentialSubject?.[key] ?? '',
   }
 }
+
+export * from './buildres'
