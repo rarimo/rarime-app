@@ -1,4 +1,4 @@
-import { AuthTokens } from '@/api/modules/auth'
+import { AuthTokensGroup } from '@/api/modules/auth'
 import { createStore } from '@/helpers'
 
 type AuthState = {
@@ -16,14 +16,14 @@ const [authStore, useAuthState] = createStore(
     tokens: [],
   } as AuthState,
   state => ({
-    addToken: (authTokens: AuthTokens, orgId: string, groupId: string) => {
+    addTokensGroup: (authTokensGroup: AuthTokensGroup, orgId: string, groupId: string) => {
       state.tokens = [
         ...state.tokens,
         {
           orgId,
           groupId,
-          accessToken: authTokens.accessToken.token,
-          refreshToken: authTokens.refreshToken.token,
+          accessToken: authTokensGroup.accessToken.token,
+          refreshToken: authTokensGroup.refreshToken.token,
         },
       ]
     },

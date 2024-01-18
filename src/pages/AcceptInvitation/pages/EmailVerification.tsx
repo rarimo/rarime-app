@@ -44,7 +44,7 @@ export default function EmailVerification() {
       role: OrgUserRoles.Undefined,
     })
 
-    authStore.addToken(jwtTokens, invitationDetails.org_id, invitationDetails.group_id)
+    authStore.addTokensGroup(jwtTokens, invitationDetails.org_id, invitationDetails.group_id)
 
     return createdRequest
   }, [

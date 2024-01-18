@@ -1,4 +1,4 @@
-export type AuthTokens = {
+export type AuthTokensGroup = {
   id: string
   type: 'token'
   accessToken: {
