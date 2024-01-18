@@ -11,7 +11,7 @@ export const getClaimOffer = async (userDid: string, claimTypeUrn: string) => {
   return data
 }
 
-// FIXME
+// FIXME: move to proper place
 export const buildAuthorizeRequest = ({
   providerAddress,
   isAdmin,
