@@ -1,6 +1,3 @@
-import { fetcher } from '@distributedlab/fetcher'
-import omit from 'lodash/omit'
-
 import {
   api,
   CredentialRequest,
@@ -15,7 +12,6 @@ import {
   OrgsStatuses,
   OrgUserRoles,
 } from '@/api'
-import { CredentialSubject, VCSchema } from '@/api/modules/zkp'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
@@ -608,27 +604,6 @@ export const getOrgGroupPublishingRequests = async ({
   )
 
   return data
-}
-
-export const loadAndParseCredentialSchema = async (
-  schemaUrl: string,
-  credentialSubject?: CredentialSubject,
-): Promise<{
-  key: string
-  type: string
-  value: string
-}> => {
-  const { data } = await fetcher.get<VCSchema>(schemaUrl)
-
-  const [key, { type }] = Object.entries(
-    omit(data?.properties.credentialSubject.properties, 'id'),
-  )[0]
-
-  return {
-    key,
-    type,
-    value: credentialSubject?.[key] ?? '',
-  }
 }
 
 export const loadOrgGroupReqMetadataById = async (

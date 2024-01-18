@@ -2,7 +2,7 @@ import { PROVIDERS } from '@distributedlab/w3p'
 import { useCallback, useMemo } from 'react'
 
 import { authorizeUser } from '@/api/modules/auth'
-import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp/helpers'
+import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp'
 import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
 import { useWeb3Context } from '@/hooks/web3'
 
