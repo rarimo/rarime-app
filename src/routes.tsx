@@ -31,7 +31,7 @@ export const AppRoutes = () => {
 
       const from = requestUrl.searchParams.get('from')
 
-      return isAuthorized ? redirect(`${from}${requestUrl.search}` ?? RoutePaths.Root) : null
+      return isAuthorized ? redirect(from ? `${from}${requestUrl.search}` : RoutePaths.Root) : null
     },
     [isAuthorized],
   )

@@ -1,14 +1,12 @@
-import { useCallback, useEffect, useMemo } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useCallback, useMemo } from 'react'
+import { Navigate, useSearchParams } from 'react-router-dom'
 
 import { acceptInvitation } from '@/api'
 import { RoutePaths } from '@/enums'
-import { useAuth, useMetamaskZkpSnapContext } from '@/hooks'
+import { useAuth, useLoading, useMetamaskZkpSnapContext } from '@/hooks'
 import { authStore } from '@/store'
 
 export default function EmailVerification() {
-  const location = useLocation()
-  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
 
   const { userDid } = useMetamaskZkpSnapContext()
@@ -44,23 +42,32 @@ export default function EmailVerification() {
 
     authStore.addToken(jwtTokens, inviteDetails.org_id, inviteDetails.group_id)
 
-    navigate(`${RoutePaths.AcceptInviteFulfillRequest}${location.search}`)
-  }, [
-    authorize,
-    inviteDetails.group_id,
-    inviteDetails.org_id,
-    inviteDetails.otp,
-    location.search,
-    navigate,
-    userDid,
-  ])
+    return createdRequest
+  }, [authorize, inviteDetails.group_id, inviteDetails.org_id, inviteDetails.otp, userDid])
 
-  useEffect(() => {
-    if (!inviteDetails) return
+  const {
+    data: createdRequest,
+    isLoading,
+    isLoadingError,
+  } = useLoading(null, acceptInvite, {
+    loadOnMount: true,
+    loadArgs: [inviteDetails],
+  })
 
-    acceptInvite()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inviteDetails])
+  const redirectPath = useMemo(() => {
+    if (!createdRequest) return ''
 
-  return <></>
+    const params = new URLSearchParams()
+    params.set('req_id', createdRequest.req_id)
+
+    return `${RoutePaths.AcceptInviteFulfillRequest}${params.toString()}`
+  }, [createdRequest])
+
+  if (isLoading) return <></>
+
+  if (isLoadingError) return <></>
+
+  if (!redirectPath) return <></>
+
+  return <Navigate to={redirectPath} />
 }
