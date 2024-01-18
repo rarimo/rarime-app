@@ -75,7 +75,7 @@ export const lightPalette: PaletteOptions = {
   divider: 'rgba(32, 32, 32, 0.05)',
   additional: {
     layerBorder: '#FFFFFF',
-    pureDark: '#262626',
+    pureBlack: '#262626',
     gradient: 'linear-gradient(180deg, #EFEFEF 0%, #EBEFF3 100%)',
   },
 }
@@ -155,7 +155,7 @@ export const darkPalette: PaletteOptions = {
   divider: 'rgba(32, 32, 32, 0.05)',
   additional: {
     layerBorder: 'rgba(255, 255, 255, 0.05)',
-    pureDark: 'rgba(255, 255, 255, 0.10)',
+    pureBlack: 'rgba(255, 255, 255, 0.10)',
     gradient: 'linear-gradient(180deg, #1D1D1D 0%, #1A1A1A 100%)',
   },
 }

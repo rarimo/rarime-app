@@ -71,7 +71,15 @@ declare module '@mui/material/styles' {
   interface PaletteOptions {
     additional: {
       layerBorder: string
-      pureDark: string
+      pureBlack: string
+      gradient: string
+    }
+  }
+
+  interface Palette {
+    additional: {
+      layerBorder: string
+      pureBlack: string
       gradient: string
     }
   }
