@@ -14,7 +14,7 @@ export default function CheckProofHead() {
         <NavLink to={generatePath(RoutePaths.OrgsId, { id })}>
           <Stack direction={'row'} alignItems={'center'} spacing={2} color={palette.text.secondary}>
             <UiIcon componentName={'chevronLeft'} size={5} />
-            <Typography variant='button' color={'inherit'}>
+            <Typography variant='buttonSmall' color={'inherit'}>
               View organization
             </Typography>
           </Stack>
