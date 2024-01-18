@@ -3,11 +3,13 @@ import { AuthTokens } from '@/api/modules/auth'
 import { ZKProof } from '@/api/modules/zkp'
 
 export const authorizeUser = async ({
+  role,
   userDid,
   orgDid,
   groupId,
   zkProof,
 }: {
+  role: OrgUserRoles
   userDid: string
   orgDid: string
   groupId: string
@@ -20,7 +22,7 @@ export const authorizeUser = async ({
         type: 'authorize',
         attributes: {
           proof: {
-            role: OrgUserRoles.Undefined, // FIXME: should be in background
+            role: role,
             group: groupId,
             issuer: orgDid,
             proof: zkProof,

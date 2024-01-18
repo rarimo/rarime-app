@@ -33,4 +33,4 @@ export const loadAndParseCredentialSchema = async (
   }
 }
 
-export * from './buildres'
+export * from './builders'
