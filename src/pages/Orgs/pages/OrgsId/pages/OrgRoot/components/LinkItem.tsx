@@ -43,12 +43,11 @@ export default function LinkItem({ link }: Props) {
       sx={{
         p: 2,
         borderRadius: 2,
-        // TODO: fix colors
-        bgcolor: palette.grey[100],
+        bgcolor: palette.action.active,
         transition: 'background-color 0.2s ease-in-out',
         overflow: 'hidden',
         '&:hover': {
-          bgcolor: palette.grey[200],
+          bgcolor: palette.action.hover,
         },
       }}
     >

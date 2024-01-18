@@ -1,17 +1,18 @@
-import { createTheme } from '@mui/material'
+import { createTheme as createMuiTheme, PaletteMode } from '@mui/material'
 
 import { breakpoints } from './breakpoints'
+import { darkPalette, lightPalette } from './colors'
 import { components } from './components'
-import { palette } from './palette'
 import { typography } from './typography'
 
-export const theme = createTheme({
-  palette,
-  typography,
-  components,
-  breakpoints,
-  spacing: 4,
-  shape: {
-    borderRadius: 4,
-  },
-})
+export const createTheme = (mode: PaletteMode) =>
+  createMuiTheme({
+    palette: mode === 'dark' ? darkPalette : lightPalette,
+    typography,
+    components,
+    breakpoints,
+    spacing: 4,
+    shape: {
+      borderRadius: 4,
+    },
+  })
