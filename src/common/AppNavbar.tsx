@@ -1,10 +1,11 @@
 import { config } from '@config'
-import { ButtonProps, Divider, Stack } from '@mui/material'
+import { Box, Divider, Stack, useTheme } from '@mui/material'
 import { ReactNode, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
-import { UiButton, UiIcon } from '@/ui'
+import { Transitions } from '@/theme/constants'
+import { UiIcon } from '@/ui'
 
 interface NavbarLinkProps {
   to: RoutePaths
@@ -13,52 +14,73 @@ interface NavbarLinkProps {
 
 const NavbarLink = ({ children, to }: NavbarLinkProps) => {
   const location = useLocation()
+  const { palette, spacing } = useTheme()
 
-  const linkProps = useMemo((): Partial<ButtonProps> => {
+  const isRouteActive = useMemo(() => {
     const locationRoot = location.pathname.split('/')[1]
-
-    const isRouteActive = to.includes(locationRoot)
-
-    return {
-      variant: isRouteActive ? 'contained' : 'text',
-      color: isRouteActive ? 'primary' : 'secondary',
-    }
+    return to.includes(locationRoot)
   }, [location.pathname, to])
 
   return (
     <NavLink to={to}>
-      <UiButton component='div' sx={{ p: 3 }} {...linkProps}>
+      <Stack
+        alignItems={'center'}
+        justifyContent={'center'}
+        sx={{
+          width: spacing(10),
+          height: spacing(10),
+          borderRadius: 250,
+          backgroundColor: isRouteActive ? palette.additional.pureBlack : 'transparent',
+          color: isRouteActive ? palette.primary.main : palette.text.primary,
+          transition: Transitions.Default,
+          '&:hover': {
+            backgroundColor: isRouteActive ? palette.additional.pureBlack : palette.action.hover,
+          },
+        }}
+      >
         {children}
-      </UiButton>
+      </Stack>
     </NavLink>
   )
 }
 
 const AppNavbar = () => {
+  const { palette } = useTheme()
+
   const navbarItems = useMemo(
     () => [
-      { route: RoutePaths.Profiles, iconComponent: <UiIcon name={Icons.Wallet} size={6} /> },
-      { route: RoutePaths.Orgs, iconComponent: <UiIcon componentName='work' size={6} /> },
+      { route: RoutePaths.Profiles, iconComponent: <UiIcon name={Icons.Wallet} size={5} /> },
+      { route: RoutePaths.Orgs, iconComponent: <UiIcon componentName={'work'} size={5} /> },
     ],
     [],
   )
 
   return (
-    <Stack spacing={4} py={1}>
-      <NavLink to={RoutePaths.Profiles}>
-        <Stack alignItems='center'>
-          <img src='/branding/logo.svg' alt={config.APP_NAME} />
+    <Stack
+      justifyContent={'space-between'}
+      py={6}
+      px={4}
+      borderRight={1}
+      borderColor={palette.divider}
+    >
+      <Stack spacing={4}>
+        <NavLink to={RoutePaths.Profiles}>
+          <Stack alignItems='center'>
+            <Box component={'img'} src={'/branding/logo.svg'} alt={config.APP_NAME} />
+          </Stack>
+        </NavLink>
+        <Divider />
+        <Stack spacing={4} p={1}>
+          {navbarItems.map(({ route, iconComponent }, idx) => (
+            <NavbarLink to={route} key={idx}>
+              {iconComponent}
+            </NavbarLink>
+          ))}
         </Stack>
-      </NavLink>
-      <Divider />
-
-      <Stack py={6} spacing={6}>
-        {navbarItems.map(({ route, iconComponent }, idx) => (
-          <NavbarLink to={route} key={idx}>
-            {iconComponent}
-          </NavbarLink>
-        ))}
       </Stack>
+
+      {/* TODO: add account popup */}
+      <UiIcon name={Icons.Metamask} size={10} sx={{ px: 1 }} />
     </Stack>
   )
 }
