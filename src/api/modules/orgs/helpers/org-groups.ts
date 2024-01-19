@@ -51,25 +51,31 @@ const DUMMY_ORG_GROUP: OrgGroup[] = [
 ]
 
 export const loadOrgGroups = async (orgId: string, query?: OrgGroupQueryParams) => {
-  const { data } = await api.get<OrgGroup[]>(`/v1/orgs/${orgId}/groups`, {
-    query,
-  })
+  const { data } = await api.get<OrgGroup[]>(
+    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups`,
+    {
+      query,
+    },
+  )
 
   return data
 }
 
 export const createOrgGroup = async (orgId: string, createOpts: OrgGroupCreate) => {
-  const { data } = await api.post<OrgGroup>(`/v1/orgs/${orgId}/groups`, {
-    body: {
-      data: {
-        type: 'groups-create',
-        attributes: {
-          metadata: createOpts.metadata,
-          rules: createOpts.rules,
+  const { data } = await api.post<OrgGroup>(
+    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups`,
+    {
+      body: {
+        data: {
+          type: 'groups-create',
+          attributes: {
+            metadata: createOpts.metadata,
+            rules: createOpts.rules,
+          },
         },
       },
     },
-  })
+  )
 
   return data
 }
@@ -79,9 +85,12 @@ export const loadOrgGroupById = async (
   groupId: string,
   query?: OrgGroupQueryParams,
 ) => {
-  const { data } = await api.get<OrgGroup>(`/v1/orgs/${orgId}/groups/${groupId}`, {
-    query,
-  })
+  const { data } = await api.get<OrgGroup>(
+    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}`,
+    {
+      query,
+    },
+  )
 
   return data
 }
@@ -91,7 +100,7 @@ export const loadOrgGroupRequestsCount = async (
   groupId: string,
 ): Promise<Record<OrgGroupRequestStatuses, number>> => {
   const { data } = await api.get<Record<OrgGroupRequestStatuses, number>>(
-    `/v1/orgs/${orgId}/groups/${groupId}/requests/count`,
+    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}/requests/count`,
   )
 
   return data
