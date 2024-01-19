@@ -64,7 +64,7 @@ export default function UiKitFields() {
         <UiTextField placeholder={'placeholder'} />
         <UiTextField label={'label'} placeholder={'placeholder'} />
         <UiTextField label={'disabled'} disabled={true} />
-        <UiTextField label={'error'} error helperText={`there is error`} />
+        <UiTextField label={'error'} error errorMessage={`there is error`} />
 
         <UiTextField
           label={'label'}

@@ -96,20 +96,74 @@ export const components: Components<Omit<Theme, 'components'>> = {
   },
   MuiTextField: {
     styleOverrides: {
-      root: {
+      root: ({ theme }) => ({
         '& .MuiInputBase-root, & .MuiInputBase-sizeSmall, & .MuiInputBase-sizeMedium':
           typography.body3,
+        '& .MuiInputBase-root': {
+          height: theme.spacing(12),
+          '&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.action.focus,
+          },
+          '&:hover:not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
+            borderColor: theme.palette.action.hover,
+          },
+        },
+        '& .MuiInputBase-sizeSmall': {
+          height: theme.spacing(8),
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          transition: Transitions.Default,
+          borderRadius: theme.spacing(2),
+          borderColor: theme.palette.action.active,
+        },
+      }),
+    },
+  },
+  MuiFormLabel: {
+    styleOverrides: {
+      root: {
+        ...typography.subtitle4,
+        color: 'inherit',
+        '&.Mui-focused': {
+          color: 'inherit',
+        },
       },
+    },
+  },
+  MuiFormHelperText: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        ...typography.body4,
+        marginTop: theme.spacing(1),
+        marginLeft: 0,
+      }),
     },
   },
   MuiSelect: {
     styleOverrides: {
-      icon: {
-        width: 20,
-        height: 20,
+      icon: ({ theme }) => ({
+        width: theme.spacing(5),
+        height: theme.spacing(5),
+        color: 'inherit',
         pointerEvents: 'none',
-        top: 18,
-      },
+        top: theme.spacing(3.5),
+        right: theme.spacing(3),
+      }),
+      root: ({ theme }) => ({
+        ...typography.body3,
+        height: theme.spacing(12),
+        borderRadius: theme.spacing(2),
+        '& .MuiOutlinedInput-notchedOutline': {
+          transition: Transitions.Default,
+          borderColor: theme.palette.action.active,
+        },
+        '&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
+          borderColor: theme.palette.action.focus,
+        },
+        '&:hover:not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
+          borderColor: theme.palette.action.hover,
+        },
+      }),
     },
     defaultProps: {
       IconComponent: ICON_COMPONENTS.keyboardArrowDownOutlined,
