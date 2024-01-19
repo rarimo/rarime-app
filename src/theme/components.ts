@@ -2,7 +2,9 @@ import { Components, Theme } from '@mui/material'
 
 import { ICON_COMPONENTS } from '@/enums'
 
+import { Transitions } from './constants'
 import { vh } from './helpers'
+import { typography } from './typography'
 
 export const components: Components<Omit<Theme, 'components'>> = {
   MuiCssBaseline: {
@@ -52,6 +54,27 @@ export const components: Components<Omit<Theme, 'components'>> = {
       disableElevation: true,
       disableFocusRipple: true,
     },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        borderRadius: theme.spacing(250),
+        transition: Transitions.Default,
+        '&.MuiButton-sizeLarge': {
+          ...typography.buttonLarge,
+          px: theme.spacing(4),
+          height: theme.spacing(12),
+        },
+        '&.MuiButton-sizeMedium': {
+          ...typography.buttonMedium,
+          px: theme.spacing(4),
+          height: theme.spacing(8),
+        },
+        '&.MuiButton-sizeSmall': {
+          ...typography.buttonSmall,
+          px: theme.spacing(2),
+          height: theme.spacing(6),
+        },
+      }),
+    },
   },
   MuiButtonBase: {
     defaultProps: {
@@ -68,6 +91,14 @@ export const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: {
         backgroundImage: 'unset',
+      },
+    },
+  },
+  MuiTextField: {
+    styleOverrides: {
+      root: {
+        '& .MuiInputBase-root, & .MuiInputBase-sizeSmall, & .MuiInputBase-sizeMedium':
+          typography.body3,
       },
     },
   },
@@ -89,7 +120,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }) => ({
         padding: 0,
         color: theme.palette.text.primary,
-        transition: 'color 0.2s',
+        transition: Transitions.Default,
 
         '&[disabled]': {
           color: theme.palette.text.disabled,

@@ -136,6 +136,42 @@ export default function UiKitButtons() {
           <UiIcon componentName='delete' />
         </UiIconButton>
       </Stack>
+
+      <Typography variant={`h6`}>{`Contained`}</Typography>
+      <Stack
+        direction={'row'}
+        flexWrap={`wrap`}
+        gap={theme => theme.spacing(2)}
+        justifyContent={`flex-start`}
+      >
+        <UiButton variant={`contained`}>{`Contained`}</UiButton>
+        <UiButton variant={`contained`} disabled={true}>{`Disabled`}</UiButton>
+        <UiButton variant={`contained`} href={'#'}>{`Link`}</UiButton>
+
+        <UiButton variant={`contained`} size={`small`}>{`Small`}</UiButton>
+        <UiButton variant={`contained`} size={`medium`}>{`Medium`}</UiButton>
+        <UiButton variant={`contained`} size={`large`}>{`Large`}</UiButton>
+
+        <UiButton variant={`contained`} color={`secondary`}>{`Secondary`}</UiButton>
+        <UiButton variant={`contained`} color={`success`}>{`Success`}</UiButton>
+        <UiButton variant={`contained`} color={`error`}>{`Error`}</UiButton>
+        <UiButton variant={`contained`} color={`info`}>{`Info`}</UiButton>
+        <UiButton variant={`contained`} color={`warning`}>{`Warning`}</UiButton>
+      </Stack>
+
+      {/*SIZES*/}
+      <Typography variant={`h6`}>{`Sizes`}</Typography>
+      <Stack
+        direction={'row'}
+        flexWrap={`wrap`}
+        gap={theme => theme.spacing(2)}
+        justifyContent={`flex-start`}
+      >
+        <UiButton size='small'>{`Small button`}</UiButton>
+        <UiButton size='medium'>{`Medium button`}</UiButton>
+        <UiButton size='large'>{`Large button`}</UiButton>
+        <UiButton>{`Default button`}</UiButton>
+      </Stack>
     </Stack>
   )
 }

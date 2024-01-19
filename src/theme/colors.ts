@@ -152,7 +152,7 @@ export const darkPalette: PaletteOptions = {
     // DesignSystem: background/pure
     paper: '#2B2B2B',
   },
-  divider: 'rgba(32, 32, 32, 0.05)',
+  divider: 'rgba(255, 255, 255, 0.05)',
   additional: {
     layerBorder: 'rgba(255, 255, 255, 0.05)',
     pureBlack: 'rgba(255, 255, 255, 0.10)',
