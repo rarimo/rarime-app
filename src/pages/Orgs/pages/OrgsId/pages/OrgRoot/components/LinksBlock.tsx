@@ -1,4 +1,4 @@
-import { Divider, Stack, Typography, useTheme } from '@mui/material'
+import { Stack, Typography, useTheme } from '@mui/material'
 
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 
@@ -9,9 +9,17 @@ export default function LinksBlock() {
   const { palette } = useTheme()
 
   return (
-    <Stack border={1} borderColor={palette.divider} borderRadius={2} p={6} spacing={5}>
-      <Typography variant='subtitle4'>Links</Typography>
-      <Divider />
+    <Stack
+      spacing={6}
+      sx={{
+        bgcolor: palette.background.light,
+        p: 6,
+        border: 1,
+        borderColor: palette.divider,
+        borderRadius: 4,
+      }}
+    >
+      <Typography variant={'subtitle3'}>Links</Typography>
       <Stack direction={'row'} gap={4} flexWrap={'wrap'}>
         {org.metadata.links?.length ? (
           org.metadata.links.map((link, index) => <LinkItem key={index} link={link} />)

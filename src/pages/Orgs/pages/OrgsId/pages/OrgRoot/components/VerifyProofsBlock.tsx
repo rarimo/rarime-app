@@ -1,9 +1,9 @@
-import { Divider, InputAdornment, Stack, Typography, useTheme } from '@mui/material'
+import { InputAdornment, Stack, Typography, useTheme } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { generatePath, useNavigate, useParams } from 'react-router-dom'
 
 import { RoutePaths } from '@/enums'
-import { UiButton, UiIcon, UiTextField } from '@/ui'
+import { UiButton, UiSearchField } from '@/ui'
 
 export default function VerifyProofsBlock() {
   const { id = null } = useParams()
@@ -21,24 +21,30 @@ export default function VerifyProofsBlock() {
   }, [id, linkOrLinkId, navigate])
 
   return (
-    <Stack border={1} borderColor={palette.divider} borderRadius={2} p={6} spacing={5}>
-      <Typography variant='subtitle4'>Verify Organizational Proofs</Typography>
-      <Divider />
-      <UiTextField
+    <Stack
+      spacing={6}
+      sx={{
+        bgcolor: palette.background.light,
+        p: 6,
+        border: 1,
+        borderColor: palette.divider,
+        borderRadius: 4,
+      }}
+    >
+      <Typography variant={'subtitle3'}>Verify proofs</Typography>
+      <UiSearchField
         value={linkOrLinkId}
+        size='medium'
         placeholder={'Enter the Proof Link ID or URL'}
         InputProps={{
-          startAdornment: (
-            <InputAdornment position='start'>
-              <UiIcon componentName='search' sx={{ color: palette.text.secondary }} />
-            </InputAdornment>
-          ),
           endAdornment: (
             <InputAdornment position='end'>
               <UiButton
                 variant='text'
-                color='primary'
+                color='secondary'
+                size='medium'
                 disabled={!linkOrLinkId}
+                sx={{ minWidth: 'auto' }}
                 onClick={navigateToCheckProof}
               >
                 Verify

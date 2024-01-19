@@ -3,6 +3,7 @@ import { ComponentProps, useMemo } from 'react'
 
 import { OrgMetadataLink } from '@/api'
 import { Icons } from '@/enums'
+import { Transitions } from '@/theme/constants'
 import { UiIcon } from '@/ui'
 
 const HOST_TO_ICON_MAP: Record<string, Icons> = {
@@ -42,9 +43,9 @@ export default function LinkItem({ link }: Props) {
       spacing={2}
       sx={{
         p: 2,
-        borderRadius: 2,
+        borderRadius: 3,
         bgcolor: palette.action.active,
-        transition: 'background-color 0.2s ease-in-out',
+        transition: Transitions.Default,
         overflow: 'hidden',
         '&:hover': {
           bgcolor: palette.action.hover,
