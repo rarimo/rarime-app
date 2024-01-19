@@ -3,6 +3,7 @@ import { generatePath, NavLink } from 'react-router-dom'
 
 import { Organization, OrgsStatuses } from '@/api'
 import { RoutePaths } from '@/enums'
+import { Transitions } from '@/theme/constants'
 import { UiIcon } from '@/ui'
 
 interface Props extends CardProps {
@@ -10,19 +11,29 @@ interface Props extends CardProps {
 }
 
 export default function ListCard({ org, ...rest }: Props) {
-  const { palette } = useTheme()
+  const { palette, spacing } = useTheme()
 
   return (
     <NavLink to={generatePath(RoutePaths.OrgsId, { id: org.id })}>
       <Card
         {...rest}
-        // TODO: change color
-        sx={{ py: 5, px: 6, borderRadius: 3, borderColor: palette.grey[300], ...rest.sx }}
+        sx={{
+          py: 5,
+          px: 6,
+          borderRadius: 3,
+          bgcolor: palette.background.light,
+          borderColor: palette.additional.layerBorder,
+          transition: Transitions.Default,
+          '&:hover': {
+            borderColor: palette.action.hover,
+          },
+          ...rest.sx,
+        }}
         variant='outlined'
       >
-        <Avatar src={org.metadata.logoUrl} sx={{ width: 64, height: 64 }} />
+        <Avatar src={org.metadata.logoUrl} sx={{ width: spacing(12), height: spacing(12) }} />
         <Stack direction={'row'} alignItems={'center'} mt={5}>
-          <Typography color={palette.text.primary} variant={'h6'} fontWeight={500}>
+          <Typography color={palette.text.primary} variant={'h6'}>
             {org.metadata.name}
           </Typography>
           {org.status.value === OrgsStatuses.Verified && (
@@ -33,7 +44,7 @@ export default function ListCard({ org, ...rest }: Props) {
             />
           )}
         </Stack>
-        <Typography color={palette.text.secondary} variant={'body2'} my={3}>
+        <Typography color={palette.text.secondary} variant={'body3'} my={3}>
           {org.metadata.description}
         </Typography>
 
@@ -43,7 +54,7 @@ export default function ListCard({ org, ...rest }: Props) {
           pt={5}
           borderTop={1}
           // TODO: change color
-          borderColor={palette.grey[300]}
+          borderColor={palette.divider}
         >
           <Grid item xs={7}>
             <Typography variant={'body4'} component={'p'} color={palette.text.secondary}>
