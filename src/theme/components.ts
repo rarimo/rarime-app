@@ -196,4 +196,65 @@ export const components: Components<Omit<Theme, 'components'>> = {
       animation: 'wave',
     },
   },
+  MuiSwitch: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        width: theme.spacing(10),
+        height: theme.spacing(6),
+        padding: 0,
+        boxShadow: 'none',
+        '& .MuiSwitch-switchBase': {
+          padding: 0,
+          margin: theme.spacing(0.5),
+          transition: Transitions.Default,
+          color: theme.palette.common.white,
+          '&.Mui-checked': {
+            color: theme.palette.common.white,
+            transform: `translateX(${theme.spacing(4)})`,
+            '& + .MuiSwitch-track': {
+              backgroundColor: theme.palette.success.main,
+              boxShadow: 'none',
+              opacity: 1,
+              border: 0,
+            },
+            '& + .MuiSwitch-thumb': {
+              boxShadow: 'none',
+            },
+            '&.Mui-disabled + .MuiSwitch-track': {
+              opacity: 0.5,
+            },
+          },
+          '&.Mui-disabled + .MuiSwitch-track': {
+            opacity: 0.5,
+          },
+        },
+        '& .MuiSwitch-thumb': {
+          boxSizing: 'border-box',
+          boxShadow: '0 1px 1px 0 rgba(0, 0, 0, 0.08)',
+          width: theme.spacing(5),
+          height: theme.spacing(5),
+        },
+        '& .MuiSwitch-track': {
+          borderRadius: theme.spacing(10),
+          backgroundColor: theme.palette.action.active,
+          opacity: 1,
+          transition: Transitions.Default,
+        },
+      }),
+    },
+  },
+  MuiFormControlLabel: {
+    defaultProps: {
+      componentsProps: {
+        typography: {
+          variant: 'subtitle4',
+        },
+      },
+    },
+  },
+  MuiTypography: {
+    defaultProps: {
+      variant: 'body3',
+    },
+  },
 }
