@@ -68,14 +68,6 @@ export default function ProofValidationResult({ proof, isValid }: Props) {
           <Typography variant={'body2'} color={palette.text.secondary}>
             {detail.text}
           </Typography>
-          {/* <Box
-            sx={{
-              flex: 1,
-              borderBottom: 1,
-              borderColor: palette.divider,
-              borderStyle: 'dashed',
-            }}
-          /> */}
           <Divider orientation={'horizontal'} sx={{ flex: 1, borderStyle: 'dashed' }} />
           {detail.value}
         </Stack>

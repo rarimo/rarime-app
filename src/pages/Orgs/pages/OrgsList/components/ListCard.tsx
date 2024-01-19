@@ -48,14 +48,7 @@ export default function ListCard({ org, ...rest }: Props) {
           {org.metadata.description}
         </Typography>
 
-        <Grid
-          container
-          mt={5}
-          pt={5}
-          borderTop={1}
-          // TODO: change color
-          borderColor={palette.divider}
-        >
+        <Grid container mt={5} pt={5} borderTop={1} borderColor={palette.divider}>
           <Grid item xs={7}>
             <Typography variant={'body4'} component={'p'} color={palette.text.secondary}>
               {'Associated people'}
