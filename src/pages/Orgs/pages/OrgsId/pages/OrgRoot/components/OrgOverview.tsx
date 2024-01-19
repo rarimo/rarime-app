@@ -13,13 +13,11 @@ export default function OrgOverview() {
       direction={'row'}
       alignItems={'center'}
       spacing={4}
-      sx={{
-        bgcolor: palette.background.light,
-        p: 6,
-        border: 1,
-        borderColor: palette.divider,
-        borderRadius: 4,
-      }}
+      bgcolor={palette.background.light}
+      p={6}
+      border={1}
+      borderColor={palette.divider}
+      borderRadius={4}
     >
       <Avatar
         src={org.metadata.logoUrl}

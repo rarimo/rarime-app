@@ -11,13 +11,11 @@ export default function LinksBlock() {
   return (
     <Stack
       spacing={6}
-      sx={{
-        bgcolor: palette.background.light,
-        p: 6,
-        border: 1,
-        borderColor: palette.divider,
-        borderRadius: 4,
-      }}
+      bgcolor={palette.background.light}
+      p={6}
+      border={1}
+      borderColor={palette.divider}
+      borderRadius={4}
     >
       <Typography variant={'subtitle3'}>Links</Typography>
       <Stack direction={'row'} gap={4} flexWrap={'wrap'}>

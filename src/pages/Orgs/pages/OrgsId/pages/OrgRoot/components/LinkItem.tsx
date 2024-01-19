@@ -41,12 +41,12 @@ export default function LinkItem({ link }: Props) {
       direction={'row'}
       alignItems={'center'}
       spacing={2}
+      p={2}
+      borderRadius={3}
+      bgcolor={palette.action.active}
+      overflow={'hidden'}
       sx={{
-        p: 2,
-        borderRadius: 3,
-        bgcolor: palette.action.active,
         transition: Transitions.Default,
-        overflow: 'hidden',
         '&:hover': {
           bgcolor: palette.action.hover,
         },
