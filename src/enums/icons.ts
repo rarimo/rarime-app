@@ -7,6 +7,7 @@ import { default as Close } from '@mui/icons-material/Close'
 import { default as DeleteIcon } from '@mui/icons-material/Delete'
 import { default as ErrorOutlineIcon } from '@mui/icons-material/ErrorOutline'
 import { default as InfoIcon } from '@mui/icons-material/Info'
+import { default as InfoOutlinedIcon } from '@mui/icons-material/InfoOutlined'
 import { default as KeyboardArrowDownOutlinedIcon } from '@mui/icons-material/KeyboardArrowDownOutlined'
 import { default as Link } from '@mui/icons-material/Link'
 import { default as Search } from '@mui/icons-material/Search'
@@ -26,19 +27,20 @@ export enum Icons {
 
 export const ICON_COMPONENTS = {
   accountCircle: AccountCircleIcon,
+  add: Add,
+  addPhotoAlternativeOutlined: AddPhotoAlternateOutlined,
+  check: CheckIcon,
+  chevronLeft: ChevronLeft,
+  close: Close,
   delete: DeleteIcon,
   errorOutline: ErrorOutlineIcon,
   info: InfoIcon,
-  warningAmber: WarningAmberIcon,
-  check: CheckIcon,
+  infoOutlined: InfoOutlinedIcon,
   keyboardArrowDownOutlined: KeyboardArrowDownOutlinedIcon,
-  work: Work,
-  search: Search,
-  add: Add,
-  addPhotoAlternativeOutlined: AddPhotoAlternateOutlined,
-  verified: Verified,
-  close: Close,
-  chevronLeft: ChevronLeft,
   link: Link,
+  search: Search,
   tune: Tune,
+  verified: Verified,
+  warningAmber: WarningAmberIcon,
+  work: Work,
 }

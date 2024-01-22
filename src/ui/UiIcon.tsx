@@ -1,5 +1,6 @@
 import { Box, BoxProps, SvgIconProps, SxProps } from '@mui/material'
 import { Theme } from '@mui/material/styles'
+import { forwardRef } from 'react'
 
 import { ICON_COMPONENTS, Icons } from '@/enums'
 
@@ -17,7 +18,7 @@ type Props = {
     } & BoxProps<'svg'>)
 )
 
-export default function UiIcon({ size = 6, ...props }: Props) {
+const UiIcon = forwardRef<SVGSVGElement, Props>(({ size = 6, ...props }, ref) => {
   const sx: SxProps<Theme> = {
     ...props.sx,
     width: theme => theme.spacing(size),
@@ -32,8 +33,7 @@ export default function UiIcon({ size = 6, ...props }: Props) {
     const { componentName, ...rest } = props
 
     const IconComponent = ICON_COMPONENTS[componentName]
-
-    return IconComponent && <IconComponent {...rest} sx={sx} />
+    return IconComponent && <IconComponent {...rest} ref={ref} sx={sx} />
   }
 
   const { className, name, ...rest } = props
@@ -41,6 +41,7 @@ export default function UiIcon({ size = 6, ...props }: Props) {
   return (
     <Box
       {...rest}
+      ref={ref}
       component='svg'
       sx={sx}
       className={['icon', ...(className ? [className] : [])].join(' ')}
@@ -49,4 +50,6 @@ export default function UiIcon({ size = 6, ...props }: Props) {
       <use href={`#${name}-icon`} />
     </Box>
   )
-}
+})
+
+export default UiIcon

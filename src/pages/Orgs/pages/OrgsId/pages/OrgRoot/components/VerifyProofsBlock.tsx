@@ -2,6 +2,7 @@ import { Grid, Stack, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 
 import { useLinkProofs } from '@/api'
+import { UiIcon, UiTooltip } from '@/ui'
 
 import LinkForm from './LinkForm'
 import ProofFieldForm from './ProofFieldForm'
@@ -21,10 +22,25 @@ export default function VerifyProofsBlock() {
       borderRadius={4}
     >
       <Stack spacing={4}>
-        <Typography variant={'subtitle3'}>Verify proofs</Typography>
+        <Stack direction={'row'} alignItems={'center'} spacing={2}>
+          <Typography variant={'subtitle3'}>Verify proofs</Typography>
+          <UiTooltip
+            title={
+              // TODO: update text
+              'Please use Verify to check whether the source officially represents Rarimo. Email address, phone number, Discord ID, Twitter account or Telegram ID.'
+            }
+          >
+            <UiIcon
+              componentName={'infoOutlined'}
+              size={4}
+              sx={{ color: palette.text.secondary }}
+            />
+          </UiTooltip>
+        </Stack>
         <Typography variant={'body3'} color={palette.text.secondary}>
+          {/* TODO: update text */}
           Please use Verify to check whether the source officially represents Rarimo. Email address,
-          phone number,Discord ID, Twitter account or Telegram ID.
+          phone number, Discord ID, Twitter account or Telegram ID.
         </Typography>
       </Stack>
 

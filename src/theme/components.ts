@@ -264,4 +264,20 @@ export const components: Components<Omit<Theme, 'components'>> = {
       variant: 'body3',
     },
   },
+  MuiTooltip: {
+    defaultProps: {
+      placement: 'bottom',
+      enterDelay: 0,
+      enterTouchDelay: 0,
+    },
+    styleOverrides: {
+      tooltip: ({ theme }) => ({
+        ...typography.body4,
+        backgroundColor: theme.palette.additional.pureBlack,
+        color: theme.palette.common.white,
+        borderRadius: theme.spacing(2),
+        padding: theme.spacing(4),
+      }),
+    },
+  },
 }
