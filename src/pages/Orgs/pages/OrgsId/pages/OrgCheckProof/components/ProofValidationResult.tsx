@@ -1,5 +1,5 @@
 import { time } from '@distributedlab/tools'
-import { Box, Stack, Typography, TypographyProps, useTheme } from '@mui/material'
+import { Divider, Stack, Typography, TypographyProps, useTheme } from '@mui/material'
 import { ReactNode, useMemo } from 'react'
 
 import { Proof } from '@/api'
@@ -68,13 +68,7 @@ export default function ProofValidationResult({ proof, isValid }: Props) {
           <Typography variant={'body2'} color={palette.text.secondary}>
             {detail.text}
           </Typography>
-          <Box
-            flex={1}
-            height={1}
-            borderBottom={1}
-            borderColor={palette.divider}
-            sx={{ borderStyle: 'dashed' }}
-          />
+          <Divider orientation={'horizontal'} sx={{ flex: 1, borderStyle: 'dashed' }} />
           {detail.value}
         </Stack>
       ))}

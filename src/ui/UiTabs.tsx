@@ -49,7 +49,13 @@ export default function UiTabs({ tabs, ariaLabel, ...rest }: Props) {
   return (
     <Stack {...rest}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={currentTab} onChange={handleChange} aria-label={ariaLabel}>
+        <Tabs
+          value={currentTab}
+          textColor='secondary'
+          indicatorColor='secondary'
+          onChange={handleChange}
+          aria-label={ariaLabel}
+        >
           {tabs.map(({ label }, idx) => (
             <Tab key={idx} label={label} {...a11yProps(idx)} />
           ))}

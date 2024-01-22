@@ -24,7 +24,7 @@ export default function VerifyProofAlias() {
   if (isLoading) {
     return (
       <Stack alignItems='center' justifyContent='center' flex={1}>
-        <CircularProgress />
+        <CircularProgress color={'secondary'} />
       </Stack>
     )
   }
