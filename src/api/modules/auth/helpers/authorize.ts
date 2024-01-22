@@ -2,6 +2,7 @@ import type { ZKProof } from '@rarimo/rarime-connector'
 
 import { api, OrgUserRoles } from '@/api'
 import { AuthTokensGroup } from '@/api/modules/auth'
+import { ApiServicePaths } from '@/enums/api'
 
 export const authorizeUser = async ({
   role,
@@ -16,7 +17,7 @@ export const authorizeUser = async ({
   groupId: string
   zkProof: ZKProof
 }) => {
-  const { data } = await api.post<AuthTokensGroup>('/v1/authorize', {
+  const { data } = await api.post<AuthTokensGroup>(`${ApiServicePaths.Auth}/v1/authorize`, {
     body: {
       data: {
         id: userDid,
@@ -37,7 +38,7 @@ export const authorizeUser = async ({
 }
 
 export const refreshJwt = async () => {
-  const { data } = await api.get<AuthTokensGroup>('/v1/refresh')
+  const { data } = await api.get<AuthTokensGroup>(`${ApiServicePaths.Auth}/v1/refresh`)
 
   return data
 }
