@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
 import { acceptInvitation, OrgUserRoles } from '@/api'
+import { buildFillRequestDetailsSearchParams, getInvitationDetails } from '@/api/modules/auth'
 import { RoutePaths } from '@/enums'
 import { useAuth, useLoading, useMetamaskZkpSnapContext } from '@/hooks'
 import { authStore } from '@/store'
@@ -15,21 +16,11 @@ export default function EmailVerification() {
   const { userDid } = useMetamaskZkpSnapContext()
   const { authorize } = useAuth()
 
-  const invitationDetails = useMemo<{
-    group_id: string
-    invite_email_id: string
-    org_id: string
-    otp: string
-  }>(() => {
-    try {
-      // TODO: add searchParameter const
-      return JSON.parse(atob(searchParams.get('q') || ''))
-    } catch (error) {
-      return null
-    }
-  }, [searchParams])
+  const invitationDetails = useMemo(() => getInvitationDetails(searchParams), [searchParams])
 
   const authorizeAndGetCreatedRequest = useCallback(async () => {
+    if (!invitationDetails) throw new TypeError('Invitation details are not defined')
+
     const createdRequest = await acceptInvitation({
       groupId: invitationDetails.group_id,
       orgId: invitationDetails.org_id,
@@ -47,13 +38,7 @@ export default function EmailVerification() {
     authStore.addTokensGroup(jwtTokens, invitationDetails.org_id, invitationDetails.group_id)
 
     return createdRequest
-  }, [
-    authorize,
-    invitationDetails.group_id,
-    invitationDetails.org_id,
-    invitationDetails.otp,
-    userDid,
-  ])
+  }, [authorize, invitationDetails, userDid])
 
   const {
     data: createdRequest,
@@ -67,8 +52,11 @@ export default function EmailVerification() {
   const redirectPath = useMemo(() => {
     if (!createdRequest) return ''
 
-    const params = new URLSearchParams()
-    params.set('req_id', createdRequest.req_id)
+    const params = buildFillRequestDetailsSearchParams(
+      createdRequest.org_id,
+      createdRequest.group_id,
+      createdRequest.req_id,
+    )
 
     return `${RoutePaths.AcceptInvitationFillRequest}${params.toString()}`
   }, [createdRequest])

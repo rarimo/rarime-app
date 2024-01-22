@@ -518,7 +518,7 @@ export const fillOrgGroupRequest = async ({
         data: {
           type: 'requests-fill',
           attributes: {
-            metadata: credReq,
+            credential_requests: credReq,
           },
         },
       },
