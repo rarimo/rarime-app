@@ -89,6 +89,4 @@ export type VCSchema = {
   }
 }
 
-export type CredentialSubject = Record<string, string> & {
-  metadata_id: string
-}
+export type CredentialSubject = Record<string, string>

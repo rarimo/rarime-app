@@ -2,7 +2,6 @@ import {
   api,
   CredentialRequest,
   OrgGroupCreatedRequest,
-  OrgGroupCreateRequest,
   OrgGroupRequest,
   OrgGroupRequestFilters,
   OrgGroupRequestPublishing,
@@ -12,6 +11,7 @@ import {
   OrgsStatuses,
   OrgUserRoles,
 } from '@/api'
+import { loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { ApiServicePaths } from '@/enums/api'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -431,16 +431,21 @@ const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {
   })
 }
 
-export const createInvitation = async ({ orgId, groupId, email, rules }: OrgGroupCreateRequest) => {
+export const createInvitation = async (params: {
+  orgId: string
+  groupId: string
+  email: string
+  credentialRequests: CredentialRequest[]
+}) => {
   const { data } = await api.post<OrgGroupCreatedRequest>(
-    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/emails`,
+    `${ApiServicePaths.Orgs}/v1/orgs/${params.orgId}/groups/${params.groupId}/emails`,
     {
       body: {
         data: {
-          type: 'invitations-email',
+          type: 'invitations-create-email',
           attributes: {
-            email: email,
-            rules: rules,
+            email: params.email,
+            credential_requests: params.credentialRequests,
           },
         },
       },
@@ -625,4 +630,19 @@ export const loadOrgGroupReqMetadataById = async (
   //     background: '#ffffff',
   //   },
   // }
+}
+
+export const buildCredentialRequest = async (schemeUrl: string, propertyValue: string) => {
+  const parsedScheme = await loadAndParseCredentialSchema(schemeUrl)
+
+  return {
+    credential_schema: schemeUrl,
+    credential_subject: {
+      [parsedScheme.key]: propertyValue,
+    },
+    type: parsedScheme.key,
+    expiration: '',
+    mt_proof: true,
+    signature_proof: true,
+  }
 }
