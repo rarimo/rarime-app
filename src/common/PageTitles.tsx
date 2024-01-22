@@ -1,4 +1,4 @@
-import { Box, BoxProps, Divider, Typography } from '@mui/material'
+import { Box, BoxProps, Typography } from '@mui/material'
 
 interface Props extends BoxProps {
   title: string
@@ -8,16 +8,10 @@ interface Props extends BoxProps {
 export default function PageTitles({ title, subtitle, ...rest }: Props) {
   return (
     <Box {...rest}>
-      <Typography variant='h5' mb={2} ml={10}>
-        {title}
+      <Typography variant='h5'>{title}</Typography>
+      <Typography variant='body3' mt={2}>
+        {subtitle}
       </Typography>
-      <Typography variant='body2'>{subtitle}</Typography>
-
-      <Divider
-        sx={theme => ({
-          mt: theme.spacing(6),
-        })}
-      />
     </Box>
   )
 }

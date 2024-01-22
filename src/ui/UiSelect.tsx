@@ -1,7 +1,7 @@
 import {
   FormControl,
   FormHelperText,
-  InputLabel,
+  FormLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
@@ -22,49 +22,55 @@ type Props = Omit<SelectProps<string>, 'error'> & {
   errorMessage?: string
 }
 
-const UiSelect = forwardRef(({ options, updateValue, errorMessage, ...rest }: Props, ref) => {
-  const id = useMemo(() => rest.id ?? `ui-select-field-${uuidv4()}`, [rest.id])
+const UiSelect = forwardRef(
+  ({ options, label, updateValue, errorMessage, ...rest }: Props, ref) => {
+    const id = useMemo(() => rest.id ?? `ui-select-field-${uuidv4()}`, [rest.id])
 
-  const labelId = useMemo(() => rest.labelId ?? `${id}-label`, [id, rest.labelId])
+    const labelId = useMemo(() => rest.labelId ?? `${id}-label`, [id, rest.labelId])
 
-  const handleChange = (e: SelectChangeEvent<string>, child: ReactNode) => {
-    updateValue?.(e.target.value as string)
+    const handleChange = (e: SelectChangeEvent<string>, child: ReactNode) => {
+      updateValue?.(e.target.value as string)
 
-    rest?.onChange?.(e, child)
-  }
+      rest?.onChange?.(e, child)
+    }
 
-  return (
-    <FormControl fullWidth error={!!errorMessage}>
-      {rest.label && <InputLabel id={labelId}>{rest.label}</InputLabel>}
+    return (
+      <FormControl fullWidth error={!!errorMessage}>
+        {label && (
+          <FormLabel id={labelId} sx={{ mb: 2 }}>
+            {label}
+          </FormLabel>
+        )}
 
-      <Select
-        {...rest}
-        inputRef={ref}
-        id={id}
-        labelId={labelId}
-        value={rest.value || ''}
-        onChange={handleChange}
-      >
-        {options.map(({ value, label, adornmentLeft, adornmentRight }, idx) => (
-          <MenuItem key={idx} value={value}>
-            <Stack
-              flex={1}
-              direction='row'
-              alignItems='center'
-              justifyContent='flex-start'
-              gap={theme => theme.spacing(1)}
-            >
-              {adornmentLeft}
-              {label}
-              {adornmentRight}
-            </Stack>
-          </MenuItem>
-        ))}
-      </Select>
+        <Select
+          {...rest}
+          inputRef={ref}
+          id={id}
+          labelId={labelId}
+          value={rest.value || ''}
+          onChange={handleChange}
+        >
+          {options.map(({ value, label, adornmentLeft, adornmentRight }, idx) => (
+            <MenuItem key={idx} value={value}>
+              <Stack
+                flex={1}
+                direction='row'
+                alignItems='center'
+                justifyContent='flex-start'
+                gap={theme => theme.spacing(1)}
+              >
+                {adornmentLeft}
+                {label}
+                {adornmentRight}
+              </Stack>
+            </MenuItem>
+          ))}
+        </Select>
 
-      {errorMessage && <FormHelperText>Error</FormHelperText>}
-    </FormControl>
-  )
-})
+        {errorMessage && <FormHelperText>Error</FormHelperText>}
+      </FormControl>
+    )
+  },
+)
 
 export default UiSelect

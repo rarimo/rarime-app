@@ -1,5 +1,5 @@
-import { Stack } from '@mui/material'
+import { PageTitles } from '@/common'
 
 export default function Profiles() {
-  return <Stack flex={1}>Profiles</Stack>
+  return <PageTitles title={'Profiles'} />
 }

@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from '@mui/material'
+import { Stack, Typography, useTheme } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
 import { RoutePaths } from '@/enums'
@@ -9,35 +9,26 @@ import { LinksBlock, OrgOverview, VerifyProofsBlock } from './components'
 
 export default function OrgRoot() {
   const { isOrgOwner, orgTabs } = useOrgDetails()
-  const { palette, spacing } = useTheme()
+  const { palette } = useTheme()
 
   return (
     <Stack flex={1} spacing={6}>
       {isOrgOwner && orgTabs}
 
-      <Box position={'relative'}>
-        <Box position={'absolute'} top={0} left={0}>
-          <NavLink to={RoutePaths.Orgs}>
-            <Stack
-              direction={'row'}
-              alignItems={'center'}
-              spacing={2}
-              color={palette.text.secondary}
-            >
-              <UiIcon componentName={'chevronLeft'} size={5} />
-              <Typography variant={'button'} color={'inherit'}>
-                Back
-              </Typography>
-            </Stack>
-          </NavLink>
-        </Box>
-
-        <Stack mt={2} spacing={6} width={'100%'} maxWidth={spacing(200)} mx={'auto'}>
-          <OrgOverview />
-          <VerifyProofsBlock />
-          <LinksBlock />
+      <NavLink to={RoutePaths.Orgs}>
+        <Stack direction={'row'} alignItems={'center'} spacing={2} color={palette.text.secondary}>
+          <UiIcon componentName={'chevronLeft'} size={5} />
+          <Typography variant={'buttonSmall'} color={'inherit'}>
+            Go Back
+          </Typography>
         </Stack>
-      </Box>
+      </NavLink>
+
+      <Stack mt={6} spacing={6}>
+        <OrgOverview />
+        <VerifyProofsBlock />
+        <LinksBlock />
+      </Stack>
     </Stack>
   )
 }

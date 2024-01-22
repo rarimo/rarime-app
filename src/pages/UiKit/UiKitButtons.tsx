@@ -136,6 +136,20 @@ export default function UiKitButtons() {
           <UiIcon componentName='delete' />
         </UiIconButton>
       </Stack>
+
+      {/*SIZES*/}
+      <Typography variant={`h6`}>{`Sizes`}</Typography>
+      <Stack
+        direction={'row'}
+        flexWrap={`wrap`}
+        gap={theme => theme.spacing(2)}
+        justifyContent={`flex-start`}
+      >
+        <UiButton size='small'>{`Small button`}</UiButton>
+        <UiButton size='medium'>{`Medium button`}</UiButton>
+        <UiButton size='large'>{`Large button`}</UiButton>
+        <UiButton>{`Default button`}</UiButton>
+      </Stack>
     </Stack>
   )
 }
