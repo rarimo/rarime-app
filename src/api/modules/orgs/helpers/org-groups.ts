@@ -1,4 +1,5 @@
 import { api, OrgGroup, OrgGroupCreate, OrgGroupQueryParams, OrgGroupRequestStatuses } from '@/api'
+import { ApiServicePaths } from '@/enums/api'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DUMMY_ORG_GROUP: OrgGroup[] = [
@@ -51,7 +52,7 @@ const DUMMY_ORG_GROUP: OrgGroup[] = [
 ]
 
 export const loadOrgGroups = async (orgId: string, query?: OrgGroupQueryParams) => {
-  const { data } = await api.get<OrgGroup[]>(`/v1/orgs/${orgId}/groups`, {
+  const { data } = await api.get<OrgGroup[]>(`${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups`, {
     query,
   })
 
@@ -59,7 +60,7 @@ export const loadOrgGroups = async (orgId: string, query?: OrgGroupQueryParams) 
 }
 
 export const createOrgGroup = async (orgId: string, createOpts: OrgGroupCreate) => {
-  const { data } = await api.post<OrgGroup>(`/v1/orgs/${orgId}/groups`, {
+  const { data } = await api.post<OrgGroup>(`${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups`, {
     body: {
       data: {
         type: 'groups-create',
@@ -79,9 +80,12 @@ export const loadOrgGroupById = async (
   groupId: string,
   query?: OrgGroupQueryParams,
 ) => {
-  const { data } = await api.get<OrgGroup>(`/v1/orgs/${orgId}/groups/${groupId}`, {
-    query,
-  })
+  const { data } = await api.get<OrgGroup>(
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}`,
+    {
+      query,
+    },
+  )
 
   return data
 }
@@ -91,7 +95,7 @@ export const loadOrgGroupRequestsCount = async (
   groupId: string,
 ): Promise<Record<OrgGroupRequestStatuses, number>> => {
   const { data } = await api.get<Record<OrgGroupRequestStatuses, number>>(
-    `/v1/orgs/${orgId}/groups/${groupId}/requests/count`,
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/count`,
   )
 
   return data

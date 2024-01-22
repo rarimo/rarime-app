@@ -1,18 +1,20 @@
 import { CircularProgress, CssBaseline, Stack, ThemeProvider } from '@mui/material'
-import { FC, HTMLAttributes, memo, useCallback, useEffect, useState } from 'react'
+import { FC, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { ErrorHandler } from '@/helpers'
 import { useAuth, useMetamaskZkpSnapContext, useViewportSizes, useWeb3Context } from '@/hooks'
 
 import { ToastsManager } from './contexts'
 import { AppRoutes } from './routes'
-import { theme } from './theme'
+import { useUiState } from './store'
+import { createTheme } from './theme'
 
 const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
   const [isAppInitialized, setIsAppInitialized] = useState(false)
 
   const { provider, isValidChain } = useWeb3Context()
   const { checkSnapStatus } = useMetamaskZkpSnapContext()
+  const { paletteMode } = useUiState()
   const { connectProviders } = useAuth()
 
   useViewportSizes()
@@ -33,6 +35,8 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
     setIsAppInitialized(true)
   }, [provider?.address, checkSnapStatus, connectProviders])
 
+  const theme = useMemo(() => createTheme(paletteMode), [paletteMode])
+
   useEffect(() => {
     init()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +51,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
             <AppRoutes />
           ) : (
             <Stack alignItems='center' justifyContent='center' flex={1}>
-              <CircularProgress />
+              <CircularProgress color={'secondary'} />
             </Stack>
           )}
         </div>

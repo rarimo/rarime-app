@@ -68,7 +68,8 @@ export default function ProofField({ proof }: Props) {
             <InputAdornment position='end'>
               <UiButton
                 variant='text'
-                color='primary'
+                color='secondary'
+                size='medium'
                 disabled={!value || isLoading}
                 onClick={reload}
               >

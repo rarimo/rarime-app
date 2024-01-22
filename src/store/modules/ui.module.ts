@@ -4,7 +4,7 @@ import { createStore } from '@/helpers'
 
 type UiStore = {
   viewportWidth: number
-  paletteMode?: PaletteMode
+  paletteMode: PaletteMode
 }
 
 export const [uiStore, useUiState] = createStore(

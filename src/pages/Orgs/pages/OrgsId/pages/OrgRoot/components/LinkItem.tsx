@@ -3,6 +3,7 @@ import { ComponentProps, useMemo } from 'react'
 
 import { OrgMetadataLink } from '@/api'
 import { Icons } from '@/enums'
+import { Transitions } from '@/theme/constants'
 import { UiIcon } from '@/ui'
 
 const HOST_TO_ICON_MAP: Record<string, Icons> = {
@@ -40,15 +41,14 @@ export default function LinkItem({ link }: Props) {
       direction={'row'}
       alignItems={'center'}
       spacing={2}
+      p={2}
+      borderRadius={3}
+      bgcolor={palette.action.active}
+      overflow={'hidden'}
       sx={{
-        p: 2,
-        borderRadius: 2,
-        // TODO: fix colors
-        bgcolor: palette.grey[100],
-        transition: 'background-color 0.2s ease-in-out',
-        overflow: 'hidden',
+        transition: Transitions.Default,
         '&:hover': {
-          bgcolor: palette.grey[200],
+          bgcolor: palette.action.hover,
         },
       }}
     >

@@ -75,6 +75,10 @@ export const AppRoutes = () => {
               path: createDeepPath(RoutePaths.Orgs),
               element: <Orgs />,
             },
+            {
+              path: createDeepPath(RoutePaths.UiKit),
+              element: <UiKit />,
+            },
           ],
         },
         {
@@ -85,10 +89,6 @@ export const AppRoutes = () => {
               path: createDeepPath(RoutePaths.SignIn),
               loader: signInGuard,
               element: <SignIn />,
-            },
-            {
-              path: createDeepPath(RoutePaths.UiKit),
-              element: <UiKit />,
             },
           ],
         },

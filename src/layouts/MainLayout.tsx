@@ -1,23 +1,19 @@
-import { Stack } from '@mui/material'
+import { Stack, useTheme } from '@mui/material'
 import { Outlet } from 'react-router-dom'
 
 import { AppNavbar } from '@/common'
 import { vh } from '@/theme/helpers'
 
 const MainLayout = () => {
+  const { spacing } = useTheme()
+
   return (
-    <Stack direction='row' px={4} py={5} spacing={4} height={vh(100)}>
+    <Stack direction='row' spacing={4} height={vh(100)} width={'100%'}>
       <AppNavbar />
-      <Stack
-        overflow='hidden auto'
-        width='100%'
-        height='100%'
-        borderRadius={4}
-        px={8}
-        py={6}
-        sx={{ backgroundColor: 'background.paper' }}
-      >
-        <Outlet />
+      <Stack py={8} flex={1} overflow={'hidden auto'}>
+        <Stack mx={'auto'} maxWidth={spacing(220)} width={'100%'}>
+          <Outlet />
+        </Stack>
       </Stack>
     </Stack>
   )
