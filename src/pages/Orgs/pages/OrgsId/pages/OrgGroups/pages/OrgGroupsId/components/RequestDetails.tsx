@@ -1,6 +1,7 @@
 import { Divider, Stack, StackProps, Typography } from '@mui/material'
 
-import { loadAndParseCredentialSchema, OrgGroupRequest } from '@/api'
+import { OrgGroupRequest } from '@/api'
+import { loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { useLoading } from '@/hooks'
 
 interface Props extends StackProps {

@@ -1,10 +1,6 @@
-import { fetcher } from '@distributedlab/fetcher'
-import omit from 'lodash/omit'
-
 import {
   api,
   CredentialRequest,
-  CredentialSubject,
   OrgGroupCreatedRequest,
   OrgGroupCreateRequest,
   OrgGroupRequest,
@@ -15,7 +11,6 @@ import {
   OrgGroupVCsMetadata,
   OrgsStatuses,
   OrgUserRoles,
-  VCSchema,
 } from '@/api'
 import { ApiServicePaths } from '@/enums/api'
 
@@ -409,6 +404,7 @@ const DUMMY_CREATED_REQUEST: OrgGroupCreatedRequest = {
   req_id: '9d6a5063-684e-4ab4-b49a-82cdceadf63f',
   created_at: '2021-08-12T14:00:00Z',
   request: DUMMY_ORG_GROUP_REQUESTS[0],
+  claim_id: '',
 }
 
 const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {
@@ -457,13 +453,11 @@ export const createInvitation = async ({ orgId, groupId, email, rules }: OrgGrou
 export const acceptInvitation = async ({
   orgId,
   groupId,
-  reqId,
   otp,
   userDid,
 }: {
   orgId: string
   groupId: string
-  reqId: string
   otp: string
   userDid: string
 }) => {
@@ -472,7 +466,6 @@ export const acceptInvitation = async ({
     {
       body: {
         data: {
-          id: reqId,
           type: 'invitations-accept-email',
           attributes: {
             otp: otp,
@@ -613,27 +606,6 @@ export const getOrgGroupPublishingRequests = async ({
   )
 
   return data
-}
-
-export const loadAndParseCredentialSchema = async (
-  schemaUrl: string,
-  credentialSubject?: CredentialSubject,
-): Promise<{
-  key: string
-  type: string
-  value: string
-}> => {
-  const { data } = await fetcher.get<VCSchema>(schemaUrl)
-
-  const [key, { type }] = Object.entries(
-    omit(data?.properties.credentialSubject.properties, 'id'),
-  )[0]
-
-  return {
-    key,
-    type,
-    value: credentialSubject?.[key] ?? '',
-  }
 }
 
 export const loadOrgGroupReqMetadataById = async (

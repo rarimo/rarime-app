@@ -1,7 +1,7 @@
 import { createStore } from '@/helpers'
 import { SUPPORTED_PROVIDERS } from '@/types'
 
-interface Web3State {
+type Web3State = {
   providerType?: SUPPORTED_PROVIDERS
 }
 

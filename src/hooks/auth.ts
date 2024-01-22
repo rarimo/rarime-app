@@ -1,47 +1,36 @@
 import { PROVIDERS } from '@distributedlab/w3p'
 import { useCallback, useMemo } from 'react'
-import { subscribe } from 'valtio'
 
+import { OrgUserRoles } from '@/api'
+import { authorizeUser } from '@/api/modules/auth'
+import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp'
 import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
 import { useWeb3Context } from '@/hooks/web3'
-import { authStore, useAuthState, web3Store } from '@/store'
 
-subscribe(web3Store, () => {
-  if (web3Store.providerType) return
-
-  authStore.setJwt('')
-})
-
+// TODO: add jwt validations for specific org
 export const useAuth = () => {
-  const { jwt } = useAuthState()
   const { init, provider } = useWeb3Context()
-  const { userDid, isSnapInstalled, connectOrInstallSnap, checkSnapStatus, createIdentity } =
-    useMetamaskZkpSnapContext()
+  const {
+    userDid,
+    isSnapInstalled,
 
-  const isJwtValid = useMemo(() => {
-    return !!jwt
-  }, [jwt])
+    getVerifiableCredentials,
+    createProof,
+
+    connectOrInstallSnap,
+    checkSnapStatus,
+    createIdentity,
+  } = useMetamaskZkpSnapContext()
 
   const isAuthorized = useMemo(
-    () => (provider?.isConnected && isSnapInstalled && isJwtValid) || false,
-    [isJwtValid, isSnapInstalled, provider?.isConnected],
-  )
-
-  const checkJwtValid = useCallback(
-    (did?: string) => {
-      const currentDid = did || userDid
-
-      // TODO: add jwt expiration and did check
-      return !!currentDid
-    },
-    [userDid],
+    () => Boolean(provider?.isConnected && isSnapInstalled),
+    [isSnapInstalled, provider?.isConnected],
   )
 
   const logout = useCallback(async () => {
     await provider?.disconnect()
     await checkSnapStatus()
-    authStore.setJwt(jwt)
-  }, [checkSnapStatus, jwt, provider])
+  }, [checkSnapStatus, provider])
 
   const connectProviders = useCallback(async () => {
     await init(PROVIDERS.Metamask)
@@ -53,35 +42,52 @@ export const useAuth = () => {
   }, [checkSnapStatus, connectOrInstallSnap, createIdentity, init])
 
   const authorize = useCallback(
-    async (_jwt?: string) => {
-      const currentJwt = _jwt || jwt
+    async ({
+      claimId,
+      orgId,
+      groupId,
+      role,
+    }: {
+      claimId: string
+      orgId: string
+      groupId: string
+      role: OrgUserRoles
+    }) => {
+      const claimOffer = await getClaimOffer(userDid, claimId)
 
-      if (!currentJwt) await logout()
+      const vc = await getVerifiableCredentials(claimOffer)
 
-      const { identityIdString } = await connectProviders()
+      if (!vc?.[0]?.issuer) throw new TypeError('VC issuer is undefined')
 
-      const isJwtValid = checkJwtValid(identityIdString)
+      if (!provider?.address) throw new TypeError('Provider address is undefined')
 
-      if (!isJwtValid) {
-        logout()
-      }
+      // FIXME: define in zkp module
+      const proofResponse = await createProof(
+        buildAuthorizeRequest({
+          providerAddress: provider?.address,
+          isAdmin: false, // TODO: add check for admin role from VC
+        }),
+      )
+
+      if (!proofResponse?.zkpProof) throw new TypeError('Proof is undefined')
+
+      return authorizeUser({
+        role,
+        orgDid: orgId,
+        groupId: groupId,
+        userDid: userDid,
+        zkProof: proofResponse.zkpProof,
+      })
     },
-    [jwt, logout, connectProviders, checkJwtValid],
+    [createProof, getVerifiableCredentials, provider?.address, userDid],
   )
-
-  const login = useCallback(async () => {
-    const { identityIdString } = await connectProviders()
-
-    // TODO: generateProof and /login
-    const jwt = identityIdString
-
-    authStore.setJwt(jwt)
-  }, [connectProviders])
 
   return {
     isAuthorized,
-    login,
-    authorize,
+
+    connectProviders,
     logout,
+
+    authorize,
   }
 }

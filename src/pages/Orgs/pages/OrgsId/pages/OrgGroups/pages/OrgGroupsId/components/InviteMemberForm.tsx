@@ -12,7 +12,7 @@ import { UiButton, UiTextField } from '@/ui'
 
 interface Props extends StackProps {
   formProps?: HTMLAttributes<HTMLFormElement>
-  onMemberInviteCreated?: (createdRequest: OrgGroupCreatedRequest) => void
+  onMemberInvitationCreated?: (createdRequest: OrgGroupCreatedRequest) => void
 }
 
 enum FieldNames {
@@ -20,7 +20,7 @@ enum FieldNames {
   Rules = 'rules',
 }
 
-export default function InviteMemberForm({ formProps, onMemberInviteCreated, ...rest }: Props) {
+export default function InviteMemberForm({ formProps, onMemberInvitationCreated, ...rest }: Props) {
   const { org } = useOrgDetails()
   const { orgGroup } = useOrgGroupDetails()
 
@@ -63,13 +63,13 @@ export default function InviteMemberForm({ formProps, onMemberInviteCreated, ...
         rules: formState[FieldNames.Rules],
       })
 
-      onMemberInviteCreated?.(createdRequest)
+      onMemberInvitationCreated?.(createdRequest)
     } catch (error) {
       ErrorHandler.process(error)
     }
 
     enableForm()
-  }, [disableForm, enableForm, formState, onMemberInviteCreated, org.id, orgGroup.id])
+  }, [disableForm, enableForm, formState, onMemberInvitationCreated, org.id, orgGroup.id])
 
   return (
     <Stack {...rest}>

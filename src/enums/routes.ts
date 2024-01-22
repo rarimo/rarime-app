@@ -20,4 +20,8 @@ export enum RoutePaths {
   OrgsIdGroupsNew = '/organisations/:id/groups/new',
 
   VerifyProofAlias = '/v/:id',
+
+  AcceptInvitation = '/i',
+  AcceptInvitationEmailVerification = '/i/verify-email',
+  AcceptInvitationFillRequest = '/i/fill-request',
 }
