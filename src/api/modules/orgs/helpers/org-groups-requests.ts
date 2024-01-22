@@ -17,6 +17,7 @@ import {
   OrgUserRoles,
   VCSchema,
 } from '@/api'
+import { ApiServicePaths } from '@/enums/api'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
@@ -436,7 +437,7 @@ const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {
 
 export const createInvitation = async ({ orgId, groupId, email, rules }: OrgGroupCreateRequest) => {
   const { data } = await api.post<OrgGroupCreatedRequest>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}/emails`,
+    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/emails`,
     {
       body: {
         data: {
@@ -467,7 +468,7 @@ export const acceptInvitation = async ({
   userDid: string
 }) => {
   const { data } = await api.patch<OrgGroupCreatedRequest>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}/emails`,
+    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/emails`,
     {
       body: {
         data: {
@@ -488,7 +489,7 @@ export const acceptInvitation = async ({
 
 export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) => {
   // const { data } =
-  // await api.get<OrgGroupRequest[]>(`/integrations/rarime-orgs-svc/v1/orgs/requests`, {
+  // await api.get<OrgGroupRequest[]>(`${ApiServicePaths.orgs}/v1/orgs/requests`, {
   //   query: query,
   // })
   //
@@ -499,7 +500,7 @@ export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) =
 
 export const loadOrgGroupRequestById = async (orgId: string, groupId: string, reqId: string) => {
   const { data } = await api.get<OrgGroupRequest>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
   )
 
   return data
@@ -518,7 +519,7 @@ export const fillOrgGroupRequest = async ({
   credReq: CredentialRequest[]
 }) => {
   const { data } = await api.patch<OrgGroupRequest>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
     {
       body: {
         data: {
@@ -552,7 +553,7 @@ export const verifyOrgGroupRequest = async ({
   metadata: OrgGroupVCsMetadata
 }) => {
   const { data } = await api.post<OrgGroupRequest>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
     {
       body: {
         data: {
@@ -582,7 +583,7 @@ export const rejectOrgGroupRequest = async ({
   reqId: string
 }) => {
   const { data } = await api.post<OrgGroupRequest>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
     {
       body: {
         data: {
@@ -608,7 +609,7 @@ export const getOrgGroupPublishingRequests = async ({
   reqId: string
 }): Promise<OrgGroupRequestPublishing[]> => {
   const { data } = await api.get<OrgGroupRequestPublishing[]>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}/publishing`,
+    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}/publishing`,
   )
 
   return data
@@ -639,7 +640,7 @@ export const loadOrgGroupReqMetadataById = async (
   metadataId: string,
 ): Promise<OrgGroupVCsMetadata> => {
   const { data } = await api.get<OrgGroupVCsMetadata>(
-    `/integrations/rarime-orgs-svc/v1/orgs/metadata/${metadataId}`,
+    `${ApiServicePaths.orgs}/v1/orgs/metadata/${metadataId}`,
   )
 
   return data

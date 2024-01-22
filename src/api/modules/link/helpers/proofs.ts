@@ -1,4 +1,5 @@
 import { api, type Proof, type ProofLink } from '@/api'
+import { ApiServicePaths } from '@/enums/api'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DUMMY_PROOFS: Proof[] = [
@@ -38,7 +39,7 @@ const DUMMY_PROOFS: Proof[] = [
 ]
 
 export const createProof = async (proof: string) => {
-  const { data } = await api.post<Proof>('/integrations/rarime-link-svc/v1/proofs', {
+  const { data } = await api.post<Proof>(`${ApiServicePaths.link}/v1/proofs`, {
     body: {
       data: {
         type: 'proofs',
@@ -51,13 +52,13 @@ export const createProof = async (proof: string) => {
 }
 
 export const getProofById = async (id: string) => {
-  const { data } = await api.get<Proof>(`/integrations/rarime-link-svc/v1/proofs/${id}`)
+  const { data } = await api.get<Proof>(`${ApiServicePaths.link}/v1/proofs/${id}`)
 
   return data
 }
 
 export const createLinkProofs = async (proofIds: string[]) => {
-  const { data } = await api.post<ProofLink>('/integrations/rarime-link-svc/v1/proofs/link', {
+  const { data } = await api.post<ProofLink>(`${ApiServicePaths.link}/v1/proofs/link`, {
     body: {
       data: {
         proofs_ids: proofIds,
@@ -69,20 +70,20 @@ export const createLinkProofs = async (proofIds: string[]) => {
 }
 
 export const getProofsByLinkId = async (linkId: string) => {
-  const { data } = await api.get<Proof[]>(`/integrations/rarime-link-svc/v1/proofs/link/${linkId}`)
+  const { data } = await api.get<Proof[]>(`${ApiServicePaths.link}/v1/proofs/link/${linkId}`)
 
   return data
 }
 
 export const getProofsByUserDid = async (userDid: string) => {
-  const { data } = await api.get<Proof[]>(`/integrations/rarime-link-svc/v1/proofs/user/${userDid}`)
+  const { data } = await api.get<Proof[]>(`${ApiServicePaths.link}/v1/proofs/user/${userDid}`)
 
   return data
 }
 
 export const getProofLinksByUserDid = async (userDid: string) => {
   const { data } = await api.get<ProofLink[]>(
-    `/integrations/rarime-link-svc/v1/proofs/user/${userDid}/link`,
+    `${ApiServicePaths.link}/v1/proofs/user/${userDid}/link`,
   )
 
   return data

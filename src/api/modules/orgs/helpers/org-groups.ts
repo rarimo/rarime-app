@@ -1,4 +1,5 @@
 import { api, OrgGroup, OrgGroupCreate, OrgGroupQueryParams, OrgGroupRequestStatuses } from '@/api'
+import { ApiServicePaths } from '@/enums/api'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DUMMY_ORG_GROUP: OrgGroup[] = [
@@ -51,31 +52,25 @@ const DUMMY_ORG_GROUP: OrgGroup[] = [
 ]
 
 export const loadOrgGroups = async (orgId: string, query?: OrgGroupQueryParams) => {
-  const { data } = await api.get<OrgGroup[]>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups`,
-    {
-      query,
-    },
-  )
+  const { data } = await api.get<OrgGroup[]>(`${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups`, {
+    query,
+  })
 
   return data
 }
 
 export const createOrgGroup = async (orgId: string, createOpts: OrgGroupCreate) => {
-  const { data } = await api.post<OrgGroup>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups`,
-    {
-      body: {
-        data: {
-          type: 'groups-create',
-          attributes: {
-            metadata: createOpts.metadata,
-            rules: createOpts.rules,
-          },
+  const { data } = await api.post<OrgGroup>(`${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups`, {
+    body: {
+      data: {
+        type: 'groups-create',
+        attributes: {
+          metadata: createOpts.metadata,
+          rules: createOpts.rules,
         },
       },
     },
-  )
+  })
 
   return data
 }
@@ -86,7 +81,7 @@ export const loadOrgGroupById = async (
   query?: OrgGroupQueryParams,
 ) => {
   const { data } = await api.get<OrgGroup>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}`,
+    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}`,
     {
       query,
     },
@@ -100,7 +95,7 @@ export const loadOrgGroupRequestsCount = async (
   groupId: string,
 ): Promise<Record<OrgGroupRequestStatuses, number>> => {
   const { data } = await api.get<Record<OrgGroupRequestStatuses, number>>(
-    `/integrations/rarime-orgs-svc/v1/orgs/${orgId}/groups/${groupId}/requests/count`,
+    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/count`,
   )
 
   return data
