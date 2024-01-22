@@ -11,7 +11,6 @@ export enum RoutePaths {
   OrgsNew = '/organisations/new',
 
   OrgsId = '/organisations/:id',
-  OrgsIdCheckProof = '/organisations/:id/check-proof',
   OrgsIdGroups = '/organisations/:id/groups',
   OrgsIdGroupsIdList = '/organisations/:id/groups/:groupId/list',
   OrgsIdGroupsIdListStatusSubmitted = '/organisations/:id/groups/:groupId/list/issued',

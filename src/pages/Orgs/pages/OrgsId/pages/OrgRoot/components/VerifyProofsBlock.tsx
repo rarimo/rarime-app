@@ -1,24 +1,15 @@
-import { InputAdornment, Stack, Typography, useTheme } from '@mui/material'
-import { useCallback, useState } from 'react'
-import { generatePath, useNavigate, useParams } from 'react-router-dom'
+import { Grid, Stack, Typography, useTheme } from '@mui/material'
+import { useState } from 'react'
 
-import { RoutePaths } from '@/enums'
-import { UiButton, UiSearchField } from '@/ui'
+import { useLinkProofs } from '@/api'
+
+import LinkForm from './LinkForm'
+import ProofFieldForm from './ProofFieldForm'
 
 export default function VerifyProofsBlock() {
-  const { id = null } = useParams()
-  const navigate = useNavigate()
   const { palette } = useTheme()
-
-  const [linkOrLinkId, setLinkOrLinkId] = useState('')
-
-  const navigateToCheckProof = useCallback(() => {
-    const searchParams = new URLSearchParams()
-    searchParams.append('linkId', linkOrLinkId)
-
-    const path = generatePath(RoutePaths.OrgsIdCheckProof, { id })
-    navigate(`${path}?${searchParams.toString()}`)
-  }, [id, linkOrLinkId, navigate])
+  const [linkId, setLinkId] = useState('')
+  const { proofs, isLoading, isLoadingError, isEmpty } = useLinkProofs(linkId)
 
   return (
     <Stack
@@ -29,29 +20,36 @@ export default function VerifyProofsBlock() {
       borderColor={palette.divider}
       borderRadius={4}
     >
-      <Typography variant={'subtitle3'}>Verify proofs</Typography>
-      <UiSearchField
-        value={linkOrLinkId}
-        size='medium'
-        placeholder={'Enter the Proof Link ID or URL'}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position='end'>
-              <UiButton
-                variant='text'
-                color='secondary'
-                size='medium'
-                disabled={!linkOrLinkId}
-                sx={{ minWidth: 'auto' }}
-                onClick={navigateToCheckProof}
-              >
-                Verify
-              </UiButton>
-            </InputAdornment>
-          ),
-        }}
-        onChange={e => setLinkOrLinkId(e.target.value)}
-      />
+      <Stack spacing={4}>
+        <Typography variant={'subtitle3'}>Verify proofs</Typography>
+        <Typography variant={'body3'} color={palette.text.secondary}>
+          Please use Verify to check whether the source officially represents Rarimo. Email address,
+          phone number,Discord ID, Twitter account or Telegram ID.
+        </Typography>
+      </Stack>
+
+      <LinkForm isLoading={isLoading} onLinkIdChange={setLinkId} />
+
+      {linkId && (
+        <>
+          {/* TODO: Handle states properly */}
+          {isLoading ? (
+            <></>
+          ) : isLoadingError ? (
+            <></>
+          ) : isEmpty ? (
+            <></>
+          ) : (
+            <Grid container spacing={6}>
+              {proofs.map(proof => (
+                <Grid item xs={6} key={proof.id}>
+                  <ProofFieldForm proof={proof} />
+                </Grid>
+              ))}
+            </Grid>
+          )}
+        </>
+      )}
     </Stack>
   )
 }

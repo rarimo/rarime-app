@@ -47,6 +47,11 @@ export const components: Components<Omit<Theme, 'components'>> = {
       }),
     },
   },
+  MuiStack: {
+    defaultProps: {
+      useFlexGap: true,
+    },
+  },
   MuiButton: {
     defaultProps: {
       variant: 'contained',
@@ -103,6 +108,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
           height: theme.spacing(12),
           '&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
             borderColor: theme.palette.action.focus,
+            borderWidth: 1,
           },
           '&:hover:not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
             borderColor: theme.palette.action.hover,
@@ -159,6 +165,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
         },
         '&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
           borderColor: theme.palette.action.focus,
+          borderWidth: 1,
         },
         '&:hover:not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
           borderColor: theme.palette.action.hover,
