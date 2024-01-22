@@ -1,4 +1,4 @@
 export enum ApiServicePaths {
-  orgs = '/integrations/rarime-orgs-svc',
-  link = '/integrations/rarime-link-svc',
+  Orgs = '/integrations/rarime-orgs-svc',
+  Link = '/integrations/rarime-link-svc',
 }

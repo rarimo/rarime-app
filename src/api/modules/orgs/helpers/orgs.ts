@@ -95,7 +95,7 @@ export const DUMMY_ORGS: Organization[] = [
 ]
 
 export const loadOrgs = async (query: OrgsRequestQueryParams) => {
-  const { data } = await api.get<Organization[]>(`${ApiServicePaths.orgs}/v1/orgs`, {
+  const { data } = await api.get<Organization[]>(`${ApiServicePaths.Orgs}/v1/orgs`, {
     query,
   })
 
@@ -103,13 +103,13 @@ export const loadOrgs = async (query: OrgsRequestQueryParams) => {
 }
 
 export const loadOrgsAmount = async () => {
-  const { data } = await api.get<number>(`${ApiServicePaths.orgs}/v1/orgs/amount`)
+  const { data } = await api.get<number>(`${ApiServicePaths.Orgs}/v1/orgs/amount`)
 
   return data
 }
 
 export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => {
-  const { data } = await api.get<Organization>(`${ApiServicePaths.orgs}/v1/orgs/${id}`, {
+  const { data } = await api.get<Organization>(`${ApiServicePaths.Orgs}/v1/orgs/${id}`, {
     query,
   })
 
@@ -117,7 +117,7 @@ export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => 
 }
 
 export const createOrg = async (body: OrganizationCreate) => {
-  const { data } = await api.post<Organization>(`${ApiServicePaths.orgs}/v1/orgs`, {
+  const { data } = await api.post<Organization>(`${ApiServicePaths.Orgs}/v1/orgs`, {
     body: {
       data: {
         type: 'organizations-create',
@@ -134,13 +134,13 @@ export const createOrg = async (body: OrganizationCreate) => {
 }
 
 export const verifyOrg = async (id: string) => {
-  const { data } = await api.post<Organization>(`${ApiServicePaths.orgs}/v1/orgs/${id}`)
+  const { data } = await api.post<Organization>(`${ApiServicePaths.Orgs}/v1/orgs/${id}`)
 
   return data
 }
 
 export const loadOrgUsers = async (id: string, query: OrgsRequestQueryParams) => {
-  const { data } = await api.get<OrgUser[]>(`${ApiServicePaths.orgs}/v1/orgs/${id}/users`, {
+  const { data } = await api.get<OrgUser[]>(`${ApiServicePaths.Orgs}/v1/orgs/${id}/users`, {
     query,
   })
 
@@ -149,7 +149,7 @@ export const loadOrgUsers = async (id: string, query: OrgsRequestQueryParams) =>
 
 export const getOrgVerificationCode = async (id: string) => {
   const { data } = await api.get<OrgVerificationCode>(
-    `${ApiServicePaths.orgs}/v1/orgs/${id}/verification-code`,
+    `${ApiServicePaths.Orgs}/v1/orgs/${id}/verification-code`,
   )
 
   return data

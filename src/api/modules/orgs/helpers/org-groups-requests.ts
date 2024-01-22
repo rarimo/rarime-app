@@ -437,7 +437,7 @@ const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {
 
 export const createInvitation = async ({ orgId, groupId, email, rules }: OrgGroupCreateRequest) => {
   const { data } = await api.post<OrgGroupCreatedRequest>(
-    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/emails`,
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/emails`,
     {
       body: {
         data: {
@@ -468,7 +468,7 @@ export const acceptInvitation = async ({
   userDid: string
 }) => {
   const { data } = await api.patch<OrgGroupCreatedRequest>(
-    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/emails`,
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/emails`,
     {
       body: {
         data: {
@@ -489,7 +489,7 @@ export const acceptInvitation = async ({
 
 export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) => {
   // const { data } =
-  // await api.get<OrgGroupRequest[]>(`${ApiServicePaths.orgs}/v1/orgs/requests`, {
+  // await api.get<OrgGroupRequest[]>(`${ApiServicePaths.Orgs}/v1/orgs/requests`, {
   //   query: query,
   // })
   //
@@ -500,7 +500,7 @@ export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) =
 
 export const loadOrgGroupRequestById = async (orgId: string, groupId: string, reqId: string) => {
   const { data } = await api.get<OrgGroupRequest>(
-    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
   )
 
   return data
@@ -519,7 +519,7 @@ export const fillOrgGroupRequest = async ({
   credReq: CredentialRequest[]
 }) => {
   const { data } = await api.patch<OrgGroupRequest>(
-    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
     {
       body: {
         data: {
@@ -553,7 +553,7 @@ export const verifyOrgGroupRequest = async ({
   metadata: OrgGroupVCsMetadata
 }) => {
   const { data } = await api.post<OrgGroupRequest>(
-    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
     {
       body: {
         data: {
@@ -583,7 +583,7 @@ export const rejectOrgGroupRequest = async ({
   reqId: string
 }) => {
   const { data } = await api.post<OrgGroupRequest>(
-    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
     {
       body: {
         data: {
@@ -609,7 +609,7 @@ export const getOrgGroupPublishingRequests = async ({
   reqId: string
 }): Promise<OrgGroupRequestPublishing[]> => {
   const { data } = await api.get<OrgGroupRequestPublishing[]>(
-    `${ApiServicePaths.orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}/publishing`,
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}/publishing`,
   )
 
   return data
@@ -640,7 +640,7 @@ export const loadOrgGroupReqMetadataById = async (
   metadataId: string,
 ): Promise<OrgGroupVCsMetadata> => {
   const { data } = await api.get<OrgGroupVCsMetadata>(
-    `${ApiServicePaths.orgs}/v1/orgs/metadata/${metadataId}`,
+    `${ApiServicePaths.Orgs}/v1/orgs/metadata/${metadataId}`,
   )
 
   return data
