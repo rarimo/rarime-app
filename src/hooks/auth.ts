@@ -14,9 +14,9 @@ export const useAuth = () => {
     userDid,
     isSnapInstalled,
 
-    getVerifiableCredentials,
     createProof,
 
+    saveVerifiableCredentials,
     connectOrInstallSnap,
     checkSnapStatus,
     createIdentity,
@@ -55,7 +55,7 @@ export const useAuth = () => {
     }) => {
       const claimOffer = await getClaimOffer(userDid, claimId)
 
-      const vc = await getVerifiableCredentials(claimOffer)
+      const vc = await saveVerifiableCredentials(claimOffer)
 
       if (!vc?.[0]?.issuer) throw new TypeError('VC issuer is undefined')
 
@@ -79,7 +79,7 @@ export const useAuth = () => {
         zkProof: proofResponse.zkpProof,
       })
     },
-    [createProof, getVerifiableCredentials, provider?.address, userDid],
+    [createProof, saveVerifiableCredentials, provider?.address, userDid],
   )
 
   return {

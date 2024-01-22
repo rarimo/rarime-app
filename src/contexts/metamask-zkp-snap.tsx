@@ -1,11 +1,13 @@
 import {
+  CheckCredentialExistenceRequestParams,
   type CreateProofRequestParams,
   enableSnap,
   isMetamaskInstalled as detectMetamaskInstalled,
   isSnapInstalled as detectSnapInstalled,
   type SaveCredentialsRequestParams,
+  SaveCredentialsResponse,
   type SnapConnector,
-  type W3CCredential,
+  W3CCredential,
   type ZKPProofResponse,
 } from '@rarimo/rarime-connector'
 import { createContext, FC, HTMLAttributes, useCallback, useState } from 'react'
@@ -18,6 +20,7 @@ import { createContext, FC, HTMLAttributes, useCallback, useState } from 'react'
 interface MetamaskZkpSnapContextValue {
   isMetamaskInstalled: boolean
   isSnapInstalled: boolean
+
   userDid: string
   userDidBigIntString: string
 
@@ -27,20 +30,19 @@ interface MetamaskZkpSnapContextValue {
     identityIdString: string
     identityIdBigIntString: string
   }>
-  getVerifiableCredentials: (
+  saveVerifiableCredentials: (
     params: SaveCredentialsRequestParams,
-    connector?: SnapConnector,
-  ) => Promise<W3CCredential[] | undefined>
-  createProof: (
-    params: CreateProofRequestParams,
-    connector?: SnapConnector,
-  ) => Promise<ZKPProofResponse | undefined>
-  checkMetamaskExists: (connector?: SnapConnector) => Promise<boolean>
+  ) => Promise<SaveCredentialsResponse[] | undefined>
+  createProof: (params: CreateProofRequestParams) => Promise<ZKPProofResponse | undefined>
+  checkMetamaskExists: () => Promise<boolean>
   checkSnapExists: () => Promise<boolean>
   checkSnapStatus: () => Promise<{
     isMetamaskInstalled: boolean
     isSnapInstalled: boolean
   }>
+  checkCredentialExistence: (
+    params: CheckCredentialExistenceRequestParams,
+  ) => Promise<SaveCredentialsResponse[] | undefined>
 
   connectOrInstallSnap: () => Promise<SnapConnector>
   getCredentials: (connector?: SnapConnector) => Promise<W3CCredential[]>
@@ -51,16 +53,18 @@ const CONTEXT_NOT_INITIALIZED_ERROR = new ReferenceError('MetamaskZkpSnapContext
 export const MetamaskZkpSnapContext = createContext<MetamaskZkpSnapContextValue>({
   isMetamaskInstalled: false,
   isSnapInstalled: false,
+
   userDid: '',
   userDidBigIntString: '',
 
   isLocalSnap: () => {
     throw CONTEXT_NOT_INITIALIZED_ERROR
   },
+
   createIdentity: () => {
     throw CONTEXT_NOT_INITIALIZED_ERROR
   },
-  getVerifiableCredentials: () => {
+  saveVerifiableCredentials: () => {
     throw CONTEXT_NOT_INITIALIZED_ERROR
   },
   createProof: () => {
@@ -75,6 +79,10 @@ export const MetamaskZkpSnapContext = createContext<MetamaskZkpSnapContextValue>
   checkSnapStatus: () => {
     throw CONTEXT_NOT_INITIALIZED_ERROR
   },
+  checkCredentialExistence: () => {
+    throw CONTEXT_NOT_INITIALIZED_ERROR
+  },
+
   connectOrInstallSnap: () => {
     throw CONTEXT_NOT_INITIALIZED_ERROR
   },
@@ -90,6 +98,7 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
 
   const [isMetamaskInstalled, setIsMetamaskInstalled] = useState(false)
   const [isSnapInstalled, setIsSnapInstalled] = useState(false)
+
   const [userDid, setUserDid] = useState('')
   const [userDidBigIntString, setUserDidBigIntString] = useState('')
 
@@ -118,7 +127,7 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
   /**
    * Get the verifiable credentials from the snap.
    */
-  const getVerifiableCredentials = useCallback(
+  const saveVerifiableCredentials = useCallback(
     async (params: SaveCredentialsRequestParams, _connector?: SnapConnector) => {
       const currentConnector = _connector || connector
 
@@ -146,7 +155,7 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
 
       if (!currentConnector) throw new TypeError('Connector is not defined')
 
-      return await currentConnector.getCredentials()
+      return currentConnector?.getCredentials?.()
     },
     [connector],
   )
@@ -189,19 +198,30 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
     }
   }, [checkMetamaskExists, checkSnapExists])
 
+  const checkCredentialExistence = useCallback(
+    async (
+      params: CheckCredentialExistenceRequestParams,
+    ): Promise<SaveCredentialsResponse[] | undefined> => {
+      return connector?.checkCredentialExistence?.(params)
+    },
+    [connector],
+  )
+
   return (
     <MetamaskZkpSnapContext.Provider
       value={{
         isMetamaskInstalled,
         isSnapInstalled,
+
         userDid,
         userDidBigIntString,
 
         isLocalSnap,
 
         createIdentity,
-        getVerifiableCredentials,
+        saveVerifiableCredentials,
         createProof,
+        checkCredentialExistence,
 
         checkMetamaskExists,
         checkSnapExists,
