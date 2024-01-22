@@ -28,7 +28,7 @@ export default function ListCard({ org, ...rest }: Props) {
           {org.status.value === OrgsStatuses.Verified && (
             <UiIcon
               componentName={'verified'}
-              sx={{ ml: 1, color: palette.success.light }}
+              sx={{ ml: 1, color: palette.success.main }}
               size={4}
             />
           )}
@@ -46,18 +46,18 @@ export default function ListCard({ org, ...rest }: Props) {
           borderColor={palette.grey[300]}
         >
           <Grid item xs={7}>
-            <Typography variant={'body3'} component={'p'} color={palette.text.secondary}>
+            <Typography variant={'body4'} component={'p'} color={palette.text.secondary}>
               {'Associated people'}
             </Typography>
-            <Typography mt={2} color={palette.text.primary} variant={'overline'}>
+            <Typography mt={2} color={palette.text.primary} variant={'subtitle4'}>
               {org.members_count}
             </Typography>
           </Grid>
           <Grid item xs={5}>
-            <Typography variant={'body3'} component={'p'} color={palette.text.secondary}>
+            <Typography variant={'body4'} component={'p'} color={palette.text.secondary}>
               {'Credentials'}
             </Typography>
-            <Typography mt={2} color={palette.text.primary} variant={'overline'}>
+            <Typography mt={2} color={palette.text.primary} variant={'subtitle4'}>
               {org.issued_claims_count}
             </Typography>
           </Grid>

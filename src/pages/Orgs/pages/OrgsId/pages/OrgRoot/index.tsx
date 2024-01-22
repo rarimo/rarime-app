@@ -25,7 +25,7 @@ export default function OrgRoot() {
               color={palette.text.secondary}
             >
               <UiIcon componentName={'chevronLeft'} size={5} />
-              <Typography variant={'button'} color={'inherit'}>
+              <Typography variant={'buttonSmall'} color={'inherit'}>
                 Back
               </Typography>
             </Stack>

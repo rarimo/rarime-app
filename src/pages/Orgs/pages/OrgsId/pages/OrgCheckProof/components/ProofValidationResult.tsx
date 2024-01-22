@@ -16,8 +16,7 @@ export default function ProofValidationResult({ proof, isValid }: Props) {
 
   const valueTypographyProps: TypographyProps = useMemo(() => {
     return {
-      variant: 'caption',
-      // TODO: fix colors
+      variant: 'caption1',
       color: palette.text.primary,
       sx: { overflow: 'hidden', textOverflow: 'ellipsis' },
     }
