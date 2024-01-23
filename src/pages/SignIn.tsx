@@ -47,10 +47,11 @@ export default function SignIn() {
 
   return (
     <Stack
-      alignItems='center'
+      alignItems={'center'}
+      justifyContent={'center'}
       maxWidth={spacing(140)}
       width={'100%'}
-      borderRadius={4}
+      height={'100%'}
       p={20}
       spacing={4}
       textAlign={'center'}
