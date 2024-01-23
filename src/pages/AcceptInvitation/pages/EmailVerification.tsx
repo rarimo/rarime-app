@@ -4,6 +4,7 @@ import { Navigate, useSearchParams } from 'react-router-dom'
 import { acceptInvitation, OrgUserRoles } from '@/api'
 import { buildFillRequestDetailsSearchParams, getInvitationDetails } from '@/api/modules/auth'
 import { RoutePaths } from '@/enums'
+import { sleep } from '@/helpers'
 import { useAuth, useLoading, useMetamaskZkpSnapContext } from '@/hooks'
 import { authStore } from '@/store'
 
@@ -21,12 +22,16 @@ export default function EmailVerification() {
   const authorizeAndGetCreatedRequest = useCallback(async () => {
     if (!invitationDetails) throw new TypeError('Invitation details are not defined')
 
+    await sleep(2_000)
+
     const createdRequest = await acceptInvitation({
       groupId: invitationDetails.group_id,
       orgId: invitationDetails.org_id,
       userDid: userDid,
       otp: invitationDetails.otp,
     })
+
+    // TODO: add loader, because issuer publishing claim takes time
 
     const jwtTokens = await authorize({
       claimId: createdRequest.claim_id,
@@ -58,7 +63,7 @@ export default function EmailVerification() {
       createdRequest.req_id,
     )
 
-    return `${RoutePaths.AcceptInvitationFillRequest}${params.toString()}`
+    return `${RoutePaths.AcceptInvitationFillRequest}?${params.toString()}`
   }, [createdRequest])
 
   if (isLoading) return <></>

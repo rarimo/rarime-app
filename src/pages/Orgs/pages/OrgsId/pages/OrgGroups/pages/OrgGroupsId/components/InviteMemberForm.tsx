@@ -58,9 +58,9 @@ export default function InviteMemberForm({ formProps, onMemberInvitationCreated,
 
     try {
       const credentialRequests: CredentialRequest[] = await Promise.all(
-        formState[FieldNames.Rules].map(async el => {
-          return buildCredentialRequest(el.scheme, el.value)
-        }),
+        formState[FieldNames.Rules].map(el =>
+          buildCredentialRequest(el.scheme, el.value, orgGroup.id),
+        ),
       )
 
       const createdRequest = await createInvitation({

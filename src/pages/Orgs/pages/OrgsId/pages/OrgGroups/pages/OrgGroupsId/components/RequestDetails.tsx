@@ -1,7 +1,7 @@
 import { Divider, Stack, StackProps, Typography } from '@mui/material'
 
 import { OrgGroupRequest } from '@/api'
-import { loadAndParseCredentialSchema } from '@/api/modules/zkp'
+import { getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { useLoading } from '@/hooks'
 
 interface Props extends StackProps {
@@ -13,8 +13,10 @@ export default function RequestDetails({ orgGroupRequest, children, ...rest }: P
     [],
     () =>
       Promise.all(
-        orgGroupRequest.credential_requests.map(req =>
-          loadAndParseCredentialSchema(req.credential_schema, req.credential_subject),
+        orgGroupRequest.credential_requests.map(async req =>
+          getTargetProperty(
+            await loadAndParseCredentialSchema(req.credential_schema, req.credential_subject),
+          ),
         ),
       ),
     {
@@ -28,8 +30,8 @@ export default function RequestDetails({ orgGroupRequest, children, ...rest }: P
       <Stack>
         {vcFields.map((el, idx) => (
           <Stack key={idx} spacing={4}>
-            <Typography>{el.key}</Typography>
-            <Typography>{el.value}</Typography>
+            <Typography>{el?.key}</Typography>
+            <Typography>{el?.value}</Typography>
           </Stack>
         ))}
       </Stack>

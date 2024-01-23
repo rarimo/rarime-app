@@ -89,4 +89,43 @@ export type VCSchema = {
   }
 }
 
-export type CredentialSubject = Record<string, string>
+export type JsonLdSchema = {
+  '@context': {
+    '@protected': boolean
+    '@version': number
+    id: string
+    type: string
+  } & {
+    [key: string]: {
+      '@context': {
+        '@propagate': boolean
+        '@protected': boolean
+        'polygon-vocab': string
+        xsd: string
+        groupID: {
+          '@id': string
+          '@type': string
+        }
+      } & {
+        [key: string]: {
+          '@id': string
+          '@type': string
+        }
+      }
+      '@id': string
+    }
+  }[]
+}
+
+export type CredentialSubject = {
+  id: string
+  type: string
+  groupID: string // uuid
+} & Record<string, string>
+
+export type parsedCredentialSchemaProperty = { key: string; type: string; value: string }
+
+export type ParsedCredentialSchema = {
+  type: string
+  credSubjectProperties: parsedCredentialSchemaProperty[]
+}

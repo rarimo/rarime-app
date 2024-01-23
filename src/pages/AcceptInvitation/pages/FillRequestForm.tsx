@@ -12,7 +12,11 @@ import {
   OrgGroupRequest,
 } from '@/api'
 import { parseFillRequestDetailsSearchParams } from '@/api/modules/auth'
-import { loadAndParseCredentialSchema } from '@/api/modules/zkp'
+import {
+  getTargetProperty,
+  loadAndParseCredentialSchema,
+  parsedCredentialSchemaProperty,
+} from '@/api/modules/zkp'
 import { ErrorHandler } from '@/helpers'
 import { useForm, useLoading } from '@/hooks'
 import { UiTextField } from '@/ui'
@@ -41,8 +45,10 @@ export default function FillRequestForm({ ...rest }: Props) {
     )
 
     const vcFields = await Promise.all(
-      orgGroupRequest.credential_requests.map(req =>
-        loadAndParseCredentialSchema(req.credential_schema, req.credential_subject),
+      orgGroupRequest.credential_requests.map(async req =>
+        getTargetProperty(
+          await loadAndParseCredentialSchema(req.credential_schema, req.credential_subject),
+        ),
       ),
     )
 
@@ -56,7 +62,7 @@ export default function FillRequestForm({ ...rest }: Props) {
     data: { orgGroupRequest, vcFields },
   } = useLoading<{
     orgGroupRequest: OrgGroupRequest
-    vcFields: { key: string; type: string; value: string }[]
+    vcFields: parsedCredentialSchemaProperty[]
   }>(
     {
       orgGroupRequest: {} as OrgGroupRequest,
