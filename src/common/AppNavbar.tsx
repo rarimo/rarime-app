@@ -1,11 +1,11 @@
-import { config } from '@config'
-import { Box, Divider, Stack, useTheme } from '@mui/material'
-import { ReactNode, useMemo } from 'react'
+import { Divider, Stack, useTheme } from '@mui/material'
+import { ReactNode, useCallback, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
+import { uiStore, useUiState } from '@/store'
 import { Transitions } from '@/theme/constants'
-import { UiIcon } from '@/ui'
+import { UiIcon, UiIconButton } from '@/ui'
 
 interface NavbarLinkProps {
   to: RoutePaths
@@ -46,6 +46,7 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
 
 const AppNavbar = () => {
   const { palette } = useTheme()
+  const { paletteMode } = useUiState()
 
   const navbarItems = useMemo(
     () => [
@@ -56,20 +57,23 @@ const AppNavbar = () => {
     [],
   )
 
+  const togglePaletteMode = useCallback(() => {
+    uiStore.setPaletteMode(paletteMode === 'dark' ? 'light' : 'dark')
+  }, [paletteMode])
+
   return (
     <Stack
       justifyContent={'space-between'}
+      alignItems={'center'}
       py={6}
       px={4}
       borderRight={1}
       borderColor={palette.divider}
     >
       <Stack spacing={4}>
-        <NavLink to={RoutePaths.Profiles}>
-          <Stack alignItems='center'>
-            <Box component={'img'} src={'/branding/logo.svg'} alt={config.APP_NAME} />
-          </Stack>
-        </NavLink>
+        <Stack component={NavLink} to={RoutePaths.Profiles} alignItems={'center'}>
+          <UiIcon name={Icons.Rarime} size={10} sx={{ color: palette.text.primary }} />
+        </Stack>
         <Divider />
         <Stack spacing={4} p={1}>
           {navbarItems.map(({ route, iconComponent }, idx) => (
@@ -80,8 +84,16 @@ const AppNavbar = () => {
         </Stack>
       </Stack>
 
-      {/* TODO: add account popup */}
-      <UiIcon name={Icons.Metamask} size={10} sx={{ px: 1 }} />
+      <Stack spacing={4}>
+        <UiIconButton onClick={togglePaletteMode}>
+          <UiIcon
+            componentName={paletteMode === 'dark' ? 'darkModeOutlined' : 'lightModeOutlined'}
+            size={5}
+          />
+        </UiIconButton>
+        {/* TODO: add account popup */}
+        <UiIcon name={Icons.Metamask} size={10} sx={{ px: 1 }} />
+      </Stack>
     </Stack>
   )
 }
