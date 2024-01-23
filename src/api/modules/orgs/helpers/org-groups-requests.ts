@@ -91,6 +91,7 @@ export const acceptInvitation = async ({
 }
 
 export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) => {
+  // FIXME: return once backend is ready
   // const { data } =
   // await api.get<OrgGroupRequest[]>(`${ApiServicePaths.Orgs}/v1/orgs/requests`, {
   //   query: query,

@@ -4,7 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom'
 import { RoutePaths } from '@/enums'
 import { useNestedRoutes } from '@/hooks'
 
-import { EmailVerification, FillRequestForm } from './pages'
+import { EmailVerification, FillRequest } from './pages'
 
 export default function AcceptInvitation() {
   const location = useLocation()
@@ -25,7 +25,7 @@ export default function AcceptInvitation() {
     },
     {
       path: RoutePaths.AcceptInvitationFillRequest,
-      element: <FillRequestForm />,
+      element: <FillRequest />,
     },
     {
       path: '*',

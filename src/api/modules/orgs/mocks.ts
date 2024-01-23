@@ -19,14 +19,14 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
           'https://ipfs.rarimo.com/ipfs/QmcMsGMDZKqPByB6h4edZaWHj64q9tbvSdxdLVZX56mGUc',
         credential_subject: {
           id: '3a798290-caf1-496a-a7e5-4db32551b13d',
-          type: 'KYCAgeCredential',
-          EmployeePosition: '1704810332',
+          type: 'EmployeePosition',
+          position: '',
           groupID: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
         },
         type: '',
         expiration: '',
         mt_proof: true,
-        signature_proof: false,
+        signature_proof: true,
       },
     ],
     status: {
