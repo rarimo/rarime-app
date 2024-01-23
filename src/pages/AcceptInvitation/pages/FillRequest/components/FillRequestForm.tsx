@@ -1,18 +1,13 @@
 import { FormControl, Stack, StackProps } from '@mui/material'
-import lowerCase from 'lodash/lowerCase'
-import upperFirst from 'lodash/upperFirst'
+import startCase from 'lodash/startCase'
 import { HTMLAttributes, useCallback } from 'react'
-import { useFieldArray } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 
 import { CredentialRequest, fillOrgGroupRequest, OrgGroupRequest } from '@/api/modules/orgs'
 import { parsedCredentialSchemaProperty } from '@/api/modules/zkp'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { UiButton, UiTextField } from '@/ui'
-
-enum FieldNames {
-  CredentialRequests = 'credential-requests',
-}
 
 type Props = StackProps & {
   formProps?: HTMLAttributes<HTMLFormElement>
@@ -28,21 +23,36 @@ export default function RequestForm({
   onRequestFilled,
   ...rest
 }: Props) {
-  const { formState, isFormDisabled, handleSubmit, disableForm, enableForm, register, control } =
-    useForm(
-      {
-        [FieldNames.CredentialRequests]: credentialFields?.map(field => ({
-          ...field,
-          value: field.value || '',
-        })),
-      },
-      yup => yup.object().shape({}),
-    )
-
-  const { fields: vcFormFields } = useFieldArray({
+  const {
+    formState,
+    isFormDisabled,
+    handleSubmit,
+    disableForm,
+    enableForm,
     control,
-    name: FieldNames.CredentialRequests,
-  })
+    getErrorMessage,
+  } = useForm(
+    {
+      ...credentialFields?.reduce(
+        (acc, field) => ({
+          ...acc,
+          [field.key]: field.value || '',
+        }),
+        {} as Record<string, string>,
+      ),
+    },
+    yup =>
+      yup.object().shape({
+        ...orgGroupRequest.group?.rules?.reduce((acc, rule) => {
+          return rule.required
+            ? {
+                ...acc,
+                [rule.name]: yup.string().email().required(),
+              }
+            : acc
+        }, {}),
+      }),
+  )
 
   const submit = useCallback(async () => {
     disableForm()
@@ -59,7 +69,7 @@ export default function RequestForm({
             el => credReq.credential_subject[el.key] !== undefined,
           )?.key
 
-          const value = formState[FieldNames.CredentialRequests].find(el => el.key === key)?.value
+          const value = formState[key!]
 
           return {
             ...credReq,
@@ -82,21 +92,23 @@ export default function RequestForm({
   return (
     <Stack {...rest}>
       <form {...formProps} onSubmit={handleSubmit(submit)}>
-        {vcFormFields.map((field, idx) => {
-          const vcField = credentialFields?.[idx]
-
-          const label = upperFirst(lowerCase(vcField?.key))
-
+        {Object.keys(formState).map((key, idx) => {
           return (
-            <FormControl key={field.id}>
-              <UiTextField
-                key={idx}
-                label={label}
-                // TODO: add error message
-                disabled={isFormDisabled}
-                {...register(`${FieldNames.CredentialRequests}.${idx}.value`)}
-              />
-            </FormControl>
+            <Controller
+              key={idx}
+              name={key}
+              control={control}
+              render={({ field }) => (
+                <FormControl>
+                  <UiTextField
+                    {...field}
+                    label={startCase(key)}
+                    errorMessage={getErrorMessage(key)}
+                    disabled={isFormDisabled}
+                  />
+                </FormControl>
+              )}
+            />
           )
         })}
 
