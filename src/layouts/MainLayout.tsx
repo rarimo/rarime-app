@@ -1,10 +1,10 @@
 import { Stack, useTheme } from '@mui/material'
-import { Outlet } from 'react-router-dom'
+import { PropsWithChildren } from 'react'
 
 import { AppNavbar } from '@/common'
 import { vh } from '@/theme/helpers'
 
-const MainLayout = () => {
+const MainLayout = ({ children }: PropsWithChildren) => {
   const { spacing } = useTheme()
 
   return (
@@ -12,7 +12,7 @@ const MainLayout = () => {
       <AppNavbar />
       <Stack py={8} flex={1} overflow={'hidden auto'}>
         <Stack mx={'auto'} maxWidth={spacing(220)} width={'100%'}>
-          <Outlet />
+          {children}
         </Stack>
       </Stack>
     </Stack>

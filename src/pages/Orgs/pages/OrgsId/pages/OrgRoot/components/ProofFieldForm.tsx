@@ -1,4 +1,4 @@
-import { InputAdornment, Stack } from '@mui/material'
+import { InputAdornment, useTheme } from '@mui/material'
 import startCase from 'lodash/startCase'
 import { useCallback, useMemo, useState } from 'react'
 
@@ -14,8 +14,10 @@ interface Props {
   proof: Proof
 }
 
-export default function ProofField({ proof }: Props) {
+export default function ProofFieldForm({ proof }: Props) {
+  const { palette } = useTheme()
   const [value, setValue] = useState<string | undefined>('')
+
   const {
     data: parsedSchema,
     isLoading: isSchemaLoading,
@@ -49,6 +51,18 @@ export default function ProofField({ proof }: Props) {
     loadOnMount: false,
   })
 
+  const inputSx = useMemo(() => {
+    return isValid !== undefined
+      ? {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderBottomLeftRadius: '0 !important',
+            borderBottomRightRadius: '0 !important',
+            borderColor: `${palette.action.hover} !important`,
+          },
+        }
+      : undefined
+  }, [isValid, palette.action.hover])
+
   const handleChange = (value: string) => {
     setValue(value)
     reset()
@@ -62,22 +76,28 @@ export default function ProofField({ proof }: Props) {
   ) : isSchemaEmpty || !formattedFieldKey ? (
     <></>
   ) : (
-    <Stack spacing={2}>
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+        reload()
+      }}
+    >
       <UiTextField
         value={value}
         label={formattedFieldKey}
         placeholder={`Enter the ${formattedFieldKey}`}
         InputProps={{
+          sx: inputSx,
           endAdornment: (
             <InputAdornment position='end'>
               <UiButton
+                type='submit'
                 variant='text'
                 color='secondary'
                 size='medium'
                 disabled={!value || isLoading}
-                onClick={reload}
               >
-                {isLoading ? 'Checking...' : 'Check'}
+                {isLoading ? 'Veryfying...' : 'Verify'}
               </UiButton>
             </InputAdornment>
           ),
@@ -86,6 +106,6 @@ export default function ProofField({ proof }: Props) {
       />
 
       {isValid !== undefined && <ProofValidationResult proof={proof} isValid={isValid} />}
-    </Stack>
+    </form>
   )
 }

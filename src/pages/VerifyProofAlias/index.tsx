@@ -17,7 +17,7 @@ export default function VerifyProofAlias() {
     const searchParams = new URLSearchParams()
     searchParams.append('linkId', id)
 
-    const path = generatePath(RoutePaths.OrgsIdCheckProof, { id: orgId })
+    const path = generatePath(RoutePaths.OrgsId, { id: orgId })
     return `${path}?${searchParams.toString()}`
   }, [id, orgId])
 

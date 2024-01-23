@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback } from 'react'
+import { lazy, Suspense, useCallback, useMemo } from 'react'
 import {
   createBrowserRouter,
   LoaderFunctionArgs,
@@ -12,8 +12,8 @@ import { RoutePaths } from '@/enums'
 import { useAuth } from '@/hooks'
 
 import { createDeepPath } from './helpers'
-import AuthLayout from './layouts/AuthLayout'
 import MainLayout from './layouts/MainLayout'
+import PublicLayout from './layouts/PublicLayout'
 
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
@@ -54,43 +54,39 @@ export const AppRoutes = () => {
     [isAuthorized, logout],
   )
 
+  const LayoutComponent = useMemo(() => {
+    return isAuthorized ? MainLayout : PublicLayout
+  }, [isAuthorized])
+
   const router = createBrowserRouter([
     {
       path: RoutePaths.Root,
       element: (
-        <Suspense fallback={<></>}>
-          <Outlet />
-        </Suspense>
+        <LayoutComponent>
+          <Suspense fallback={<></>}>
+            <Outlet />
+          </Suspense>
+        </LayoutComponent>
       ),
       children: [
         {
-          element: <MainLayout />,
-          children: [
-            {
-              path: createDeepPath(RoutePaths.Profiles),
-              loader: authProtectedGuard,
-              element: <Profiles />,
-            },
-            {
-              path: createDeepPath(RoutePaths.Orgs),
-              element: <Orgs />,
-            },
-            {
-              path: createDeepPath(RoutePaths.UiKit),
-              element: <UiKit />,
-            },
-          ],
+          path: createDeepPath(RoutePaths.Profiles),
+          loader: authProtectedGuard,
+          element: <Profiles />,
         },
         {
-          element: <AuthLayout />,
-          children: [
-            {
-              index: true,
-              path: createDeepPath(RoutePaths.SignIn),
-              loader: signInGuard,
-              element: <SignIn />,
-            },
-          ],
+          path: createDeepPath(RoutePaths.Orgs),
+          element: <Orgs />,
+        },
+        {
+          path: createDeepPath(RoutePaths.UiKit),
+          element: <UiKit />,
+        },
+        {
+          index: true,
+          path: createDeepPath(RoutePaths.SignIn),
+          loader: signInGuard,
+          element: <SignIn />,
         },
         {
           path: RoutePaths.VerifyProofAlias,
