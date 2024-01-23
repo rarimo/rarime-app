@@ -12,15 +12,15 @@ interface Props {
 }
 
 export default function ProofValidationResult({ proof, isValid }: Props) {
-  const { palette } = useTheme()
+  const { palette, spacing } = useTheme()
 
   const valueTypographyProps: TypographyProps = useMemo(() => {
     return {
-      variant: 'caption1',
-      color: palette.text.primary,
+      variant: 'subtitle5',
+      color: palette.text.secondary,
       sx: { overflow: 'hidden', textOverflow: 'ellipsis' },
     }
-  }, [palette.text.primary])
+  }, [palette.text.secondary])
 
   const validationDetails = useMemo<{ text: string; value: ReactNode }[]>(() => {
     return [
@@ -51,11 +51,15 @@ export default function ProofValidationResult({ proof, isValid }: Props) {
     <Stack
       px={4}
       py={2}
-      bgcolor={palette.background.default}
+      bgcolor={palette.action.active}
       border={1}
-      borderColor={palette.divider}
-      borderRadius={2}
+      borderColor={palette.action.hover}
+      borderTop={0}
       spacing={2}
+      sx={{
+        borderBottomLeftRadius: spacing(2),
+        borderBottomRightRadius: spacing(2),
+      }}
     >
       {validationDetails.map((detail, index) => (
         <Stack
@@ -65,7 +69,7 @@ export default function ProofValidationResult({ proof, isValid }: Props) {
           alignItems={'center'}
           spacing={2}
         >
-          <Typography variant={'body2'} color={palette.text.secondary}>
+          <Typography variant={'body4'} color={palette.text.secondary}>
             {detail.text}
           </Typography>
           <Divider orientation={'horizontal'} sx={{ flex: 1, borderStyle: 'dashed' }} />

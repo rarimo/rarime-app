@@ -19,7 +19,7 @@ export default function OrgRoot() {
         <Stack direction={'row'} alignItems={'center'} spacing={2} color={palette.text.secondary}>
           <UiIcon componentName={'chevronLeft'} size={5} />
           <Typography variant={'buttonSmall'} color={'inherit'}>
-            Go Back
+            View all organizations
           </Typography>
         </Stack>
       </NavLink>

@@ -53,6 +53,7 @@ export default function SignIn() {
       width={'100%'}
       height={'100%'}
       p={20}
+      mx={'auto'}
       spacing={4}
       textAlign={'center'}
     >

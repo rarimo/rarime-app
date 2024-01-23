@@ -8,6 +8,7 @@ import { default as DarkModeOutlined } from '@mui/icons-material/DarkModeOutline
 import { default as DeleteIcon } from '@mui/icons-material/Delete'
 import { default as ErrorOutlineIcon } from '@mui/icons-material/ErrorOutline'
 import { default as InfoIcon } from '@mui/icons-material/Info'
+import { default as InfoOutlinedIcon } from '@mui/icons-material/InfoOutlined'
 import { default as KeyboardArrowDownOutlinedIcon } from '@mui/icons-material/KeyboardArrowDownOutlined'
 import { default as LightModeOutlined } from '@mui/icons-material/LightModeOutlined'
 import { default as Link } from '@mui/icons-material/Link'
@@ -29,21 +30,22 @@ export enum Icons {
 
 export const ICON_COMPONENTS = {
   accountCircle: AccountCircleIcon,
+  add: Add,
+  addPhotoAlternativeOutlined: AddPhotoAlternateOutlined,
+  check: CheckIcon,
+  chevronLeft: ChevronLeft,
+  close: Close,
+  darkModeOutlined: DarkModeOutlined,
   delete: DeleteIcon,
   errorOutline: ErrorOutlineIcon,
   info: InfoIcon,
-  warningAmber: WarningAmberIcon,
-  check: CheckIcon,
+  infoOutlined: InfoOutlinedIcon,
   keyboardArrowDownOutlined: KeyboardArrowDownOutlinedIcon,
-  work: Work,
-  search: Search,
-  add: Add,
-  addPhotoAlternativeOutlined: AddPhotoAlternateOutlined,
-  verified: Verified,
-  close: Close,
-  chevronLeft: ChevronLeft,
-  link: Link,
-  tune: Tune,
-  darkModeOutlined: DarkModeOutlined,
   lightModeOutlined: LightModeOutlined,
+  link: Link,
+  search: Search,
+  tune: Tune,
+  verified: Verified,
+  warningAmber: WarningAmberIcon,
+  work: Work,
 }

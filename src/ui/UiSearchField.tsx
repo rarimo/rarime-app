@@ -7,13 +7,17 @@ import UiIcon from './UiIcon'
 import UiTextField from './UiTextField'
 
 const UiSearchField = forwardRef((props: ComponentProps<typeof UiTextField>, ref) => {
-  const { palette } = useTheme()
+  const { palette, spacing } = useTheme()
 
   return (
     <UiTextField
       {...props}
       ref={ref}
       autoComplete='off'
+      sx={{
+        ...props.sx,
+        height: spacing(10),
+      }}
       InputProps={{
         ...props.InputProps,
         startAdornment: (

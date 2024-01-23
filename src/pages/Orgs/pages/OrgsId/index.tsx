@@ -5,7 +5,7 @@ import { useNestedRoutes } from '@/hooks'
 import { OrgDetailsContextProvider } from '@/pages/Orgs/pages/OrgsId/contexts'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 
-import { OrgCheckProof, OrgGroups, OrgRoot } from './pages'
+import { OrgGroups, OrgRoot } from './pages'
 
 function OrgsIdRouter() {
   const { isOrgOwner, org } = useOrgDetails()
@@ -26,10 +26,6 @@ function OrgsIdRouter() {
           })}
         />
       ),
-    },
-    {
-      path: RoutePaths.OrgsIdCheckProof,
-      element: <OrgCheckProof />,
     },
   ])
 }
