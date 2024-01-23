@@ -6,7 +6,7 @@ import { Controller } from 'react-hook-form'
 import { CredentialRequest, fillOrgGroupRequest, OrgGroupRequest } from '@/api/modules/orgs'
 import { parsedCredentialSchemaProperty } from '@/api/modules/zkp'
 import { ErrorHandler } from '@/helpers'
-import { useForm } from '@/hooks'
+import { useForm, useMetamaskZkpSnapContext } from '@/hooks'
 import { UiButton, UiTextField } from '@/ui'
 
 type Props = StackProps & {
@@ -23,6 +23,8 @@ export default function RequestForm({
   onRequestFilled,
   ...rest
 }: Props) {
+  const { userDid } = useMetamaskZkpSnapContext()
+
   const {
     formState,
     isFormDisabled,
@@ -75,6 +77,7 @@ export default function RequestForm({
             ...credReq,
             credential_subject: {
               ...credReq.credential_subject,
+              id: userDid,
               ...(key && value && { [key]: value }),
             },
           } as CredentialRequest
@@ -87,7 +90,15 @@ export default function RequestForm({
     }
 
     enableForm()
-  }, [credentialFields, disableForm, enableForm, formState, onRequestFilled, orgGroupRequest])
+  }, [
+    credentialFields,
+    disableForm,
+    enableForm,
+    formState,
+    onRequestFilled,
+    orgGroupRequest,
+    userDid,
+  ])
 
   return (
     <Stack {...rest}>
