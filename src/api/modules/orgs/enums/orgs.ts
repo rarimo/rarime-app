@@ -13,3 +13,8 @@ export enum OrgsIncludes {
   Organization = 'Organization',
   Owner = 'Owner',
 }
+
+export enum OrgsRequestPage {
+  Limit = 'limit',
+  Cursor = 'cursor',
+}

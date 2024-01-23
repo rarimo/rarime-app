@@ -42,11 +42,11 @@ export const DUMMY_ORG: Organization = {
 }
 
 export const loadOrgs = async (query: OrgsRequestQueryParams) => {
-  const { data } = await api.get<Organization[]>('/v1/orgs', {
+  const { data, meta } = await api.get<Organization[]>('/v1/orgs', {
     query,
   })
 
-  return data
+  return { data, meta }
 }
 
 export const loadOrgsAmount = async () => {

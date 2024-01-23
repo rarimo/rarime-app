@@ -1,4 +1,4 @@
-import type { OrgsIncludes, OrgsRequestFilters, OrgsStatuses } from '@/api'
+import type { OrgsIncludes, OrgsRequestFilters, OrgsRequestPage, OrgsStatuses } from '@/api'
 
 export type OrgMetadata = {
   logoUrl: string
@@ -49,10 +49,16 @@ export type OrgsRequestFiltersMap = {
   [OrgsRequestFilters.Status]?: OrgsStatuses
 }
 
+export type OrgsRequestPageMap = {
+  [OrgsRequestPage.Limit]: number
+  [OrgsRequestPage.Cursor]: string
+}
+
 export type OrgsRequestQueryParams = {
   include?: OrgsIncludes
   filter?: OrgsRequestFiltersMap
-  // TODO: page, limit, sort, ...etc
+  page?: OrgsRequestPageMap
+  // TODO: sort, ...etc
 }
 
 export type OrgVerificationCode = {
