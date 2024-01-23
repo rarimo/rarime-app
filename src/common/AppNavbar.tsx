@@ -18,7 +18,8 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
 
   const isRouteActive = useMemo(() => {
     const locationRoot = location.pathname.split('/')[1]
-    return to.includes(locationRoot)
+
+    return to.split('/').includes(locationRoot)
   }, [location.pathname, to])
 
   return (
