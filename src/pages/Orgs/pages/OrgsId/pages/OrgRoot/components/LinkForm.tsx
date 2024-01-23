@@ -19,7 +19,7 @@ export default function LinkForm({ isLoading, onLinkIdChange }: Props) {
 
     try {
       const url = new URL(linkOrLinkId)
-      return url.pathname.split('/').pop() ?? ''
+      return url.pathname.split('/').pop() || ''
     } catch {
       return linkOrLinkId
     }
