@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { useLinkProofs } from '@/api'
 import { UiIcon, UiTooltip } from '@/ui'
 
-import LinkForm from './LinkForm'
 import ProofFieldForm from './ProofFieldForm'
+import ProofsLinkForm from './ProofsLinkForm'
 
 export default function VerifyProofsBlock() {
   const { palette } = useTheme()
@@ -44,7 +44,7 @@ export default function VerifyProofsBlock() {
         </Typography>
       </Stack>
 
-      <LinkForm isLoading={isLoading} onLinkIdChange={setLinkId} />
+      <ProofsLinkForm isLoading={isLoading} onLinkIdChange={setLinkId} />
 
       {linkId && (
         <>

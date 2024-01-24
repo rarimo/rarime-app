@@ -1,72 +1,45 @@
-import { InputAdornment } from '@mui/material'
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { Stack, Typography } from '@mui/material'
 
-import { UiButton, UiSearchField } from '@/ui'
+import { UiIcon, UiIconButton, UiTextField } from '@/ui'
 
 interface Props {
-  isLoading: boolean
-  onLinkIdChange: (linkId: string) => void
+  id: number | string
 }
 
-export default function LinkForm({ isLoading, onLinkIdChange }: Props) {
-  const [params] = useSearchParams()
-  const [linkOrLinkId, setLinkOrLinkId] = useState(params.get('linkId') ?? '')
-  const [isVerifying, setIsVerifying] = useState(false)
-
-  const linkId = useMemo(() => {
-    if (!isVerifying) return ''
-
-    try {
-      const url = new URL(linkOrLinkId)
-      return url.pathname.split('/').pop() || ''
-    } catch {
-      return linkOrLinkId
-    }
-  }, [linkOrLinkId, isVerifying])
-
-  const handleLinkChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setLinkOrLinkId(e.target.value)
-      setIsVerifying(false)
-    },
-    [setLinkOrLinkId, setIsVerifying],
-  )
-
-  useEffect(() => {
-    onLinkIdChange(linkId)
-  }, [linkId, onLinkIdChange])
+export default function LinkForm({ id }: Props) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+  })
 
   return (
-    <form
-      onSubmit={e => {
-        e.preventDefault()
-        setIsVerifying(true)
+    <Stack
+      ref={setNodeRef}
+      spacing={2}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+      }}
+      sx={{
+        bgcolor: theme => theme.palette.background.paper,
+        position: 'relative',
+        zIndex: isDragging ? 1000 : 0,
       }}
     >
-      <UiSearchField
-        value={linkOrLinkId}
-        size='medium'
-        placeholder={'Enter the Proof Link ID or URL'}
-        sx={{ mt: 2 }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position='end'>
-              <UiButton
-                type='submit'
-                variant='text'
-                color='secondary'
-                size='medium'
-                disabled={!linkOrLinkId || isLoading}
-                sx={{ minWidth: 'auto' }}
-              >
-                {isLoading ? 'Verifying...' : 'Verify'}
-              </UiButton>
-            </InputAdornment>
-          ),
-        }}
-        onChange={handleLinkChange}
-      />
-    </form>
+      <Stack direction='row' justifyContent={'space-between'}>
+        <Typography variant='subtitle4'>Link {id}</Typography>
+        <Stack direction={'row'} spacing={4}>
+          <UiIconButton color='secondary' sx={{ cursor: 'grab' }} {...attributes} {...listeners}>
+            <UiIcon componentName='dragIndicator' size={5} />
+          </UiIconButton>
+          <UiIconButton color='error'>
+            <UiIcon componentName='deleteOutlined' size={5} />
+          </UiIconButton>
+        </Stack>
+      </Stack>
+      <UiTextField size='small' placeholder={'Title'} />
+      <UiTextField size='small' placeholder={'URL'} />
+    </Stack>
   )
 }

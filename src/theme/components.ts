@@ -200,22 +200,38 @@ export const components: Components<Omit<Theme, 'components'>> = {
   },
   MuiIconButton: {
     styleOverrides: {
-      root: ({ theme }) => ({
+      root: {
         padding: 0,
-        color: theme.palette.text.primary,
         transition: Transitions.Default,
-
-        '&[disabled]': {
-          color: theme.palette.text.disabled,
-        },
-
-        '&:not([disabled]):hover': {
+        '&:hover': {
           backgroundColor: 'transparent',
+        },
+      },
+      colorPrimary: ({ theme }) => ({
+        color: theme.palette.text.primary,
+      }),
+      colorSecondary: ({ theme }) => ({
+        color: theme.palette.text.secondary,
+        '&:hover': {
           color: theme.palette.text.primary,
         },
-
-        '&:not([disabled]).active, &:not([disabled]):active': {
-          color: theme.palette.primary.main,
+      }),
+      colorSuccess: ({ theme }) => ({
+        color: theme.palette.success.main,
+        '&:hover': {
+          color: theme.palette.success.dark,
+        },
+      }),
+      colorError: ({ theme }) => ({
+        color: theme.palette.error.main,
+        '&:hover': {
+          color: theme.palette.error.dark,
+        },
+      }),
+      colorWarning: ({ theme }) => ({
+        color: theme.palette.warning.main,
+        '&:hover': {
+          color: theme.palette.warning.dark,
         },
       }),
     },

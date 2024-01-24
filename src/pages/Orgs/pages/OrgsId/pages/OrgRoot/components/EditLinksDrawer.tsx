@@ -1,17 +1,11 @@
-import { DrawerProps, Stack, Typography } from '@mui/material'
-import { FormEvent } from 'react'
+import { DrawerProps, Stack } from '@mui/material'
+import { FormEvent, useState } from 'react'
 
 import { OrgMetadataLink } from '@/api'
-import {
-  UiButton,
-  UiDrawer,
-  UiDrawerActions,
-  UiDrawerContent,
-  UiDrawerTitle,
-  UiIcon,
-  UiIconButton,
-  UiTextField,
-} from '@/ui'
+import VerticalDraggableContext from '@/contexts/vertical-draggable'
+import { UiButton, UiDrawer, UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiIcon } from '@/ui'
+
+import LinkForm from './LinkForm'
 
 interface Props extends DrawerProps {
   links: OrgMetadataLink[]
@@ -19,6 +13,8 @@ interface Props extends DrawerProps {
 }
 
 export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props) {
+  const [items, setItems] = useState([1, 2, 3])
+
   return (
     <UiDrawer
       PaperProps={{
@@ -35,20 +31,12 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
         {links.length ? 'Edit links' : 'Add links'}
       </UiDrawerTitle>
       <UiDrawerContent>
-        <Stack spacing={2}>
-          <Stack direction='row' justifyContent={'space-between'}>
-            <Typography variant='subtitle4'>Link 1</Typography>
-            <Stack direction={'row'} spacing={4}>
-              <UiIconButton color='secondary'>
-                <UiIcon componentName='info' size={5} />
-              </UiIconButton>
-              <UiIconButton color='error'>
-                <UiIcon componentName='delete' size={5} />
-              </UiIconButton>
-            </Stack>
-          </Stack>
-          <UiTextField size='small' placeholder={'Title'} />
-          <UiTextField size='small' placeholder={'URL'} />
+        <Stack spacing={4}>
+          <VerticalDraggableContext items={items} setItems={setItems}>
+            {items.map(id => (
+              <LinkForm key={id} id={id} />
+            ))}
+          </VerticalDraggableContext>
         </Stack>
 
         <UiButton
