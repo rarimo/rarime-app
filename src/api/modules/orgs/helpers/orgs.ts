@@ -102,10 +102,12 @@ export const loadOrgs = async (query: OrgsRequestQueryParams) => {
   return data
 }
 
-export const loadOrgsAmount = async () => {
-  const { data } = await api.get<number>(`${ApiServicePaths.Orgs}/v1/orgs/amount`)
+export const loadOrgsCount = async () => {
+  // TODO: uncomment when API is ready
+  // const { data } = await api.get<number>(`${ApiServicePaths.Orgs}/v1/orgs/count`)
 
-  return data
+  // return data
+  return 4
 }
 
 export const loadOrgById = async (id: string, query: OrgsRequestQueryParams) => {
