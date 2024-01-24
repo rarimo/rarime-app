@@ -2,21 +2,22 @@ import { FormControl, Stack, StackProps } from '@mui/material'
 import startCase from 'lodash/startCase'
 import { HTMLAttributes, useCallback } from 'react'
 import { Controller } from 'react-hook-form'
+import type { ObjectShape } from 'yup'
 
 import { CredentialRequest, fillOrgGroupRequest, OrgGroupRequest } from '@/api/modules/orgs'
-import { parsedCredentialSchemaProperty } from '@/api/modules/zkp'
+import { ParsedCredentialSchemaProperty } from '@/api/modules/zkp'
 import { ErrorHandler } from '@/helpers'
 import { useForm, useMetamaskZkpSnapContext } from '@/hooks'
 import { UiButton, UiTextField } from '@/ui'
 
 type Props = StackProps & {
   formProps?: HTMLAttributes<HTMLFormElement>
-  credentialFields: parsedCredentialSchemaProperty[]
+  credentialFields: ParsedCredentialSchemaProperty[]
   orgGroupRequest: OrgGroupRequest
   onRequestFilled?: () => void
 }
 
-export default function RequestForm({
+export default function FillRequestForm({
   formProps,
   credentialFields,
   orgGroupRequest,
@@ -34,25 +35,19 @@ export default function RequestForm({
     control,
     getErrorMessage,
   } = useForm(
-    {
-      ...credentialFields?.reduce(
-        (acc, field) => ({
-          ...acc,
-          [field.key]: field.value || '',
-        }),
-        {} as Record<string, string>,
-      ),
-    },
+    credentialFields?.reduce((acc, field) => {
+      acc[field.key] = field.value || ''
+      return acc
+    }, {} as Record<string, string>),
     yup =>
       yup.object().shape({
         ...orgGroupRequest.group?.rules?.reduce((acc, rule) => {
-          return rule.required
-            ? {
-                ...acc,
-                [rule.name]: yup.string().email().required(),
-              }
-            : acc
-        }, {}),
+          if (!rule.required) return acc
+
+          acc[rule.name] = yup.string().required()
+
+          return acc
+        }, {} as ObjectShape),
       }),
   )
 

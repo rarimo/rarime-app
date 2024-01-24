@@ -7,7 +7,7 @@ import {
   CredentialSubject,
   JsonLdSchema,
   ParsedCredentialSchema,
-  parsedCredentialSchemaProperty,
+  ParsedCredentialSchemaProperty,
   VCSchema,
 } from '@/api/modules/zkp'
 
@@ -39,7 +39,7 @@ export const loadAndParseCredentialSchema = async (
 
   const propertiesContext = properties?.['@context']?.[0]
 
-  if (!propertiesContext) throw new TypeError('Invalid schema')
+  if (!propertiesContext) throw new TypeError('Invalid jsonld schema')
 
   const [type, vcCredSubject] = Object.entries(
     omit(propertiesContext, '@protected', '@version', 'id', 'type'),
@@ -65,6 +65,6 @@ export const loadAndParseCredentialSchema = async (
 
 export const getTargetProperty = (
   parsedCredentialSchema: ParsedCredentialSchema,
-): parsedCredentialSchemaProperty => {
+): ParsedCredentialSchemaProperty => {
   return parsedCredentialSchema.credSubjectProperties.filter(el => el.key !== 'groupID')[0]
 }
