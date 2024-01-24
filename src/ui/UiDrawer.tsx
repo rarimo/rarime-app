@@ -1,7 +1,55 @@
-import { Drawer, type DrawerProps } from '@mui/material'
+import {
+  Box,
+  DialogTitle,
+  Drawer,
+  type DrawerProps,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material'
+import { ReactNode } from 'react'
 
-interface Props extends DrawerProps {}
+import UiIcon from './UiIcon'
+import UiIconButton from './UiIconButton'
 
-export default function UiDrawer({ children, ...rest }: Props) {
-  return <Drawer {...rest}>{children}</Drawer>
+interface Props extends DrawerProps {
+  header: ReactNode
+  actions?: ReactNode
+  // HACK: do not pass event and other props to onClose
+  onClose: () => void
+}
+
+export default function UiDrawer({ header, actions, children, ...rest }: Props) {
+  const { palette } = useTheme()
+
+  return (
+    <Drawer {...rest}>
+      <DialogTitle
+        component={Stack}
+        direction={'row'}
+        justifyContent={'space-between'}
+        width={'100%'}
+        p={5}
+        borderBottom={1}
+        borderColor={palette.divider}
+      >
+        <Typography component={'p'} variant='h6'>
+          {header}
+        </Typography>
+        <UiIconButton
+          aria-label='close'
+          onClick={rest.onClose}
+          sx={{ color: palette.text.secondary }}
+        >
+          <UiIcon componentName='close' size={5} />
+        </UiIconButton>
+      </DialogTitle>
+      <Box p={5} flex={1}>
+        {children}
+      </Box>
+      <Box px={5} py={4} borderTop={1} borderColor={palette.divider}>
+        {actions}
+      </Box>
+    </Drawer>
+  )
 }

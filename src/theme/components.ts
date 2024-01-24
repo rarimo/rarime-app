@@ -63,20 +63,42 @@ export const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }) => ({
         borderRadius: theme.spacing(250),
         transition: Transitions.Default,
+        '&.MuiButton-fullWidth': {
+          width: '100%',
+        },
         '&.MuiButton-sizeLarge': {
           ...typography.buttonLarge,
-          px: theme.spacing(4),
+          padding: theme.spacing(0, 4),
           height: theme.spacing(12),
         },
         '&.MuiButton-sizeMedium': {
           ...typography.buttonMedium,
-          px: theme.spacing(4),
+          padding: theme.spacing(0, 4),
           height: theme.spacing(8),
         },
         '&.MuiButton-sizeSmall': {
           ...typography.buttonSmall,
-          px: theme.spacing(2),
+          padding: theme.spacing(0, 2),
           height: theme.spacing(6),
+        },
+        '&.MuiButton-text': {
+          padding: 0,
+          minWidth: 'unset',
+          '&:hover': {
+            backgroundColor: 'transparent',
+          },
+          '&Primary': {
+            color: theme.palette.text.primary,
+            '&:hover': {
+              color: theme.palette.primary.main,
+            },
+          },
+          '&Secondary': {
+            color: theme.palette.text.secondary,
+            '&:hover': {
+              color: theme.palette.text.primary,
+            },
+          },
         },
       }),
     },
@@ -277,6 +299,33 @@ export const components: Components<Omit<Theme, 'components'>> = {
         color: theme.palette.common.white,
         borderRadius: theme.spacing(2),
         padding: theme.spacing(4),
+      }),
+    },
+  },
+  MuiDrawer: {
+    defaultProps: {
+      anchor: 'right',
+    },
+    styleOverrides: {
+      root: {
+        '& > .MuiBackdrop-root': {
+          backgroundColor: 'rgba(32, 32, 32, 0.50)',
+        },
+      },
+      paper: ({ theme }) => ({
+        width: '100%',
+        maxWidth: theme.spacing(108),
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: 'none',
+        border: 'none',
+        borderRadius: theme.spacing(3),
+      }),
+      paperAnchorRight: ({ theme }) => ({
+        height: 'unset',
+        top: theme.spacing(3),
+        bottom: theme.spacing(3),
+        left: 'unset',
+        right: theme.spacing(3),
       }),
     },
   },

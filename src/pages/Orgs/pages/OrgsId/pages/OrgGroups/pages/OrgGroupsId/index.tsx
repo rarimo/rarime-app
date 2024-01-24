@@ -168,7 +168,7 @@ export default function OrgGroupsId() {
 
       <UiDrawer
         open={isInviteDrawerShown}
-        anchor='right'
+        header={'Invite member'}
         onClose={() => setIsInviteDrawerShown(false)}
       >
         <InviteMemberForm
