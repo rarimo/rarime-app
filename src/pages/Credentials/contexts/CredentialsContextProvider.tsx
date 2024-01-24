@@ -42,6 +42,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
     async () => {
       {
         const [orgGroupRequests, vcs] = await Promise.all([
+          // TODO: replace with new endpoint to get all user's requests by his did
           loadOrgGroupRequests({
             filter: {
               [OrgGroupRequestFilters.UserDid]: userDid,

@@ -3,6 +3,7 @@ import {
   CredentialRequest,
   OrgGroupCreatedRequest,
   OrgGroupRequest,
+  OrgGroupRequestClaim,
   OrgGroupRequestFilters,
   OrgGroupRequestPublishing,
   OrgGroupRequestQueryParams,
@@ -259,4 +260,20 @@ export const buildCredentialRequest = async (
     mt_proof: true,
     signature_proof: true,
   }
+}
+
+export const getOrgGroupRequestClaims = async ({
+  orgId,
+  groupId,
+  reqId,
+}: {
+  orgId: string
+  groupId: string
+  reqId: string
+}): Promise<OrgGroupRequestClaim[]> => {
+  const { data } = await api.get<OrgGroupRequestClaim[]>(
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}/publishing`,
+  )
+
+  return data
 }

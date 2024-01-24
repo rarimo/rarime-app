@@ -66,3 +66,15 @@ export type OrgGroupRequestPublishing = {
   schema_url: string
   status: OrgGroupRequestPublishingStatuses
 }
+
+export type OrgGroupRequestClaim = {
+  id: string
+  type: 'claims'
+  claim_id: string
+  request_id: string
+  schema_url: string
+  status: string
+  created_at: string
+  updated_at: string
+  organization?: Organization
+}

@@ -8,11 +8,10 @@ import {
   loadAndParseCredentialSchema,
   ParsedCredentialSchemaProperty,
 } from '@/api/modules/zkp'
+import { FillRequestForm } from '@/common'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
 import { useLoading } from '@/hooks'
-
-import { FillRequestForm } from './components'
 
 export default function FillRequest() {
   const navigate = useNavigate()

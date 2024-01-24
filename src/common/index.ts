@@ -1,4 +1,5 @@
 export { default as AppNavbar } from './AppNavbar'
+export { default as FillRequestForm } from './FillRequestForm'
 export { default as PageListFilters } from './PageListFilters'
 export { default as PageTitles } from './PageTitles'
 export { default as VCGroupOverviewCard } from './VCGroupOverviewCard'
