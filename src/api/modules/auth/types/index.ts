@@ -10,3 +10,16 @@ export type AuthTokensGroup = {
     tokenType: 'access'
   }
 }
+
+export type InvitationDetails = {
+  group_id: string
+  invite_email_id: string
+  org_id: string
+  otp: string
+}
+
+export type FillRequestDetails = {
+  orgId: string
+  groupId: string
+  reqId: string
+}
