@@ -1,7 +1,11 @@
 import { Stack, StackProps } from '@mui/material'
 import { useMemo } from 'react'
 
-import { loadOrgGroupReqMetadataById, OrgGroupRequest, OrgGroupVCsMetadata } from '@/api'
+import {
+  loadOrgGroupReqMetadataById,
+  OrgGroupRequest,
+  OrgGroupVCsMetadata,
+} from '@/api/modules/orgs'
 import { VCGroupOverviewCard } from '@/common'
 import { useLoading } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'

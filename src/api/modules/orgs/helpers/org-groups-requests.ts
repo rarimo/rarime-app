@@ -1,5 +1,5 @@
+import { api } from '@/api/clients'
 import {
-  api,
   CredentialRequest,
   OrgGroupCreatedRequest,
   OrgGroupRequest,
@@ -8,7 +8,7 @@ import {
   OrgGroupRequestQueryParams,
   OrgGroupVCsMetadata,
   OrgUserRoles,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { DUMMY_ORG_GROUP_REQUESTS } from '@/api/modules/orgs/mocks'
 import { getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { ApiServicePaths } from '@/enums/api'

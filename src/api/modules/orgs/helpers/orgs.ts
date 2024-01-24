@@ -1,12 +1,12 @@
+import { api } from '@/api/clients'
 import {
-  api,
   type Organization,
   type OrganizationCreate,
   type OrgsRequestQueryParams,
   OrgsStatuses,
   type OrgUser,
   type OrgVerificationCode,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { ApiServicePaths } from '@/enums/api'
 
 export const DUMMY_ORGS: Organization[] = [

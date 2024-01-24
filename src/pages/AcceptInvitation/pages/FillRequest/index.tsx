@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { loadOrgGroupRequestById, OrgGroupRequest } from '@/api'
 import { parseFillRequestDetailsSearchParams } from '@/api/modules/auth'
+import { loadOrgGroupRequestById, OrgGroupRequest } from '@/api/modules/orgs'
 import {
   getTargetProperty,
   loadAndParseCredentialSchema,

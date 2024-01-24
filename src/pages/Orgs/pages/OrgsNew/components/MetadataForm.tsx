@@ -2,7 +2,7 @@ import { FormControl, Stack, StackProps } from '@mui/material'
 import { HTMLAttributes, useCallback } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { createOrg, Organization } from '@/api'
+import { createOrg, Organization } from '@/api/modules/orgs'
 import { ErrorHandler } from '@/helpers'
 import { useForm, useMetamaskZkpSnapContext } from '@/hooks'
 import { UiButton, UiImageUploader, UiTextField } from '@/ui'

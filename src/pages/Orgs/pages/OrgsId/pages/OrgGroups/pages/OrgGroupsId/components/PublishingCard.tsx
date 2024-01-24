@@ -6,7 +6,7 @@ import {
   OrgGroupRequest,
   OrgGroupRequestPublishing,
   OrgGroupRequestPublishingStatuses,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { useLoading } from '@/hooks'
 
 import ApprovedCard from './ApprovedCard'

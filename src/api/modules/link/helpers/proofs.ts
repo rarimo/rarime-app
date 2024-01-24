@@ -1,4 +1,5 @@
-import { api, type Proof, type ProofLink } from '@/api'
+import { api } from '@/api/clients'
+import { type Proof, type ProofLink } from '@/api/modules/link'
 import { ApiServicePaths } from '@/enums/api'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

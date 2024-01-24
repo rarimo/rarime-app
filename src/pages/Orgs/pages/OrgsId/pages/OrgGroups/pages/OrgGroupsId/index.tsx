@@ -8,7 +8,7 @@ import {
   OrgGroupRequestFilters,
   OrgGroupRequestFiltersMap,
   OrgGroupRequestStatuses,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { PageListFilters, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useLoading, useNestedRoutes } from '@/hooks'

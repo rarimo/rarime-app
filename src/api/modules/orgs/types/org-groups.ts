@@ -1,4 +1,4 @@
-import { OrgGroupIncludes } from '@/api'
+import { OrgGroupIncludes } from '@/api/modules/orgs'
 
 export type OrgGroupMetadata = {
   name: string

@@ -4,7 +4,7 @@ import {
   OrgGroupRequest,
   OrgGroupRequestStatuses,
   OrgsStatuses,
-} from '@/api'
+} from '@/api/modules/orgs'
 
 export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
   {

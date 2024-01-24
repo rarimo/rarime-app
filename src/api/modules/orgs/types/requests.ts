@@ -5,7 +5,7 @@ import {
   OrgGroupRequestIncludes,
   OrgGroupRequestPublishingStatuses,
   OrgGroupRequestStatuses,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { CredentialSubject } from '@/api/modules/zkp'
 
 export type CredentialRequest = {

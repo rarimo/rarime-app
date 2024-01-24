@@ -2,7 +2,7 @@ import { Divider, FormControl, Stack, StackProps, Typography } from '@mui/materi
 import { HTMLAttributes, useCallback } from 'react'
 import { Controller, useFieldArray } from 'react-hook-form'
 
-import { createOrgGroup, OrgGroup, OrgGroupRule } from '@/api'
+import { createOrgGroup, OrgGroup, OrgGroupRule } from '@/api/modules/orgs'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'

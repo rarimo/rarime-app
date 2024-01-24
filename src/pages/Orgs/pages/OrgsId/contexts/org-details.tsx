@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useMemo } from 'react'
 import { generatePath, useParams } from 'react-router-dom'
 
-import { type Organization, OrgGroup, useOrg } from '@/api'
+import { type Organization, OrgGroup, useOrg } from '@/api/modules/orgs'
 import { useOrgGroups } from '@/api/modules/orgs/hooks/org-groups'
 import { RoutePaths } from '@/enums'
 import { UiNavTabs } from '@/ui'

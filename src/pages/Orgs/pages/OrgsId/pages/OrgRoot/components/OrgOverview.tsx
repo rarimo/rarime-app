@@ -1,6 +1,6 @@
 import { Avatar, Stack, Typography, useTheme } from '@mui/material'
 
-import { OrgsStatuses } from '@/api'
+import { OrgsStatuses } from '@/api/modules/orgs'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiIcon } from '@/ui'
 

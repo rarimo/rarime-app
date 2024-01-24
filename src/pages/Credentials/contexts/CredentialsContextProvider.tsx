@@ -1,13 +1,13 @@
 import { CircularProgress } from '@mui/material'
 import { W3CCredential } from '@rarimo/rarime-connector'
-import { createContext, PropsWithChildren, useCallback, useContext } from 'react'
+import { createContext, PropsWithChildren, useContext } from 'react'
 
 import {
   loadOrgGroupRequests,
   OrgGroupRequest,
   OrgGroupRequestFilters,
   OrgGroupRequestStatuses,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { useLoading, useMetamaskZkpSnapContext } from '@/hooks'
 
 type CredentialsContextValue = {
@@ -27,26 +27,6 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
 
   const { userDid, getCredentials } = useMetamaskZkpSnapContext()
 
-  const loadCredentialsAndRequests = useCallback(async (): Promise<{
-    orgGroupRequests: OrgGroupRequest[]
-    vcs: W3CCredential[]
-  }> => {
-    const [orgGroupRequests, vcs] = await Promise.all([
-      loadOrgGroupRequests({
-        filter: {
-          [OrgGroupRequestFilters.UserDid]: userDid,
-          [OrgGroupRequestFilters.Status]: [
-            OrgGroupRequestStatuses.Submitted,
-            OrgGroupRequestStatuses.Created,
-          ],
-        },
-      }),
-      getCredentials(),
-    ])
-
-    return { orgGroupRequests, vcs }
-  }, [getCredentials, userDid])
-
   const {
     data: { orgGroupRequests, vcs },
     isLoading,
@@ -59,10 +39,29 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
       orgGroupRequests: [],
       vcs: [],
     },
-    loadCredentialsAndRequests,
+    async () => {
+      {
+        const [orgGroupRequests, vcs] = await Promise.all([
+          loadOrgGroupRequests({
+            filter: {
+              [OrgGroupRequestFilters.UserDid]: userDid,
+              [OrgGroupRequestFilters.Status]: [
+                OrgGroupRequestStatuses.Submitted,
+                OrgGroupRequestStatuses.Created,
+              ],
+            },
+          }),
+          getCredentials(),
+        ])
+
+        // TODO: load metadata and group them with VCs
+
+        return { orgGroupRequests, vcs }
+      }
+    },
     {
       loadOnMount: !!userDid,
-      loadArgs: [userDid],
+      loadArgs: [getCredentials, userDid],
     },
   )
 
