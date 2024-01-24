@@ -123,9 +123,9 @@ export type CredentialSubject = {
   groupID: string // uuid
 } & Record<string, string>
 
-export type parsedCredentialSchemaProperty = { key: string; type: string; value: string }
+export type ParsedCredentialSchemaProperty = { key: string; type: string; value: string }
 
 export type ParsedCredentialSchema = {
   type: string
-  credSubjectProperties: parsedCredentialSchemaProperty[]
+  credSubjectProperties: ParsedCredentialSchemaProperty[]
 }

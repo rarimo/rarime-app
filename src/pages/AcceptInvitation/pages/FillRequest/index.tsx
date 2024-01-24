@@ -6,7 +6,7 @@ import { parseFillRequestDetailsSearchParams } from '@/api/modules/auth'
 import {
   getTargetProperty,
   loadAndParseCredentialSchema,
-  parsedCredentialSchemaProperty,
+  ParsedCredentialSchemaProperty,
 } from '@/api/modules/zkp'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
@@ -52,7 +52,7 @@ export default function FillRequest() {
     isLoadingError,
   } = useLoading<{
     orgGroupRequest: OrgGroupRequest
-    vcFields: parsedCredentialSchemaProperty[]
+    vcFields: ParsedCredentialSchemaProperty[]
   }>(
     {
       orgGroupRequest: {} as OrgGroupRequest,

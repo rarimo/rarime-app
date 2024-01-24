@@ -246,8 +246,6 @@ export const buildCredentialRequest = async (
   const parsedScheme = await loadAndParseCredentialSchema(schemeUrl)
   const targetProperty = getTargetProperty(parsedScheme)
 
-  if (!targetProperty) throw new TypeError('Invalid schema')
-
   return {
     credential_schema: schemeUrl,
     credential_subject: {
