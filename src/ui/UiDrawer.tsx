@@ -15,8 +15,6 @@ import UiIconButton from './UiIconButton'
 interface Props extends DrawerProps {
   header: ReactNode
   actions?: ReactNode
-  // HACK: do not pass event and other props to onClose
-  onClose: () => void
 }
 
 export default function UiDrawer({ header, actions, children, ...rest }: Props) {
@@ -38,7 +36,7 @@ export default function UiDrawer({ header, actions, children, ...rest }: Props) 
         </Typography>
         <UiIconButton
           aria-label='close'
-          onClick={rest.onClose}
+          onClick={e => rest.onClose?.(e, 'backdropClick')}
           sx={{ color: palette.text.secondary }}
         >
           <UiIcon componentName='close' size={5} />
