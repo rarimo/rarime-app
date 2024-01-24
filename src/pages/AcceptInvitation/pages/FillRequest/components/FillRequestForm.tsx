@@ -42,9 +42,7 @@ export default function FillRequestForm({
     yup =>
       yup.object().shape({
         ...orgGroupRequest.group?.rules?.reduce((acc, rule) => {
-          if (!rule.required) return acc
-
-          acc[rule.name] = yup.string().required()
+          if (rule.required) acc[rule.name] = yup.string().required()
 
           return acc
         }, {} as ObjectShape),
