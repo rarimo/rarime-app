@@ -60,6 +60,7 @@ export default function LinksBlock() {
         open={isLinkDrawerShown}
         links={links}
         onClose={() => setIsLinkDrawerShown(false)}
+        onLinksUpdate={() => setIsLinkDrawerShown(false)}
       />
     </Stack>
   )

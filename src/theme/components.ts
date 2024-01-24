@@ -137,7 +137,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
           },
         },
         '& .MuiInputBase-sizeSmall': {
-          height: theme.spacing(8),
+          height: theme.spacing(10),
         },
         '& .MuiOutlinedInput-notchedOutline': {
           transition: Transitions.Default,

@@ -41,11 +41,7 @@ export default function UiKitOther() {
           justifyContent={`flex-start`}
         >
           <UiButton onClick={() => setIsDrawerShown(prev => !prev)}>{`Toggle Drawer`}</UiButton>
-          <UiDrawer
-            open={isDrawerShown}
-            header={'Drawer title'}
-            onClose={() => setIsDrawerShown(false)}
-          >
+          <UiDrawer open={isDrawerShown} onClose={() => setIsDrawerShown(false)}>
             <Stack
               direction={'row'}
               flexWrap={`wrap`}
