@@ -13,6 +13,7 @@ import { default as KeyboardArrowDownOutlinedIcon } from '@mui/icons-material/Ke
 import { default as Layers } from '@mui/icons-material/Layers'
 import { default as LightModeOutlined } from '@mui/icons-material/LightModeOutlined'
 import { default as Link } from '@mui/icons-material/Link'
+import { default as Notifications } from '@mui/icons-material/Notifications'
 import { default as Search } from '@mui/icons-material/Search'
 import { default as Tune } from '@mui/icons-material/Tune'
 import { default as Verified } from '@mui/icons-material/Verified'
@@ -50,4 +51,5 @@ export const ICON_COMPONENTS = {
   warningAmber: WarningAmberIcon,
   work: Work,
   layers: Layers,
+  notifications: Notifications,
 }

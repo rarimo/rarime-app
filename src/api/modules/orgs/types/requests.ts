@@ -47,8 +47,8 @@ export type OrgGroupCreatedRequest = {
 }
 
 export type OrgGroupRequestFiltersMap = {
-  [OrgGroupRequestFilters.UserDid]: string
-  [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses[]
+  [OrgGroupRequestFilters.UserDid]?: string
+  [OrgGroupRequestFilters.Status]?: OrgGroupRequestStatuses[]
 }
 
 export type OrgGroupRequestQueryParams = {
