@@ -18,6 +18,7 @@ import PublicLayout from './layouts/PublicLayout'
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
   const Orgs = lazy(() => import('@/pages/Orgs'))
+  const Credentials = lazy(() => import('@/pages/Credentials'))
   const Profiles = lazy(() => import('@/pages/Profiles'))
   const UiKit = lazy(() => import('@/pages/UiKit'))
   const VerifyProofAlias = lazy(() => import('@/pages/VerifyProofAlias'))
@@ -77,6 +78,10 @@ export const AppRoutes = () => {
         {
           path: createDeepPath(RoutePaths.Orgs),
           element: <Orgs />,
+        },
+        {
+          path: createDeepPath(RoutePaths.Credentials),
+          element: <Credentials />,
         },
         {
           path: createDeepPath(RoutePaths.UiKit),

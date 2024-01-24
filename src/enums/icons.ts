@@ -10,6 +10,7 @@ import { default as ErrorOutlineIcon } from '@mui/icons-material/ErrorOutline'
 import { default as InfoIcon } from '@mui/icons-material/Info'
 import { default as InfoOutlinedIcon } from '@mui/icons-material/InfoOutlined'
 import { default as KeyboardArrowDownOutlinedIcon } from '@mui/icons-material/KeyboardArrowDownOutlined'
+import { default as Layers } from '@mui/icons-material/Layers'
 import { default as LightModeOutlined } from '@mui/icons-material/LightModeOutlined'
 import { default as Link } from '@mui/icons-material/Link'
 import { default as Search } from '@mui/icons-material/Search'
@@ -48,4 +49,5 @@ export const ICON_COMPONENTS = {
   verified: Verified,
   warningAmber: WarningAmberIcon,
   work: Work,
+  layers: Layers,
 }
