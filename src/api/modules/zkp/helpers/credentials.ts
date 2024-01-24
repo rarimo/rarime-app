@@ -3,7 +3,13 @@ import type { SaveCredentialsRequestParams } from '@rarimo/rarime-connector'
 import omit from 'lodash/omit'
 
 import { api } from '@/api'
-import { CredentialSubject, VCSchema } from '@/api/modules/zkp'
+import {
+  CredentialSubject,
+  JsonLdSchema,
+  ParsedCredentialSchema,
+  ParsedCredentialSchemaProperty,
+  VCSchema,
+} from '@/api/modules/zkp'
 
 export const getClaimOffer = async (userDid: string, claimTypeUrn: string) => {
   const { data } = await api.get<SaveCredentialsRequestParams>(
@@ -13,23 +19,52 @@ export const getClaimOffer = async (userDid: string, claimTypeUrn: string) => {
   return data
 }
 
+/**
+ * This method simply returns type of schema,
+ * which is usually the element of {@link W3CCredential.type}
+ *
+ * and credentialSubject properties with their types and values (optional)
+ * @param schemaUrl
+ * @param credentialSubject
+ */
 export const loadAndParseCredentialSchema = async (
   schemaUrl: string,
   credentialSubject?: CredentialSubject,
-): Promise<{
-  key: string
-  type: string
-  value: string
-}> => {
-  const { data } = await fetcher.get<VCSchema>(schemaUrl)
+): Promise<ParsedCredentialSchema> => {
+  const { data: schema } = await fetcher.get<VCSchema>(schemaUrl)
 
-  const [key, { type }] = Object.entries(
-    omit(data?.properties.credentialSubject.properties, 'id'),
+  if (!schema?.$metadata.uris.jsonLdContext) throw new TypeError('Invalid schema')
+
+  const { data: properties } = await fetcher.get<JsonLdSchema>(schema.$metadata.uris.jsonLdContext)
+
+  const propertiesContext = properties?.['@context']?.[0]
+
+  if (!propertiesContext) throw new TypeError('Invalid jsonld schema')
+
+  const [type, vcCredSubject] = Object.entries(
+    omit(propertiesContext, '@protected', '@version', 'id', 'type'),
   )[0]
 
+  const vcCredSubjectProperties = Object.entries(
+    omit(vcCredSubject?.['@context'], '@propagate', '@protected', 'polygon-vocab', 'xsd'),
+  )
+
+  const credSubjectProperties = vcCredSubjectProperties.map(([key, value]) => {
+    return {
+      key,
+      type: value?.['@type'],
+      value: credentialSubject?.[key] ?? '',
+    }
+  })
+
   return {
-    key,
     type,
-    value: credentialSubject?.[key] ?? '',
+    credSubjectProperties,
   }
+}
+
+export const getTargetProperty = (
+  parsedCredentialSchema: ParsedCredentialSchema,
+): ParsedCredentialSchemaProperty => {
+  return parsedCredentialSchema.credSubjectProperties.filter(el => el.key !== 'groupID')[0]
 }
