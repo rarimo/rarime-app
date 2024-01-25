@@ -4,6 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 
 import { ProfileMenu, UserAvatar } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
+import { useMetamaskZkpSnapContext } from '@/hooks'
 import { uiStore, useUiState } from '@/store'
 import { Transitions } from '@/theme/constants'
 import { UiIcon, UiIconButton } from '@/ui'
@@ -48,7 +49,8 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
 const AppNavbar = () => {
   const { palette } = useTheme()
   const { paletteMode } = useUiState()
-  const [anchorEl, setAnchorEl] = useState<null | EventTarget | undefined>(null)
+  const { userDid } = useMetamaskZkpSnapContext()
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const navbarItems = useMemo(
     () => [
@@ -62,13 +64,6 @@ const AppNavbar = () => {
   const togglePaletteMode = useCallback(() => {
     uiStore.setPaletteMode(paletteMode === 'dark' ? 'light' : 'dark')
   }, [paletteMode])
-
-  const openProfileMenu = (event: Event | undefined) => {
-    setAnchorEl(event?.target)
-  }
-  const closeProfileMenu = () => {
-    setAnchorEl(null)
-  }
 
   return (
     <Stack
@@ -100,9 +95,9 @@ const AppNavbar = () => {
             size={5}
           />
         </UiIconButton>
-        <ProfileMenu anchorEl={anchorEl as HTMLElement} handleClose={closeProfileMenu} />
-        <UiIconButton onClick={() => openProfileMenu(event)}>
-          <UserAvatar />
+        <ProfileMenu anchorEl={anchorEl} handleClose={() => setAnchorEl(null)} />
+        <UiIconButton onClick={event => setAnchorEl(event.currentTarget)}>
+          <UserAvatar userDid={userDid} />
         </UiIconButton>
       </Stack>
     </Stack>

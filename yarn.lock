@@ -3919,7 +3919,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"copy-to-clipboard@npm:^3.3.1":
+"copy-to-clipboard@npm:^3.3.1, copy-to-clipboard@npm:^3.3.3":
   version: 3.3.3
   resolution: "copy-to-clipboard@npm:3.3.3"
   dependencies:
@@ -8814,6 +8814,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^6.10.0"
     "@vitejs/plugin-react-swc": "npm:^3.5.0"
     "@walletconnect/modal": "npm:^2.6.2"
+    copy-to-clipboard: "npm:^3.3.3"
     dotenv: "npm:^16.3.1"
     dotenv-cli: "npm:^7.2.1"
     esbuild: "npm:^0.19.8"

@@ -1,10 +1,10 @@
-import { Logout, OpenInNew, QrCode } from '@mui/icons-material'
 import { default as AccountCircleIcon } from '@mui/icons-material/AccountCircle'
 import { default as Add } from '@mui/icons-material/Add'
 import { default as AddPhotoAlternateOutlined } from '@mui/icons-material/AddPhotoAlternateOutlined'
 import { default as CheckIcon } from '@mui/icons-material/Check'
 import { default as ChevronLeft } from '@mui/icons-material/ChevronLeft'
 import { default as Close } from '@mui/icons-material/Close'
+import { default as ContentCopy } from '@mui/icons-material/ContentCopy'
 import { default as DarkModeOutlined } from '@mui/icons-material/DarkModeOutlined'
 import { default as DeleteIcon } from '@mui/icons-material/Delete'
 import { default as ErrorOutlineIcon } from '@mui/icons-material/ErrorOutline'
@@ -13,6 +13,9 @@ import { default as InfoOutlinedIcon } from '@mui/icons-material/InfoOutlined'
 import { default as KeyboardArrowDownOutlinedIcon } from '@mui/icons-material/KeyboardArrowDownOutlined'
 import { default as LightModeOutlined } from '@mui/icons-material/LightModeOutlined'
 import { default as Link } from '@mui/icons-material/Link'
+import { default as Logout } from '@mui/icons-material/Logout'
+import { default as OpenInNew } from '@mui/icons-material/OpenInNew'
+import { default as QrCode } from '@mui/icons-material/QrCode'
 import { default as Search } from '@mui/icons-material/Search'
 import { default as Tune } from '@mui/icons-material/Tune'
 import { default as Verified } from '@mui/icons-material/Verified'
@@ -35,6 +38,7 @@ export const ICON_COMPONENTS = {
   addPhotoAlternativeOutlined: AddPhotoAlternateOutlined,
   check: CheckIcon,
   chevronLeft: ChevronLeft,
+  contentCopy: ContentCopy,
   close: Close,
   darkModeOutlined: DarkModeOutlined,
   delete: DeleteIcon,

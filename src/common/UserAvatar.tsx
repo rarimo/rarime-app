@@ -1,14 +1,16 @@
-import { Avatar } from '@mui/material'
+import { Avatar, AvatarProps } from '@mui/material'
 import jdenticon from 'jdenticon/standalone'
 import { useMemo } from 'react'
 
-import { useMetamaskZkpSnapContext } from '@/hooks'
+interface UserAvatarProps extends AvatarProps {
+  userDid: string
+  size?: number
+}
 
-const UserAvatar = ({ ...rest }) => {
-  const { userDid } = useMetamaskZkpSnapContext()
+const UserAvatar = ({ userDid, size = 48, ...rest }: UserAvatarProps) => {
   const userAvatar = useMemo(() => {
-    return jdenticon.toSvg(userDid, 48)
-  }, [userDid])
+    return jdenticon.toSvg(userDid, Number(size))
+  }, [size, userDid])
 
   return <Avatar {...rest} src={`data:image/svg+xml;utf8,${encodeURIComponent(userAvatar)}`} />
 }

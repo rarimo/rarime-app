@@ -8,12 +8,14 @@ type AuthState = {
     accessToken: string
     refreshToken: string
   }[]
+  isConnected: boolean
 }
 
 const [authStore, useAuthState] = createStore(
   'auth',
   {
     tokens: [],
+    isConnected: false,
   } as AuthState,
   state => ({
     addTokensGroup: (authTokensGroup: AuthTokensGroup, orgId: string, groupId: string) => {
@@ -26,6 +28,9 @@ const [authStore, useAuthState] = createStore(
           refreshToken: authTokensGroup.refreshToken.token,
         },
       ]
+    },
+    setIsConnected: (value: boolean) => {
+      state.isConnected = value
     },
   }),
 )

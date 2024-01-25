@@ -1,118 +1,108 @@
 import { config } from '@config'
-import {
-  Divider,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Stack,
-  Tooltip,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Divider, ListItemIcon, Menu, MenuItem, Stack, Typography, useTheme } from '@mui/material'
+import copy from 'copy-to-clipboard'
 import { useMemo, useState } from 'react'
-import { redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { UserAvatar } from '@/common'
-import { BusEvents, RoutePaths } from '@/enums'
+import { BusEvents } from '@/enums'
 import { bus } from '@/helpers'
 import { useAuth, useMetamaskZkpSnapContext } from '@/hooks'
-import { UiIcon } from '@/ui'
+import { UiIcon, UiIconButton, UiTooltip } from '@/ui'
 
 interface ProfileMenuProps {
-  anchorEl?: null | HTMLElement | undefined
+  anchorEl?: HTMLElement | null
   handleClose: () => void
 }
 
-const MAX_LENGTH_DID = 12
+const MAX_LENGTH_FORMATTED_DID = 12
+
+const MenuItemStyles = { py: 2.5, px: 4 }
 
 export default function ProfileMenu({ anchorEl, handleClose }: ProfileMenuProps) {
   const [isCopied, setIsCopied] = useState(false)
-
-  const open = Boolean(anchorEl)
   const { palette, spacing, shadows } = useTheme()
   const { userDid } = useMetamaskZkpSnapContext()
   const { logout } = useAuth()
 
-  let timeout: NodeJS.Timeout
-
   const copyToClipboard = async () => {
     try {
-      clearTimeout(timeout)
-      await navigator.clipboard.writeText(`${userDid}`)
+      copy(userDid)
       setIsCopied(true)
-      timeout = setTimeout(() => {
+      setTimeout(() => {
         setIsCopied(false)
-      }, 3000)
+      }, 2000)
     } catch (e) {
-      bus.emit(BusEvents['error'], 'Not copied, pleas try again')
+      bus.emit(BusEvents.error, 'Not copied, pleas try again')
     }
-  }
-
-  const redirectToSupport = () => {
-    window.open(config.SUPPORT_LINK, '_blank', 'noopener noreferrer')
   }
 
   const logOut = async () => {
     await logout()
-    redirect(RoutePaths.SignIn)
   }
 
-  const userDidLabel = useMemo(() => {
-    if (userDid.length > MAX_LENGTH_DID) {
-      return userDid.substring(0, 8) + '...' + userDid.substring(userDid.length - 4)
-    }
-    return userDid
-  }, [userDid])
+  const formatedDidLabel = useMemo(
+    () =>
+      userDid.length > MAX_LENGTH_FORMATTED_DID
+        ? userDid.slice(0, 8) + '...' + userDid.slice(-4)
+        : userDid,
+    [userDid],
+  )
 
   return (
     <Menu
       anchorEl={anchorEl}
-      id='account-menu'
-      open={open}
+      id='profile-menu'
+      open={!!anchorEl}
       onClose={handleClose}
       anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
       transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       MenuListProps={{
         sx: {
-          width: spacing(60.5),
+          width: spacing(60),
           border: 1,
           borderColor: palette.action.hover,
-          borderRadius: spacing(2),
+          borderRadius: 2,
           boxShadow: shadows[0],
           pt: 0,
         },
       }}
     >
-      <Stack direction={'column'} p={spacing(4)} alignItems={'center'}>
-        <UserAvatar sx={{ width: spacing(12), height: spacing(12) }} />
-        <Tooltip title={'Copied'} open={isCopied} onClose={handleClose}>
+      <Stack direction={'column'} p={4} alignItems={'center'}>
+        <UserAvatar sx={{ width: spacing(12), height: spacing(12) }} userDid={userDid} />
+        <Stack direction={'row'} mt={3}>
           <Typography
             variant={'subtitle4'}
             overflow={'hidden'}
             textOverflow={'ellipsis'}
             maxWidth={spacing(30)}
-            mt={spacing(3)}
-            sx={{ cursor: 'pointer' }}
-            onClick={copyToClipboard}
           >
-            {userDidLabel}
+            {formatedDidLabel}
           </Typography>
-        </Tooltip>
+          <UiTooltip title={'Copied'} open={isCopied} onClose={handleClose}>
+            <UiIconButton onClick={copyToClipboard} sx={{ ml: 2 }}>
+              <UiIcon componentName={'contentCopy'} size={4} />
+            </UiIconButton>
+          </UiTooltip>
+        </Stack>
       </Stack>
-      <Divider sx={{ py: spacing(2) }} />
-      <MenuItem onClick={handleClose} sx={{ py: spacing(2.5), px: spacing(4) }}>
+      <Divider sx={{ py: 2 }} />
+      {/*TODO: Add handler*/}
+      <MenuItem sx={MenuItemStyles}>
         <ListItemIcon>
           <UiIcon componentName={'qrCode'} size={5} sx={{ color: palette.text.secondary }} />
         </ListItemIcon>
         <Typography variant={'caption1'}>QR login</Typography>
       </MenuItem>
-      <MenuItem onClick={redirectToSupport} sx={{ py: spacing(2.5), px: spacing(4) }}>
-        <ListItemIcon>
-          <UiIcon componentName={'openInNew'} size={5} sx={{ color: palette.text.secondary }} />
-        </ListItemIcon>
-        <Typography variant={'caption1'}>Help Center</Typography>
+      <MenuItem sx={MenuItemStyles}>
+        <Link to={config.SUPPORT_LINK} target='_blank' rel='noreferrer noopener'>
+          <ListItemIcon>
+            <UiIcon componentName={'openInNew'} size={5} sx={{ color: palette.text.secondary }} />
+          </ListItemIcon>
+          <Typography variant={'caption1'}>Help Center</Typography>
+        </Link>
       </MenuItem>
-      <MenuItem onClick={logOut} sx={{ py: spacing(2.5), px: spacing(4) }}>
+      <MenuItem onClick={logOut} sx={MenuItemStyles}>
         <ListItemIcon>
           <UiIcon componentName={'logOut'} size={5} sx={{ color: palette.error.main }} />
         </ListItemIcon>

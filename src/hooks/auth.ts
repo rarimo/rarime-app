@@ -6,6 +6,7 @@ import { authorizeUser } from '@/api/modules/auth'
 import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp'
 import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
 import { useWeb3Context } from '@/hooks/web3'
+import { authStore } from '@/store'
 
 // TODO: add jwt validations for specific org
 export const useAuth = () => {
@@ -21,25 +22,29 @@ export const useAuth = () => {
     checkSnapStatus,
     createIdentity,
   } = useMetamaskZkpSnapContext()
+  // Todo: isConnected change to jwt. We can simulate a disconnect by removing jwt
+  const { isConnected, setIsConnected } = authStore
 
   const isAuthorized = useMemo(
-    () => Boolean(provider?.isConnected && isSnapInstalled),
-    [isSnapInstalled, provider?.isConnected],
+    () => Boolean(provider?.isConnected && isSnapInstalled && isConnected),
+    [isConnected, isSnapInstalled, provider?.isConnected],
   )
 
   const logout = useCallback(async () => {
     await provider?.disconnect()
     await checkSnapStatus()
-  }, [checkSnapStatus, provider])
+    setIsConnected(false)
+  }, [checkSnapStatus, provider, setIsConnected])
 
   const connectProviders = useCallback(async () => {
     await init(PROVIDERS.Metamask)
     const connector = await connectOrInstallSnap()
 
     await checkSnapStatus()
+    setIsConnected(true)
 
     return createIdentity(connector)
-  }, [checkSnapStatus, connectOrInstallSnap, createIdentity, init])
+  }, [checkSnapStatus, connectOrInstallSnap, createIdentity, init, setIsConnected])
 
   const authorize = useCallback(
     async ({
