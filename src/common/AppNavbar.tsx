@@ -48,6 +48,7 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
 const AppNavbar = () => {
   const { palette } = useTheme()
   const { paletteMode } = useUiState()
+  const [anchorEl, setAnchorEl] = useState<null | EventTarget | undefined>(null)
 
   const navbarItems = useMemo(
     () => [
@@ -62,11 +63,10 @@ const AppNavbar = () => {
     uiStore.setPaletteMode(paletteMode === 'dark' ? 'light' : 'dark')
   }, [paletteMode])
 
-  const [anchorEl, setAnchorEl] = useState<null | EventTarget | undefined>(null)
-  const handleClick = (event: Event | undefined) => {
+  const openProfileMenu = (event: Event | undefined) => {
     setAnchorEl(event?.target)
   }
-  const handleClose = () => {
+  const closeProfileMenu = () => {
     setAnchorEl(null)
   }
 
@@ -101,8 +101,8 @@ const AppNavbar = () => {
           />
         </UiIconButton>
         {/* TODO: add account popup */}
-        <ProfileMenu anchorEl={anchorEl as HTMLElement} handleClose={handleClose} />
-        <UiIconButton onClick={() => handleClick(event)} sx={{ marginBottom: '30px' }}>
+        <ProfileMenu anchorEl={anchorEl as HTMLElement} handleClose={closeProfileMenu} />
+        <UiIconButton onClick={() => openProfileMenu(event)} sx={{ marginBottom: '30px' }}>
           <UserAvatar />
         </UiIconButton>
       </Stack>

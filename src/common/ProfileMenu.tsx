@@ -23,6 +23,8 @@ interface ProfileMenuProps {
   handleClose: () => void
 }
 
+const MAX_LENGTH_DID = 12
+
 export default function ProfileMenu({ anchorEl, handleClose }: ProfileMenuProps) {
   const [isCopied, setIsCopied] = useState(false)
 
@@ -56,9 +58,7 @@ export default function ProfileMenu({ anchorEl, handleClose }: ProfileMenuProps)
   }
 
   const userDidLabel = useMemo(() => {
-    const maxLength = 12
-
-    if (userDid.length > maxLength) {
+    if (userDid.length > MAX_LENGTH_DID) {
       return userDid.substring(0, 8) + '...' + userDid.substring(userDid.length - 4)
     }
     return userDid
