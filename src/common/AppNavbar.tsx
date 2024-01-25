@@ -1,7 +1,8 @@
 import { Divider, Stack, useTheme } from '@mui/material'
-import { ReactNode, useCallback, useMemo } from 'react'
+import { ReactNode, useCallback, useMemo, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
+import { ProfileMenu, UserAvatar } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
 import { uiStore, useUiState } from '@/store'
 import { Transitions } from '@/theme/constants'
@@ -61,6 +62,14 @@ const AppNavbar = () => {
     uiStore.setPaletteMode(paletteMode === 'dark' ? 'light' : 'dark')
   }, [paletteMode])
 
+  const [anchorEl, setAnchorEl] = useState<null | EventTarget | undefined>(null)
+  const handleClick = (event: Event | undefined) => {
+    setAnchorEl(event?.target)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   return (
     <Stack
       justifyContent={'space-between'}
@@ -92,7 +101,10 @@ const AppNavbar = () => {
           />
         </UiIconButton>
         {/* TODO: add account popup */}
-        <UiIcon name={Icons.Metamask} size={10} sx={{ px: 1 }} />
+        <ProfileMenu anchorEl={anchorEl as HTMLElement} handleClose={handleClose} />
+        <UiIconButton onClick={() => handleClick(event)} sx={{ marginBottom: '30px' }}>
+          <UserAvatar />
+        </UiIconButton>
       </Stack>
     </Stack>
   )

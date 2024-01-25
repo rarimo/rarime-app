@@ -3581,6 +3581,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"canvas-renderer@npm:~2.2.0":
+  version: 2.2.1
+  resolution: "canvas-renderer@npm:2.2.1"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 436f2f516723cf2cac03dcb189907b282249cc33446c6bce7760fb3ebd22689b0a4a27b3a3ab077a2c8204bd597a5e923da505520735b00cd839a790e6bdda50
+  languageName: node
+  linkType: hard
+
 "capability@npm:^0.2.5":
   version: 0.2.5
   resolution: "capability@npm:0.2.5"
@@ -6903,6 +6912,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jdenticon@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "jdenticon@npm:3.2.0"
+  dependencies:
+    canvas-renderer: "npm:~2.2.0"
+  bin:
+    jdenticon: bin/jdenticon.js
+  checksum: 441e1ecf4efae01b006825a5b4630958a445d0841e9f84c10957ca3185070c8a8373135ccd2c782935719849ec2865e301d1abde22ab0723150efc8204d239f4
+  languageName: node
+  linkType: hard
+
 "jiti@npm:^1.21.0":
   version: 1.21.0
   resolution: "jiti@npm:1.21.0"
@@ -8808,6 +8828,7 @@ __metadata:
     eslint-plugin-react-i18n: "npm:^1.0.3"
     eslint-plugin-simple-import-sort: "npm:^10.0.0"
     i18next: "npm:^22.4.3"
+    jdenticon: "npm:^3.2.0"
     lodash: "npm:^4.17.21"
     loglevel: "npm:^1.8.1"
     notistack: "npm:^3.0.1"

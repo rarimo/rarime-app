@@ -17,6 +17,7 @@ import { default as Tune } from '@mui/icons-material/Tune'
 import { default as Verified } from '@mui/icons-material/Verified'
 import { default as WarningAmberIcon } from '@mui/icons-material/WarningAmber'
 import { default as Work } from '@mui/icons-material/Work'
+import {Logout, OpenInNew, QrCode} from "@mui/icons-material";
 
 export enum Icons {
   Metamask = 'metamask',
@@ -38,11 +39,14 @@ export const ICON_COMPONENTS = {
   darkModeOutlined: DarkModeOutlined,
   delete: DeleteIcon,
   errorOutline: ErrorOutlineIcon,
+  qrCode: QrCode,
   info: InfoIcon,
   infoOutlined: InfoOutlinedIcon,
   keyboardArrowDownOutlined: KeyboardArrowDownOutlinedIcon,
+  openInNew: OpenInNew,
   lightModeOutlined: LightModeOutlined,
   link: Link,
+  logOut: Logout,
   search: Search,
   tune: Tune,
   verified: Verified,
