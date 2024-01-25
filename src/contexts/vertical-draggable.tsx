@@ -9,16 +9,20 @@ import {
 } from '@dnd-kit/core'
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
-import { Dispatch, PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 
-interface Props<T extends UniqueIdentifier> extends PropsWithChildren {
+type SortableId = UniqueIdentifier | { id: UniqueIdentifier }
+
+interface Props<T extends SortableId> extends PropsWithChildren {
   items: T[]
-  setItems: Dispatch<(items: T[]) => T[]>
+  onItemsChange?: (items: T[]) => void
+  onItemsMove?: (oldIndex: number, newIndex: number) => void
 }
 
-export default function VerticalDraggableContext<T extends UniqueIdentifier>({
+export default function VerticalDraggableContext<T extends SortableId>({
   items,
-  setItems,
+  onItemsMove,
+  onItemsChange,
   children,
 }: Props<T>) {
   const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor))
@@ -32,12 +36,10 @@ export default function VerticalDraggableContext<T extends UniqueIdentifier>({
         if (!over?.id) return
 
         if (active.id !== over.id) {
-          setItems(items => {
-            const oldIndex = items.indexOf(active.id as T)
-            const newIndex = items.indexOf(over.id as T)
-
-            return arrayMove(items, oldIndex, newIndex) as T[]
-          })
+          const oldIndex = items.indexOf(active.id as T)
+          const newIndex = items.indexOf(over.id as T)
+          onItemsMove?.(oldIndex, newIndex)
+          onItemsChange?.(arrayMove(items, oldIndex, newIndex) as T[])
         }
       }}
     >
