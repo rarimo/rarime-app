@@ -36,10 +36,12 @@ export default function VerticalDraggableContext<T extends SortableId>({
         if (!over?.id) return
 
         if (active.id !== over.id) {
-          const oldIndex = items.indexOf(active.id as T)
-          const newIndex = items.indexOf(over.id as T)
+          const itemIds = items.map(item => (typeof item === 'object' ? item.id : item))
+          const oldIndex = itemIds.indexOf(active.id)
+          const newIndex = itemIds.indexOf(over.id)
+
           onItemsMove?.(oldIndex, newIndex)
-          onItemsChange?.(arrayMove(items, oldIndex, newIndex) as T[])
+          onItemsChange?.(arrayMove(items, oldIndex, newIndex))
         }
       }}
     >

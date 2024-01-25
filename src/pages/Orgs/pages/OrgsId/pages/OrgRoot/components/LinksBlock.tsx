@@ -1,5 +1,5 @@
 import { Stack, Typography, useTheme } from '@mui/material'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 import { NoDataViewer } from '@/common'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
@@ -12,10 +12,7 @@ export default function LinksBlock() {
   const { org } = useOrgDetails()
   const { palette } = useTheme()
   const [isLinkDrawerShown, setIsLinkDrawerShown] = useState(false)
-
-  const links = useMemo(() => {
-    return org.metadata.links ?? []
-  }, [org.metadata.links])
+  const [links, setLinks] = useState(org.metadata.links ?? [])
 
   return (
     <Stack
@@ -60,7 +57,10 @@ export default function LinksBlock() {
         open={isLinkDrawerShown}
         links={links}
         onClose={() => setIsLinkDrawerShown(false)}
-        onLinksUpdate={() => setIsLinkDrawerShown(false)}
+        onLinksUpdate={links => {
+          setIsLinkDrawerShown(false)
+          setLinks(links)
+        }}
       />
     </Stack>
   )

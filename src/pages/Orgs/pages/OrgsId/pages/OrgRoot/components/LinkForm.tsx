@@ -1,36 +1,43 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { FormControl, Stack, Typography } from '@mui/material'
-import { Control, Controller, FieldErrors } from 'react-hook-form'
+import { useMemo } from 'react'
+import { Controller, FieldArrayWithId, FieldPath } from 'react-hook-form'
 
+import { OrgMetadataLink } from '@/api'
+import { Form } from '@/hooks'
 import { UiIcon, UiIconButton, UiTextField } from '@/ui'
 
 interface Props {
-  field: {
-    id: string
-    title: string
-    url: string
-  }
-  control: Control<{
-    links: {
-      title: string
-      url: string
-    }[]
-  }>
-  formErrors: FieldErrors<{
-    links: {
-      title: string
-      url: string
-    }[]
-  }>
+  field: FieldArrayWithId<OrgMetadataLink>
+  form: Form<{ links: OrgMetadataLink[] }>
   index: number
   onRemove?: () => void
 }
 
-export default function LinkForm({ field, control, index, formErrors, onRemove }: Props) {
+export default function LinkForm({ field, index, form, onRemove }: Props) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: field.id,
   })
+
+  const formFields = useMemo<
+    {
+      name: FieldPath<{ links: OrgMetadataLink[] }>
+      placeholder: string
+    }[]
+  >(
+    () => [
+      {
+        name: `links.${index}.title`,
+        placeholder: 'Title',
+      },
+      {
+        name: `links.${index}.url`,
+        placeholder: 'URL',
+      },
+    ],
+    [index],
+  )
 
   return (
     <Stack
@@ -41,8 +48,8 @@ export default function LinkForm({ field, control, index, formErrors, onRemove }
         transition,
       }}
       sx={{
-        bgcolor: theme => theme.palette.background.paper,
         position: 'relative',
+        bgcolor: theme => theme.palette.background.paper,
         zIndex: isDragging ? 1000 : 0,
       }}
     >
@@ -58,35 +65,23 @@ export default function LinkForm({ field, control, index, formErrors, onRemove }
         </Stack>
       </Stack>
 
-      <Controller
-        name={`links.${index}.title`}
-        control={control}
-        render={({ field }) => (
-          <FormControl>
-            <UiTextField
-              {...field}
-              size='small'
-              placeholder={'Title'}
-              errorMessage={formErrors.links?.[index]?.title?.message?.toString() ?? ''}
-            />
-          </FormControl>
-        )}
-      />
-
-      <Controller
-        name={`links.${index}.url`}
-        control={control}
-        render={({ field }) => (
-          <FormControl>
-            <UiTextField
-              {...field}
-              size='small'
-              placeholder={'URL'}
-              errorMessage={formErrors.links?.[index]?.url?.message?.toString() ?? ''}
-            />
-          </FormControl>
-        )}
-      />
+      {formFields.map(({ name, placeholder }) => (
+        <Controller
+          key={name}
+          name={name}
+          control={form.control}
+          render={({ field }) => (
+            <FormControl>
+              <UiTextField
+                {...field}
+                size='small'
+                placeholder={placeholder}
+                errorMessage={form.getErrorMessage(name)}
+              />
+            </FormControl>
+          )}
+        />
+      ))}
     </Stack>
   )
 }

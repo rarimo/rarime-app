@@ -13,21 +13,19 @@ import LinkForm from './LinkForm'
 
 interface Props extends DrawerProps {
   links: OrgMetadataLink[]
-  onLinksUpdate?: () => void
+  onLinksUpdate?: (links: OrgMetadataLink[]) => void
 }
 
-const DEFAULT_VALUES = {
-  links: [
-    {
-      title: '',
-      url: '',
-    },
-  ],
+const DEFAULT_LINK_VALUES: OrgMetadataLink = {
+  title: '',
+  url: '',
 }
 
 export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props) {
-  const { handleSubmit, disableForm, enableForm, control, formErrors } = useForm(
-    DEFAULT_VALUES,
+  const form = useForm(
+    {
+      links: links.length ? links : [DEFAULT_LINK_VALUES],
+    },
     yup =>
       yup.object().shape({
         links: yup.array().of(
@@ -41,17 +39,16 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
 
   const { fields, append, remove, move } = useFieldArray({
     name: 'links',
-    control,
+    control: form.control,
   })
 
   const submit = useCallback(async () => {
-    disableForm()
+    form.disableForm()
 
     try {
       // TODO: update links
       await sleep(500)
-      console.log(fields)
-      onLinksUpdate?.()
+      onLinksUpdate?.(fields)
       bus.emit(BusEvents.success, {
         message: 'Links updated',
       })
@@ -59,8 +56,8 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
       ErrorHandler.process(error)
     }
 
-    enableForm()
-  }, [fields, disableForm, enableForm, onLinksUpdate])
+    form.enableForm()
+  }, [fields, form, onLinksUpdate])
 
   return (
     <UiDrawer
@@ -68,7 +65,7 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
         component: 'form',
         onSubmit: (e: FormEvent<HTMLFormElement>) => {
           e.preventDefault()
-          handleSubmit(submit)()
+          form.handleSubmit(submit)()
         },
       }}
       {...rest}
@@ -78,14 +75,19 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
       </UiDrawerTitle>
       <UiDrawerContent>
         <Stack spacing={4}>
-          <VerticalDraggableContext items={fields} onItemsMove={move}>
+          <VerticalDraggableContext
+            items={fields}
+            onItemsMove={(a, b) => {
+              console.log(a, b, fields)
+              move(a, b)
+            }}
+          >
             {fields.map((field, index) => (
               <LinkForm
                 key={field.id}
                 field={field}
-                control={control}
                 index={index}
-                formErrors={formErrors}
+                form={form}
                 onRemove={() => remove(fields.indexOf(field))}
               />
             ))}
