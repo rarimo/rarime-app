@@ -7,7 +7,7 @@ import { loadOrgsAmount, OrgsRequestFilters, OrgsRequestFiltersMap } from '@/api
 import { PageListFilters, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useLoading, useMetamaskZkpSnapContext, useNestedRoutes } from '@/hooks'
-import { UiButton, UiIcon, UiSwitch } from '@/ui'
+import { UiButton } from '@/ui'
 
 import { List } from './components'
 
@@ -55,8 +55,8 @@ export default function OrgsList() {
   })
 
   return (
-    <Stack flex={1} gap={6}>
-      <PageTitles title={t('org-list.title')} subtitle={t('org-list.subtitle')} />
+    <Stack flex={1} spacing={6}>
+      <PageTitles title={t('org-list.title')} />
       <PageListFilters
         tabs={[
           {
@@ -64,7 +64,7 @@ export default function OrgsList() {
             route: RoutePaths.OrgsListAll,
           },
           {
-            label: 'My Organizations',
+            label: 'My',
             route: RoutePaths.OrgsListMy,
           },
         ]}
@@ -77,19 +77,11 @@ export default function OrgsList() {
           }))
         }
         actionBar={
-          <Stack direction='row' gap={4} justifyContent='space-between'>
-            <UiSwitch label='Show Only active' />
-
-            <NavLink to={RoutePaths.OrgsNew}>
-              <UiButton
-                variant='contained'
-                color='primary'
-                startIcon={<UiIcon componentName='add' />}
-              >
-                New Organization
-              </UiButton>
-            </NavLink>
-          </Stack>
+          <NavLink to={RoutePaths.OrgsNew}>
+            <UiButton variant='contained' color='primary' size='medium'>
+              Create
+            </UiButton>
+          </NavLink>
         }
       />
 

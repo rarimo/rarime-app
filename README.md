@@ -1,6 +1,6 @@
-<div align="center"><h1><b>Rarime Dashboard</b></h1></div>
+<div align="center"><h1><b>Rarime App</b></h1></div>
 
-Manage your identity credentials and Soulbound Tokens (SBTs) easily from the Rarime Dashboard.
+Manage your identity credentials and Soulbound Tokens (SBTs) easily from the Rarime App.
 
 ## Getting Started
 

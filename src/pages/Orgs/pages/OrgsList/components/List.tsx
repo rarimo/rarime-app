@@ -47,7 +47,7 @@ export default function List({ filter, ...rest }: Props) {
       ) : (
         <Grid container spacing={6}>
           {orgList.map(org => (
-            <Grid key={org.id} item xs={4}>
+            <Grid key={org.id} item xs={6}>
               <ListCard org={org} />
             </Grid>
           ))}

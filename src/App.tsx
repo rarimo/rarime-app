@@ -1,25 +1,21 @@
 import { CircularProgress, CssBaseline, Stack, ThemeProvider } from '@mui/material'
-import { FC, HTMLAttributes, memo, useCallback, useEffect, useState } from 'react'
+import { FC, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { ErrorHandler } from '@/helpers'
-import {
-  useAuth,
-  useMetamaskZkpSnapContext,
-  useThemeMode,
-  useViewportSizes,
-  useWeb3Context,
-} from '@/hooks'
+import { useAuth, useMetamaskZkpSnapContext, useViewportSizes, useWeb3Context } from '@/hooks'
 
 import { ToastsManager } from './contexts'
 import { AppRoutes } from './routes'
+import { useUiState } from './store'
+import { createTheme } from './theme'
 
 const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
   const [isAppInitialized, setIsAppInitialized] = useState(false)
 
   const { provider, isValidChain } = useWeb3Context()
-  const { theme } = useThemeMode()
   const { checkSnapStatus } = useMetamaskZkpSnapContext()
-  const { authorize } = useAuth()
+  const { paletteMode } = useUiState()
+  const { connectProviders } = useAuth()
 
   useViewportSizes()
 
@@ -30,14 +26,16 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
       const { isMetamaskInstalled, isSnapInstalled } = await checkSnapStatus()
 
       if (isMetamaskInstalled && isSnapInstalled) {
-        await authorize()
+        await connectProviders()
       }
     } catch (error) {
       ErrorHandler.processWithoutFeedback(error)
     }
 
     setIsAppInitialized(true)
-  }, [provider?.address, checkSnapStatus, authorize])
+  }, [provider?.address, checkSnapStatus, connectProviders])
+
+  const theme = useMemo(() => createTheme(paletteMode), [paletteMode])
 
   useEffect(() => {
     init()
@@ -53,7 +51,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
             <AppRoutes />
           ) : (
             <Stack alignItems='center' justifyContent='center' flex={1}>
-              <CircularProgress />
+              <CircularProgress color={'secondary'} />
             </Stack>
           )}
         </div>

@@ -10,8 +10,14 @@ export enum OrgsRequestFilters {
 }
 
 export enum OrgsIncludes {
-  Organization = 'Organization',
-  Owner = 'Owner',
+  Owner = 'owner',
+}
+
+export enum OrgUserRoles {
+  Undefined = '0',
+  Employee = '1',
+  Admin = '2',
+  SuperAdmin = '3',
 }
 
 export enum OrgsRequestPage {

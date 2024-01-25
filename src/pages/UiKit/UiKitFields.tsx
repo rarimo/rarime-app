@@ -1,5 +1,4 @@
 import { InputAdornment, Stack, Typography } from '@mui/material'
-import Grid2 from '@mui/material/Unstable_Grid2'
 import { useState } from 'react'
 
 import { UiCheckbox, UiIcon, UiRadioGroup, UiSelect, UiSwitch, UiTextField } from '@/ui'
@@ -64,7 +63,7 @@ export default function UiKitFields() {
         <UiTextField placeholder={'placeholder'} />
         <UiTextField label={'label'} placeholder={'placeholder'} />
         <UiTextField label={'disabled'} disabled={true} />
-        <UiTextField label={'error'} error helperText={`there is error`} />
+        <UiTextField label={'error'} error errorMessage={`there is error`} />
 
         <UiTextField
           label={'label'}
@@ -181,11 +180,7 @@ export default function UiKitFields() {
 
       <Typography variant={`h6`}>{`Radio group`}</Typography>
       <Typography>{`Radio group value: ${radioGroupValue}`}</Typography>
-      <Grid2 container spacing={2} gap={theme => theme.spacing(2)} justifyContent={`flex-start`}>
-        <Grid2 xs={1}>
-          <UiRadioGroup groupOptions={RADIO_GROUP_OPTIONS} updateValue={setRadioGroupValue} />
-        </Grid2>
-      </Grid2>
+      <UiRadioGroup groupOptions={RADIO_GROUP_OPTIONS} updateValue={setRadioGroupValue} />
 
       <Typography variant={`h6`}>{`Switch Field`}</Typography>
       <Stack

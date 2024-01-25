@@ -1,7 +1,14 @@
-import { Avatar, Input, type InputProps, Stack, type StackProps, Typography } from '@mui/material'
-import { ChangeEvent, forwardRef, useCallback } from 'react'
+import {
+  Avatar,
+  Input,
+  type InputProps,
+  Stack,
+  type StackProps,
+  Typography,
+  useTheme,
+} from '@mui/material'
+import { ChangeEvent, forwardRef, useCallback, useMemo } from 'react'
 
-import { useThemeMode } from '@/hooks'
 import UiIcon from '@/ui/UiIcon'
 
 interface Props extends Omit<InputProps, 'value' | 'onChange'> {
@@ -9,17 +16,18 @@ interface Props extends Omit<InputProps, 'value' | 'onChange'> {
   stackProps?: StackProps
   value?: File
   onChange?: (value: File) => void
+  // TODO: add errorMessage
 }
 
 const AVATAR_SIZE = 19
 
 const UiImageUploader = forwardRef<HTMLInputElement, Props>(
   ({ label, stackProps, value, onChange, ...rest }: Props, ref) => {
-    const { theme } = useThemeMode()
+    const { palette, spacing } = useTheme()
 
     const avatarSize = {
-      width: theme.spacing(AVATAR_SIZE),
-      height: theme.spacing(AVATAR_SIZE),
+      width: spacing(AVATAR_SIZE),
+      height: spacing(AVATAR_SIZE),
     }
 
     const handleChange = useCallback(
@@ -33,11 +41,21 @@ const UiImageUploader = forwardRef<HTMLInputElement, Props>(
       [onChange],
     )
 
+    const valueUrl = useMemo(() => {
+      if (!value) return ''
+
+      try {
+        return URL.createObjectURL(value)
+      } catch (error) {
+        return ''
+      }
+    }, [value])
+
     return (
-      <Stack {...stackProps} position='relative' direction='row' alignItems='center' gap={6}>
-        {(!!value && (
+      <Stack {...stackProps} position='relative' direction='row' alignItems='center' spacing={6}>
+        {(!!valueUrl && (
           <Avatar
-            src={URL.createObjectURL(value)}
+            src={valueUrl}
             sx={{
               ...avatarSize,
             }}
@@ -47,7 +65,7 @@ const UiImageUploader = forwardRef<HTMLInputElement, Props>(
             {...avatarSize}
             justifyContent='center'
             alignItems='center'
-            bgcolor={theme.palette.background.default}
+            bgcolor={palette.background.default}
             borderRadius={'50%'}
           >
             <UiIcon componentName='addPhotoAlternativeOutlined' size={6} />

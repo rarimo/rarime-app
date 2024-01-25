@@ -1,7 +1,8 @@
-import { Stack, Typography, useTheme } from '@mui/material'
+import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { config } from '@/config'
 import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler, metamaskLink } from '@/helpers'
 import { useAuth, useMetamaskZkpSnapContext } from '@/hooks'
@@ -9,22 +10,22 @@ import { UiButton, UiIcon } from '@/ui'
 
 export default function SignIn() {
   const { t } = useTranslation()
-  const { login } = useAuth()
+  const { connectProviders } = useAuth()
   const [isPending, setIsPending] = useState(false)
 
-  const { palette } = useTheme()
+  const { palette, spacing } = useTheme()
   const { isMetamaskInstalled } = useMetamaskZkpSnapContext()
 
   const signIn = useCallback(async () => {
     setIsPending(true)
 
     try {
-      await login()
+      await connectProviders()
     } catch (error) {
       ErrorHandler.process(error)
       setIsPending(false)
     }
-  }, [login])
+  }, [connectProviders])
 
   const installMMLink = useMemo(() => {
     if (isMetamaskInstalled) return ''
@@ -46,43 +47,45 @@ export default function SignIn() {
 
   return (
     <Stack
-      maxWidth={520}
-      borderRadius={4}
-      p={16}
-      flexDirection='column'
-      alignItems='center'
-      bgcolor={palette.background.paper}
+      alignItems={'center'}
+      justifyContent={'center'}
+      maxWidth={spacing(140)}
+      width={'100%'}
+      height={'100%'}
+      p={20}
+      mx={'auto'}
+      spacing={4}
+      textAlign={'center'}
     >
-      <UiIcon
-        size={22}
-        name={Icons.User}
-        sx={{ background: palette.background.default, borderRadius: 100 }}
-        color={palette.primary.main}
+      <Box
+        component={'img'}
+        src={'/branding/logo.svg'}
+        alt={config.APP_NAME}
+        sx={{
+          width: spacing(16),
+          height: spacing(16),
+        }}
       />
-      {/*Todo: add metamask not found texts*/}
-      <Typography component='h4' variant='h4' sx={{ my: 4 }}>
-        {t('sign-in-page.title')}
-      </Typography>
-      <Typography variant='body2' marginBottom={8} textAlign={'center'}>
+
+      {/* TODO: add metamask not found texts */}
+      <Typography variant='h3'>{t('sign-in-page.title')}</Typography>
+      <Typography variant='body2' color={palette.text.secondary}>
         {t('sign-in-page.description')}
       </Typography>
-      {isMetamaskInstalled ? (
+      <Box>
         <UiButton
-          onClick={signIn}
-          startIcon={<UiIcon name={Icons.Metamask} />}
+          startIcon={<UiIcon name={Icons.Metamask} size={5} />}
           disabled={isPending}
+          sx={{ mt: 8 }}
+          onClick={isMetamaskInstalled ? signIn : openInstallMetamaskLink}
         >
-          {t('sign-in-page.connect-btn')}
+          {isMetamaskInstalled
+            ? t('sign-in-page.connect-btn')
+            : isPending
+            ? t('sign-in-page.reload-page-btn')
+            : t('sign-in-page.install-btn')}
         </UiButton>
-      ) : (
-        <UiButton
-          onClick={openInstallMetamaskLink}
-          startIcon={<UiIcon name={Icons.Metamask} />}
-          disabled={isPending}
-        >
-          {isPending ? t('sign-in-page.reload-page-btn') : t('sign-in-page.install-btn')}
-        </UiButton>
-      )}
+      </Box>
     </Stack>
   )
 }

@@ -1,134 +1,86 @@
-import { Theme } from '@mui/material/styles'
 import { TypographyOptions } from '@mui/material/styles/createTypography'
-import React from 'react'
-
-import { FontWeight } from '@/enums'
-
-import { ColorString } from './base'
-
-export type BaseTheme = Omit<Theme, 'components'>
+import { CSSProperties } from 'react'
 
 export interface ExtendedTypographyOptions extends TypographyOptions {
-  body3: React.CSSProperties
+  subtitle3: CSSProperties
+  subtitle4: CSSProperties
+  subtitle5: CSSProperties
+
+  body3: CSSProperties
+  body4: CSSProperties
+
+  buttonLarge: CSSProperties
+  buttonMedium: CSSProperties
+  buttonSmall: CSSProperties
+
+  caption1: CSSProperties
+  caption2: CSSProperties
+  caption3: CSSProperties
+
+  overline1: CSSProperties
+  overline2: CSSProperties
+  overline3: CSSProperties
 }
 
 declare module '@mui/material/Typography/Typography' {
   interface TypographyPropsVariantOverrides {
+    subtitle3: true
+    subtitle4: true
+    subtitle5: true
+
     body3: true
+    body4: true
+
+    buttonLarge: true
+    buttonMedium: true
+    buttonSmall: true
+
+    caption1: true
+    caption2: true
+    caption3: true
+
+    overline1: true
+    overline2: true
+    overline3: true
+
+    button: false
+    caption: false
+    overline: false
   }
 }
 
-export type Typography = {
-  txtFontFamily: string
+declare module '@mui/material/styles' {
+  interface PaletteColor {
+    darker?: string
+    lighter?: string
+  }
 
-  txtFontWeightLight: FontWeight.Light
-  txtFontWeightRegular: FontWeight.Regular
-  txtFontWeightMedium: FontWeight.Medium
-  txtFontWeightSemiBold: FontWeight.SemiBold
-  txtFontWeightBold: FontWeight.Bold
+  interface SimplePaletteColorOptions {
+    darker?: string
+    lighter?: string
+  }
 
-  txtFontSizeRegular: string
-  txtFontSizeH1: string
-  txtFontSizeH2: string
-  txtFontSizeH3: string
-  txtFontSizeH4: string
-  txtFontSizeH5: string
-  txtFontSizeH6: string
-  txtFontSizeSubtitle1: string
-  txtFontSizeSubtitle2: string
-  txtFontSizeBody1: string
-  txtFontSizeBody2: string
-  txtFontSizeBody3: string
-  txtFontSizeButton: string
-  txtFontSizeCaption: string
-  txtFontSizeOverline: string
+  interface TypeText {
+    placeholder: string
+  }
 
-  txtFontLineHeightH1: number
-  txtFontLineHeightH2: number
-  txtFontLineHeightH3: number
-  txtFontLineHeightH4: number
-  txtFontLineHeightH5: number
-  txtFontLineHeightH6: number
-  txtFontLineHeightSubtitle1: number
-  txtFontLineHeightSubtitle2: number
-  txtFontLineHeightBody1: number
-  txtFontLineHeightBody2: number
-  txtFontLineHeightBody3: number
-  txtFontLineHeightButton: number
-  txtFontLineHeightCaption: number
-  txtFontLineHeightOverline: number
+  interface TypeBackground {
+    light: string
+  }
 
-  txtFontLetterSpacingH1: string | number
-  txtFontLetterSpacingH2: string | number
-  txtFontLetterSpacingH3: string | number
-  txtFontLetterSpacingH4: string | number
-  txtFontLetterSpacingH5: string | number
-  txtFontLetterSpacingH6: string | number
-  txtFontLetterSpacingSubtitle1: string | number
-  txtFontLetterSpacingSubtitle2: string | number
-  txtFontLetterSpacingBody1: string | number
-  txtFontLetterSpacingBody2: string | number
-  txtFontLetterSpacingBody3: string | number
-  txtFontLetterSpacingButton: string | number
-  txtFontLetterSpacingCaption: string | number
-  txtFontLetterSpacingOverline: string | number
+  interface PaletteOptions {
+    additional: {
+      layerBorder: string
+      pureBlack: string
+      gradient: string
+    }
+  }
 
-  txtFontWeightH1: number
-  txtFontWeightH2: number
-  txtFontWeightH3: number
-  txtFontWeightH4: number
-  txtFontWeightH5: number
-  txtFontWeightH6: number
-  txtFontWeightSubtitle1: number
-  txtFontWeightSubtitle2: number
-  txtFontWeightBody1: number
-  txtFontWeightBody2: number
-  txtFontWeightBody3: number
-  txtFontWeightButton: number
-  txtFontWeightCaption: number
-  txtFontWeightOverline: number
-}
-
-export type PaletteColors = {
-  colDark: ColorString
-  colLight: ColorString
-
-  colTxtPrimary: ColorString
-  colTxtSecondary: ColorString
-  colTxtDisabled: ColorString
-
-  colPrimaryLight: ColorString
-  colPrimaryMain: ColorString
-  colPrimaryDark: ColorString
-
-  colSecondaryLight: ColorString
-  colSecondaryMain: ColorString
-  colSecondaryDark: ColorString
-
-  colErrorLight: ColorString
-  colErrorMain: ColorString
-  colErrorDark: ColorString
-
-  colWarningLight: ColorString
-  colWarningMain: ColorString
-  colWarningDark: ColorString
-
-  colInfoLight: ColorString
-  colInfoMain: ColorString
-  colInfoDark: ColorString
-
-  colSuccessLight: ColorString
-  colSuccessMain: ColorString
-  colSuccessDark: ColorString
-
-  colBgDefault: ColorString
-  colBgPaper: ColorString
-  colBgDivider: ColorString
-
-  colActionActive: ColorString
-  colActionHover: ColorString
-  colActionSelected: ColorString
-  colActionDisabledBg: ColorString
-  colActionFocus: ColorString
-  colActionDisabled: ColorString
+  interface Palette {
+    additional: {
+      layerBorder: string
+      pureBlack: string
+      gradient: string
+    }
+  }
 }

@@ -17,21 +17,15 @@ interface OrgDetailsContextValue {
 export const OrgDetailsContext = createContext<OrgDetailsContextValue>({} as OrgDetailsContextValue)
 
 export const OrgDetailsContextProvider = ({ children }: { children: ReactNode }) => {
-  const { id = null } = useParams<{ id: string }>()
+  const { id = '' } = useParams<{ id: string }>()
 
-  const {
-    org,
-    isOrgOwner,
-    isLoadingError: orgIsLoadingError,
-    isEmpty: isOrgEmpty,
-  } = useOrg(id ?? '')
+  const { org, isOrgOwner, isLoadingError: orgIsLoadingError, isEmpty: isOrgEmpty } = useOrg(id)
 
-  // FIXME: isAdminOnly?
   const {
     orgGroups,
     isLoading: isOrgGroupsLoading,
     isLoadingError: orgGroupsIsLoadingError,
-  } = useOrgGroups((isOrgOwner && id) || '')
+  } = useOrgGroups(isOrgOwner ? id : '')
 
   const isLoadingError = useMemo(
     () => orgIsLoadingError || orgGroupsIsLoadingError,

@@ -1,9 +1,9 @@
-import { InputAdornment, Stack, StackProps } from '@mui/material'
+import { Divider, Stack, StackProps } from '@mui/material'
 import debounce from 'lodash/debounce'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { UiIcon, UiNavTabs, UiTextField } from '@/ui'
+import { UiIcon, UiIconButton, UiNavTabs, UiSearchField } from '@/ui'
 
 interface Props extends StackProps {
   tabs?: {
@@ -20,25 +20,34 @@ export default function PageListFilters({ tabs, onSearchInput, actionBar, ...res
   const handleSearchInput = debounce((value: string) => onSearchInput?.(value), 500)
 
   return (
-    <Stack {...rest} direction='row' alignItems='center' gap={5}>
+    <Stack
+      {...rest}
+      direction='row'
+      alignItems='center'
+      justifyContent={'space-between'}
+      spacing={5}
+    >
       {tabs && <UiNavTabs tabs={tabs} />}
 
-      <UiTextField
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position='start'>
-              <UiIcon componentName='search' />
-            </InputAdornment>
-          ),
-          // TODO: change color
-          sx: { borderRadius: 25, borderColor: theme => theme.palette.grey[300] },
-        }}
-        placeholder={t('page-list-filters.search-input-placeholder')}
-        onChange={e => handleSearchInput(e.target.value)}
-        size={'small'}
-      />
+      <Stack direction={'row'} alignItems={'center'} spacing={6}>
+        <UiSearchField
+          size={'small'}
+          placeholder={t('page-list-filters.search-input-placeholder')}
+          onChange={e => handleSearchInput(e.target.value)}
+        />
 
-      <Stack flex={1}>{actionBar}</Stack>
+        {/* TODO: add filters here */}
+        <UiIconButton>
+          <UiIcon componentName='tune' size={5} />
+        </UiIconButton>
+
+        {actionBar && (
+          <>
+            <Divider orientation='vertical' flexItem />
+            {actionBar}
+          </>
+        )}
+      </Stack>
     </Stack>
   )
 }

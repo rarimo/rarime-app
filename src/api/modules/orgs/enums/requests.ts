@@ -16,3 +16,10 @@ export enum OrgGroupRequestIncludes {
   Organization = 'Organization',
   Group = 'Group',
 }
+
+export enum OrgGroupRequestPublishingStatuses {
+  Created = 'created',
+  Transacted = 'transacted',
+  Confirmed = 'confirmed',
+  Failed = 'failed',
+}

@@ -1,4 +1,3 @@
-import '@/styles/index.scss'
 import '@/locales'
 // eslint-disable-next-line import/no-unresolved
 import 'virtual:svg-icons-register'

@@ -1,9 +1,13 @@
 import { FormControl, Stack, StackProps } from '@mui/material'
-import { HTMLAttributes, useCallback, useMemo } from 'react'
+import { HTMLAttributes, useCallback } from 'react'
 import { Controller, useFieldArray } from 'react-hook-form'
 
-import { OrgGroupCreatedRequest } from '@/api'
-import { createInvitation } from '@/api/modules/orgs/helpers/org-groups-requests'
+import {
+  buildCredentialRequest,
+  createInvitation,
+  CredentialRequest,
+  OrgGroupCreatedRequest,
+} from '@/api/modules/orgs'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
@@ -12,7 +16,7 @@ import { UiButton, UiTextField } from '@/ui'
 
 interface Props extends StackProps {
   formProps?: HTMLAttributes<HTMLFormElement>
-  onMemberInviteCreated?: (createdRequest: OrgGroupCreatedRequest) => void
+  onMemberInvitationCreated?: (createdRequest: OrgGroupCreatedRequest) => void
 }
 
 enum FieldNames {
@@ -20,17 +24,9 @@ enum FieldNames {
   Rules = 'rules',
 }
 
-export default function InviteMemberForm({ formProps, onMemberInviteCreated, ...rest }: Props) {
+export default function InviteMemberForm({ formProps, onMemberInvitationCreated, ...rest }: Props) {
   const { org } = useOrgDetails()
   const { orgGroup } = useOrgGroupDetails()
-
-  const DEFAULT_VALUES = useMemo(
-    () => ({
-      [FieldNames.Email]: '',
-      [FieldNames.Rules]: orgGroup.rules.map(rule => ({ ...rule, value: '' })),
-    }),
-    [orgGroup.rules],
-  )
 
   const {
     formState,
@@ -41,35 +37,46 @@ export default function InviteMemberForm({ formProps, onMemberInviteCreated, ...
     getErrorMessage,
     register,
     control,
-  } = useForm(DEFAULT_VALUES, yup =>
-    yup.object().shape({
-      [FieldNames.Email]: yup.string().email().required(),
-    }),
+  } = useForm(
+    {
+      [FieldNames.Email]: '',
+      [FieldNames.Rules]: orgGroup.rules.map(rule => ({ ...rule, value: '' })),
+    },
+    yup =>
+      yup.object().shape({
+        [FieldNames.Email]: yup.string().email().required(),
+      }),
   )
 
-  const { fields: ruleFields } = useFieldArray({
+  const { fields: vcFields } = useFieldArray({
     control,
-    name: FieldNames.Rules, // unique name for your Field Array
+    name: FieldNames.Rules,
   })
 
   const submit = useCallback(async () => {
     disableForm()
 
     try {
+      const credentialRequests: CredentialRequest[] = await Promise.all(
+        formState[FieldNames.Rules].map(el =>
+          buildCredentialRequest(el.scheme, el.value, orgGroup.id),
+        ),
+      )
+
       const createdRequest = await createInvitation({
         orgId: org.id,
         groupId: orgGroup.id,
         email: formState[FieldNames.Email],
-        rules: formState[FieldNames.Rules],
+        credentialRequests,
       })
 
-      onMemberInviteCreated?.(createdRequest)
+      onMemberInvitationCreated?.(createdRequest)
     } catch (error) {
       ErrorHandler.process(error)
     }
 
     enableForm()
-  }, [disableForm, enableForm, formState, onMemberInviteCreated, org.id, orgGroup.id])
+  }, [disableForm, enableForm, formState, onMemberInvitationCreated, org.id, orgGroup.id])
 
   return (
     <Stack {...rest}>
@@ -89,7 +96,7 @@ export default function InviteMemberForm({ formProps, onMemberInviteCreated, ...
           )}
         />
 
-        {ruleFields.map((field, idx) => (
+        {vcFields.map((field, idx) => (
           <FormControl key={field.id}>
             <UiTextField
               label={field.name}

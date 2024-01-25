@@ -1,9 +1,15 @@
 import type { OrgsIncludes, OrgsRequestFilters, OrgsRequestPage, OrgsStatuses } from '@/api'
 
+export type OrgMetadataLink = {
+  title: string
+  url: string
+}
+
 export type OrgMetadata = {
   logoUrl: string
   name: string
   description: string
+  links?: OrgMetadataLink[]
 }
 
 export type OrgUser = {

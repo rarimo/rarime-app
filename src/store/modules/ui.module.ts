@@ -1,26 +1,27 @@
-import { ThemeMode } from '@/enums'
+import { PaletteMode } from '@mui/material'
+
 import { createStore } from '@/helpers'
 
-interface UiStore {
+type UiStore = {
   viewportWidth: number
-  themeMode?: ThemeMode
+  paletteMode: PaletteMode
 }
 
 export const [uiStore, useUiState] = createStore(
   'ui',
   {
     viewportWidth: 0,
-    themeMode: ThemeMode.Light,
+    paletteMode: 'light',
   } as UiStore,
   state => ({
     setViewportWidth: (width: number) => {
       state.viewportWidth = width
     },
-    setThemeMode: (mode: ThemeMode) => {
-      state.themeMode = mode
+    setPaletteMode: (mode: PaletteMode) => {
+      state.paletteMode = mode
     },
     clearUiStorage: () => {
-      state.themeMode = '' as ThemeMode
+      state.paletteMode = 'light'
       state.viewportWidth = 0
     },
   }),

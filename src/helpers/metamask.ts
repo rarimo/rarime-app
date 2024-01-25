@@ -1,4 +1,4 @@
-import { get } from 'lodash'
+import get from 'lodash/get'
 
 const OTHER_BROWSER_METAMASK_LINK = 'https://metamask.io/download/'
 const CHROME_METAMASK_ADDON_LINK = 'https://chrome.google.com/webstore/detail/metamask/'

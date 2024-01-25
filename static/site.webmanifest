@@ -1,6 +1,6 @@
 {
-  "name": "dashboard-rarime",
-  "short_name": "dashboard-rarime",
+  "name": "rarime-app",
+  "short_name": "rarime-app",
   "icons": [
     {
       "src": "/branding/android-chrome-192x192.png",

@@ -3,18 +3,19 @@ import {
   OrgGroup,
   OrgGroupRequestFilters,
   OrgGroupRequestIncludes,
+  OrgGroupRequestPublishingStatuses,
   OrgGroupRequestStatuses,
 } from '@/api'
+import { CredentialSubject } from '@/api/modules/zkp'
 
-export type OrgGroupRequestMetadata = {
-  schema: string
-  metadata: {
-    metadata1: string
-  }
-  fields: {
-    field1: string
-  }
-}[]
+export type CredentialRequest = {
+  credential_schema: string
+  credential_subject: CredentialSubject
+  type: string
+  expiration: string
+  mt_proof: boolean
+  signature_proof: boolean
+}
 
 export type OrgGroupRequest = {
   id: string
@@ -22,7 +23,7 @@ export type OrgGroupRequest = {
   org_id: string
   group_id: string
   user_did: string
-  metadata: OrgGroupRequestMetadata
+  credential_requests: CredentialRequest[]
   status: {
     name: string
     value: OrgGroupRequestStatuses
@@ -33,18 +34,6 @@ export type OrgGroupRequest = {
   group?: OrgGroup
 }
 
-export type OrgGroupCreateRequestRule = {
-  scheme: string
-  value: string
-}
-
-export type OrgGroupCreateRequest = {
-  orgId: string
-  groupId: string
-  email: string
-  rules: OrgGroupCreateRequestRule[]
-}
-
 export type OrgGroupCreatedRequest = {
   id: string
   type: 'invitations-email'
@@ -53,15 +42,27 @@ export type OrgGroupCreatedRequest = {
   group_id: string
   email: string
   created_at: string
-  request: OrgGroupRequest
+  claim_id: string
+  request?: OrgGroupRequest
 }
 
 export type OrgGroupRequestFiltersMap = {
   [OrgGroupRequestFilters.UserDid]: string
-  [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses
+  [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses[]
 }
 
 export type OrgGroupRequestQueryParams = {
   filter?: OrgGroupRequestFiltersMap
   include?: OrgGroupRequestIncludes[]
+}
+
+export type OrgGroupRequestPublishing = {
+  id: string
+  type: 'claims'
+  claim_id: string
+  request_id: string
+  created_at: string
+  updated_at: string
+  schema_url: string
+  status: OrgGroupRequestPublishingStatuses
 }
