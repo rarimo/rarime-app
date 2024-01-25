@@ -12,6 +12,8 @@ import {
 } from '@rarimo/rarime-connector'
 import { createContext, FC, HTMLAttributes, useCallback, useState } from 'react'
 
+import { DUMMY_VCS } from '@/api/modules/orgs/mocks'
+
 /**
  * The snap origin to use.
  * Will default to the local hosted snap if no value is provided in the environment.
@@ -155,7 +157,8 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
 
       if (!currentConnector) throw new TypeError('Connector is not defined')
 
-      return currentConnector?.getCredentials?.()
+      // return currentConnector?.getCredentials?.()
+      return DUMMY_VCS // TODO: remove
     },
     [connector],
   )

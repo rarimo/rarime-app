@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import {
   loadOrgGroupReqMetadataById,
   OrgGroupRequest,
-  OrgGroupVCsMetadata,
+  OrgGroupRequestMetadata,
 } from '@/api/modules/orgs'
 import { VCGroupOverviewCard } from '@/common'
 import { useLoading } from '@/hooks'
@@ -26,7 +26,7 @@ export default function ApprovedCard({ orgGroupRequest, ...rest }: Props) {
   }, [orgGroupRequest.credential_requests])
 
   const { data: orgGroupVCsMetadata } = useLoading(
-    {} as OrgGroupVCsMetadata,
+    {} as OrgGroupRequestMetadata,
     () => {
       return loadOrgGroupReqMetadataById(metadataId)
     },

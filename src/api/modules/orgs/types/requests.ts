@@ -1,8 +1,11 @@
+import { W3CCredential } from '@rarimo/rarime-connector'
+
 import {
   Organization,
   OrgGroup,
   OrgGroupRequestFilters,
   OrgGroupRequestIncludes,
+  OrgGroupRequestMetadata,
   OrgGroupRequestPublishingStatuses,
   OrgGroupRequestStatuses,
 } from '@/api/modules/orgs'
@@ -78,3 +81,34 @@ export type OrgGroupRequestClaim = {
   updated_at: string
   organization?: Organization
 }
+
+export type OrgClaimIDMap = Record<string, string[]>
+
+export type GroupedCredentials = {
+  id: string
+  type: 'grouped_credentials'
+
+  grouped_credentials: {
+    org_did: string
+    groups: {
+      group_id: string
+      requests: {
+        req_id: string
+        claim_ids: string[]
+        metadata: OrgGroupRequestMetadata
+      }[]
+    }[]
+  }[]
+}
+
+export type OrgGroupVCMap = {
+  orgDID: string
+  groups: {
+    groupID: string
+    requests: {
+      reqID: string
+      vcs: W3CCredential[]
+      metadata: OrgGroupRequestMetadata
+    }[]
+  }[]
+}[]
