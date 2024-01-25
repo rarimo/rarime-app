@@ -100,9 +100,8 @@ const AppNavbar = () => {
             size={5}
           />
         </UiIconButton>
-        {/* TODO: add account popup */}
         <ProfileMenu anchorEl={anchorEl as HTMLElement} handleClose={closeProfileMenu} />
-        <UiIconButton onClick={() => openProfileMenu(event)} sx={{ marginBottom: '30px' }}>
+        <UiIconButton onClick={() => openProfileMenu(event)}>
           <UserAvatar />
         </UiIconButton>
       </Stack>
