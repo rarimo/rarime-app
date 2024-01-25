@@ -1,14 +1,15 @@
-import { DrawerProps, Stack } from '@mui/material'
+import { CircularProgress, DrawerProps, Stack } from '@mui/material'
 import { FormEvent, useCallback } from 'react'
 import { useFieldArray } from 'react-hook-form'
 
-import { OrgMetadataLink } from '@/api'
+import { OrgMetadataLink, updateOrgMetadata } from '@/api'
 import VerticalDraggableContext from '@/contexts/vertical-draggable'
 import { BusEvents } from '@/enums'
-import { bus, ErrorHandler, sleep } from '@/helpers'
+import { bus, ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { UiButton, UiDrawer, UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiIcon } from '@/ui'
 
+import { useOrgDetails } from '../../../hooks'
 import LinkForm from './LinkForm'
 
 interface Props extends DrawerProps {
@@ -21,7 +22,11 @@ const DEFAULT_LINK_VALUES: OrgMetadataLink = {
   url: '',
 }
 
+const MAX_LINKS_COUNT = 10
+
 export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props) {
+  const { org } = useOrgDetails()
+
   const form = useForm(
     {
       links: links.length ? links : [DEFAULT_LINK_VALUES],
@@ -42,22 +47,24 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
     control: form.control,
   })
 
-  const submit = useCallback(async () => {
-    form.disableForm()
+  const submit = useCallback(
+    async ({ links }: { links: OrgMetadataLink[] }) => {
+      form.disableForm()
 
-    try {
-      // TODO: update links
-      await sleep(500)
-      onLinksUpdate?.(fields)
-      bus.emit(BusEvents.success, {
-        message: 'Links updated',
-      })
-    } catch (error) {
-      ErrorHandler.process(error)
-    }
+      try {
+        await updateOrgMetadata(org.id, { links })
+        onLinksUpdate?.(links)
+        bus.emit(BusEvents.success, {
+          message: 'Links updated',
+        })
+      } catch (error) {
+        ErrorHandler.process(error)
+      }
 
-    form.enableForm()
-  }, [fields, form, onLinksUpdate])
+      form.enableForm()
+    },
+    [form, org.id, onLinksUpdate],
+  )
 
   return (
     <UiDrawer
@@ -75,13 +82,7 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
       </UiDrawerTitle>
       <UiDrawerContent>
         <Stack spacing={4}>
-          <VerticalDraggableContext
-            items={fields}
-            onItemsMove={(a, b) => {
-              console.log(a, b, fields)
-              move(a, b)
-            }}
-          >
+          <VerticalDraggableContext items={fields} onItemsMove={move}>
             {fields.map((field, index) => (
               <LinkForm
                 key={field.id}
@@ -94,22 +95,39 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
           </VerticalDraggableContext>
         </Stack>
 
-        <UiButton
-          variant='text'
-          color='secondary'
-          size='medium'
-          startIcon={<UiIcon componentName='add' size={5} />}
-          onClick={() => append({ title: '', url: '' })}
-          sx={{ mt: fields.length ? 4 : 0 }}
-        >
-          Add links
-        </UiButton>
+        {fields.length < MAX_LINKS_COUNT && (
+          <UiButton
+            variant='text'
+            color='secondary'
+            size='medium'
+            startIcon={<UiIcon componentName='add' size={5} />}
+            onClick={() => append({ title: '', url: '' })}
+            sx={{ mt: fields.length ? 4 : 0 }}
+          >
+            Add link
+          </UiButton>
+        )}
       </UiDrawerContent>
       <UiDrawerActions>
         <UiButton type='submit' fullWidth>
           Save
         </UiButton>
       </UiDrawerActions>
+
+      {form.isFormDisabled && (
+        <Stack
+          justifyContent={'center'}
+          alignItems={'center'}
+          position={'absolute'}
+          top={0}
+          left={0}
+          bottom={0}
+          right={0}
+          bgcolor={theme => theme.palette.background.light}
+        >
+          <CircularProgress color={'secondary'} />
+        </Stack>
+      )}
     </UiDrawer>
   )
 }

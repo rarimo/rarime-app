@@ -2,6 +2,7 @@ import {
   api,
   type Organization,
   type OrganizationCreate,
+  type OrgMetadata,
   type OrgsRequestQueryParams,
   OrgsStatuses,
   type OrgUser,
@@ -137,6 +138,14 @@ export const createOrg = async (body: OrganizationCreate) => {
 
 export const verifyOrg = async (id: string) => {
   const { data } = await api.post<Organization>(`${ApiServicePaths.Orgs}/v1/orgs/${id}`)
+
+  return data
+}
+
+export const updateOrgMetadata = async (id: string, metadata: Partial<OrgMetadata>) => {
+  const { data } = await api.patch<Partial<OrgMetadata>>(`${ApiServicePaths.Orgs}/v1/orgs/${id}`, {
+    body: { data: metadata },
+  })
 
   return data
 }

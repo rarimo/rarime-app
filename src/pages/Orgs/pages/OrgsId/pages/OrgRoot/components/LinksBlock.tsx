@@ -37,7 +37,7 @@ export default function LinksBlock() {
           </UiButton>
         )}
       </Stack>
-      <Stack direction={'row'} gap={4} flexWrap={'wrap'}>
+      <Stack direction={'row'} spacing={4} flexWrap={'wrap'}>
         {links.length ? (
           links.map((link, index) => <LinkItem key={index} link={link} />)
         ) : (
