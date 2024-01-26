@@ -125,7 +125,7 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
           right={0}
           bgcolor={theme => theme.palette.background.light}
         >
-          <CircularProgress color={'secondary'} />
+          <CircularProgress color={'inherit'} />
         </Stack>
       )}
     </UiDrawer>

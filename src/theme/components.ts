@@ -63,42 +63,39 @@ export const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }) => ({
         borderRadius: theme.spacing(250),
         transition: Transitions.Default,
-        '&.MuiButton-fullWidth': {
-          width: '100%',
+      }),
+      containedSizeLarge: ({ theme }) => ({
+        ...typography.buttonLarge,
+        padding: theme.spacing(0, 4),
+        height: theme.spacing(12),
+      }),
+      containedSizeMedium: ({ theme }) => ({
+        ...typography.buttonMedium,
+        padding: theme.spacing(0, 4),
+        height: theme.spacing(8),
+      }),
+      containedSizeSmall: ({ theme }) => ({
+        ...typography.buttonSmall,
+        padding: theme.spacing(0, 2),
+        height: theme.spacing(6),
+      }),
+      fullWidth: {
+        width: '100%',
+      },
+      text: {
+        padding: 0,
+        minWidth: 'unset',
+        '&:hover': {
+          backgroundColor: 'transparent',
         },
-        '&.MuiButton-sizeLarge': {
-          ...typography.buttonLarge,
-          padding: theme.spacing(0, 4),
-          height: theme.spacing(12),
-        },
-        '&.MuiButton-sizeMedium': {
-          ...typography.buttonMedium,
-          padding: theme.spacing(0, 4),
-          height: theme.spacing(8),
-        },
-        '&.MuiButton-sizeSmall': {
-          ...typography.buttonSmall,
-          padding: theme.spacing(0, 2),
-          height: theme.spacing(6),
-        },
-        '&.MuiButton-text': {
-          padding: 0,
-          minWidth: 'unset',
-          '&:hover': {
-            backgroundColor: 'transparent',
-          },
-          '&Primary': {
-            color: theme.palette.text.primary,
-            '&:hover': {
-              color: theme.palette.primary.main,
-            },
-          },
-          '&Secondary': {
-            color: theme.palette.text.secondary,
-            '&:hover': {
-              color: theme.palette.text.primary,
-            },
-          },
+      },
+      textPrimary: ({ theme }) => ({
+        color: theme.palette.text.primary,
+      }),
+      textSecondary: ({ theme }) => ({
+        color: theme.palette.text.secondary,
+        '&:hover': {
+          color: theme.palette.secondary.main,
         },
       }),
     },
@@ -199,6 +196,9 @@ export const components: Components<Omit<Theme, 'components'>> = {
     },
   },
   MuiIconButton: {
+    defaultProps: {
+      color: 'primary',
+    },
     styleOverrides: {
       root: {
         padding: 0,

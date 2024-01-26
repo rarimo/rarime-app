@@ -9,7 +9,7 @@ import EditLinksDrawer from './EditLinksDrawer'
 import LinkItem from './LinkItem'
 
 export default function LinksBlock() {
-  const { org } = useOrgDetails()
+  const { org, isOrgOwner } = useOrgDetails()
   const { palette } = useTheme()
   const [isLinkDrawerShown, setIsLinkDrawerShown] = useState(false)
   const [links, setLinks] = useState(org.metadata.links ?? [])
@@ -25,7 +25,7 @@ export default function LinksBlock() {
     >
       <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
         <Typography variant={'subtitle3'}>Links</Typography>
-        {!!links.length && (
+        {!!links.length && isOrgOwner && (
           <UiButton
             variant={'text'}
             size={'medium'}
@@ -45,9 +45,11 @@ export default function LinksBlock() {
             icon={'🔗'}
             title={'No Links'}
             action={
-              <UiButton size='medium' onClick={() => setIsLinkDrawerShown(true)}>
-                Add
-              </UiButton>
+              isOrgOwner && (
+                <UiButton size='medium' onClick={() => setIsLinkDrawerShown(true)}>
+                  Add
+                </UiButton>
+              )
             }
           />
         )}

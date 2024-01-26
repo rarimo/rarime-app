@@ -39,6 +39,8 @@ export default function LinkForm({ field, index, form, onRemove }: Props) {
     [index],
   )
 
+  const hasManyLinks = useMemo(() => form.formState.links.length > 1, [form])
+
   return (
     <Stack
       ref={setNodeRef}
@@ -55,14 +57,16 @@ export default function LinkForm({ field, index, form, onRemove }: Props) {
     >
       <Stack direction='row' justifyContent={'space-between'}>
         <Typography variant='subtitle4'>Link {index + 1}</Typography>
-        <Stack direction={'row'} spacing={4}>
-          <UiIconButton color='secondary' sx={{ cursor: 'grab' }} {...attributes} {...listeners}>
-            <UiIcon componentName='dragIndicator' size={5} />
-          </UiIconButton>
-          <UiIconButton color='error' onClick={onRemove}>
-            <UiIcon componentName='deleteOutlined' size={5} />
-          </UiIconButton>
-        </Stack>
+        {hasManyLinks && (
+          <Stack direction={'row'} spacing={4}>
+            <UiIconButton color='secondary' sx={{ cursor: 'grab' }} {...attributes} {...listeners}>
+              <UiIcon componentName='dragIndicator' size={5} />
+            </UiIconButton>
+            <UiIconButton color='error' onClick={onRemove}>
+              <UiIcon componentName='deleteOutlined' size={5} />
+            </UiIconButton>
+          </Stack>
+        )}
       </Stack>
 
       {formFields.map(({ name, placeholder }) => (
