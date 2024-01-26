@@ -72,8 +72,7 @@ export default function OrgsList() {
           setFilter(prev => ({
             ...prev,
 
-            // FIXME: remove this and add searching orgs by name in backend
-            [OrgsRequestFilters.UserDid]: value,
+            [OrgsRequestFilters.Search]: value,
           }))
         }
         actionBar={

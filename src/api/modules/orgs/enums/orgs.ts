@@ -7,6 +7,7 @@ export enum OrgsRequestFilters {
   Owner = 'owner',
   UserDid = 'user_did',
   Status = 'status',
+  Search = 'search',
 }
 
 export enum OrgsIncludes {
@@ -22,5 +23,5 @@ export enum OrgUserRoles {
 
 export enum OrgsRequestPage {
   Limit = 'limit',
-  Cursor = 'cursor',
+  Number = 'number',
 }

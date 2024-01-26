@@ -95,7 +95,7 @@ export const DUMMY_ORGS: Organization[] = [
 ]
 
 export const loadOrgs = async (query: OrgsRequestQueryParams) => {
-  const { data, meta } = await api.get<Organization[]>('/v1/orgs', {
+  const { data, meta } = await api.get<Organization[]>(`${ApiServicePaths.Orgs}/v1/orgs`, {
     query,
   })
 

@@ -53,11 +53,12 @@ export type OrgsRequestFiltersMap = {
   [OrgsRequestFilters.Owner]?: string
   [OrgsRequestFilters.UserDid]?: string
   [OrgsRequestFilters.Status]?: OrgsStatuses
+  [OrgsRequestFilters.Search]?: string
 }
 
 export type OrgsRequestPageMap = {
   [OrgsRequestPage.Limit]: number
-  [OrgsRequestPage.Cursor]: string
+  [OrgsRequestPage.Number]: number
 }
 
 export type OrgsRequestQueryParams = {
