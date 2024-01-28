@@ -1,4 +1,4 @@
-import { Avatar, AvatarProps } from '@mui/material'
+import { Avatar, AvatarProps, useTheme } from '@mui/material'
 import jdenticon from 'jdenticon/standalone'
 import { useMemo } from 'react'
 
@@ -7,9 +7,12 @@ interface UserAvatarProps extends AvatarProps {
   size?: number
 }
 
-const UserAvatar = ({ userDid, size = 48, ...rest }: UserAvatarProps) => {
+const UserAvatar = ({ userDid, size = 12, ...rest }: UserAvatarProps) => {
+  const { spacing } = useTheme()
+
   const userAvatar = useMemo(() => {
-    return jdenticon.toSvg(userDid, Number(size))
+    return jdenticon.toSvg(userDid, parseInt(spacing(size)))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size, userDid])
 
   return <Avatar {...rest} src={`data:image/svg+xml;utf8,${encodeURIComponent(userAvatar)}`} />

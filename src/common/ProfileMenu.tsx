@@ -1,5 +1,14 @@
 import { config } from '@config'
-import { Divider, ListItemIcon, Menu, MenuItem, Stack, Typography, useTheme } from '@mui/material'
+import {
+  Divider,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  Stack,
+  SxProps,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import copy from 'copy-to-clipboard'
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -17,24 +26,23 @@ interface ProfileMenuProps {
 
 const MAX_LENGTH_FORMATTED_DID = 12
 
-const MenuItemStyles = { py: 2.5, px: 4 }
-
 export default function ProfileMenu({ anchorEl, handleClose }: ProfileMenuProps) {
   const [isCopied, setIsCopied] = useState(false)
   const { palette, spacing, shadows } = useTheme()
   const { userDid } = useMetamaskZkpSnapContext()
   const { logout } = useAuth()
 
-  const copyToClipboard = async () => {
-    try {
-      copy(userDid)
+  const menuItemSx: SxProps = { py: 2.5, px: 4 }
+
+  const copyToClipboard = () => {
+    if (copy(userDid)) {
       setIsCopied(true)
       setTimeout(() => {
         setIsCopied(false)
       }, 2000)
-    } catch (e) {
-      bus.emit(BusEvents.error, 'Not copied, pleas try again')
+      return
     }
+    bus.emit(BusEvents.error, 'Not copied, please try again')
   }
 
   const logOut = async () => {
@@ -70,7 +78,7 @@ export default function ProfileMenu({ anchorEl, handleClose }: ProfileMenuProps)
     >
       <Stack direction={'column'} p={4} alignItems={'center'}>
         <UserAvatar sx={{ width: spacing(12), height: spacing(12) }} userDid={userDid} />
-        <Stack direction={'row'} mt={3}>
+        <Stack direction={'row'} mt={3} spacing={2}>
           <Typography
             variant={'subtitle4'}
             overflow={'hidden'}
@@ -80,7 +88,7 @@ export default function ProfileMenu({ anchorEl, handleClose }: ProfileMenuProps)
             {formatedDidLabel}
           </Typography>
           <UiTooltip title={'Copied'} open={isCopied} onClose={handleClose}>
-            <UiIconButton onClick={copyToClipboard} sx={{ ml: 2 }}>
+            <UiIconButton onClick={copyToClipboard}>
               <UiIcon componentName={'contentCopy'} size={4} />
             </UiIconButton>
           </UiTooltip>
@@ -88,21 +96,25 @@ export default function ProfileMenu({ anchorEl, handleClose }: ProfileMenuProps)
       </Stack>
       <Divider sx={{ py: 2 }} />
       {/*TODO: Add handler*/}
-      <MenuItem sx={MenuItemStyles}>
+      <MenuItem sx={menuItemSx}>
         <ListItemIcon>
           <UiIcon componentName={'qrCode'} size={5} sx={{ color: palette.text.secondary }} />
         </ListItemIcon>
         <Typography variant={'caption1'}>QR login</Typography>
       </MenuItem>
-      <MenuItem sx={MenuItemStyles}>
-        <Link to={config.SUPPORT_LINK} target='_blank' rel='noreferrer noopener'>
-          <ListItemIcon>
-            <UiIcon componentName={'openInNew'} size={5} sx={{ color: palette.text.secondary }} />
-          </ListItemIcon>
-          <Typography variant={'caption1'}>Help Center</Typography>
-        </Link>
+      <MenuItem
+        component={Link}
+        to={config.SUPPORT_LINK}
+        target='_blank'
+        rel='noreferrer noopener'
+        sx={menuItemSx}
+      >
+        <ListItemIcon>
+          <UiIcon componentName={'openInNew'} size={5} sx={{ color: palette.text.secondary }} />
+        </ListItemIcon>
+        <Typography variant={'caption1'}>Help Center</Typography>
       </MenuItem>
-      <MenuItem onClick={logOut} sx={MenuItemStyles}>
+      <MenuItem onClick={logOut} sx={menuItemSx}>
         <ListItemIcon>
           <UiIcon componentName={'logOut'} size={5} sx={{ color: palette.error.main }} />
         </ListItemIcon>

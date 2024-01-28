@@ -22,7 +22,6 @@ export const useAuth = () => {
     checkSnapStatus,
     createIdentity,
   } = useMetamaskZkpSnapContext()
-  // Todo: isConnected change to jwt. We can simulate a disconnect by removing jwt
   const { isConnected, setIsConnected } = authStore
 
   const isAuthorized = useMemo(
