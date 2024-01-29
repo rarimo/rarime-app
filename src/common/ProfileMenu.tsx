@@ -24,7 +24,7 @@ interface ProfileMenuProps {
 export default function ProfileMenu({ userDid }: ProfileMenuProps) {
   const { palette, spacing, shadows } = useTheme()
   const { logout } = useAuth()
-  const { copyToClipboard, isCopied } = useCopy({ userDid })
+  const { copyToClipboard, isCopied } = useCopy()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const menuItemSx: SxProps = { py: 2.5, px: 4 }
@@ -64,7 +64,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
               {formatDid(userDid)}
             </Typography>
             <UiTooltip title={'Copied'} open={isCopied && !!anchorEl}>
-              <UiIconButton onClick={copyToClipboard}>
+              <UiIconButton onClick={() => copyToClipboard(userDid)}>
                 <UiIcon componentName={'contentCopy'} size={4} />
               </UiIconButton>
             </UiTooltip>
