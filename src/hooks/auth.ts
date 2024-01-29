@@ -6,7 +6,7 @@ import { authorizeUser } from '@/api/modules/auth'
 import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp'
 import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
 import { useWeb3Context } from '@/hooks/web3'
-import { authStore } from '@/store'
+import { web3Store } from '@/store'
 
 // TODO: add jwt validations for specific org
 export const useAuth = () => {
@@ -22,28 +22,37 @@ export const useAuth = () => {
     checkSnapStatus,
     createIdentity,
   } = useMetamaskZkpSnapContext()
-  const { isConnected, setIsConnected } = authStore
 
   const isAuthorized = useMemo(
-    () => Boolean(provider?.isConnected && isSnapInstalled && isConnected),
-    [isConnected, isSnapInstalled, provider?.isConnected],
+    () => Boolean(provider?.isConnected && isSnapInstalled),
+    [isSnapInstalled, provider?.isConnected],
   )
 
   const logout = useCallback(async () => {
     await provider?.disconnect()
     await checkSnapStatus()
-    setIsConnected(false)
-  }, [checkSnapStatus, provider, setIsConnected])
 
-  const connectProviders = useCallback(async () => {
-    await init(PROVIDERS.Metamask)
-    const connector = await connectOrInstallSnap()
+    web3Store.setProviderType(undefined)
+  }, [checkSnapStatus, provider])
 
-    await checkSnapStatus()
-    setIsConnected(true)
+  const connectProviders = useCallback(
+    async (providerType?: PROVIDERS) => {
+      const currentProviderType = providerType || web3Store.providerType
 
-    return createIdentity(connector)
-  }, [checkSnapStatus, connectOrInstallSnap, createIdentity, init, setIsConnected])
+      web3Store.setProviderType(currentProviderType)
+
+      if (!currentProviderType) return
+
+      await init(currentProviderType)
+
+      const connector = await connectOrInstallSnap()
+
+      await checkSnapStatus()
+
+      return createIdentity(connector)
+    },
+    [checkSnapStatus, connectOrInstallSnap, createIdentity, init],
+  )
 
   const authorize = useCallback(
     async ({

@@ -1,8 +1,8 @@
 import { Divider, Stack, useTheme } from '@mui/material'
-import { ReactNode, useCallback, useMemo, useState } from 'react'
+import { ReactNode, useCallback, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { ProfileMenu, UserAvatar } from '@/common'
+import { ProfileMenu } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
 import { useMetamaskZkpSnapContext } from '@/hooks'
 import { uiStore, useUiState } from '@/store'
@@ -50,7 +50,6 @@ const AppNavbar = () => {
   const { palette } = useTheme()
   const { paletteMode } = useUiState()
   const { userDid } = useMetamaskZkpSnapContext()
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const navbarItems = useMemo(
     () => [
@@ -95,10 +94,7 @@ const AppNavbar = () => {
             size={5}
           />
         </UiIconButton>
-        <ProfileMenu anchorEl={anchorEl} handleClose={() => setAnchorEl(null)} />
-        <UiIconButton onClick={event => setAnchorEl(event.currentTarget)}>
-          <UserAvatar userDid={userDid} />
-        </UiIconButton>
+        <ProfileMenu userDid={userDid} />
       </Stack>
     </Stack>
   )
