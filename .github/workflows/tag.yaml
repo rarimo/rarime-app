@@ -32,6 +32,6 @@ jobs:
         run: |
           cp .env-production .env
           . $(werf ci-env github --as-file)
-          werf export web --tag ghcr.io/$GITHUB_REPOSITORY:$GITHUB_REF_NAME
+          werf export --dev web --tag ghcr.io/$GITHUB_REPOSITORY:$GITHUB_REF_NAME
 
   
