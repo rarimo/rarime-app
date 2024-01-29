@@ -23,7 +23,7 @@ interface ProfileMenuProps {
 }
 
 export default function ProfileMenu({ userDid }: ProfileMenuProps) {
-  const { palette, spacing, shadows } = useTheme()
+  const { palette, spacing } = useTheme()
   const { logout } = useAuth()
   const { copy, isCopied } = useCopyToClipboard()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
@@ -56,7 +56,6 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
             border: 1,
             borderColor: palette.action.hover,
             borderRadius: 2,
-            boxShadow: shadows[0],
             pt: 0,
           },
         }}
@@ -79,7 +78,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
             </UiTooltip>
           </Stack>
         </Stack>
-        <Divider sx={{ py: 2 }} />
+        <Divider sx={{ mb: 2 }} />
         {/*TODO: Add handler*/}
         <MenuItem sx={menuItemSx}>
           <ListItemIcon>
