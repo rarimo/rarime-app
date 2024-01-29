@@ -1,6 +1,6 @@
 import { JsonApiResponseLinks } from '@distributedlab/jac'
-import { Grid, Pagination, Skeleton, Stack, StackProps, useTheme } from '@mui/material'
-import { useCallback, useEffect, useState } from 'react'
+import { Grid, Skeleton, Stack, StackProps, useTheme } from '@mui/material'
+import { useCallback, useState } from 'react'
 
 import { loadOrgs, Organization, type OrgsRequestFiltersMap, OrgsRequestPage } from '@/api'
 import { PageListPagination } from '@/common'
@@ -30,15 +30,10 @@ export default function List({ filter, ...rest }: Props) {
     isLoading,
     isLoadingError,
     isEmpty,
-    reload,
   } = useLoading<{ data: Organization[]; links: JsonApiResponseLinks }>({}, loadList, {
+    loadArgs: [filter, page],
     loadOnMount: true,
   })
-
-  useEffect(() => {
-    reload()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter, page])
 
   return (
     <Stack {...rest}>

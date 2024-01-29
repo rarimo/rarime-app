@@ -1,7 +1,5 @@
 import { Pagination, Stack, StackProps } from '@mui/material'
 
-import { OrgsRequestPage } from '@/api'
-
 interface Props extends StackProps {
   page: number
   count: number

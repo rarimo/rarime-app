@@ -1,5 +1,5 @@
 export { default as AppNavbar } from './AppNavbar'
 export { default as PageListFilters } from './PageListFilters'
+export { default as PageListPagination } from './PageListPagination'
 export { default as PageTitles } from './PageTitles'
 export { default as VCGroupOverviewCard } from './VCGroupOverviewCard'
-export { default as PageListPagination } from './PageListPagination'
