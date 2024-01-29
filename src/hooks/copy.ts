@@ -10,6 +10,7 @@ interface Props {
 
 export const useCopy = ({ userDid }: Props) => {
   const [isCopied, setIsCopied] = useState(false)
+  //Todo: migrate to navigator Api
   const copyToClipboard = () => {
     if (copy(userDid)) {
       setIsCopied(true)
