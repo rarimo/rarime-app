@@ -13,7 +13,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { UserAvatar } from '@/common'
-import { formatDid } from '@/helpers'
+import { BusEvents } from '@/enums'
+import { bus, formatDid } from '@/helpers'
 import { useAuth, useCopy } from '@/hooks'
 import { UiIcon, UiIconButton, UiTooltip } from '@/ui'
 
@@ -28,6 +29,14 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const menuItemSx: SxProps = { py: 2.5, px: 4 }
+
+  const copyUserDid = async () => {
+    try {
+      await copyToClipboard(userDid)
+    } catch (e) {
+      bus.emit(BusEvents.error, 'Not copied, please try again')
+    }
+  }
 
   return (
     <>
@@ -64,7 +73,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
               {formatDid(userDid)}
             </Typography>
             <UiTooltip title={'Copied'} open={isCopied && !!anchorEl}>
-              <UiIconButton onClick={() => copyToClipboard(userDid)}>
+              <UiIconButton onClick={copyUserDid}>
                 <UiIcon componentName={'contentCopy'} size={4} />
               </UiIconButton>
             </UiTooltip>
