@@ -1,3 +1,4 @@
+import { PROVIDERS } from '@distributedlab/w3p'
 import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -20,7 +21,7 @@ export default function SignIn() {
     setIsPending(true)
 
     try {
-      await connectProviders()
+      await connectProviders(PROVIDERS.Metamask)
     } catch (error) {
       ErrorHandler.process(error)
       setIsPending(false)
