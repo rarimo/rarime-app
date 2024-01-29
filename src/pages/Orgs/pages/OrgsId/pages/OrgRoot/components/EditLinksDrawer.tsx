@@ -7,9 +7,9 @@ import VerticalDraggableContext from '@/contexts/vertical-draggable'
 import { BusEvents } from '@/enums'
 import { bus, ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
+import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiButton, UiDrawer, UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiIcon } from '@/ui'
 
-import { useOrgDetails } from '../../../hooks'
 import LinkForm from './LinkForm'
 
 interface Props extends DrawerProps {
