@@ -3,6 +3,7 @@ import { Grid, Pagination, Skeleton, Stack, StackProps, useTheme } from '@mui/ma
 import { useCallback, useEffect, useState } from 'react'
 
 import { loadOrgs, Organization, type OrgsRequestFiltersMap, OrgsRequestPage } from '@/api'
+import { PageListPagination } from '@/common'
 import { useLoading } from '@/hooks'
 
 import ListCard from './ListCard'
@@ -49,7 +50,7 @@ export default function List({ filter, ...rest }: Props) {
                 <Skeleton
                   variant='rounded'
                   animation='wave'
-                  sx={{ bgcolor: palette.divider }}
+                  sx={{ bgcolor: palette.divider, borderRadius: 3 }}
                   height={spacing(60)}
                 />
               </Grid>
@@ -77,19 +78,16 @@ export default function List({ filter, ...rest }: Props) {
               </Grid>
             ))}
           </Grid>
-          <Stack alignItems='center' mt={6}>
-            <Pagination
-              count={Math.ceil(meta?.count / DEFAULT_LIMIT) ?? 0}
-              page={page[OrgsRequestPage.Number] + 1}
-              onChange={(_, page) =>
-                setPage(prevState => ({
-                  ...prevState,
-                  [OrgsRequestPage.Number]: page - 1,
-                }))
-              }
-              color={'primary'}
-            />
-          </Stack>
+          <PageListPagination
+            page={page[OrgsRequestPage.Number] + 1}
+            count={Math.ceil(meta?.count / DEFAULT_LIMIT) ?? 0}
+            onChange={page =>
+              setPage(prevState => ({
+                ...prevState,
+                [OrgsRequestPage.Number]: page - 1,
+              }))
+            }
+          />
         </>
       )}
     </Stack>
