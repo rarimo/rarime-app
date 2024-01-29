@@ -2,7 +2,9 @@ import { Divider, Stack, useTheme } from '@mui/material'
 import { ReactNode, useCallback, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
+import { ProfileMenu } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
+import { useMetamaskZkpSnapContext } from '@/hooks'
 import { uiStore, useUiState } from '@/store'
 import { Transitions } from '@/theme/constants'
 import { UiIcon, UiIconButton } from '@/ui'
@@ -47,6 +49,7 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
 const AppNavbar = () => {
   const { palette } = useTheme()
   const { paletteMode } = useUiState()
+  const { userDid } = useMetamaskZkpSnapContext()
 
   const navbarItems = useMemo(
     () => [
@@ -91,8 +94,7 @@ const AppNavbar = () => {
             size={5}
           />
         </UiIconButton>
-        {/* TODO: add account popup */}
-        <UiIcon name={Icons.Metamask} size={10} sx={{ px: 1 }} />
+        <ProfileMenu userDid={userDid} />
       </Stack>
     </Stack>
   )
