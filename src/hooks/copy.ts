@@ -1,8 +1,7 @@
 import copy from 'copy-to-clipboard'
 import { useState } from 'react'
 
-import { BusEvents } from '@/enums'
-import { bus, sleep } from '@/helpers'
+import { sleep } from '@/helpers'
 
 export const useCopy = () => {
   const [isCopied, setIsCopied] = useState(false)
@@ -14,7 +13,7 @@ export const useCopy = () => {
       setIsCopied(false)
       return
     }
-    bus.emit(BusEvents.error, 'Not copied, please try again')
+    throw new TypeError('Not copied')
   }
 
   return { copyToClipboard, isCopied }
