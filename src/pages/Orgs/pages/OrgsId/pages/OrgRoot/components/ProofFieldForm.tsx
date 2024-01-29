@@ -3,7 +3,7 @@ import startCase from 'lodash/startCase'
 import { useCallback, useMemo, useState } from 'react'
 
 import { Proof } from '@/api'
-import { loadAndParseCredentialSchema } from '@/api/modules/zkp'
+import { getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { sleep } from '@/helpers'
 import { useLoading } from '@/hooks'
 import { UiButton, UiTextField } from '@/ui'
@@ -23,10 +23,14 @@ export default function ProofFieldForm({ proof }: Props) {
     isLoading: isSchemaLoading,
     isLoadingError: isSchemaLoadingError,
     isEmpty: isSchemaEmpty,
-  } = useLoading(null, () => loadAndParseCredentialSchema(proof.schema_url), {
-    loadOnMount: true,
-    loadArgs: [proof.schema_url],
-  })
+  } = useLoading(
+    null,
+    async () => getTargetProperty(await loadAndParseCredentialSchema(proof.schema_url)),
+    {
+      loadOnMount: true,
+      loadArgs: [proof.schema_url],
+    },
+  )
 
   const formattedFieldKey = useMemo(() => {
     return startCase(parsedSchema?.key ?? '')

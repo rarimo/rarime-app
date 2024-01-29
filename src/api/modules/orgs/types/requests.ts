@@ -34,18 +34,6 @@ export type OrgGroupRequest = {
   group?: OrgGroup
 }
 
-export type OrgGroupCreateRequestRule = {
-  scheme: string
-  value: string
-}
-
-export type OrgGroupCreateRequest = {
-  orgId: string
-  groupId: string
-  email: string
-  rules: OrgGroupCreateRequestRule[]
-}
-
 export type OrgGroupCreatedRequest = {
   id: string
   type: 'invitations-email'
