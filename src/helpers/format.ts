@@ -1,7 +1,7 @@
-const MAX_LENGTH_FORMATTED_DID = 12
+const FORMATTED_DID_MAX_LENGTH = 12
 
-export function formatDid(userDid: string) {
-  return userDid.length > MAX_LENGTH_FORMATTED_DID
-    ? userDid.slice(0, 8) + '...' + userDid.slice(-4)
-    : userDid
+export function formatDid(did: string) {
+  return did.length > FORMATTED_DID_MAX_LENGTH
+    ? did.slice(0, 8) + '...' + did.slice(-4)
+    : did
 }

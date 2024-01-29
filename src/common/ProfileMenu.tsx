@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom'
 import { UserAvatar } from '@/common'
 import { BusEvents } from '@/enums'
 import { bus, formatDid } from '@/helpers'
-import { useAuth, useCopy } from '@/hooks'
+import { useAuth, useCopyToClipboard } from '@/hooks'
 import { UiIcon, UiIconButton, UiTooltip } from '@/ui'
 
 interface ProfileMenuProps {
@@ -25,14 +25,14 @@ interface ProfileMenuProps {
 export default function ProfileMenu({ userDid }: ProfileMenuProps) {
   const { palette, spacing, shadows } = useTheme()
   const { logout } = useAuth()
-  const { copyToClipboard, isCopied } = useCopy()
+  const { copy, isCopied } = useCopyToClipboard()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const menuItemSx: SxProps = { py: 2.5, px: 4 }
 
   const copyUserDid = async () => {
     try {
-      await copyToClipboard(userDid)
+      await copy(userDid)
     } catch (e) {
       bus.emit(BusEvents.error, 'Not copied, please try again')
     }

@@ -13,7 +13,7 @@ const UserAvatar = ({ userDid, size = 12, ...rest }: UserAvatarProps) => {
   const userAvatar = useMemo(() => {
     return jdenticon.toSvg(userDid, parseInt(spacing(size)))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size, userDid])
+  }, [size, userDid, spacing])
 
   return <Avatar {...rest} src={`data:image/svg+xml;utf8,${encodeURIComponent(userAvatar)}`} />
 }

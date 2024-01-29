@@ -1,5 +1,5 @@
 export * from './auth'
-export * from './copy'
+export * from './copyToClipboard'
 export * from './form'
 export * from './interval'
 export * from './loading'
