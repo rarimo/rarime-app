@@ -1779,9 +1779,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rarimo/rarime-connector@npm:^2.0.0-rc.8":
-  version: 2.0.0-rc.8
-  resolution: "@rarimo/rarime-connector@npm:2.0.0-rc.8"
+"@rarimo/rarime-connector@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@rarimo/rarime-connector@npm:2.0.1"
   dependencies:
     "@ethersproject/providers": "npm:5.7.2"
     compare-versions: "npm:^6.1.0"
@@ -8785,7 +8785,7 @@ __metadata:
     "@mui/icons-material": "npm:^5.14.19"
     "@mui/material": "npm:^5.14.20"
     "@mui/x-date-pickers": "npm:^6.18.7"
-    "@rarimo/rarime-connector": "npm:^2.0.0-rc.8"
+    "@rarimo/rarime-connector": "npm:2.0.1"
     "@types/lodash": "npm:^4"
     "@types/react": "npm:^18.2.37"
     "@types/react-dom": "npm:^18.2.15"
