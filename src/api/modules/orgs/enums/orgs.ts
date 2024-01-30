@@ -8,6 +8,7 @@ export enum OrgsRequestFilters {
   UserDid = 'user_did',
   Status = 'status',
   MetaData = 'metadata',
+  //metadata is responsible for searching by org name or org description
 }
 
 export enum OrgsIncludes {
