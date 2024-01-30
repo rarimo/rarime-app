@@ -1,7 +1,7 @@
 import { Stack, StackProps, Typography } from '@mui/material'
 import { HTMLAttributes, useCallback } from 'react'
 
-import { getOrgVerificationCode, Organization, verifyOrg } from '@/api'
+import { getOrgVerificationCode, Organization, verifyOrg } from '@/api/modules/orgs'
 import { ErrorHandler } from '@/helpers'
 import { useLoading } from '@/hooks'
 import { UiButton } from '@/ui'

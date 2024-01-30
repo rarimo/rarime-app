@@ -1,7 +1,7 @@
 import { Stack, StackProps } from '@mui/material'
 import { useCallback, useState } from 'react'
 
-import { OrgGroupRequest, rejectOrgGroupRequest } from '@/api'
+import { OrgGroupRequest, rejectOrgGroupRequest } from '@/api/modules/orgs'
 import { ErrorHandler } from '@/helpers'
 import { UiBasicModal, UiButton } from '@/ui'
 

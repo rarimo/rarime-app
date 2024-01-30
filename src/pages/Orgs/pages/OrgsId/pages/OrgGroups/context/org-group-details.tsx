@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { OrgGroup } from '@/api'
+import { OrgGroup } from '@/api/modules/orgs'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 
 interface OrgGroupDetailsContextValue {

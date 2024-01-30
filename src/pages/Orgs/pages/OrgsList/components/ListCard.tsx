@@ -1,7 +1,7 @@
 import { Avatar, Card, CardProps, Grid, Stack, Typography, useTheme } from '@mui/material'
 import { generatePath, NavLink } from 'react-router-dom'
 
-import { Organization, OrgsStatuses } from '@/api'
+import { Organization, OrgsStatuses } from '@/api/modules/orgs'
 import { RoutePaths } from '@/enums'
 import { Transitions } from '@/theme/constants'
 import { UiIcon } from '@/ui'

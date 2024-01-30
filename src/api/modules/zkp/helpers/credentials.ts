@@ -2,7 +2,7 @@ import { fetcher } from '@distributedlab/fetcher'
 import type { SaveCredentialsRequestParams } from '@rarimo/rarime-connector'
 import omit from 'lodash/omit'
 
-import { api } from '@/api'
+import { api } from '@/api/clients'
 import {
   CredentialSubject,
   JsonLdSchema,

@@ -1,14 +1,15 @@
+import { api } from '@/api/clients'
 import {
-  api,
   CredentialRequest,
   OrgGroupCreatedRequest,
   OrgGroupRequest,
+  OrgGroupRequestClaim,
   OrgGroupRequestFilters,
   OrgGroupRequestPublishing,
   OrgGroupRequestQueryParams,
   OrgGroupVCsMetadata,
   OrgUserRoles,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { DUMMY_ORG_GROUP_REQUESTS } from '@/api/modules/orgs/mocks'
 import { getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { ApiServicePaths } from '@/enums/api'
@@ -259,4 +260,20 @@ export const buildCredentialRequest = async (
     mt_proof: true,
     signature_proof: true,
   }
+}
+
+export const getOrgGroupRequestClaims = async ({
+  orgId,
+  groupId,
+  reqId,
+}: {
+  orgId: string
+  groupId: string
+  reqId: string
+}): Promise<OrgGroupRequestClaim[]> => {
+  const { data } = await api.get<OrgGroupRequestClaim[]>(
+    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}/publishing`,
+  )
+
+  return data
 }

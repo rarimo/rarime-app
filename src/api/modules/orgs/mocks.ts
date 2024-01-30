@@ -4,7 +4,7 @@ import {
   OrgGroupRequest,
   OrgGroupRequestStatuses,
   OrgsStatuses,
-} from '@/api'
+} from '@/api/modules/orgs'
 
 export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
   {
@@ -12,7 +12,7 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
-    user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
+    user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
         credential_schema:
@@ -61,7 +61,7 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
-    user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
+    user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
         credential_schema:
@@ -110,7 +110,7 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
-    user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
+    user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
         credential_schema:
@@ -159,7 +159,7 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
-    user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
+    user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
         credential_schema:
@@ -208,7 +208,7 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
-    user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
+    user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
         credential_schema:
@@ -257,7 +257,7 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
-    user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
+    user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
         credential_schema:
@@ -306,7 +306,7 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
-    user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
+    user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
         credential_schema:
@@ -355,7 +355,7 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
-    user_did: 'did:iden3:tP2Yx51N98d7E5M84SGnyzmaGWqRz4oUcHQSGAgyg',
+    user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
         credential_schema:

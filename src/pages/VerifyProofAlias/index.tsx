@@ -2,7 +2,7 @@ import { CircularProgress, Stack } from '@mui/material'
 import { useMemo } from 'react'
 import { generatePath, Navigate, useParams } from 'react-router-dom'
 
-import { useLinkProofs } from '@/api'
+import { useLinkProofs } from '@/api/modules/link'
 import { RoutePaths } from '@/enums'
 
 export default function VerifyProofAlias() {

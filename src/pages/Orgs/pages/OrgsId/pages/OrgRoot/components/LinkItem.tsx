@@ -1,7 +1,7 @@
 import { Stack, Typography, useTheme } from '@mui/material'
 import { ComponentProps, useMemo } from 'react'
 
-import { OrgMetadataLink } from '@/api'
+import { OrgMetadataLink } from '@/api/modules/orgs'
 import { Icons } from '@/enums'
 import { Transitions } from '@/theme/constants'
 import { UiIcon } from '@/ui'

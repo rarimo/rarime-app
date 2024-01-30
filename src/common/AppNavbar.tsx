@@ -20,7 +20,8 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
 
   const isRouteActive = useMemo(() => {
     const locationRoot = location.pathname.split('/')[1]
-    return to.includes(locationRoot)
+
+    return to.split('/').includes(locationRoot)
   }, [location.pathname, to])
 
   return (
@@ -55,6 +56,10 @@ const AppNavbar = () => {
     () => [
       { route: RoutePaths.Profiles, iconComponent: <UiIcon name={Icons.Wallet} size={5} /> },
       { route: RoutePaths.Orgs, iconComponent: <UiIcon componentName={'work'} size={5} /> },
+      {
+        route: RoutePaths.Credentials,
+        iconComponent: <UiIcon componentName={'layers'} size={6} />,
+      },
       { route: RoutePaths.UiKit, iconComponent: <UiIcon componentName={'info'} size={5} /> },
     ],
     [],

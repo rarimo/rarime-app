@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { getProofsByLinkId } from '@/api'
+import { getProofsByLinkId } from '@/api/modules/link'
 import { useLoading } from '@/hooks'
 
 export const useLinkProofs = (id: string) => {

@@ -2,7 +2,7 @@ import { time } from '@distributedlab/tools'
 import { Divider, Stack, Typography, TypographyProps, useTheme } from '@mui/material'
 import { ReactNode, useMemo } from 'react'
 
-import { Proof } from '@/api'
+import { Proof } from '@/api/modules/link'
 
 import ProofValidityBadge from './ProofValidityBadge'
 

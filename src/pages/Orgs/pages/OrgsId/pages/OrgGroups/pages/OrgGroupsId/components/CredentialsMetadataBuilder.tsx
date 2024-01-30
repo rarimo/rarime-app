@@ -3,7 +3,12 @@ import { FormControl, Stack, StackProps } from '@mui/material'
 import { useCallback, useMemo } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { OrgGroupRequest, OrgGroupVCsMetadata, OrgUserRoles, verifyOrgGroupRequest } from '@/api'
+import {
+  OrgGroupRequest,
+  OrgGroupVCsMetadata,
+  OrgUserRoles,
+  verifyOrgGroupRequest,
+} from '@/api/modules/orgs'
 import { VCGroupOverviewCard } from '@/common'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'

@@ -1,6 +1,6 @@
 import { CreateProofRequestParams } from '@rarimo/rarime-connector/dist/types'
 
-import { OrgUserRoles } from '@/api'
+import { OrgUserRoles } from '@/api/modules/orgs'
 import { QueryOperators } from '@/api/modules/zkp'
 
 export const buildAuthorizeRequest = ({

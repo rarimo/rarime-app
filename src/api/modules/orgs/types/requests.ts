@@ -5,7 +5,7 @@ import {
   OrgGroupRequestIncludes,
   OrgGroupRequestPublishingStatuses,
   OrgGroupRequestStatuses,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { CredentialSubject } from '@/api/modules/zkp'
 
 export type CredentialRequest = {
@@ -47,8 +47,8 @@ export type OrgGroupCreatedRequest = {
 }
 
 export type OrgGroupRequestFiltersMap = {
-  [OrgGroupRequestFilters.UserDid]: string
-  [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses[]
+  [OrgGroupRequestFilters.UserDid]?: string
+  [OrgGroupRequestFilters.Status]?: OrgGroupRequestStatuses[]
 }
 
 export type OrgGroupRequestQueryParams = {
@@ -65,4 +65,16 @@ export type OrgGroupRequestPublishing = {
   updated_at: string
   schema_url: string
   status: OrgGroupRequestPublishingStatuses
+}
+
+export type OrgGroupRequestClaim = {
+  id: string
+  type: 'claims'
+  claim_id: string
+  request_id: string
+  schema_url: string
+  status: string
+  created_at: string
+  updated_at: string
+  organization?: Organization
 }
