@@ -1,8 +1,14 @@
 import { JsonApiDefaultMeta } from '@distributedlab/jac'
 import { Grid, Stack, StackProps, useTheme } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import { loadOrgs, Organization, type OrgsRequestFiltersMap, OrgsRequestPage } from '@/api'
+import {
+  loadOrgs,
+  Organization,
+  OrgsRequestFilters,
+  type OrgsRequestFiltersMap,
+  OrgsRequestPage,
+} from '@/api'
 import { PageListPagination } from '@/common'
 import { useLoading } from '@/hooks'
 import { UiSkeleton } from '@/ui'
@@ -27,6 +33,7 @@ export default function List({ filter, ...rest }: Props) {
     [OrgsRequestPage.Number]: 0,
     [OrgsRequestPage.Limit]: ORGS_IN_PAGE_DEFAULT_LIMIT_,
   })
+  const [prevStateMetaData, setPrevStateMetaData] = useState<string | undefined>('')
 
   const loadList = useCallback(async () => {
     return loadOrgs({ filter, page })
@@ -41,6 +48,17 @@ export default function List({ filter, ...rest }: Props) {
     loadArgs: [filter, page],
     loadOnMount: true,
   })
+
+  useEffect(() => {
+    if (filter[OrgsRequestFilters.MetaData] !== prevStateMetaData) {
+      setPage(prevState => ({
+        ...prevState,
+        //Todo: change the page to 1 when the API is ready
+        [OrgsRequestPage.Number]: 0,
+      }))
+      setPrevStateMetaData(filter[OrgsRequestFilters.MetaData])
+    }
+  }, [filter, prevStateMetaData])
 
   return (
     <Stack {...rest}>
@@ -70,13 +88,14 @@ export default function List({ filter, ...rest }: Props) {
               </Grid>
             ))}
           </Grid>
+          {/*Todo: remove increment when the API is ready*/}
           <PageListPagination
-            page={page[OrgsRequestPage.Number]}
+            page={page[OrgsRequestPage.Number] + 1}
             count={Math.ceil(meta?.count / ORGS_IN_PAGE_DEFAULT_LIMIT_) ?? 0}
             onChange={page =>
               setPage(prevState => ({
                 ...prevState,
-                [OrgsRequestPage.Number]: page,
+                [OrgsRequestPage.Number]: page - 1,
               }))
             }
           />
