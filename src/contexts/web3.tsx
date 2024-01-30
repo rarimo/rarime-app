@@ -13,7 +13,6 @@ import { createContext, ReactNode, useCallback, useMemo } from 'react'
 import { config } from '@/config'
 import { ErrorHandler } from '@/helpers'
 import { useProvider } from '@/hooks'
-import { useWeb3State, web3Store } from '@/store'
 import { SUPPORTED_PROVIDERS } from '@/types'
 
 interface Web3ProviderContextValue {
@@ -57,8 +56,6 @@ const SUPPORTED_PROVIDERS_MAP: {
 export const Web3ProviderContextProvider = ({ children }: { children: ReactNode }) => {
   const providerDetector = useMemo(() => new ProviderDetector<SUPPORTED_PROVIDERS>(), [])
 
-  const { providerType: storeProviderType } = useWeb3State()
-
   const provider = useProvider()
 
   const isValidChain = useMemo(() => {
@@ -73,8 +70,6 @@ export const Web3ProviderContextProvider = ({ children }: { children: ReactNode 
     } catch (error) {
       // empty
     }
-
-    web3Store.setProviderType(undefined)
   }, [provider])
 
   const listeners = useMemo(
@@ -99,12 +94,10 @@ export const Web3ProviderContextProvider = ({ children }: { children: ReactNode 
           ),
         )
 
-        const currentProviderType = providerType || storeProviderType
-
-        if (!currentProviderType) return
+        if (!providerType) return
 
         const initializedProvider = await provider.init(
-          SUPPORTED_PROVIDERS_MAP[currentProviderType] as ProviderProxyConstructor,
+          SUPPORTED_PROVIDERS_MAP[providerType] as ProviderProxyConstructor,
           {
             providerDetector,
             listeners,
@@ -114,8 +107,6 @@ export const Web3ProviderContextProvider = ({ children }: { children: ReactNode 
         if (!initializedProvider.isConnected) {
           await initializedProvider?.connect?.()
         }
-
-        web3Store.setProviderType(providerType || storeProviderType)
       } catch (error) {
         if (
           error instanceof Error &&
@@ -128,7 +119,7 @@ export const Web3ProviderContextProvider = ({ children }: { children: ReactNode 
         throw error
       }
     },
-    [providerDetector, storeProviderType, provider, listeners, disconnect],
+    [providerDetector, provider, listeners, disconnect],
   )
 
   const addProvider = (provider: ProviderInstance) => {
