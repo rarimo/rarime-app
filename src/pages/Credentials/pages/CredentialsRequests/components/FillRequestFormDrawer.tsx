@@ -1,4 +1,4 @@
-import { ComponentProps, useCallback } from 'react'
+import { ComponentProps, useCallback, useMemo } from 'react'
 
 import { OrgGroupRequest } from '@/api/modules/orgs'
 import {
@@ -41,19 +41,25 @@ export default function FillRequestFormDrawer({
     loadArgs: [orgGroupRequest],
   })
 
-  if (isLoading) return <></>
+  const drawerContent = useMemo(() => {
+    if (isLoading) return <></>
 
-  if (isLoadingError) return <></>
+    if (isLoadingError) return <></>
+
+    if (!vcFields.length || !orgGroupRequest) return <></>
+
+    return (
+      <FillRequestForm
+        onRequestFilled={onRequestFilled}
+        orgGroupRequest={orgGroupRequest}
+        credentialFields={vcFields}
+      />
+    )
+  }, [isLoading, isLoadingError, onRequestFilled, orgGroupRequest, vcFields])
 
   return (
     <UiDrawer {...rest} anchor='right'>
-      {vcFields.length && orgGroupRequest && (
-        <FillRequestForm
-          onRequestFilled={onRequestFilled}
-          orgGroupRequest={orgGroupRequest}
-          credentialFields={vcFields}
-        />
-      )}
+      {drawerContent}
     </UiDrawer>
   )
 }
