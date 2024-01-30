@@ -53,7 +53,7 @@ export type OrgsRequestFiltersMap = {
   [OrgsRequestFilters.Owner]?: string
   [OrgsRequestFilters.UserDid]?: string
   [OrgsRequestFilters.Status]?: OrgsStatuses
-  [OrgsRequestFilters.Search]?: string
+  [OrgsRequestFilters.MetaData]?: string
 }
 
 export type OrgsRequestPageMap = {

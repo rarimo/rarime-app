@@ -3,7 +3,7 @@ import { Pagination, Stack, StackProps } from '@mui/material'
 interface Props extends StackProps {
   page: number
   count: number
-  onChange: (page) => void
+  onChange: (page: number) => void
 }
 
 export default function PageListPagination({ page, count, onChange, ...rest }: Props) {

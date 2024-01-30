@@ -1,24 +1,31 @@
-import { JsonApiResponseLinks } from '@distributedlab/jac'
-import { Grid, Skeleton, Stack, StackProps, useTheme } from '@mui/material'
+import { JsonApiDefaultMeta } from '@distributedlab/jac'
+import { Grid, Stack, StackProps, useTheme } from '@mui/material'
 import { useCallback, useState } from 'react'
 
 import { loadOrgs, Organization, type OrgsRequestFiltersMap, OrgsRequestPage } from '@/api'
 import { PageListPagination } from '@/common'
 import { useLoading } from '@/hooks'
+import { UiSkeleton } from '@/ui'
 
 import ListCard from './ListCard'
+import ListCardSkeleton from './ListCardSkeleton'
 
 interface Props extends StackProps {
   filter: OrgsRequestFiltersMap
 }
 
-const DEFAULT_LIMIT = 4
+type loadListResponseType = {
+  data: Organization[]
+  meta: JsonApiDefaultMeta
+}
+
+const ORGS_IN_PAGE_DEFAULT_LIMIT_ = 4
 
 export default function List({ filter, ...rest }: Props) {
-  const { spacing, palette } = useTheme()
+  const { spacing } = useTheme()
   const [page, setPage] = useState({
     [OrgsRequestPage.Number]: 0,
-    [OrgsRequestPage.Limit]: DEFAULT_LIMIT,
+    [OrgsRequestPage.Limit]: ORGS_IN_PAGE_DEFAULT_LIMIT_,
   })
 
   const loadList = useCallback(async () => {
@@ -30,7 +37,7 @@ export default function List({ filter, ...rest }: Props) {
     isLoading,
     isLoadingError,
     isEmpty,
-  } = useLoading<{ data: Organization[]; links: JsonApiResponseLinks }>({}, loadList, {
+  } = useLoading<loadListResponseType>({} as loadListResponseType, loadList, {
     loadArgs: [filter, page],
     loadOnMount: true,
   })
@@ -42,22 +49,12 @@ export default function List({ filter, ...rest }: Props) {
           <Grid container spacing={6}>
             {Array.from({ length: 4 }).map((_, idx) => (
               <Grid key={idx} item xs={6}>
-                <Skeleton
-                  variant='rounded'
-                  animation='wave'
-                  sx={{ bgcolor: palette.divider, borderRadius: 3 }}
-                  height={spacing(60)}
-                />
+                <ListCardSkeleton />
               </Grid>
             ))}
           </Grid>
           <Stack alignItems='center' mt={6}>
-            <Skeleton
-              variant='rounded'
-              animation='wave'
-              sx={{ bgcolor: palette.divider, width: spacing(80) }}
-              height={spacing(6)}
-            />
+            <UiSkeleton variant='rounded' height={spacing(6)} width={spacing(80)} />
           </Stack>
         </>
       ) : isLoadingError ? (
@@ -74,12 +71,12 @@ export default function List({ filter, ...rest }: Props) {
             ))}
           </Grid>
           <PageListPagination
-            page={page[OrgsRequestPage.Number] + 1}
-            count={Math.ceil(meta?.count / DEFAULT_LIMIT) ?? 0}
+            page={page[OrgsRequestPage.Number]}
+            count={Math.ceil(meta?.count / ORGS_IN_PAGE_DEFAULT_LIMIT_) ?? 0}
             onChange={page =>
               setPage(prevState => ({
                 ...prevState,
-                [OrgsRequestPage.Number]: page - 1,
+                [OrgsRequestPage.Number]: page,
               }))
             }
           />
