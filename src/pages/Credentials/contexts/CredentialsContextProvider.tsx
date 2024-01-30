@@ -1,23 +1,25 @@
 import { CircularProgress } from '@mui/material'
-import { W3CCredential } from '@rarimo/rarime-connector'
 import { createContext, PropsWithChildren, useContext } from 'react'
 
 import {
+  getMetadataBatch,
+  groupVCsToOrgGroups,
   loadOrgGroupRequests,
   OrgGroupRequest,
   OrgGroupRequestFilters,
   OrgGroupRequestStatuses,
+  OrgGroupVCMap,
 } from '@/api/modules/orgs'
 import { useLoading, useMetamaskZkpSnapContext } from '@/hooks'
 
 type CredentialsContextValue = {
   orgGroupRequests: OrgGroupRequest[]
-  vcs: W3CCredential[]
+  groupedVCs: OrgGroupVCMap
 }
 
 const CredentialsContext = createContext<CredentialsContextValue>({
   orgGroupRequests: [],
-  vcs: [],
+  groupedVCs: [],
 })
 
 export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
@@ -28,16 +30,16 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
   const { userDid, getCredentials } = useMetamaskZkpSnapContext()
 
   const {
-    data: { orgGroupRequests, vcs },
+    data: { orgGroupRequests, groupedVCs },
     isLoading,
     isLoadingError,
   } = useLoading<{
     orgGroupRequests: OrgGroupRequest[]
-    vcs: W3CCredential[]
+    groupedVCs: OrgGroupVCMap
   }>(
     {
       orgGroupRequests: [],
-      vcs: [],
+      groupedVCs: [],
     },
     async () => {
       {
@@ -55,9 +57,11 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
           getCredentials(),
         ])
 
-        // TODO: load metadata and group them with VCs
+        const metadatas = await getMetadataBatch(vcs)
 
-        return { orgGroupRequests, vcs }
+        const groupedVCs = groupVCsToOrgGroups(metadatas, vcs)
+
+        return { orgGroupRequests, groupedVCs }
       }
     },
     {
@@ -74,7 +78,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
     <CredentialsContext.Provider
       value={{
         orgGroupRequests,
-        vcs,
+        groupedVCs,
       }}
     >
       {children}

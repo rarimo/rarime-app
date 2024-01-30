@@ -1,17 +1,26 @@
+import { W3CCredential } from '@rarimo/rarime-connector'
+
 import { api } from '@/api/clients'
 import {
   CredentialRequest,
+  GroupedCredentials,
+  OrgClaimIDMap,
   OrgGroupCreatedRequest,
   OrgGroupRequest,
   OrgGroupRequestClaim,
   OrgGroupRequestFilters,
+  OrgGroupRequestMetadata,
   OrgGroupRequestPublishing,
   OrgGroupRequestQueryParams,
-  OrgGroupVCsMetadata,
+  OrgGroupVCMap,
   OrgUserRoles,
 } from '@/api/modules/orgs'
 import { DUMMY_ORG_GROUP_REQUESTS } from '@/api/modules/orgs/mocks'
-import { getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
+import {
+  getClaimIdFromVC,
+  getTargetProperty,
+  loadAndParseCredentialSchema,
+} from '@/api/modules/zkp'
 import { ApiServicePaths } from '@/enums/api'
 
 const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {
@@ -155,7 +164,7 @@ export const verifyOrgGroupRequest = async ({
   activationDate?: string
   expirationDate?: string
   role: OrgUserRoles
-  metadata: OrgGroupVCsMetadata
+  metadata: OrgGroupRequestMetadata
 }) => {
   const { data } = await api.post<OrgGroupRequest>(
     `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
@@ -222,8 +231,8 @@ export const getOrgGroupPublishingRequests = async ({
 
 export const loadOrgGroupReqMetadataById = async (
   metadataId: string,
-): Promise<OrgGroupVCsMetadata> => {
-  const { data } = await api.get<OrgGroupVCsMetadata>(
+): Promise<OrgGroupRequestMetadata> => {
+  const { data } = await api.get<OrgGroupRequestMetadata>(
     `${ApiServicePaths.Orgs}/v1/orgs/metadata/${metadataId}`,
   )
 
@@ -276,4 +285,43 @@ export const getOrgGroupRequestClaims = async ({
   )
 
   return data
+}
+
+export const getMetadataBatch = async (vcs: W3CCredential[]): Promise<GroupedCredentials> => {
+  const orgsToClaimIdsMap = vcs.reduce((acc, vc) => {
+    const issuerDID = vc.issuer
+
+    if (!acc[issuerDID]) acc[issuerDID] = []
+
+    acc[issuerDID].push(getClaimIdFromVC(vc))
+
+    return acc
+  }, {} as OrgClaimIDMap)
+
+  const { data } = await api.get<GroupedCredentials>(`${ApiServicePaths.Orgs}/v1/orgs/metadata`, {
+    query: {
+      orgsToClaimIdsMap,
+    },
+  })
+
+  return data
+
+  // return DUMMY_ORG_GROUP_METADATAS // FIXME: remove
+}
+
+export const groupVCsToOrgGroups = (
+  groupedVCs: GroupedCredentials,
+  vcs: W3CCredential[],
+): OrgGroupVCMap => {
+  return groupedVCs.grouped_credentials.map(org => ({
+    orgDID: org.org_did,
+    groups: org.groups.map(group => ({
+      groupID: group.group_id,
+      requests: group.requests.map(req => ({
+        reqID: req.req_id,
+        vcs: vcs.filter(vc => req.claim_ids.includes(getClaimIdFromVC(vc))),
+        metadata: req.metadata,
+      })),
+    })),
+  }))
 }

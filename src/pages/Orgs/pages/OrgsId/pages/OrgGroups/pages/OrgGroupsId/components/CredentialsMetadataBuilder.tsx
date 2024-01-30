@@ -5,7 +5,7 @@ import { Controller } from 'react-hook-form'
 
 import {
   OrgGroupRequest,
-  OrgGroupVCsMetadata,
+  OrgGroupRequestMetadata,
   OrgUserRoles,
   verifyOrgGroupRequest,
 } from '@/api/modules/orgs'
@@ -69,7 +69,7 @@ export default function CredentialsMetadataBuilder({
     control,
   } = useForm(DEFAULT_VALUES, yup => yup.object().shape({}))
 
-  const vcMetadata = useMemo<OrgGroupVCsMetadata>(() => {
+  const vcMetadata = useMemo<OrgGroupRequestMetadata>(() => {
     return {
       title: formState[FieldNames.Title],
       subtitle: formState[FieldNames.Subtitle],
