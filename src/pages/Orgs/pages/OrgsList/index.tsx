@@ -72,7 +72,7 @@ export default function OrgsList() {
           setFilter(prev => ({
             ...prev,
 
-            [OrgsRequestFilters.MetaData]: value,
+            [OrgsRequestFilters.Metadata]: value,
           }))
         }
         actionBar={

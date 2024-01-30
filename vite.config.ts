@@ -68,7 +68,6 @@ export default defineConfig(({ mode }) => {
       },
     },
     optimizeDeps: {
-      exclude: ['js-big-decimal'],
       esbuildOptions: {
         define: {
           global: 'globalThis',
