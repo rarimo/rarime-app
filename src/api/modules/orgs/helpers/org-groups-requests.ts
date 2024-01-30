@@ -4,6 +4,7 @@ import { api } from '@/api/clients'
 import {
   CredentialRequest,
   GroupedCredentials,
+  OrgClaimIDMap,
   OrgGroupCreatedRequest,
   OrgGroupRequest,
   OrgGroupRequestClaim,
@@ -14,7 +15,7 @@ import {
   OrgGroupVCMap,
   OrgUserRoles,
 } from '@/api/modules/orgs'
-import { DUMMY_ORG_GROUP_METADATAS, DUMMY_ORG_GROUP_REQUESTS } from '@/api/modules/orgs/mocks'
+import { DUMMY_ORG_GROUP_REQUESTS } from '@/api/modules/orgs/mocks'
 import {
   getClaimIdFromVC,
   getTargetProperty,
@@ -287,25 +288,25 @@ export const getOrgGroupRequestClaims = async ({
 }
 
 export const getMetadataBatch = async (vcs: W3CCredential[]): Promise<GroupedCredentials> => {
-  // const orgsToClaimIdsMap = vcs.reduce((acc, vc) => {
-  //   const issuerDID = vc.issuer
-  //
-  //   if (!acc[issuerDID]) acc[issuerDID] = []
-  //
-  //   acc[issuerDID].push(getClaimIdFromVC(vc))
-  //
-  //   return acc
-  // }, {} as OrgClaimIDMap)
+  const orgsToClaimIdsMap = vcs.reduce((acc, vc) => {
+    const issuerDID = vc.issuer
 
-  // const { data } = await api.get<OrgMetadataMap>(`${ApiServicePaths.Orgs}/v1/orgs/metadata`, {
-  //   query: {
-  //     orgsToClaimIdsMap,
-  //   },
-  // })
-  //
-  // return data
+    if (!acc[issuerDID]) acc[issuerDID] = []
 
-  return DUMMY_ORG_GROUP_METADATAS // FIXME: remove
+    acc[issuerDID].push(getClaimIdFromVC(vc))
+
+    return acc
+  }, {} as OrgClaimIDMap)
+
+  const { data } = await api.get<GroupedCredentials>(`${ApiServicePaths.Orgs}/v1/orgs/metadata`, {
+    query: {
+      orgsToClaimIdsMap,
+    },
+  })
+
+  return data
+
+  // return DUMMY_ORG_GROUP_METADATAS // FIXME: remove
 }
 
 export const groupVCsToOrgGroups = (
