@@ -25,11 +25,11 @@ export const components: Components<Omit<Theme, 'components'>> = {
         flex: 1;
         flex-direction: column;
       }
-      
+
       a {
         outline: none;
         text-decoration: none;
-      
+
         &:hover,
         &:focus,
         &:active {
@@ -277,6 +277,14 @@ export const components: Components<Omit<Theme, 'components'>> = {
         color: theme.palette.common.white,
         borderRadius: theme.spacing(2),
         padding: theme.spacing(4),
+      }),
+    },
+  },
+  MuiMenu: {
+    styleOverrides: {
+      paper: ({ theme }) => ({
+        borderRadius: theme.spacing(2),
+        boxShadow: '0px 8px 16px 0px rgba(0, 0, 0, 0.04)',
       }),
     },
   },
