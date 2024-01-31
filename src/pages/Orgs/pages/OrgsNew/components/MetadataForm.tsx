@@ -1,11 +1,11 @@
-import { FormControl, Stack, StackProps } from '@mui/material'
+import { FormControl, Stack, StackProps, useTheme } from '@mui/material'
 import { HTMLAttributes, useCallback } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { createOrg, Organization } from '@/api/modules/orgs'
 import { ErrorHandler } from '@/helpers'
 import { useForm, useMetamaskZkpSnapContext } from '@/hooks'
-import { UiButton, UiImageUploader, UiTextField } from '@/ui'
+import { UiButton, UiIcon, UiImageUploader, UiTextField } from '@/ui'
 
 interface Props extends StackProps {
   formProps?: HTMLAttributes<HTMLFormElement>
@@ -29,6 +29,7 @@ const DEFAULT_VALUES = {
 
 export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props) {
   const { userDid } = useMetamaskZkpSnapContext()
+  const { palette } = useTheme()
 
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
@@ -73,67 +74,82 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
   return (
     <Stack {...rest}>
       <form {...formProps} onSubmit={handleSubmit(submit)}>
-        <Controller
-          name={FieldNames.Logo}
-          control={control}
-          render={({ field }) => (
-            <FormControl>
-              <UiImageUploader
-                {...field}
-                label={FieldNames.Logo}
-                // errorMessage={getErrorMessage(FieldNames.Logo)}
-                disabled={isFormDisabled}
-              />
-            </FormControl>
-          )}
-        />
+        <Stack spacing={6} bgcolor={palette.background.light} p={6} borderRadius={4} my={6}>
+          <Controller
+            name={FieldNames.Logo}
+            control={control}
+            render={({ field }) => (
+              <FormControl>
+                <UiImageUploader
+                  {...field}
+                  label='Upload logo'
+                  // errorMessage={getErrorMessage(FieldNames.Logo)}
+                  disabled={isFormDisabled}
+                />
+              </FormControl>
+            )}
+          />
 
-        <Controller
-          name={FieldNames.Name}
-          control={control}
-          render={({ field }) => (
-            <FormControl>
-              <UiTextField
-                {...field}
-                label={FieldNames.Name}
-                errorMessage={getErrorMessage(FieldNames.Name)}
-                disabled={isFormDisabled}
-              />
-            </FormControl>
-          )}
-        />
+          <Controller
+            name={FieldNames.Domain}
+            control={control}
+            render={({ field }) => (
+              <FormControl>
+                <UiTextField
+                  {...field}
+                  label='Domain'
+                  placeholder='https:///'
+                  errorMessage={getErrorMessage(FieldNames.Domain)}
+                  disabled={isFormDisabled}
+                />
+              </FormControl>
+            )}
+          />
 
-        <Controller
-          name={FieldNames.Description}
-          control={control}
-          render={({ field }) => (
-            <FormControl>
-              <UiTextField
-                {...field}
-                label={FieldNames.Description}
-                errorMessage={getErrorMessage(FieldNames.Description)}
-                disabled={isFormDisabled}
-              />
-            </FormControl>
-          )}
-        />
+          <Controller
+            name={FieldNames.Name}
+            control={control}
+            render={({ field }) => (
+              <FormControl>
+                <UiTextField
+                  {...field}
+                  label='Name'
+                  placeholder='Company name'
+                  errorMessage={getErrorMessage(FieldNames.Name)}
+                  disabled={isFormDisabled}
+                />
+              </FormControl>
+            )}
+          />
 
-        <Controller
-          name={FieldNames.Domain}
-          control={control}
-          render={({ field }) => (
-            <FormControl>
-              <UiTextField
-                {...field}
-                label={FieldNames.Domain}
-                errorMessage={getErrorMessage(FieldNames.Domain)}
-                disabled={isFormDisabled}
-              />
-            </FormControl>
-          )}
-        />
+          <Controller
+            name={FieldNames.Description}
+            control={control}
+            render={({ field }) => (
+              <FormControl>
+                <UiTextField
+                  {...field}
+                  label={'Description'}
+                  multiline
+                  minRows={5}
+                  maxRows={5}
+                  placeholder='Write a small description ?'
+                  errorMessage={getErrorMessage(FieldNames.Description)}
+                  disabled={isFormDisabled}
+                />
+              </FormControl>
+            )}
+          />
+        </Stack>
 
-        <UiButton type='submit'>Next</UiButton>
+        <UiButton
+          type='submit'
+          sx={{ '&.MuiButton-sizeMedium': { px: 8, py: 3.5, height: 'auto' } }}
+          size='medium'
+          endIcon={<UiIcon componentName={'arrowForward'} size={4} />}
+        >
+          {'Create'}
+        </UiButton>
       </form>
     </Stack>
   )

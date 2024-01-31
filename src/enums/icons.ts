@@ -1,3 +1,4 @@
+import { default as ArrowForward } from '@mui/icons-material/ArrowForward'
 import { default as AccountCircleIcon } from '@mui/icons-material/AccountCircle'
 import { default as Add } from '@mui/icons-material/Add'
 import { default as AddPhotoAlternateOutlined } from '@mui/icons-material/AddPhotoAlternateOutlined'
@@ -38,6 +39,7 @@ export const ICON_COMPONENTS = {
   accountCircle: AccountCircleIcon,
   add: Add,
   addPhotoAlternativeOutlined: AddPhotoAlternateOutlined,
+  arrowForward: ArrowForward,
   check: CheckIcon,
   chevronLeft: ChevronLeft,
   contentCopy: ContentCopy,
