@@ -2,8 +2,8 @@ import { Grid, Pagination, Stack, StackProps } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 
 import {
-  type LoadListResponseType,
   loadOrgs,
+  type OrgsListResponse,
   OrgsRequestFilters,
   type OrgsRequestFiltersMap,
   OrgsRequestPage,
@@ -34,7 +34,7 @@ export default function List({ filter, ...rest }: Props) {
     isLoading,
     isLoadingError,
     isEmpty,
-  } = useLoading<LoadListResponseType>({} as LoadListResponseType, loadList, {
+  } = useLoading<OrgsListResponse>({} as OrgsListResponse, loadList, {
     loadArgs: [filter, page],
     loadOnMount: true,
   })

@@ -2,6 +2,7 @@ import { api } from '@/api/clients'
 import {
   type Organization,
   type OrganizationCreate,
+  OrgListMeta,
   type OrgsRequestQueryParams,
   OrgsStatuses,
   type OrgUser,
@@ -95,9 +96,12 @@ export const DUMMY_ORGS: Organization[] = [
 ]
 
 export const loadOrgs = async (query: OrgsRequestQueryParams) => {
-  const { data, meta } = await api.get<Organization[]>(`${ApiServicePaths.Orgs}/v1/orgs`, {
-    query,
-  })
+  const { data, meta } = await api.get<Organization[], OrgListMeta>(
+    `${ApiServicePaths.Orgs}/v1/orgs`,
+    {
+      query,
+    },
+  )
 
   return { data, meta }
 }

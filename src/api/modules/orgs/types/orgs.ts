@@ -83,7 +83,7 @@ export type OrgListMeta = {
   count: number
 }
 
-export type LoadListResponseType = {
+export type OrgsListResponse = {
   data: Organization[]
   meta: OrgListMeta
 }
