@@ -2,11 +2,11 @@ import { Grid, Pagination, Stack, StackProps } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 
 import {
+  type LoadListResponseType,
   loadOrgs,
   OrgsRequestFilters,
   type OrgsRequestFiltersMap,
   OrgsRequestPage,
-  type LoadListResponseType,
 } from '@/api/modules/orgs'
 import { useLoading } from '@/hooks'
 
@@ -66,7 +66,7 @@ export default function List({ filter, ...rest }: Props) {
           </Grid>
           <Stack alignItems='center' mt={6} {...rest}>
             <Pagination
-              count={Math.ceil(meta?.count / ORGS_PAGE_LIMIT)}
+              count={Math.ceil(meta.count / ORGS_PAGE_LIMIT)}
               page={page[OrgsRequestPage.Number]}
               onChange={(_, page) =>
                 setPage(prevState => ({
