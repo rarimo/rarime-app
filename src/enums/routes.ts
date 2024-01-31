@@ -23,4 +23,8 @@ export enum RoutePaths {
   AcceptInvitation = '/i',
   AcceptInvitationEmailVerification = '/i/verify-email',
   AcceptInvitationFillRequest = '/i/fill-request',
+
+  Credentials = '/credentials',
+  CredentialsList = '/credentials/list',
+  CredentialsRequests = '/credentials/requests',
 }

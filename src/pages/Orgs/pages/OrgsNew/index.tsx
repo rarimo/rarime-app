@@ -2,7 +2,7 @@ import { Stack } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { generatePath, useNavigate } from 'react-router-dom'
 
-import { Organization } from '@/api'
+import { Organization } from '@/api/modules/orgs'
 import { RoutePaths } from '@/enums'
 import { ErrorHandler } from '@/helpers'
 import { useStepper } from '@/hooks'

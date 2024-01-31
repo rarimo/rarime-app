@@ -1,11 +1,14 @@
+import { W3CCredential } from '@rarimo/rarime-connector'
+
 import {
   Organization,
   OrgGroup,
   OrgGroupRequestFilters,
   OrgGroupRequestIncludes,
+  OrgGroupRequestMetadata,
   OrgGroupRequestPublishingStatuses,
   OrgGroupRequestStatuses,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { CredentialSubject } from '@/api/modules/zkp'
 
 export type CredentialRequest = {
@@ -47,8 +50,8 @@ export type OrgGroupCreatedRequest = {
 }
 
 export type OrgGroupRequestFiltersMap = {
-  [OrgGroupRequestFilters.UserDid]: string
-  [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses[]
+  [OrgGroupRequestFilters.UserDid]?: string
+  [OrgGroupRequestFilters.Status]?: OrgGroupRequestStatuses[]
 }
 
 export type OrgGroupRequestQueryParams = {
@@ -66,3 +69,46 @@ export type OrgGroupRequestPublishing = {
   schema_url: string
   status: OrgGroupRequestPublishingStatuses
 }
+
+export type OrgGroupRequestClaim = {
+  id: string
+  type: 'claims'
+  claim_id: string
+  request_id: string
+  schema_url: string
+  status: string
+  created_at: string
+  updated_at: string
+  organization?: Organization
+}
+
+export type OrgClaimIDMap = Record<string, string[]>
+
+export type GroupedCredentials = {
+  id: string
+  type: 'grouped_credentials'
+
+  grouped_credentials: {
+    org_did: string
+    groups: {
+      group_id: string
+      requests: {
+        req_id: string
+        claim_ids: string[]
+        metadata: OrgGroupRequestMetadata
+      }[]
+    }[]
+  }[]
+}
+
+export type OrgGroupVCMap = {
+  orgDID: string
+  groups: {
+    groupID: string
+    requests: {
+      reqID: string
+      vcs: W3CCredential[]
+      metadata: OrgGroupRequestMetadata
+    }[]
+  }[]
+}[]

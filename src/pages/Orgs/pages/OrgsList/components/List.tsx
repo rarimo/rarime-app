@@ -1,8 +1,13 @@
 import { Grid, Pagination, Stack, StackProps } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 
-import { loadOrgs, OrgsRequestFilters, type OrgsRequestFiltersMap, OrgsRequestPage } from '@/api'
-import { LoadListResponseType } from '@/api'
+import {
+  loadOrgs,
+  OrgsRequestFilters,
+  type OrgsRequestFiltersMap,
+  OrgsRequestPage,
+  type LoadListResponseType,
+} from '@/api/modules/orgs'
 import { useLoading } from '@/hooks'
 
 import ListCard from './ListCard'

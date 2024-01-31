@@ -6,7 +6,7 @@ import {
   OrgGroupRequest,
   OrgGroupRequestFiltersMap,
   OrgGroupRequestStatuses,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { useLoading } from '@/hooks'
 import { UiButton, UiDrawer, UiIcon } from '@/ui'
 

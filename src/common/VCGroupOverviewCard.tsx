@@ -1,7 +1,7 @@
 import { Avatar, Stack, StackProps, Typography } from '@mui/material'
 import { useMemo } from 'react'
 
-import { Organization } from '@/api'
+import { Organization } from '@/api/modules/orgs'
 
 interface Props extends StackProps {
   title: string

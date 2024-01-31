@@ -1,8 +1,8 @@
 import { fetcher } from '@distributedlab/fetcher'
-import type { SaveCredentialsRequestParams } from '@rarimo/rarime-connector'
+import { SaveCredentialsRequestParams, W3CCredential } from '@rarimo/rarime-connector'
 import omit from 'lodash/omit'
 
-import { api } from '@/api'
+import { api } from '@/api/clients'
 import {
   CredentialSubject,
   JsonLdSchema,
@@ -67,4 +67,16 @@ export const getTargetProperty = (
   parsedCredentialSchema: ParsedCredentialSchema,
 ): ParsedCredentialSchemaProperty => {
   return parsedCredentialSchema.credSubjectProperties.filter(el => el.key !== 'groupID')[0]
+}
+
+export const getClaimIdFromVC = (credential: W3CCredential) => {
+  try {
+    const claimIdUrl = new URL(credential.id)
+
+    const pathNameParts = claimIdUrl.pathname.split('/')
+
+    return pathNameParts[pathNameParts.length - 1]
+  } catch (error) {
+    return credential.id
+  }
 }

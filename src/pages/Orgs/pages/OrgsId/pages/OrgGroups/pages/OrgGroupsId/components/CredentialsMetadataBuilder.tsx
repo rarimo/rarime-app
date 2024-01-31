@@ -3,7 +3,12 @@ import { FormControl, Stack, StackProps } from '@mui/material'
 import { useCallback, useMemo } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { OrgGroupRequest, OrgGroupVCsMetadata, OrgUserRoles, verifyOrgGroupRequest } from '@/api'
+import {
+  OrgGroupRequest,
+  OrgGroupRequestMetadata,
+  OrgUserRoles,
+  verifyOrgGroupRequest,
+} from '@/api/modules/orgs'
 import { VCGroupOverviewCard } from '@/common'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
@@ -64,7 +69,7 @@ export default function CredentialsMetadataBuilder({
     control,
   } = useForm(DEFAULT_VALUES, yup => yup.object().shape({}))
 
-  const vcMetadata = useMemo<OrgGroupVCsMetadata>(() => {
+  const vcMetadata = useMemo<OrgGroupRequestMetadata>(() => {
     return {
       title: formState[FieldNames.Title],
       subtitle: formState[FieldNames.Subtitle],

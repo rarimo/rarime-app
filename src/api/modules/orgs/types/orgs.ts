@@ -1,6 +1,11 @@
 import { JsonApiDefaultMeta } from '@distributedlab/jac'
 
-import type { OrgsIncludes, OrgsRequestFilters, OrgsRequestPage, OrgsStatuses } from '@/api'
+import type {
+  OrgsIncludes,
+  OrgsRequestFilters,
+  OrgsRequestPage,
+  OrgsStatuses,
+} from '@/api/modules/orgs'
 
 export type OrgMetadataLink = {
   title: string
