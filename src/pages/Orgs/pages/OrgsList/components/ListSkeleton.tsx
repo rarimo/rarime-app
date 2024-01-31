@@ -3,15 +3,15 @@ import { Grid, Stack, useTheme } from '@mui/material'
 import { UiSkeleton } from '@/ui'
 
 interface Props {
-  amountCard: number
+  cardsCount: number
 }
 
-export default function ListSkeleton({ amountCard }: Props) {
+export default function ListSkeleton({ cardsCount }: Props) {
   const { spacing } = useTheme()
   return (
     <>
       <Grid container spacing={6}>
-        {Array.from({ length: amountCard }).map((_, idx) => (
+        {Array.from({ length: cardsCount }).map((_, idx) => (
           <Grid key={idx} item xs={6}>
             <UiSkeleton variant='rounded' sx={{ borderRadius: 3 }} height={spacing(60)} />
           </Grid>

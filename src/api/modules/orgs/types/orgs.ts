@@ -1,3 +1,5 @@
+import { JsonApiDefaultMeta } from '@distributedlab/jac'
+
 import type { OrgsIncludes, OrgsRequestFilters, OrgsRequestPage, OrgsStatuses } from '@/api'
 
 export type OrgMetadataLink = {
@@ -72,4 +74,9 @@ export type OrgVerificationCode = {
   id: string
   type: string
   code: string
+}
+
+export type LoadListResponseType = {
+  data: Organization[]
+  meta: JsonApiDefaultMeta
 }
