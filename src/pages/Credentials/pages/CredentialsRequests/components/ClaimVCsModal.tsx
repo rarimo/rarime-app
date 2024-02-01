@@ -24,13 +24,12 @@ export default function ClaimVCsModal({ orgGroupRequest, onClose, ...rest }: Pro
     async () => {
       if (!orgGroupRequest) throw new TypeError('orgGroupRequest is not defined')
 
-      const orgGroupRequestClaims = orgGroupRequest.claims?.map(el => el.id)
+      const claimIds = orgGroupRequest.claims?.map(el => el.id)
 
-      if (!orgGroupRequestClaims?.length)
-        throw new TypeError('orgGroupRequestClaims is not defined')
+      if (!claimIds?.length) throw new TypeError('claimIds is not defined')
 
       const [claimOffers, vcFields] = await Promise.all([
-        Promise.all(orgGroupRequestClaims.map(claimId => getClaimOffer(userDid, claimId))),
+        Promise.all(claimIds.map(claimId => getClaimOffer(userDid, claimId))),
         Promise.all(
           orgGroupRequest.credential_requests.map(async req =>
             getTargetProperty(
