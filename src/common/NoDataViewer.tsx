@@ -1,15 +1,17 @@
 import { Stack, StackProps, Typography, useTheme } from '@mui/material'
 import { ReactNode } from 'react'
 
+import { UiIcon } from '@/ui'
+
 interface Props extends StackProps {
-  icon?: string
+  icon?: ReactNode
   title?: string
   description?: string
   action?: ReactNode
 }
 
 export default function NoDataViewer({
-  icon = '📁',
+  icon = <UiIcon componentName='folderOff' />,
   title = 'No data',
   description,
   action,
@@ -34,11 +36,12 @@ export default function NoDataViewer({
         alignItems={'center'}
         justifyContent={'center'}
         bgcolor={palette.action.active}
+        color={palette.text.secondary}
         borderRadius={250}
         width={spacing(12)}
         height={spacing(12)}
       >
-        <Typography variant='subtitle1'>{icon}</Typography>
+        {icon}
       </Stack>
       <Stack spacing={1} textAlign={'center'}>
         <Typography variant='body3'>{title}</Typography>

@@ -42,7 +42,6 @@ export default function LinksBlock() {
           links.map((link, index) => <LinkItem key={index} link={link} />)
         ) : (
           <NoDataViewer
-            icon={'🔗'}
             title={'No Links'}
             action={
               isOrgOwner && (

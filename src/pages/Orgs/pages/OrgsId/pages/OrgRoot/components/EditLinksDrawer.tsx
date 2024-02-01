@@ -2,7 +2,7 @@ import { CircularProgress, DrawerProps, Stack } from '@mui/material'
 import { FormEvent, useCallback } from 'react'
 import { useFieldArray } from 'react-hook-form'
 
-import { OrgMetadataLink, updateOrgMetadata } from '@/api'
+import { OrgMetadataLink, updateOrgMetadata } from '@/api/modules/orgs'
 import VerticalDraggableContext from '@/contexts/vertical-draggable'
 import { BusEvents } from '@/enums'
 import { bus, ErrorHandler } from '@/helpers'

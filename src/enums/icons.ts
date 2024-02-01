@@ -11,6 +11,7 @@ import DeleteOutlined from '@mui/icons-material/DeleteOutlined'
 import DragIndicator from '@mui/icons-material/DragIndicator'
 import DriveFileRenameOutlineOutlined from '@mui/icons-material/DriveFileRenameOutlineOutlined'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
+import FolderOff from '@mui/icons-material/FolderOff'
 import InfoIcon from '@mui/icons-material/Info'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
@@ -51,6 +52,7 @@ export const ICON_COMPONENTS = {
   dragIndicator: DragIndicator,
   driveFileRenameOutlineOutlined: DriveFileRenameOutlineOutlined,
   errorOutline: ErrorOutlineIcon,
+  folderOff: FolderOff,
   info: InfoIcon,
   infoOutlined: InfoOutlinedIcon,
   keyboardArrowDownOutlined: KeyboardArrowDownOutlinedIcon,

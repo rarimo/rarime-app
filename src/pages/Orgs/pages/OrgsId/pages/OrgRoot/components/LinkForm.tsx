@@ -4,7 +4,7 @@ import { FormControl, Stack, Typography } from '@mui/material'
 import { useMemo } from 'react'
 import { Controller, FieldArrayWithId, FieldPath } from 'react-hook-form'
 
-import { OrgMetadataLink } from '@/api'
+import { OrgMetadataLink } from '@/api/modules/orgs'
 import { Form } from '@/hooks'
 import { UiIcon, UiIconButton, UiTextField } from '@/ui'
 
