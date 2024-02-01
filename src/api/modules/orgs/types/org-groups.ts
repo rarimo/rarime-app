@@ -1,17 +1,8 @@
-import { OrgGroupIncludes } from '@/api'
+import { OrgGroupIncludes } from '@/api/modules/orgs'
 
 export type OrgGroupMetadata = {
   name: string
   description: string
-  // TODO: other metadata e. g. styles
-}
-
-export type OrgGroupVCsMetadata = {
-  title: string
-  subtitle: string
-  appearance: {
-    background: string
-  }
 }
 
 export type OrgGroupRule = {

@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { loadOrgGroups } from '@/api'
+import { loadOrgGroups } from '@/api/modules/orgs'
 import { useLoading } from '@/hooks'
 
 /**

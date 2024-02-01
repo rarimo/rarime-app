@@ -1,11 +1,12 @@
 import { PROVIDERS } from '@distributedlab/w3p'
 import { useCallback, useMemo } from 'react'
 
-import { OrgUserRoles } from '@/api'
 import { authorizeUser } from '@/api/modules/auth'
+import { OrgUserRoles } from '@/api/modules/orgs'
 import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp'
 import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
 import { useWeb3Context } from '@/hooks/web3'
+import { web3Store } from '@/store'
 
 // TODO: add jwt validations for specific org
 export const useAuth = () => {
@@ -30,16 +31,28 @@ export const useAuth = () => {
   const logout = useCallback(async () => {
     await provider?.disconnect()
     await checkSnapStatus()
+
+    web3Store.setProviderType(undefined)
   }, [checkSnapStatus, provider])
 
-  const connectProviders = useCallback(async () => {
-    await init(PROVIDERS.Metamask)
-    const connector = await connectOrInstallSnap()
+  const connectProviders = useCallback(
+    async (providerType?: PROVIDERS) => {
+      const currentProviderType = providerType || web3Store.providerType
 
-    await checkSnapStatus()
+      web3Store.setProviderType(currentProviderType)
 
-    return createIdentity(connector)
-  }, [checkSnapStatus, connectOrInstallSnap, createIdentity, init])
+      if (!currentProviderType) return
+
+      await init(currentProviderType)
+
+      const connector = await connectOrInstallSnap()
+
+      await checkSnapStatus()
+
+      return createIdentity(connector)
+    },
+    [checkSnapStatus, connectOrInstallSnap, createIdentity, init],
+  )
 
   const authorize = useCallback(
     async ({

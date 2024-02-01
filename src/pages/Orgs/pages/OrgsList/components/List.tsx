@@ -1,7 +1,7 @@
 import { Grid, Stack, StackProps } from '@mui/material'
 import { useCallback } from 'react'
 
-import { loadOrgs, Organization, type OrgsRequestFiltersMap } from '@/api'
+import { loadOrgs, Organization, type OrgsRequestFiltersMap } from '@/api/modules/orgs'
 import { useLoading } from '@/hooks'
 
 import ListCard from './ListCard'

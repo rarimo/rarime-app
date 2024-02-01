@@ -1,4 +1,10 @@
-import { api, OrgGroup, OrgGroupCreate, OrgGroupQueryParams, OrgGroupRequestStatuses } from '@/api'
+import { api } from '@/api/clients'
+import {
+  OrgGroup,
+  OrgGroupCreate,
+  OrgGroupQueryParams,
+  OrgGroupRequestStatuses,
+} from '@/api/modules/orgs'
 import { ApiServicePaths } from '@/enums/api'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

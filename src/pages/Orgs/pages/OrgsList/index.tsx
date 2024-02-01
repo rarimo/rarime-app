@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { loadOrgsCount, OrgsRequestFilters, OrgsRequestFiltersMap } from '@/api'
+import { loadOrgsCount, OrgsRequestFilters, OrgsRequestFiltersMap } from '@/api/modules/orgs'
 import { PageListFilters, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useLoading, useMetamaskZkpSnapContext, useNestedRoutes } from '@/hooks'

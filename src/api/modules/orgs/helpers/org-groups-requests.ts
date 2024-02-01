@@ -1,16 +1,24 @@
+import { W3CCredential } from '@rarimo/rarime-connector'
+
+import { api } from '@/api/clients'
 import {
-  api,
   CredentialRequest,
   OrgGroupCreatedRequest,
   OrgGroupRequest,
   OrgGroupRequestFilters,
+  OrgGroupRequestMetadata,
   OrgGroupRequestPublishing,
   OrgGroupRequestQueryParams,
-  OrgGroupVCsMetadata,
+  OrgGroupRequestWithClaims,
+  OrgGroupVCMap,
   OrgUserRoles,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { DUMMY_ORG_GROUP_REQUESTS } from '@/api/modules/orgs/mocks'
-import { getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
+import {
+  getClaimIdFromVC,
+  getTargetProperty,
+  loadAndParseCredentialSchema,
+} from '@/api/modules/zkp'
 import { ApiServicePaths } from '@/enums/api'
 
 const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {
@@ -102,6 +110,14 @@ export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) =
   return fakeLoadRequestsAll(query)
 }
 
+export const loadRequestsByUserDid = async (did: string): Promise<OrgGroupRequestWithClaims[]> => {
+  const { data } = await api.get<OrgGroupRequestWithClaims[]>(
+    `${ApiServicePaths.Orgs}/v1/users/${did}/requests`,
+  )
+
+  return data
+}
+
 export const loadOrgGroupRequestById = async (orgId: string, groupId: string, reqId: string) => {
   const { data } = await api.get<OrgGroupRequest>(
     `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
@@ -154,7 +170,7 @@ export const verifyOrgGroupRequest = async ({
   activationDate?: string
   expirationDate?: string
   role: OrgUserRoles
-  metadata: OrgGroupVCsMetadata
+  metadata: OrgGroupRequestMetadata
 }) => {
   const { data } = await api.post<OrgGroupRequest>(
     `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}`,
@@ -219,25 +235,6 @@ export const getOrgGroupPublishingRequests = async ({
   return data
 }
 
-export const loadOrgGroupReqMetadataById = async (
-  metadataId: string,
-): Promise<OrgGroupVCsMetadata> => {
-  const { data } = await api.get<OrgGroupVCsMetadata>(
-    `${ApiServicePaths.Orgs}/v1/orgs/metadata/${metadataId}`,
-  )
-
-  return data
-
-  // TODO: remove once backend is ready
-  // return {
-  //   title: 'title',
-  //   subtitle: 'subtitle',
-  //   appearance: {
-  //     background: '#ffffff',
-  //   },
-  // }
-}
-
 export const buildCredentialRequest = async (
   schemeUrl: string,
   propertyValue: string,
@@ -259,4 +256,21 @@ export const buildCredentialRequest = async (
     mt_proof: true,
     signature_proof: true,
   }
+}
+
+export const groupVCsToOrgGroups = (
+  orgGroupRequests: OrgGroupRequestWithClaims[],
+  vcs: W3CCredential[],
+): OrgGroupVCMap => {
+  return orgGroupRequests.map(orgGroupRequest => {
+    if (!orgGroupRequest.organization?.did) throw new TypeError('Organization DID is missing')
+
+    const orgRequestClaimIDs = orgGroupRequest.claims.map(claim => claim.id)
+
+    return {
+      orgDID: orgGroupRequest.organization.did,
+      groupID: orgGroupRequest.group_id,
+      vcs: vcs.filter(vc => orgRequestClaimIDs.includes(getClaimIdFromVC(vc))),
+    }
+  })
 }

@@ -1,18 +1,17 @@
 import { useCallback, useMemo } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { loadOrgGroupRequestById, OrgGroupRequest } from '@/api'
 import { parseFillRequestDetailsSearchParams } from '@/api/modules/auth'
+import { loadOrgGroupRequestById, OrgGroupRequest } from '@/api/modules/orgs'
 import {
   getTargetProperty,
   loadAndParseCredentialSchema,
   ParsedCredentialSchemaProperty,
 } from '@/api/modules/zkp'
+import { FillRequestForm } from '@/common'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
 import { useLoading } from '@/hooks'
-
-import { FillRequestForm } from './components'
 
 export default function FillRequest() {
   const navigate = useNavigate()

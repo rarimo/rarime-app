@@ -136,11 +136,22 @@ export function useProvider<T extends keyof Record<string, string>>() {
     [provider],
   )
 
+  const resetProviderState = useCallback(() => {
+    setProviderReactiveState({
+      address: '',
+      isConnected: false,
+      chainId: '',
+      chainType: undefined,
+      providerType: '',
+    })
+  }, [])
+
   const disconnect = useCallback(async (): Promise<void> => {
-    if (await provider?.disconnect?.()) return
+    await provider?.disconnect?.()
 
     setProvider(undefined)
-  }, [provider])
+    resetProviderState()
+  }, [provider, resetProviderState])
 
   useEffect(() => {
     return () => {

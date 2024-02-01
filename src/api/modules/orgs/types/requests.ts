@@ -1,3 +1,5 @@
+import { W3CCredential } from '@rarimo/rarime-connector'
+
 import {
   Organization,
   OrgGroup,
@@ -5,7 +7,7 @@ import {
   OrgGroupRequestIncludes,
   OrgGroupRequestPublishingStatuses,
   OrgGroupRequestStatuses,
-} from '@/api'
+} from '@/api/modules/orgs'
 import { CredentialSubject } from '@/api/modules/zkp'
 
 export type CredentialRequest = {
@@ -15,6 +17,14 @@ export type CredentialRequest = {
   expiration: string
   mt_proof: boolean
   signature_proof: boolean
+}
+
+export type OrgGroupRequestMetadata = {
+  title: string
+  subtitle: string
+  appearance: {
+    background: string
+  }
 }
 
 export type OrgGroupRequest = {
@@ -30,8 +40,16 @@ export type OrgGroupRequest = {
   }
   created_at: string
   updated_at: string
+  metadata: OrgGroupRequestMetadata
   organization?: Organization
   group?: OrgGroup
+}
+
+export type OrgGroupRequestWithClaims = OrgGroupRequest & {
+  claims: {
+    id: string
+    type: 'claims'
+  }[]
 }
 
 export type OrgGroupCreatedRequest = {
@@ -47,8 +65,8 @@ export type OrgGroupCreatedRequest = {
 }
 
 export type OrgGroupRequestFiltersMap = {
-  [OrgGroupRequestFilters.UserDid]: string
-  [OrgGroupRequestFilters.Status]: OrgGroupRequestStatuses[]
+  [OrgGroupRequestFilters.UserDid]?: string
+  [OrgGroupRequestFilters.Status]?: OrgGroupRequestStatuses[]
 }
 
 export type OrgGroupRequestQueryParams = {
@@ -66,3 +84,9 @@ export type OrgGroupRequestPublishing = {
   schema_url: string
   status: OrgGroupRequestPublishingStatuses
 }
+
+export type OrgGroupVCMap = {
+  orgDID: string
+  groupID: string
+  vcs: W3CCredential[]
+}[]

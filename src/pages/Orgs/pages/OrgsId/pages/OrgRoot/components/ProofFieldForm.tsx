@@ -2,7 +2,7 @@ import { InputAdornment, useTheme } from '@mui/material'
 import startCase from 'lodash/startCase'
 import { useCallback, useMemo, useState } from 'react'
 
-import { Proof } from '@/api'
+import { Proof } from '@/api/modules/link'
 import { getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { sleep } from '@/helpers'
 import { useLoading } from '@/hooks'

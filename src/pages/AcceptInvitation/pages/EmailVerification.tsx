@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from 'react'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
-import { acceptInvitation, OrgUserRoles } from '@/api'
 import { buildFillRequestDetailsSearchParams, getInvitationDetails } from '@/api/modules/auth'
+import { acceptInvitation, OrgUserRoles } from '@/api/modules/orgs'
 import { RoutePaths } from '@/enums'
 import { sleep } from '@/helpers'
 import { useAuth, useLoading, useMetamaskZkpSnapContext } from '@/hooks'

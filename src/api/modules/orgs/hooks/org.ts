@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { loadOrgById, OrgsIncludes } from '@/api'
+import { loadOrgById, OrgsIncludes } from '@/api/modules/orgs'
 import { useLoading, useMetamaskZkpSnapContext } from '@/hooks'
 
 export const useOrg = (id: string) => {

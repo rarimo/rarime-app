@@ -1,7 +1,7 @@
 import { Grid, Stack, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 
-import { useLinkProofs } from '@/api'
+import { useLinkProofs } from '@/api/modules/link'
 import { UiIcon, UiTooltip } from '@/ui'
 
 import ProofFieldForm from './ProofFieldForm'

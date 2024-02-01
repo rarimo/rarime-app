@@ -1,4 +1,4 @@
-import type { OrgsIncludes, OrgsRequestFilters, OrgsStatuses } from '@/api'
+import type { OrgsIncludes, OrgsRequestFilters, OrgsStatuses } from '@/api/modules/orgs'
 
 export type OrgMetadataLink = {
   title: string

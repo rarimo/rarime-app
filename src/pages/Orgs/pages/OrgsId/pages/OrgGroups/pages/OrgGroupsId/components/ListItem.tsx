@@ -1,6 +1,6 @@
 import { Card, CardContent, CardProps, Typography } from '@mui/material'
 
-import { OrgGroupRequest } from '@/api'
+import { OrgGroupRequest } from '@/api/modules/orgs'
 
 interface Props extends CardProps {
   orgGroupRequest: OrgGroupRequest

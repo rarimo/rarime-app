@@ -1,6 +1,6 @@
 import { Divider, Stack, StackProps, Typography } from '@mui/material'
 
-import { OrgGroupRequest } from '@/api'
+import { OrgGroupRequest } from '@/api/modules/orgs'
 import { getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { useLoading } from '@/hooks'
 
