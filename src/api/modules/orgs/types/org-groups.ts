@@ -5,14 +5,6 @@ export type OrgGroupMetadata = {
   description: string
 }
 
-export type OrgGroupRequestMetadata = {
-  title: string
-  subtitle: string
-  appearance: {
-    background: string
-  }
-}
-
 export type OrgGroupRule = {
   name: string
   scheme: string
