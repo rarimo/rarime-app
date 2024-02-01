@@ -131,8 +131,7 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
                   {...field}
                   label={'Description'}
                   multiline
-                  minRows={5}
-                  maxRows={5}
+                  rows={5}
                   placeholder='Write a small description ?'
                   errorMessage={getErrorMessage(FieldNames.Description)}
                   disabled={isFormDisabled}

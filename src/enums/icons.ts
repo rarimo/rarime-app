@@ -1,7 +1,7 @@
-import { default as ArrowForward } from '@mui/icons-material/ArrowForward'
 import { default as AccountCircleIcon } from '@mui/icons-material/AccountCircle'
 import { default as Add } from '@mui/icons-material/Add'
 import { default as AddPhotoAlternateOutlined } from '@mui/icons-material/AddPhotoAlternateOutlined'
+import { default as ArrowForward } from '@mui/icons-material/ArrowForward'
 import { default as CheckIcon } from '@mui/icons-material/Check'
 import { default as ChevronLeft } from '@mui/icons-material/ChevronLeft'
 import { default as Close } from '@mui/icons-material/Close'
@@ -33,6 +33,7 @@ export enum Icons {
   Instagram = 'instagram',
   Twitter = 'twitter',
   Rarime = 'rarime',
+  RegistrationIntoBg = 'registration-into-bg',
 }
 
 export const ICON_COMPONENTS = {

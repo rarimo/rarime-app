@@ -8,7 +8,7 @@ import { ErrorHandler } from '@/helpers'
 import { useStepper } from '@/hooks'
 import { UiStepper } from '@/ui'
 
-import { MetadataForm, VerifyForm } from './components'
+import { MetadataForm, RegisterInto, VerifyForm } from './components'
 
 export default function OrgsNew() {
   const [draftOrg, setDraftOrg] = useState<Organization>()
@@ -27,6 +27,10 @@ export default function OrgsNew() {
 
   const { steps, activeStep, activeComponent } = useStepper(
     ({ nextStep }) => [
+      {
+        label: 'Into',
+        content: <RegisterInto nextStepCb={nextStep} />,
+      },
       {
         label: 'Details',
         content: <MetadataForm onOrgCreated={org => handleOrgCreated(org, nextStep)} />,
