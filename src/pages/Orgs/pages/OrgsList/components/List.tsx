@@ -1,5 +1,5 @@
 import { Grid, Pagination, Stack, StackProps } from '@mui/material'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import {
   loadOrgs,
@@ -38,11 +38,6 @@ export default function List({ filter, ...rest }: Props) {
     loadOnMount: true,
   })
 
-  const isEmpty = useMemo(() => {
-    if (!orgList) return true
-    return orgList.length === 0
-  }, [orgList])
-
   useEffect(() => {
     setPage(prevState => ({
       ...prevState,
@@ -57,7 +52,7 @@ export default function List({ filter, ...rest }: Props) {
         <ListSkeleton cardsCount={ORGS_PAGE_LIMIT} />
       ) : isLoadingError ? (
         <></>
-      ) : isEmpty ? (
+      ) : !orgList?.length ? (
         <></>
       ) : (
         <>

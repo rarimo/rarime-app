@@ -1,3 +1,4 @@
+import _isEmpty from 'lodash/isEmpty'
 import { useEffect, useMemo, useState } from 'react'
 
 import { ErrorHandler } from '@/helpers'
@@ -15,6 +16,7 @@ export const useLoading = <T>(
   isLoading: boolean
   isLoadingError: boolean
   reload: () => Promise<void>
+  isEmpty: boolean
   update: () => Promise<void>
   reset: () => void
 } => {
@@ -23,6 +25,11 @@ export const useLoading = <T>(
   const [isLoading, setIsLoading] = useState(loadOnMount)
   const [isLoadingError, setIsLoadingError] = useState(false)
   const [data, setData] = useState(initialState as T)
+
+  const isEmpty = useMemo(() => {
+    if (!data) return true
+    return _isEmpty(data)
+  }, [data])
 
   const load = async () => {
     setIsLoading(true)
@@ -61,5 +68,5 @@ export const useLoading = <T>(
     setData(initialState as T)
   }
 
-  return { data, isLoading, isLoadingError, reload, update, reset }
+  return { data, isLoading, isLoadingError, isEmpty, reload, update, reset }
 }
