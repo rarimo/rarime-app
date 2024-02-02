@@ -138,8 +138,7 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
 
         <UiButton
           type='submit'
-          sx={{ '&.MuiButton-sizeMedium': { px: 8, py: 3.5, height: 'auto' } }}
-          size='medium'
+          size='large'
           endIcon={<UiIcon componentName={'arrowForward'} size={4} />}
         >
           {'Create'}
