@@ -100,6 +100,7 @@ export const DUMMY_ORGS: Organization[] = [
 
 export const loadOrgs = (
   query: OrgsRequestQueryParams,
+  //Todo: change other api methods response to this for consistency
 ): Promise<JsonApiResponse<Organization[], OrgListMeta>> => {
   return api.get<Organization[], OrgListMeta>(`${ApiServicePaths.Orgs}/v1/orgs`, {
     query,
