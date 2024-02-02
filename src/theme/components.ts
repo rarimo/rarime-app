@@ -124,7 +124,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
         '& .MuiInputBase-root, & .MuiInputBase-sizeSmall, & .MuiInputBase-sizeMedium':
           typography.body3,
         '& .MuiInputBase-root': {
-          height: theme.spacing(12),
+          minHeight: theme.spacing(12),
           '&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
             borderColor: theme.palette.action.focus,
             borderWidth: 1,

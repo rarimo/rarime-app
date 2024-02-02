@@ -1,6 +1,7 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Add from '@mui/icons-material/Add'
 import AddPhotoAlternateOutlined from '@mui/icons-material/AddPhotoAlternateOutlined'
+import ArrowForward from '@mui/icons-material/ArrowForward'
 import CheckIcon from '@mui/icons-material/Check'
 import ChevronLeft from '@mui/icons-material/ChevronLeft'
 import Close from '@mui/icons-material/Close'
@@ -42,6 +43,7 @@ export const ICON_COMPONENTS = {
   accountCircle: AccountCircleIcon,
   add: Add,
   addPhotoAlternativeOutlined: AddPhotoAlternateOutlined,
+  arrowForward: ArrowForward,
   check: CheckIcon,
   chevronLeft: ChevronLeft,
   contentCopy: ContentCopy,

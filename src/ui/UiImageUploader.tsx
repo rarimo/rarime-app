@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { ChangeEvent, forwardRef, useCallback, useMemo } from 'react'
 
-import UiIcon from '@/ui/UiIcon'
+import { UiIcon } from '@/ui'
 
 interface Props extends Omit<InputProps, 'value' | 'onChange'> {
   label?: string
@@ -23,7 +23,7 @@ const AVATAR_SIZE = 19
 
 const UiImageUploader = forwardRef<HTMLInputElement, Props>(
   ({ label, stackProps, value, onChange, ...rest }: Props, ref) => {
-    const { palette, spacing } = useTheme()
+    const { palette, spacing, typography } = useTheme()
 
     const avatarSize = {
       width: spacing(AVATAR_SIZE),
@@ -71,7 +71,7 @@ const UiImageUploader = forwardRef<HTMLInputElement, Props>(
             <UiIcon componentName='addPhotoAlternativeOutlined' size={6} />
           </Stack>
         )}
-        <Typography>{value?.name || label || 'Upload image'}</Typography>
+        <Typography {...typography.subtitle4}>{value?.name || label || 'Upload image'}</Typography>
         <Input
           {...rest}
           onChange={handleChange}
