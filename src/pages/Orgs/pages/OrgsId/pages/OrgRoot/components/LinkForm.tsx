@@ -1,72 +1,91 @@
-import { InputAdornment } from '@mui/material'
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { FormControl, Stack, Typography } from '@mui/material'
+import { useMemo } from 'react'
+import { Controller, FieldArrayWithId, FieldPath } from 'react-hook-form'
 
-import { UiButton, UiSearchField } from '@/ui'
+import { OrgMetadataLink } from '@/api/modules/orgs'
+import { Form } from '@/hooks'
+import { UiIcon, UiIconButton, UiTextField } from '@/ui'
 
 interface Props {
-  isLoading: boolean
-  onLinkIdChange: (linkId: string) => void
+  field: FieldArrayWithId<OrgMetadataLink>
+  form: Form<{ links: OrgMetadataLink[] }>
+  index: number
+  onRemove?: () => void
 }
 
-export default function LinkForm({ isLoading, onLinkIdChange }: Props) {
-  const [params] = useSearchParams()
-  const [linkOrLinkId, setLinkOrLinkId] = useState(params.get('linkId') ?? '')
-  const [isVerifying, setIsVerifying] = useState(false)
+export default function LinkForm({ field, index, form, onRemove }: Props) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: field.id,
+  })
 
-  const linkId = useMemo(() => {
-    if (!isVerifying) return ''
-
-    try {
-      const url = new URL(linkOrLinkId)
-      return url.pathname.split('/').pop() || ''
-    } catch {
-      return linkOrLinkId
-    }
-  }, [linkOrLinkId, isVerifying])
-
-  const handleLinkChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setLinkOrLinkId(e.target.value)
-      setIsVerifying(false)
-    },
-    [setLinkOrLinkId, setIsVerifying],
+  const formFields = useMemo<
+    {
+      name: FieldPath<{ links: OrgMetadataLink[] }>
+      placeholder: string
+    }[]
+  >(
+    () => [
+      {
+        name: `links.${index}.title`,
+        placeholder: 'Title',
+      },
+      {
+        name: `links.${index}.url`,
+        placeholder: 'URL',
+      },
+    ],
+    [index],
   )
 
-  useEffect(() => {
-    onLinkIdChange(linkId)
-  }, [linkId, onLinkIdChange])
+  const hasManyLinks = useMemo(() => form.formState.links.length > 1, [form])
 
   return (
-    <form
-      onSubmit={e => {
-        e.preventDefault()
-        setIsVerifying(true)
+    <Stack
+      ref={setNodeRef}
+      spacing={2}
+      style={{
+        transform: CSS.Transform.toString(transform),
+        transition,
+      }}
+      sx={{
+        position: 'relative',
+        bgcolor: theme => theme.palette.background.paper,
+        zIndex: isDragging ? 1000 : 0,
       }}
     >
-      <UiSearchField
-        value={linkOrLinkId}
-        size='medium'
-        placeholder={'Enter the Proof Link ID or URL'}
-        sx={{ mt: 2 }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position='end'>
-              <UiButton
-                type='submit'
-                variant='text'
-                color='secondary'
-                size='medium'
-                disabled={!linkOrLinkId || isLoading}
-                sx={{ minWidth: 'auto' }}
-              >
-                {isLoading ? 'Verifying...' : 'Verify'}
-              </UiButton>
-            </InputAdornment>
-          ),
-        }}
-        onChange={handleLinkChange}
-      />
-    </form>
+      <Stack direction='row' justifyContent={'space-between'}>
+        <Typography variant='subtitle4'>Link {index + 1}</Typography>
+        {hasManyLinks && (
+          <Stack direction={'row'} spacing={4}>
+            <UiIconButton color='secondary' sx={{ cursor: 'grab' }} {...attributes} {...listeners}>
+              <UiIcon componentName='dragIndicator' size={5} />
+            </UiIconButton>
+            <UiIconButton color='error' onClick={onRemove}>
+              <UiIcon componentName='deleteOutlined' size={5} />
+            </UiIconButton>
+          </Stack>
+        )}
+      </Stack>
+
+      {formFields.map(({ name, placeholder }) => (
+        <Controller
+          key={name}
+          name={name}
+          control={form.control}
+          render={({ field }) => (
+            <FormControl>
+              <UiTextField
+                {...field}
+                size='small'
+                placeholder={placeholder}
+                errorMessage={form.getErrorMessage(name)}
+              />
+            </FormControl>
+          )}
+        />
+      ))}
+    </Stack>
   )
 }

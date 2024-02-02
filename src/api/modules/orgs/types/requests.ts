@@ -5,7 +5,6 @@ import {
   OrgGroup,
   OrgGroupRequestFilters,
   OrgGroupRequestIncludes,
-  OrgGroupRequestMetadata,
   OrgGroupRequestPublishingStatuses,
   OrgGroupRequestStatuses,
 } from '@/api/modules/orgs'
@@ -18,6 +17,14 @@ export type CredentialRequest = {
   expiration: string
   mt_proof: boolean
   signature_proof: boolean
+}
+
+export type OrgGroupRequestMetadata = {
+  title: string
+  subtitle: string
+  appearance: {
+    background: string
+  }
 }
 
 export type OrgGroupRequest = {
@@ -33,8 +40,16 @@ export type OrgGroupRequest = {
   }
   created_at: string
   updated_at: string
+  metadata: OrgGroupRequestMetadata
   organization?: Organization
   group?: OrgGroup
+}
+
+export type OrgGroupRequestWithClaims = OrgGroupRequest & {
+  claims: {
+    id: string
+    type: 'claims'
+  }[]
 }
 
 export type OrgGroupCreatedRequest = {
@@ -70,45 +85,8 @@ export type OrgGroupRequestPublishing = {
   status: OrgGroupRequestPublishingStatuses
 }
 
-export type OrgGroupRequestClaim = {
-  id: string
-  type: 'claims'
-  claim_id: string
-  request_id: string
-  schema_url: string
-  status: string
-  created_at: string
-  updated_at: string
-  organization?: Organization
-}
-
-export type OrgClaimIDMap = Record<string, string[]>
-
-export type GroupedCredentials = {
-  id: string
-  type: 'grouped_credentials'
-
-  grouped_credentials: {
-    org_did: string
-    groups: {
-      group_id: string
-      requests: {
-        req_id: string
-        claim_ids: string[]
-        metadata: OrgGroupRequestMetadata
-      }[]
-    }[]
-  }[]
-}
-
 export type OrgGroupVCMap = {
   orgDID: string
-  groups: {
-    groupID: string
-    requests: {
-      reqID: string
-      vcs: W3CCredential[]
-      metadata: OrgGroupRequestMetadata
-    }[]
-  }[]
+  groupID: string
+  vcs: W3CCredential[]
 }[]

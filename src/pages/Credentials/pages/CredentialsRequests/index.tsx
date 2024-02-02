@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 
-import { OrgGroupRequest, OrgGroupRequestStatuses } from '@/api/modules/orgs'
+import { OrgGroupRequestStatuses, OrgGroupRequestWithClaims } from '@/api/modules/orgs'
 import { PageTitles } from '@/common'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
@@ -22,7 +22,7 @@ export default function CredentialsRequests({ ...rest }: Props) {
   const [isFillFormDrawerShown, setIsFillFormDrawerShown] = useState(false)
   const [isClaimModalShown, setIsClaimModalShown] = useState(false)
 
-  const [selectedOrgGroupRequest, setSelectedRequest] = useState<OrgGroupRequest>()
+  const [selectedOrgGroupRequest, setSelectedRequest] = useState<OrgGroupRequestWithClaims>()
 
   const handleRequestFilled = useCallback(() => {
     bus.emit(BusEvents.success, 'Request successfully sent')

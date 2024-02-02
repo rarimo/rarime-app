@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { loadOrgsAmount, OrgsRequestFilters, OrgsRequestFiltersMap } from '@/api/modules/orgs'
+import { loadOrgsCount, OrgsRequestFilters, OrgsRequestFiltersMap } from '@/api/modules/orgs'
 import { PageListFilters, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useLoading, useMetamaskZkpSnapContext, useNestedRoutes } from '@/hooks'
@@ -47,10 +47,10 @@ export default function OrgsList() {
   ])
 
   const init = useCallback(async () => {
-    return loadOrgsAmount()
+    return loadOrgsCount()
   }, [])
 
-  const { data: orgsAmount } = useLoading<number | undefined>(undefined, init, {
+  const { data: orgsCount } = useLoading<number | undefined>(undefined, init, {
     loadOnMount: true,
   })
 
@@ -60,7 +60,7 @@ export default function OrgsList() {
       <PageListFilters
         tabs={[
           {
-            label: `All${orgsAmount ? ` (${orgsAmount})` : ''}`,
+            label: `All${orgsCount ? ` (${orgsCount})` : ''}`,
             route: RoutePaths.OrgsListAll,
           },
           {

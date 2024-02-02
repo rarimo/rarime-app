@@ -53,11 +53,11 @@ const UiSelect = forwardRef(
           {options.map(({ value, label, adornmentLeft, adornmentRight }, idx) => (
             <MenuItem key={idx} value={value}>
               <Stack
-                flex={1}
                 direction='row'
+                spacing={1}
+                flex={1}
                 alignItems='center'
                 justifyContent='flex-start'
-                gap={theme => theme.spacing(1)}
               >
                 {adornmentLeft}
                 {label}

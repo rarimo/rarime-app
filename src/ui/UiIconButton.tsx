@@ -2,7 +2,7 @@ import { IconButton, type IconButtonProps } from '@mui/material'
 
 interface Props extends IconButtonProps {}
 
-export default function UiButton({ ...rest }: Props) {
+export default function UiIconButton({ ...rest }: Props) {
   return (
     <IconButton
       sx={{

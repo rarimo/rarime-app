@@ -63,20 +63,39 @@ export const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }) => ({
         borderRadius: theme.spacing(250),
         transition: Transitions.Default,
-        '&.MuiButton-sizeLarge': {
-          ...typography.buttonLarge,
-          px: theme.spacing(4),
-          height: theme.spacing(12),
+      }),
+      containedSizeLarge: ({ theme }) => ({
+        ...typography.buttonLarge,
+        padding: theme.spacing(0, 4),
+        height: theme.spacing(12),
+      }),
+      containedSizeMedium: ({ theme }) => ({
+        ...typography.buttonMedium,
+        padding: theme.spacing(0, 4),
+        height: theme.spacing(8),
+      }),
+      containedSizeSmall: ({ theme }) => ({
+        ...typography.buttonSmall,
+        padding: theme.spacing(0, 2),
+        height: theme.spacing(6),
+      }),
+      fullWidth: {
+        width: '100%',
+      },
+      text: {
+        padding: 0,
+        minWidth: 'unset',
+        '&:hover': {
+          backgroundColor: 'transparent',
         },
-        '&.MuiButton-sizeMedium': {
-          ...typography.buttonMedium,
-          px: theme.spacing(4),
-          height: theme.spacing(8),
-        },
-        '&.MuiButton-sizeSmall': {
-          ...typography.buttonSmall,
-          px: theme.spacing(2),
-          height: theme.spacing(6),
+      },
+      textPrimary: ({ theme }) => ({
+        color: theme.palette.text.primary,
+      }),
+      textSecondary: ({ theme }) => ({
+        color: theme.palette.text.secondary,
+        '&:hover': {
+          color: theme.palette.secondary.main,
         },
       }),
     },
@@ -115,7 +134,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
           },
         },
         '& .MuiInputBase-sizeSmall': {
-          height: theme.spacing(8),
+          height: theme.spacing(10),
         },
         '& .MuiOutlinedInput-notchedOutline': {
           transition: Transitions.Default,
@@ -177,23 +196,42 @@ export const components: Components<Omit<Theme, 'components'>> = {
     },
   },
   MuiIconButton: {
+    defaultProps: {
+      color: 'primary',
+    },
     styleOverrides: {
-      root: ({ theme }) => ({
+      root: {
         padding: 0,
-        color: theme.palette.text.primary,
         transition: Transitions.Default,
-
-        '&[disabled]': {
-          color: theme.palette.text.disabled,
-        },
-
-        '&:not([disabled]):hover': {
+        '&:hover': {
           backgroundColor: 'transparent',
+        },
+      },
+      colorPrimary: ({ theme }) => ({
+        color: theme.palette.text.primary,
+      }),
+      colorSecondary: ({ theme }) => ({
+        color: theme.palette.text.secondary,
+        '&:hover': {
           color: theme.palette.text.primary,
         },
-
-        '&:not([disabled]).active, &:not([disabled]):active': {
-          color: theme.palette.primary.main,
+      }),
+      colorSuccess: ({ theme }) => ({
+        color: theme.palette.success.main,
+        '&:hover': {
+          color: theme.palette.success.dark,
+        },
+      }),
+      colorError: ({ theme }) => ({
+        color: theme.palette.error.main,
+        '&:hover': {
+          color: theme.palette.error.dark,
+        },
+      }),
+      colorWarning: ({ theme }) => ({
+        color: theme.palette.warning.main,
+        '&:hover': {
+          color: theme.palette.warning.dark,
         },
       }),
     },
@@ -305,6 +343,33 @@ export const components: Components<Omit<Theme, 'components'>> = {
           ...typography.subtitle4,
           color: theme.palette.text.secondary,
         },
+      }),
+    },
+  },
+  MuiDrawer: {
+    defaultProps: {
+      anchor: 'right',
+    },
+    styleOverrides: {
+      root: {
+        '& > .MuiBackdrop-root': {
+          backgroundColor: 'rgba(32, 32, 32, 0.50)',
+        },
+      },
+      paper: ({ theme }) => ({
+        width: '100%',
+        maxWidth: theme.spacing(108),
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: 'none',
+        border: 'none',
+        borderRadius: theme.spacing(3),
+      }),
+      paperAnchorRight: ({ theme }) => ({
+        height: 'unset',
+        top: theme.spacing(3),
+        bottom: theme.spacing(3),
+        left: 'unset',
+        right: theme.spacing(3),
       }),
     },
   },

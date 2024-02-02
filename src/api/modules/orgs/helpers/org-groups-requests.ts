@@ -3,15 +3,13 @@ import { W3CCredential } from '@rarimo/rarime-connector'
 import { api } from '@/api/clients'
 import {
   CredentialRequest,
-  GroupedCredentials,
-  OrgClaimIDMap,
   OrgGroupCreatedRequest,
   OrgGroupRequest,
-  OrgGroupRequestClaim,
   OrgGroupRequestFilters,
   OrgGroupRequestMetadata,
   OrgGroupRequestPublishing,
   OrgGroupRequestQueryParams,
+  OrgGroupRequestWithClaims,
   OrgGroupVCMap,
   OrgUserRoles,
 } from '@/api/modules/orgs'
@@ -110,6 +108,14 @@ export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) =
   // return data
 
   return fakeLoadRequestsAll(query)
+}
+
+export const loadRequestsByUserDid = async (did: string): Promise<OrgGroupRequestWithClaims[]> => {
+  const { data } = await api.get<OrgGroupRequestWithClaims[]>(
+    `${ApiServicePaths.Orgs}/v1/users/${did}/requests`,
+  )
+
+  return data
 }
 
 export const loadOrgGroupRequestById = async (orgId: string, groupId: string, reqId: string) => {
@@ -229,25 +235,6 @@ export const getOrgGroupPublishingRequests = async ({
   return data
 }
 
-export const loadOrgGroupReqMetadataById = async (
-  metadataId: string,
-): Promise<OrgGroupRequestMetadata> => {
-  const { data } = await api.get<OrgGroupRequestMetadata>(
-    `${ApiServicePaths.Orgs}/v1/orgs/metadata/${metadataId}`,
-  )
-
-  return data
-
-  // TODO: remove once backend is ready
-  // return {
-  //   title: 'title',
-  //   subtitle: 'subtitle',
-  //   appearance: {
-  //     background: '#ffffff',
-  //   },
-  // }
-}
-
 export const buildCredentialRequest = async (
   schemeUrl: string,
   propertyValue: string,
@@ -271,57 +258,19 @@ export const buildCredentialRequest = async (
   }
 }
 
-export const getOrgGroupRequestClaims = async ({
-  orgId,
-  groupId,
-  reqId,
-}: {
-  orgId: string
-  groupId: string
-  reqId: string
-}): Promise<OrgGroupRequestClaim[]> => {
-  const { data } = await api.get<OrgGroupRequestClaim[]>(
-    `${ApiServicePaths.Orgs}/v1/orgs/${orgId}/groups/${groupId}/requests/${reqId}/publishing`,
-  )
-
-  return data
-}
-
-export const getMetadataBatch = async (vcs: W3CCredential[]): Promise<GroupedCredentials> => {
-  const orgsToClaimIdsMap = vcs.reduce((acc, vc) => {
-    const issuerDID = vc.issuer
-
-    if (!acc[issuerDID]) acc[issuerDID] = []
-
-    acc[issuerDID].push(getClaimIdFromVC(vc))
-
-    return acc
-  }, {} as OrgClaimIDMap)
-
-  const { data } = await api.get<GroupedCredentials>(`${ApiServicePaths.Orgs}/v1/orgs/metadata`, {
-    query: {
-      orgsToClaimIdsMap,
-    },
-  })
-
-  return data
-
-  // return DUMMY_ORG_GROUP_METADATAS // FIXME: remove
-}
-
 export const groupVCsToOrgGroups = (
-  groupedVCs: GroupedCredentials,
+  orgGroupRequests: OrgGroupRequestWithClaims[],
   vcs: W3CCredential[],
 ): OrgGroupVCMap => {
-  return groupedVCs.grouped_credentials.map(org => ({
-    orgDID: org.org_did,
-    groups: org.groups.map(group => ({
-      groupID: group.group_id,
-      requests: group.requests.map(req => ({
-        reqID: req.req_id,
-        vcs: vcs.filter(vc => req.claim_ids.includes(getClaimIdFromVC(vc))),
-        metadata: req.metadata,
-      })),
-    })),
-  }))
+  return orgGroupRequests.map(orgGroupRequest => {
+    if (!orgGroupRequest.organization?.did) throw new TypeError('Organization DID is missing')
+
+    const orgRequestClaimIDs = orgGroupRequest.claims.map(claim => claim.id)
+
+    return {
+      orgDID: orgGroupRequest.organization.did,
+      groupID: orgGroupRequest.group_id,
+      vcs: vcs.filter(vc => orgRequestClaimIDs.includes(getClaimIdFromVC(vc))),
+    }
+  })
 }

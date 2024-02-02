@@ -1,5 +1,6 @@
 export { default as AppNavbar } from './AppNavbar'
 export { default as FillRequestForm } from './FillRequestForm'
+export { default as NoDataViewer } from './NoDataViewer'
 export { default as PageListFilters } from './PageListFilters'
 export { default as PageTitles } from './PageTitles'
 export { default as ProfileMenu } from './ProfileMenu'
