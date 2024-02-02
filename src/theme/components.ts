@@ -240,6 +240,11 @@ export const components: Components<Omit<Theme, 'components'>> = {
     defaultProps: {
       animation: 'wave',
     },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        backgroundColor: theme.palette.divider,
+      }),
+    },
   },
   MuiSwitch: {
     styleOverrides: {
@@ -323,6 +328,21 @@ export const components: Components<Omit<Theme, 'components'>> = {
       paper: ({ theme }) => ({
         borderRadius: theme.spacing(2),
         boxShadow: '0px 8px 16px 0px rgba(0, 0, 0, 0.04)',
+      }),
+    },
+  },
+  MuiPagination: {
+    defaultProps: {
+      color: 'primary',
+      hidePrevButton: true,
+      hideNextButton: true,
+    },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        '& .MuiButtonBase-root': {
+          ...typography.subtitle4,
+          color: theme.palette.text.secondary,
+        },
       }),
     },
   },

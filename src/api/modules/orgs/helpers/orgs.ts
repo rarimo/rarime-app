@@ -1,7 +1,10 @@
+import { JsonApiResponse } from '@distributedlab/jac'
+
 import { api } from '@/api/clients'
 import {
   type Organization,
   type OrganizationCreate,
+  OrgListMeta,
   type OrgMetadata,
   type OrgsRequestQueryParams,
   OrgsStatuses,
@@ -95,12 +98,13 @@ export const DUMMY_ORGS: Organization[] = [
   },
 ]
 
-export const loadOrgs = async (query: OrgsRequestQueryParams) => {
-  const { data } = await api.get<Organization[]>(`${ApiServicePaths.Orgs}/v1/orgs`, {
+export const loadOrgs = (
+  query: OrgsRequestQueryParams,
+  //Todo: change other api methods response to this for consistency
+): Promise<JsonApiResponse<Organization[], OrgListMeta>> => {
+  return api.get<Organization[], OrgListMeta>(`${ApiServicePaths.Orgs}/v1/orgs`, {
     query,
   })
-
-  return data
 }
 
 export const loadOrgsCount = async () => {
