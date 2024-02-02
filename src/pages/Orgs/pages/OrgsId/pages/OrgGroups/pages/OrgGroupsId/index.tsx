@@ -166,11 +166,7 @@ export default function OrgGroupsId() {
       />
       <Stack flex={1}>{routes}</Stack>
 
-      <UiDrawer
-        open={isInviteDrawerShown}
-        anchor='right'
-        onClose={() => setIsInviteDrawerShown(false)}
-      >
+      <UiDrawer open={isInviteDrawerShown} onClose={() => setIsInviteDrawerShown(false)}>
         <InviteMemberForm
           onMemberInvitationCreated={handleMemberInvitationCreated}
           maxWidth={theme => theme.spacing(100)}

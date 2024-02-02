@@ -1,14 +1,14 @@
 import { Typography } from '@mui/material'
 import { ComponentProps, useCallback } from 'react'
 
-import { getOrgGroupRequestClaims, OrgGroupRequest } from '@/api/modules/orgs'
+import { OrgGroupRequestWithClaims } from '@/api/modules/orgs'
 import { getClaimOffer, getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { ErrorHandler } from '@/helpers'
 import { useLoading, useMetamaskZkpSnapContext } from '@/hooks'
 import { UiBasicModal, UiButton, UiIcon } from '@/ui'
 
 type Props = ComponentProps<typeof UiBasicModal> & {
-  orgGroupRequest: OrgGroupRequest | undefined
+  orgGroupRequest: OrgGroupRequestWithClaims | undefined
 }
 
 export default function ClaimVCsModal({ orgGroupRequest, onClose, ...rest }: Props) {
@@ -24,14 +24,12 @@ export default function ClaimVCsModal({ orgGroupRequest, onClose, ...rest }: Pro
     async () => {
       if (!orgGroupRequest) throw new TypeError('orgGroupRequest is not defined')
 
-      const orgGroupRequestClaims = await getOrgGroupRequestClaims({
-        orgId: orgGroupRequest.org_id,
-        groupId: orgGroupRequest.group_id,
-        reqId: orgGroupRequest.id,
-      })
+      const claimIds = orgGroupRequest.claims?.map(el => el.id)
+
+      if (!claimIds?.length) throw new TypeError('claimIds is not defined')
 
       const [claimOffers, vcFields] = await Promise.all([
-        Promise.all(orgGroupRequestClaims.map(el => getClaimOffer(userDid, el.claim_id))),
+        Promise.all(claimIds.map(claimId => getClaimOffer(userDid, claimId))),
         Promise.all(
           orgGroupRequest.credential_requests.map(async req =>
             getTargetProperty(

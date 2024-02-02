@@ -2,7 +2,6 @@
 import { W3CCredential } from '@rarimo/rarime-connector'
 
 import {
-  GroupedCredentials,
   OrgGroupCreatedRequest,
   OrgGroupRequest,
   OrgGroupRequestMetadata,
@@ -39,6 +38,13 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     },
     created_at: '2021-08-12T14:00:00Z',
     updated_at: '2021-08-12T13:00:00Z',
+    metadata: {
+      title: 'Civic',
+      subtitle: 'Civic',
+      appearance: {
+        background: '#000000',
+      },
+    },
     organization: {
       id: '3a798290-caf1-496a-a7e5-4db32551b13d',
       type: 'organizations',
@@ -65,6 +71,13 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
+    metadata: {
+      title: 'Civic',
+      subtitle: 'Civic',
+      appearance: {
+        background: '#000000',
+      },
+    },
     user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
@@ -114,6 +127,13 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
+    metadata: {
+      title: 'Civic',
+      subtitle: 'Civic',
+      appearance: {
+        background: '#000000',
+      },
+    },
     user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
@@ -163,6 +183,13 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
+    metadata: {
+      title: 'Civic',
+      subtitle: 'Civic',
+      appearance: {
+        background: '#000000',
+      },
+    },
     user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
@@ -212,6 +239,13 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
+    metadata: {
+      title: 'Civic',
+      subtitle: 'Civic',
+      appearance: {
+        background: '#000000',
+      },
+    },
     user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
@@ -261,6 +295,13 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
+    metadata: {
+      title: 'Civic',
+      subtitle: 'Civic',
+      appearance: {
+        background: '#000000',
+      },
+    },
     user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
@@ -310,6 +351,13 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
+    metadata: {
+      title: 'Civic',
+      subtitle: 'Civic',
+      appearance: {
+        background: '#000000',
+      },
+    },
     user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
@@ -359,6 +407,13 @@ export const DUMMY_ORG_GROUP_REQUESTS: OrgGroupRequest[] = [
     type: 'requests',
     org_id: '3a798290-caf1-496a-a7e5-4db32551b13d',
     group_id: '6c8c1a69-177e-4754-a4e1-d4a7dbf561e8',
+    metadata: {
+      title: 'Civic',
+      subtitle: 'Civic',
+      appearance: {
+        background: '#000000',
+      },
+    },
     user_did: 'did:iden3:readonly:tKRuUKu3feUEktA38mxN2jdEkbgSAHjq8fVqAGmkw',
     credential_requests: [
       {
@@ -635,19 +690,3 @@ const createFakeVCs = (org: FakeOrgSystem): W3CCredential[] => {
 export const DUMMY_VCS: W3CCredential[] = [
   ...FAKE_ORG_DETAILS.reduce((acc, org) => [...acc, ...createFakeVCs(org)], [] as W3CCredential[]),
 ]
-
-export const DUMMY_ORG_GROUP_METADATAS: GroupedCredentials = {
-  id: 'b0dc3814-e754-4596-a117-c4a07dfc65ef',
-  type: 'grouped_credentials',
-  grouped_credentials: FAKE_ORG_DETAILS.map(org => ({
-    org_did: org.did,
-    groups: org.groups.map(group => ({
-      group_id: group.id,
-      requests: group.requests.map(req => ({
-        req_id: req.id,
-        claim_ids: req.claim_ids,
-        metadata: req.metadata,
-      })),
-    })),
-  })),
-}

@@ -2,18 +2,15 @@ import { CircularProgress } from '@mui/material'
 import { createContext, PropsWithChildren, useContext } from 'react'
 
 import {
-  getMetadataBatch,
   groupVCsToOrgGroups,
-  loadOrgGroupRequests,
-  OrgGroupRequest,
-  OrgGroupRequestFilters,
-  OrgGroupRequestStatuses,
+  loadRequestsByUserDid,
+  OrgGroupRequestWithClaims,
   OrgGroupVCMap,
 } from '@/api/modules/orgs'
 import { useLoading, useMetamaskZkpSnapContext } from '@/hooks'
 
 type CredentialsContextValue = {
-  orgGroupRequests: OrgGroupRequest[]
+  orgGroupRequests: OrgGroupRequestWithClaims[]
   groupedVCs: OrgGroupVCMap
 }
 
@@ -34,7 +31,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
     isLoading,
     isLoadingError,
   } = useLoading<{
-    orgGroupRequests: OrgGroupRequest[]
+    orgGroupRequests: OrgGroupRequestWithClaims[]
     groupedVCs: OrgGroupVCMap
   }>(
     {
@@ -44,22 +41,11 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
     async () => {
       {
         const [orgGroupRequests, vcs] = await Promise.all([
-          // TODO: replace with new endpoint to get all user's requests by his did
-          loadOrgGroupRequests({
-            filter: {
-              [OrgGroupRequestFilters.UserDid]: userDid,
-              [OrgGroupRequestFilters.Status]: [
-                OrgGroupRequestStatuses.Submitted,
-                OrgGroupRequestStatuses.Created,
-              ],
-            },
-          }),
+          loadRequestsByUserDid(userDid),
           getCredentials(),
         ])
 
-        const metadatas = await getMetadataBatch(vcs)
-
-        const groupedVCs = groupVCsToOrgGroups(metadatas, vcs)
+        const groupedVCs = groupVCsToOrgGroups(orgGroupRequests, vcs)
 
         return { orgGroupRequests, groupedVCs }
       }

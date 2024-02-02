@@ -103,7 +103,7 @@ export default function List({ filter, ...rest }: Props) {
             ))}
 
             {drawerContent && (
-              <UiDrawer open={isDrawerShown} onClose={() => setIsDrawerShown(false)} anchor='right'>
+              <UiDrawer open={isDrawerShown} onClose={() => setIsDrawerShown(false)}>
                 <Stack>
                   <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
                     <Typography>Member Details</Typography>
