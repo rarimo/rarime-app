@@ -15,7 +15,6 @@ export const useLoading = <T>(
   isLoading: boolean
   isLoadingError: boolean
   reload: () => Promise<void>
-  isEmpty: boolean
   update: () => Promise<void>
   reset: () => void
 } => {
@@ -24,11 +23,6 @@ export const useLoading = <T>(
   const [isLoading, setIsLoading] = useState(loadOnMount)
   const [isLoadingError, setIsLoadingError] = useState(false)
   const [data, setData] = useState(initialState as T)
-
-  const isEmpty = useMemo(() => {
-    if (!data) return true
-    return data.lenght === 0
-  }, [data])
 
   const load = async () => {
     setIsLoading(true)
@@ -67,5 +61,5 @@ export const useLoading = <T>(
     setData(initialState as T)
   }
 
-  return { data, isLoading, isLoadingError, isEmpty, reload, update, reset }
+  return { data, isLoading, isLoadingError, reload, update, reset }
 }

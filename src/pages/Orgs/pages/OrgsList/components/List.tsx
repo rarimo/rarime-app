@@ -1,5 +1,5 @@
 import { Grid, Pagination, Stack, StackProps } from '@mui/material'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
   loadOrgs,
@@ -33,11 +33,15 @@ export default function List({ filter, ...rest }: Props) {
     data: { data: orgList, meta },
     isLoading,
     isLoadingError,
-    isEmpty,
   } = useLoading<OrgsListResponse>({} as OrgsListResponse, loadList, {
     loadArgs: [filter, page],
     loadOnMount: true,
   })
+
+  const isEmpty = useMemo(() => {
+    if (!orgList) return true
+    return orgList.length === 0
+  }, [orgList])
 
   useEffect(() => {
     setPage(prevState => ({
