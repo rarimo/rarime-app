@@ -1,6 +1,7 @@
 import { Stack, StackProps, Typography, useTheme } from '@mui/material'
 
-import { UiButton } from '@/ui'
+import { Illustrations } from '@/enums'
+import { UiButton, UiIllustration } from '@/ui'
 
 interface Props extends StackProps {
   nextStepCb: () => void
@@ -29,7 +30,7 @@ export default function RegisterIntro({ nextStepCb, ...rest }: Props) {
           <Stack
             component={'ol'}
             paddingInlineStart={5}
-            sx={{ '& li::marker': { ...typography.subtitle4 } }}
+            sx={{ '& li::marker': typography.subtitle4 }}
             spacing={3}
           >
             <Typography component={'li'}>Enter your company details</Typography>
@@ -42,9 +43,7 @@ export default function RegisterIntro({ nextStepCb, ...rest }: Props) {
         </UiButton>
       </Stack>
       <Stack p={11}>
-        <svg>
-          <use href={`#registration-intro-illustration`} />
-        </svg>
+        <UiIllustration name={Illustrations.RegistrationIntro} size={60} />
       </Stack>
     </Stack>
   )
