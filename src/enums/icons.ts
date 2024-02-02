@@ -33,7 +33,6 @@ export enum Icons {
   Instagram = 'instagram',
   Twitter = 'twitter',
   Rarime = 'rarime',
-  RegistrationIntoBg = 'registration-into-bg',
 }
 
 export const ICON_COMPONENTS = {

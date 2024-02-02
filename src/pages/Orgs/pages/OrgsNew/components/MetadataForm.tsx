@@ -80,12 +80,7 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
             control={control}
             render={({ field }) => (
               <FormControl>
-                <UiImageUploader
-                  {...field}
-                  label='Upload logo'
-                  // errorMessage={getErrorMessage(FieldNames.Logo)}
-                  disabled={isFormDisabled}
-                />
+                <UiImageUploader {...field} label='Upload logo' disabled={isFormDisabled} />
               </FormControl>
             )}
           />
@@ -98,7 +93,7 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
                 <UiTextField
                   {...field}
                   label='Domain'
-                  placeholder='https:///'
+                  placeholder='https://'
                   errorMessage={getErrorMessage(FieldNames.Domain)}
                   disabled={isFormDisabled}
                 />
@@ -132,7 +127,7 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
                   label={'Description'}
                   multiline
                   rows={5}
-                  placeholder='Write a small description ?'
+                  placeholder='Write a small description'
                   errorMessage={getErrorMessage(FieldNames.Description)}
                   disabled={isFormDisabled}
                 />

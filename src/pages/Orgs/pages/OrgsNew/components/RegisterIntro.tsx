@@ -1,13 +1,12 @@
 import { Stack, StackProps, Typography, useTheme } from '@mui/material'
 
-import { Icons } from '@/enums'
-import { UiButton, UiIcon } from '@/ui'
+import { UiButton } from '@/ui'
 
 interface Props extends StackProps {
   nextStepCb: () => void
 }
 
-export default function RegisterInto({ nextStepCb, ...rest }: Props) {
+export default function RegisterIntro({ nextStepCb, ...rest }: Props) {
   const { palette, typography, spacing } = useTheme()
   return (
     <Stack
@@ -26,37 +25,26 @@ export default function RegisterInto({ nextStepCb, ...rest }: Props) {
         <Typography variant={'body3'} color={palette.text.secondary} mt={3}>
           Create your company profile
         </Typography>
-        <Stack
-          my={6}
-          spacing={3}
-          sx={{
-            '& ol': {
-              ...typography.subtitle4,
-              paddingInlineStart: 5,
-              '& li': {
-                pb: 3,
-              },
-            },
-          }}
-        >
-          <ol>
-            <li>
-              <Typography ml={3}>Enter your company details</Typography>
-            </li>
-            <li>
-              <Typography ml={3}>Verify domain</Typography>
-            </li>
-            <li>
-              <Typography ml={3}>Create & Manage Credentials</Typography>
-            </li>
-          </ol>
+        <Stack my={6} spacing={3}>
+          <Stack
+            component={'ol'}
+            paddingInlineStart={5}
+            sx={{ '& li::marker': { ...typography.subtitle4 } }}
+            spacing={3}
+          >
+            <Typography component={'li'}>Enter your company details</Typography>
+            <Typography component={'li'}>Verify domain</Typography>
+            <Typography component={'li'}>Create & Manage Credentials</Typography>
+          </Stack>
         </Stack>
         <UiButton onClick={nextStepCb} sx={{ width: spacing(93) }}>
           Let’s Start
         </UiButton>
       </Stack>
       <Stack p={11}>
-        <UiIcon name={Icons.RegistrationIntoBg} size={60} />
+        <svg>
+          <use href={`#registration-intro-illustration`} />
+        </svg>
       </Stack>
     </Stack>
   )
