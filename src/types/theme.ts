@@ -84,3 +84,7 @@ declare module '@mui/material/styles' {
     }
   }
 }
+
+declare module '@mui/material/styles/createTypography' {
+  interface Typography extends ExtendedTypographyOptions {}
+}
