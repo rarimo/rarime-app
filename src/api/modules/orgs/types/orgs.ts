@@ -82,8 +82,3 @@ export type OrgVerificationCode = {
 export type OrgListMeta = {
   count: number
 }
-
-export type OrgsListResponse = {
-  data: Organization[]
-  meta: OrgListMeta
-}

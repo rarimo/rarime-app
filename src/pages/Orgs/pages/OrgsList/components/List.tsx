@@ -1,9 +1,11 @@
+import { JsonApiResponse } from '@distributedlab/jac'
 import { Grid, Pagination, Stack, StackProps } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
 
 import {
   loadOrgs,
-  type OrgsListResponse,
+  Organization,
+  OrgListMeta,
   OrgsRequestFilters,
   type OrgsRequestFiltersMap,
   OrgsRequestPage,
@@ -33,10 +35,14 @@ export default function List({ filter, ...rest }: Props) {
     data: { data: orgList, meta },
     isLoading,
     isLoadingError,
-  } = useLoading<OrgsListResponse>({} as OrgsListResponse, loadList, {
-    loadArgs: [filter, page],
-    loadOnMount: true,
-  })
+  } = useLoading<JsonApiResponse<Organization[], OrgListMeta>>(
+    {} as JsonApiResponse<Organization[], OrgListMeta>,
+    loadList,
+    {
+      loadArgs: [filter, page],
+      loadOnMount: true,
+    },
+  )
 
   useEffect(() => {
     setPage(prevState => ({
