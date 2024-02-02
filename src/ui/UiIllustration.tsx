@@ -5,7 +5,6 @@ import { forwardRef } from 'react'
 import { Illustrations } from '@/enums'
 type Props = {
   size?: number
-  sx?: SxProps<Theme>
   name: Illustrations
 } & BoxProps<'svg'>
 
