@@ -1,3 +1,5 @@
+import { JsonApiResponse } from '@distributedlab/jac'
+
 import { api } from '@/api/clients'
 import {
   type Organization,
@@ -95,15 +97,12 @@ export const DUMMY_ORGS: Organization[] = [
   },
 ]
 
-export const loadOrgs = async (query: OrgsRequestQueryParams) => {
-  const { data, meta } = await api.get<Organization[], OrgListMeta>(
-    `${ApiServicePaths.Orgs}/v1/orgs`,
-    {
-      query,
-    },
-  )
-
-  return { data, meta }
+export const loadOrgs = (
+  query: OrgsRequestQueryParams,
+): Promise<JsonApiResponse<Organization[], OrgListMeta>> => {
+  return api.get<Organization[], OrgListMeta>(`${ApiServicePaths.Orgs}/v1/orgs`, {
+    query,
+  })
 }
 
 export const loadOrgsAmount = async () => {

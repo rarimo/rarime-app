@@ -1,4 +1,3 @@
-import _isEmpty from 'lodash/isEmpty'
 import { useEffect, useMemo, useState } from 'react'
 
 import { ErrorHandler } from '@/helpers'
@@ -28,7 +27,7 @@ export const useLoading = <T>(
 
   const isEmpty = useMemo(() => {
     if (!data) return true
-    return _isEmpty(data)
+    return data.lenght === 0
   }, [data])
 
   const load = async () => {
