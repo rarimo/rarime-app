@@ -1,6 +1,8 @@
 import { default as AccountCircleIcon } from '@mui/icons-material/AccountCircle'
 import { default as Add } from '@mui/icons-material/Add'
 import { default as AddPhotoAlternateOutlined } from '@mui/icons-material/AddPhotoAlternateOutlined'
+import { default as AllInclusiveOutlinedIcon } from '@mui/icons-material/AllInclusiveOutlined'
+import { default as CalendarTodayOutlinedIcon } from '@mui/icons-material/CalendarTodayOutlined'
 import { default as CheckIcon } from '@mui/icons-material/Check'
 import { default as ChevronLeft } from '@mui/icons-material/ChevronLeft'
 import { default as Close } from '@mui/icons-material/Close'
@@ -8,6 +10,7 @@ import { default as ContentCopy } from '@mui/icons-material/ContentCopy'
 import { default as DarkModeOutlined } from '@mui/icons-material/DarkModeOutlined'
 import { default as DeleteIcon } from '@mui/icons-material/Delete'
 import { default as ErrorOutlineIcon } from '@mui/icons-material/ErrorOutline'
+import { default as FingerPrint } from '@mui/icons-material/Fingerprint'
 import { default as InfoIcon } from '@mui/icons-material/Info'
 import { default as InfoOutlinedIcon } from '@mui/icons-material/InfoOutlined'
 import { default as KeyboardArrowDownOutlinedIcon } from '@mui/icons-material/KeyboardArrowDownOutlined'
@@ -60,4 +63,7 @@ export const ICON_COMPONENTS = {
   work: Work,
   layers: Layers,
   notifications: Notifications,
+  fingerprint: FingerPrint,
+  calendarTodayOutlinedIcon: CalendarTodayOutlinedIcon,
+  allInclusiveOutlinedIcon: AllInclusiveOutlinedIcon,
 }

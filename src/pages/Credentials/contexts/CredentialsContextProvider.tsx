@@ -1,4 +1,5 @@
 import { CircularProgress } from '@mui/material'
+import { W3CCredential } from '@rarimo/rarime-connector'
 import { createContext, PropsWithChildren, useContext } from 'react'
 
 import {
@@ -10,11 +11,13 @@ import {
 import { useLoading, useMetamaskZkpSnapContext } from '@/hooks'
 
 type CredentialsContextValue = {
+  vcs: W3CCredential[]
   orgGroupRequests: OrgGroupRequestWithClaims[]
   groupedVCs: OrgGroupVCMap
 }
 
 const CredentialsContext = createContext<CredentialsContextValue>({
+  vcs: [],
   orgGroupRequests: [],
   groupedVCs: [],
 })
@@ -27,14 +30,16 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
   const { userDid, getCredentials } = useMetamaskZkpSnapContext()
 
   const {
-    data: { orgGroupRequests, groupedVCs },
+    data: { vcs, orgGroupRequests, groupedVCs },
     isLoading,
     isLoadingError,
   } = useLoading<{
+    vcs: W3CCredential[]
     orgGroupRequests: OrgGroupRequestWithClaims[]
     groupedVCs: OrgGroupVCMap
   }>(
     {
+      vcs: [],
       orgGroupRequests: [],
       groupedVCs: [],
     },
@@ -47,7 +52,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
 
         const groupedVCs = groupVCsToOrgGroups(orgGroupRequests, vcs)
 
-        return { orgGroupRequests, groupedVCs }
+        return { vcs, orgGroupRequests, groupedVCs }
       }
     },
     {
@@ -63,6 +68,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
   return (
     <CredentialsContext.Provider
       value={{
+        vcs,
         orgGroupRequests,
         groupedVCs,
       }}
