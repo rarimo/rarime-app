@@ -37,6 +37,7 @@ export enum Icons {
   Instagram = 'instagram',
   Twitter = 'twitter',
   Rarime = 'rarime',
+  Gift = 'gift',
 }
 
 export const ICON_COMPONENTS = {

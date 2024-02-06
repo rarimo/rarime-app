@@ -27,4 +27,10 @@ export enum RoutePaths {
   Credentials = '/credentials',
   CredentialsList = '/credentials/list',
   CredentialsRequests = '/credentials/requests',
+
+  Rewards = '/rewards',
+  RewardsActive = '/rewards/active',
+  RewardsHistory = '/rewards/history',
+  RewardsActiveId = '/rewards/active/:id',
+  RewardsLeaderboard = '/rewards/leaderboard',
 }
