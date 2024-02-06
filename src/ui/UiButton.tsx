@@ -1,7 +1,6 @@
 import { Button, type ButtonProps } from '@mui/material'
+import { ElementType } from 'react'
 
-interface Props extends ButtonProps {}
-
-export default function UiButton({ ...rest }: Props) {
-  return <Button {...rest} />
+export default function UiButton<T extends ElementType>(props: ButtonProps<T>) {
+  return <Button {...props} />
 }
