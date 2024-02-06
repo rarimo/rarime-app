@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { ChangeEvent, forwardRef, useCallback, useMemo } from 'react'
 
-import UiIcon from '@/ui/UiIcon'
+import { UiIcon } from '@/ui'
 
 interface Props extends Omit<InputProps, 'value' | 'onChange'> {
   label?: string
@@ -71,7 +71,7 @@ const UiImageUploader = forwardRef<HTMLInputElement, Props>(
             <UiIcon componentName='addPhotoAlternativeOutlined' size={6} />
           </Stack>
         )}
-        <Typography>{value?.name || label || 'Upload image'}</Typography>
+        <Typography variant='subtitle4'>{value?.name || label || 'Upload image'}</Typography>
         <Input
           {...rest}
           onChange={handleChange}

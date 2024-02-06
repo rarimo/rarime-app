@@ -63,20 +63,39 @@ export const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }) => ({
         borderRadius: theme.spacing(250),
         transition: Transitions.Default,
-        '&.MuiButton-sizeLarge': {
-          ...typography.buttonLarge,
-          px: theme.spacing(4),
-          height: theme.spacing(12),
+      }),
+      containedSizeLarge: ({ theme }) => ({
+        ...typography.buttonLarge,
+        padding: theme.spacing(0, 4),
+        height: theme.spacing(12),
+      }),
+      containedSizeMedium: ({ theme }) => ({
+        ...typography.buttonMedium,
+        padding: theme.spacing(0, 4),
+        height: theme.spacing(8),
+      }),
+      containedSizeSmall: ({ theme }) => ({
+        ...typography.buttonSmall,
+        padding: theme.spacing(0, 2),
+        height: theme.spacing(6),
+      }),
+      fullWidth: {
+        width: '100%',
+      },
+      text: {
+        padding: 0,
+        minWidth: 'unset',
+        '&:hover': {
+          backgroundColor: 'transparent',
         },
-        '&.MuiButton-sizeMedium': {
-          ...typography.buttonMedium,
-          px: theme.spacing(4),
-          height: theme.spacing(8),
-        },
-        '&.MuiButton-sizeSmall': {
-          ...typography.buttonSmall,
-          px: theme.spacing(2),
-          height: theme.spacing(6),
+      },
+      textPrimary: ({ theme }) => ({
+        color: theme.palette.text.primary,
+      }),
+      textSecondary: ({ theme }) => ({
+        color: theme.palette.text.secondary,
+        '&:hover': {
+          color: theme.palette.secondary.main,
         },
       }),
     },
@@ -105,7 +124,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
         '& .MuiInputBase-root, & .MuiInputBase-sizeSmall, & .MuiInputBase-sizeMedium':
           typography.body3,
         '& .MuiInputBase-root': {
-          height: theme.spacing(12),
+          minHeight: theme.spacing(12),
           '&.Mui-focused:not(.Mui-error) .MuiOutlinedInput-notchedOutline': {
             borderColor: theme.palette.action.focus,
             borderWidth: 1,
@@ -115,7 +134,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
           },
         },
         '& .MuiInputBase-sizeSmall': {
-          height: theme.spacing(8),
+          height: theme.spacing(10),
         },
         '& .MuiOutlinedInput-notchedOutline': {
           transition: Transitions.Default,
@@ -177,23 +196,42 @@ export const components: Components<Omit<Theme, 'components'>> = {
     },
   },
   MuiIconButton: {
+    defaultProps: {
+      color: 'primary',
+    },
     styleOverrides: {
-      root: ({ theme }) => ({
+      root: {
         padding: 0,
-        color: theme.palette.text.primary,
         transition: Transitions.Default,
-
-        '&[disabled]': {
-          color: theme.palette.text.disabled,
-        },
-
-        '&:not([disabled]):hover': {
+        '&:hover': {
           backgroundColor: 'transparent',
+        },
+      },
+      colorPrimary: ({ theme }) => ({
+        color: theme.palette.text.primary,
+      }),
+      colorSecondary: ({ theme }) => ({
+        color: theme.palette.text.secondary,
+        '&:hover': {
           color: theme.palette.text.primary,
         },
-
-        '&:not([disabled]).active, &:not([disabled]):active': {
-          color: theme.palette.primary.main,
+      }),
+      colorSuccess: ({ theme }) => ({
+        color: theme.palette.success.main,
+        '&:hover': {
+          color: theme.palette.success.dark,
+        },
+      }),
+      colorError: ({ theme }) => ({
+        color: theme.palette.error.main,
+        '&:hover': {
+          color: theme.palette.error.dark,
+        },
+      }),
+      colorWarning: ({ theme }) => ({
+        color: theme.palette.warning.main,
+        '&:hover': {
+          color: theme.palette.warning.dark,
         },
       }),
     },
@@ -201,6 +239,11 @@ export const components: Components<Omit<Theme, 'components'>> = {
   MuiSkeleton: {
     defaultProps: {
       animation: 'wave',
+    },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        backgroundColor: theme.palette.divider,
+      }),
     },
   },
   MuiSwitch: {
@@ -285,6 +328,48 @@ export const components: Components<Omit<Theme, 'components'>> = {
       paper: ({ theme }) => ({
         borderRadius: theme.spacing(2),
         boxShadow: '0px 8px 16px 0px rgba(0, 0, 0, 0.04)',
+      }),
+    },
+  },
+  MuiPagination: {
+    defaultProps: {
+      color: 'primary',
+      hidePrevButton: true,
+      hideNextButton: true,
+    },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        '& .MuiButtonBase-root': {
+          ...typography.subtitle4,
+          color: theme.palette.text.secondary,
+        },
+      }),
+    },
+  },
+  MuiDrawer: {
+    defaultProps: {
+      anchor: 'right',
+    },
+    styleOverrides: {
+      root: {
+        '& > .MuiBackdrop-root': {
+          backgroundColor: 'rgba(32, 32, 32, 0.50)',
+        },
+      },
+      paper: ({ theme }) => ({
+        width: '100%',
+        maxWidth: theme.spacing(108),
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: 'none',
+        border: 'none',
+        borderRadius: theme.spacing(3),
+      }),
+      paperAnchorRight: ({ theme }) => ({
+        height: 'unset',
+        top: theme.spacing(3),
+        bottom: theme.spacing(3),
+        left: 'unset',
+        right: theme.spacing(3),
       }),
     },
   },

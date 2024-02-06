@@ -1,12 +1,33 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useState } from 'react'
-import { DefaultValues, FieldErrorsImpl, Merge, useForm as useFormHook } from 'react-hook-form'
+import {
+  Control,
+  DefaultValues,
+  FieldErrorsImpl,
+  FieldPath,
+  FieldValues,
+  useForm as useFormHook,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from 'react-hook-form'
 import * as Yup from 'yup'
 
-export const useForm = <T extends Yup.AnyObjectSchema, R extends object>(
+export type Form<T extends FieldValues> = {
+  isFormDisabled: boolean
+  getErrorMessage: (fieldName: FieldPath<T>) => string
+  enableForm: () => void
+  disableForm: () => void
+  formState: T
+  formErrors: FieldErrorsImpl<T>
+  register: UseFormRegister<T>
+  handleSubmit: UseFormHandleSubmit<T>
+  control: Control<T>
+}
+
+export const useForm = <T extends Yup.AnyObjectSchema, R extends FieldValues>(
   defaultValues: R,
   schemaBuilder: (yup: typeof Yup) => T,
-) => {
+): Form<R> => {
   const [isFormDisabled, setIsFormDisabled] = useState(false)
 
   const {
@@ -24,7 +45,7 @@ export const useForm = <T extends Yup.AnyObjectSchema, R extends object>(
     resolver: yupResolver(schemaBuilder(Yup)),
   })
 
-  const getErrorMessage = (fieldName: keyof Merge<R, FieldErrorsImpl<R>>): string => {
+  const getErrorMessage = (fieldName: FieldPath<R>): string => {
     return errors[fieldName]?.message?.toString() ?? ''
   }
 

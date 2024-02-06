@@ -16,7 +16,7 @@ const UiSearchField = forwardRef((props: ComponentProps<typeof UiTextField>, ref
       autoComplete='off'
       sx={{
         ...props.sx,
-        height: spacing(10),
+        height: props.size === 'small' ? spacing(8) : spacing(10),
       }}
       InputProps={{
         ...props.InputProps,

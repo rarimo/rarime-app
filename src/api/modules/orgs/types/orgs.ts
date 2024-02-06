@@ -1,4 +1,9 @@
-import type { OrgsIncludes, OrgsRequestFilters, OrgsStatuses } from '@/api/modules/orgs'
+import type {
+  OrgsIncludes,
+  OrgsRequestFilters,
+  OrgsRequestPage,
+  OrgsStatuses,
+} from '@/api/modules/orgs'
 
 export type OrgMetadataLink = {
   title: string
@@ -53,16 +58,28 @@ export type OrgsRequestFiltersMap = {
   [OrgsRequestFilters.Owner]?: string
   [OrgsRequestFilters.UserDid]?: string
   [OrgsRequestFilters.Status]?: OrgsStatuses
+  [OrgsRequestFilters.Metadata]?: string
+}
+
+export type OrgsRequestPageMap = {
+  [OrgsRequestPage.Limit]: number
+  [OrgsRequestPage.Number]: number
 }
 
 export type OrgsRequestQueryParams = {
   include?: OrgsIncludes
   filter?: OrgsRequestFiltersMap
-  // TODO: page, limit, sort, ...etc
+  page?: OrgsRequestPageMap
+  // TODO: sort, ...etc
 }
 
 export type OrgVerificationCode = {
   id: string
   type: string
   code: string
+}
+
+//Todo: change other api methods response to this for consistency
+export type OrgListMeta = {
+  count: number
 }

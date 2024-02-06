@@ -1,7 +1,11 @@
+import { JsonApiResponse } from '@distributedlab/jac'
+
 import { api } from '@/api/clients'
 import {
   type Organization,
   type OrganizationCreate,
+  OrgListMeta,
+  type OrgMetadata,
   type OrgsRequestQueryParams,
   OrgsStatuses,
   type OrgUser,
@@ -94,16 +98,17 @@ export const DUMMY_ORGS: Organization[] = [
   },
 ]
 
-export const loadOrgs = async (query: OrgsRequestQueryParams) => {
-  const { data } = await api.get<Organization[]>(`${ApiServicePaths.Orgs}/v1/orgs`, {
+export const loadOrgs = (
+  query: OrgsRequestQueryParams,
+  //Todo: change other api methods response to this for consistency
+): Promise<JsonApiResponse<Organization[], OrgListMeta>> => {
+  return api.get<Organization[], OrgListMeta>(`${ApiServicePaths.Orgs}/v1/orgs`, {
     query,
   })
-
-  return data
 }
 
-export const loadOrgsAmount = async () => {
-  const { data } = await api.get<number>(`${ApiServicePaths.Orgs}/v1/orgs/amount`)
+export const loadOrgsCount = async () => {
+  const { data } = await api.get<number>(`${ApiServicePaths.Orgs}/v1/orgs/count`)
 
   return data
 }
@@ -135,6 +140,14 @@ export const createOrg = async (body: OrganizationCreate) => {
 
 export const verifyOrg = async (id: string) => {
   const { data } = await api.post<Organization>(`${ApiServicePaths.Orgs}/v1/orgs/${id}`)
+
+  return data
+}
+
+export const updateOrgMetadata = async (id: string, metadata: Partial<OrgMetadata>) => {
+  const { data } = await api.patch<Partial<OrgMetadata>>(`${ApiServicePaths.Orgs}/v1/orgs/${id}`, {
+    body: { data: metadata },
+  })
 
   return data
 }
