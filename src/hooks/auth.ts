@@ -24,8 +24,8 @@ export const useAuth = () => {
   } = useMetamaskZkpSnapContext()
 
   const isAuthorized = useMemo(
-    () => Boolean(provider?.isConnected && isSnapInstalled),
-    [isSnapInstalled, provider?.isConnected],
+    () => Boolean(userDid && isSnapInstalled),
+    [isSnapInstalled, userDid],
   )
 
   const logout = useCallback(async () => {

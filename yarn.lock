@@ -1841,14 +1841,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rarimo/rarime-connector@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@rarimo/rarime-connector@npm:2.0.1"
+"@rarimo/rarime-connector@npm:^2.0.3-rc.0":
+  version: 2.0.3
+  resolution: "@rarimo/rarime-connector@npm:2.0.3"
   dependencies:
     "@ethersproject/providers": "npm:5.7.2"
     compare-versions: "npm:^6.1.0"
     ethers: "npm:5.7.2"
-  checksum: f1c69c1e89f52afaed6caba2a564716e27ad2f048bfe15a84674824326f1a4c297f184ee454d69378ea5c159d5510da98a8d9fdec90d616d814aac3df9cf9623
+  checksum: 9b17b2596c6f001e1d3bc744844cdfbf0fc6d2ac489020ba8324bbe532f0ae59328c9f0020c79ce46e1e3571ef485a6a41f48a5e8ff958430337bbd58d2875a5
   languageName: node
   linkType: hard
 
@@ -8886,7 +8886,7 @@ __metadata:
     "@mui/icons-material": "npm:^5.14.19"
     "@mui/material": "npm:^5.14.20"
     "@mui/x-date-pickers": "npm:^6.18.7"
-    "@rarimo/rarime-connector": "npm:^2.0.1"
+    "@rarimo/rarime-connector": "npm:^2.0.3-rc.0"
     "@types/lodash": "npm:^4"
     "@types/react": "npm:^18.2.37"
     "@types/react-dom": "npm:^18.2.15"

@@ -2,7 +2,7 @@ import { CircularProgress, CssBaseline, Stack, ThemeProvider } from '@mui/materi
 import { FC, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { ErrorHandler } from '@/helpers'
-import { useAuth, useMetamaskZkpSnapContext, useViewportSizes, useWeb3Context } from '@/hooks'
+import { useMetamaskZkpSnapContext, useViewportSizes, useWeb3Context } from '@/hooks'
 
 import { ToastsManager } from './contexts'
 import { AppRoutes } from './routes'
@@ -13,27 +13,23 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
   const [isAppInitialized, setIsAppInitialized] = useState(false)
 
   const { provider, isValidChain } = useWeb3Context()
-  const { checkSnapStatus } = useMetamaskZkpSnapContext()
+  const { checkSnapStatus, connectOrInstallSnap } = useMetamaskZkpSnapContext()
   const { paletteMode } = useUiState()
-  const { connectProviders } = useAuth()
-
   useViewportSizes()
 
   const init = useCallback(async () => {
-    if (provider?.address) return
-
     try {
       const { isMetamaskInstalled, isSnapInstalled } = await checkSnapStatus()
 
       if (isMetamaskInstalled && isSnapInstalled) {
-        await connectProviders()
+        await connectOrInstallSnap()
       }
     } catch (error) {
       ErrorHandler.processWithoutFeedback(error)
     }
 
     setIsAppInitialized(true)
-  }, [provider?.address, checkSnapStatus, connectProviders])
+  }, [checkSnapStatus, connectOrInstallSnap])
 
   const theme = useMemo(() => createTheme(paletteMode), [paletteMode])
 
