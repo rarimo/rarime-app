@@ -12,6 +12,17 @@ import {
 } from '@rarimo/rarime-connector'
 import { createContext, FC, HTMLAttributes, useCallback, useState } from 'react'
 
+// TODO: remove
+type RemoveCredentialsRequestParams =
+  | {
+      ids: string[]
+      claimIds?: never
+    }
+  | {
+      ids?: never
+      claimIds: string[]
+    }
+
 /**
  * The snap origin to use.
  * Will default to the local hosted snap if no value is provided in the environment.
@@ -33,6 +44,7 @@ interface MetamaskZkpSnapContextValue {
   saveVerifiableCredentials: (
     params: SaveCredentialsRequestParams,
   ) => Promise<SaveCredentialsResponse[] | undefined>
+  removeVerifiableCredentials: (params: RemoveCredentialsRequestParams) => Promise<void>
   createProof: (params: CreateProofRequestParams) => Promise<ZKPProofResponse | undefined>
   checkMetamaskExists: () => Promise<boolean>
   checkSnapExists: () => Promise<boolean>
@@ -65,6 +77,9 @@ export const MetamaskZkpSnapContext = createContext<MetamaskZkpSnapContextValue>
     throw CONTEXT_NOT_INITIALIZED_ERROR
   },
   saveVerifiableCredentials: () => {
+    throw CONTEXT_NOT_INITIALIZED_ERROR
+  },
+  removeVerifiableCredentials: () => {
     throw CONTEXT_NOT_INITIALIZED_ERROR
   },
   createProof: () => {
@@ -138,6 +153,21 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
     [connector],
   )
 
+  const removeVerifiableCredentials = useCallback(
+    async (params: RemoveCredentialsRequestParams) => {
+      if (!connector) throw new TypeError('Connector is not defined')
+
+      return await window.ethereum.request({
+        method: 'wallet_invokeSnap',
+        params: {
+          request: { method: 'remove_credentials', params },
+          snapId: 'local:http://localhost:8081',
+        },
+      })
+    },
+    [connector],
+  )
+
   const createProof = useCallback(
     async (params: CreateProofRequestParams, _connector?: SnapConnector) => {
       const currentConnector = _connector || connector
@@ -169,7 +199,7 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
   }, [])
 
   const checkSnapExists = useCallback(async () => {
-    const _isSnapInstalled = await detectSnapInstalled()
+    const _isSnapInstalled = await detectSnapInstalled('local:http://localhost:8081')
 
     setIsSnapInstalled(_isSnapInstalled)
 
@@ -177,7 +207,7 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
   }, [])
 
   const connectOrInstallSnap = useCallback(async () => {
-    const snap = await enableSnap()
+    const snap = await enableSnap('local:http://localhost:8081')
     const connector = await snap.getConnector()
 
     setConnector(connector)
@@ -220,6 +250,7 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
 
         createIdentity,
         saveVerifiableCredentials,
+        removeVerifiableCredentials,
         createProof,
         checkCredentialExistence,
 

@@ -11,23 +11,23 @@ type Props = StackProps & {
 function DotsDecoration({ ...rest }: StackProps) {
   const { palette } = useTheme()
 
+  const rowsCount = 3
+  const maxDots = 5
   const betweenDotsSpacing = 2
 
   return (
     <Stack {...rest} alignItems={'flex-end'} spacing={betweenDotsSpacing}>
-      {Array.from({ length: 3 }).map((_, rowIdx) => (
+      {Array.from({ length: rowsCount }, (v, i) => i).map(rowIdx => (
         <Stack key={rowIdx} direction='row' spacing={betweenDotsSpacing}>
-          {Array.from({ length: rowIdx + 3 })
-            .map((_, boxIdx) => (
-              <Box
-                key={boxIdx}
-                width={8}
-                height={8}
-                borderRadius={'50%'}
-                bgcolor={alpha(palette.background.default, 0.16)}
-              />
-            ))
-            .reverse()}
+          {Array.from({ length: maxDots - rowIdx }, (v, i) => i).map(boxIdx => (
+            <Box
+              key={boxIdx}
+              width={8}
+              height={8}
+              borderRadius={'50%'}
+              bgcolor={alpha(palette.background.default, 0.16)}
+            />
+          ))}
         </Stack>
       ))}
     </Stack>

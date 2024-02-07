@@ -6,6 +6,7 @@ import ArrowForward from '@mui/icons-material/ArrowForward'
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined'
 import CheckIcon from '@mui/icons-material/Check'
 import ChevronLeft from '@mui/icons-material/ChevronLeft'
+import ChevronRight from '@mui/icons-material/ChevronRight'
 import Close from '@mui/icons-material/Close'
 import ContentCopy from '@mui/icons-material/ContentCopy'
 import DarkModeOutlined from '@mui/icons-material/DarkModeOutlined'
@@ -23,6 +24,7 @@ import Layers from '@mui/icons-material/Layers'
 import LightModeOutlined from '@mui/icons-material/LightModeOutlined'
 import Link from '@mui/icons-material/Link'
 import Logout from '@mui/icons-material/Logout'
+import MoreHoriz from '@mui/icons-material/MoreHoriz'
 import Notifications from '@mui/icons-material/Notifications'
 import OpenInNew from '@mui/icons-material/OpenInNew'
 import QrCode from '@mui/icons-material/QrCode'
@@ -49,6 +51,7 @@ export const ICON_COMPONENTS = {
   arrowForward: ArrowForward,
   check: CheckIcon,
   chevronLeft: ChevronLeft,
+  chevronRight: ChevronRight,
   contentCopy: ContentCopy,
   close: Close,
   darkModeOutlined: DarkModeOutlined,
@@ -76,4 +79,5 @@ export const ICON_COMPONENTS = {
   fingerprint: FingerPrint,
   calendarTodayOutlinedIcon: CalendarTodayOutlinedIcon,
   allInclusiveOutlinedIcon: AllInclusiveOutlinedIcon,
+  moreHoriz: MoreHoriz,
 }

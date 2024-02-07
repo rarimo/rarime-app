@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { BusEvents, Icons } from '@/enums'
 import { bus } from '@/helpers'
-import { UiBasicModal, UiButton, UiDrawer, UiIcon, UiModal } from '@/ui'
+import { UiBasicModal, UiButton, UiDrawer, UiIcon, UiModal, UiPaper } from '@/ui'
 
 export default function UiKitOther() {
   const [isDrawerShown, setIsDrawerShown] = useState(false)
@@ -161,9 +161,13 @@ export default function UiKitOther() {
           <Typography variant={`caption2`}>{`Caption 2`}</Typography>
           <Typography variant={`caption3`}>{`Caption 3`}</Typography>
 
-          <Typography variant={`overline1`}>{`Overline 1`}</Typography>
-          <Typography variant={`overline2`}>{`Overline 2`}</Typography>
-          <Typography variant={`overline3`}>{`Overline 3`}</Typography>
+          <UiPaper>
+            <Stack spacing={4} justifyContent={`flex-start`}>
+              <Typography variant={`overline1`}>{`Overline 1`}</Typography>
+              <Typography variant={`overline2`}>{`Overline 2`}</Typography>
+              <Typography variant={`overline3`}>{`Overline 3`}</Typography>
+            </Stack>
+          </UiPaper>
         </Stack>
       </Stack>
     </Stack>
