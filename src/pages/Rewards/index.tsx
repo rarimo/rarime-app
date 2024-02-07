@@ -1,10 +1,13 @@
-import { Box } from '@mui/material'
 import { Navigate } from 'react-router-dom'
 
 import { RoutePaths } from '@/enums'
 import { useNestedRoutes } from '@/hooks'
 
 import RewardsLayout from './components/RewardsLayout'
+import ActiveTasks from './pages/ActiveTasks'
+import ActiveTasksId from './pages/ActiveTasksId'
+import History from './pages/History'
+import Leaderboard from './pages/Leaderboard'
 
 export default function Rewards() {
   return useNestedRoutes(RoutePaths.Rewards, [
@@ -16,7 +19,7 @@ export default function Rewards() {
       path: RoutePaths.RewardsActive,
       element: (
         <RewardsLayout>
-          <Box>active</Box>
+          <ActiveTasks />
         </RewardsLayout>
       ),
     },
@@ -24,13 +27,17 @@ export default function Rewards() {
       path: RoutePaths.RewardsHistory,
       element: (
         <RewardsLayout>
-          <Box>history</Box>
+          <History />
         </RewardsLayout>
       ),
     },
     {
       path: RoutePaths.RewardsActiveId,
-      element: <Box>active id</Box>,
+      element: <ActiveTasksId />,
+    },
+    {
+      path: RoutePaths.RewardsLeaderboard,
+      element: <Leaderboard />,
     },
     {
       path: '*',
