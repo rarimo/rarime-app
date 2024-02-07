@@ -60,7 +60,6 @@ const AppNavbar = () => {
         iconComponent: <UiIcon componentName={'layers'} size={6} />,
       },
       { route: RoutePaths.Rewards, iconComponent: <UiIcon name={Icons.Gift} size={5} /> },
-      { route: RoutePaths.UiKit, iconComponent: <UiIcon componentName={'info'} size={5} /> },
     ],
     [],
   )

@@ -98,6 +98,13 @@ export const components: Components<Omit<Theme, 'components'>> = {
           color: theme.palette.secondary.main,
         },
       }),
+      containedSecondary: ({ theme }) => ({
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.action.active,
+        '&:hover': {
+          backgroundColor: theme.palette.action.hover,
+        },
+      }),
     },
   },
   MuiButtonBase: {
