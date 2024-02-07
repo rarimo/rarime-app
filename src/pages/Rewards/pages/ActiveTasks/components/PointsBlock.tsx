@@ -2,8 +2,7 @@ import { Divider, Stack, Typography, useTheme } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
-import { Transitions } from '@/theme/constants'
-import { UiIcon } from '@/ui'
+import { UiButton, UiIcon } from '@/ui'
 
 import LevelProgress from './LevelProgress'
 
@@ -27,33 +26,24 @@ export default function PointsBlock() {
           <Typography variant='h4'>120</Typography>
         </Stack>
 
-        <Stack
+        <UiButton
           component={NavLink}
           to={RoutePaths.RewardsLeaderboard}
-          direction={'row'}
-          alignItems={'center'}
-          spacing={2}
+          color='secondary'
+          size='medium'
           px={3}
-          py={2}
-          borderRadius={250}
-          bgcolor={palette.action.active}
-          color={palette.text.primary}
-          sx={{
-            textDecoration: 'none',
-            transition: Transitions.Default,
-            '&:hover': {
-              bgcolor: palette.action.hover,
-            },
-          }}
+          sx={{ height: spacing(9) }}
         >
-          <Stack direction={'row'} alignItems={'center'} spacing={1}>
-            <UiIcon name={Icons.Trophy} size={5} />
-            <Typography variant='subtitle4'>241</Typography>
+          <Stack direction={'row'} alignItems={'center'} spacing={2}>
+            <Stack direction={'row'} alignItems={'center'} spacing={1}>
+              <UiIcon name={Icons.Trophy} size={5} />
+              <Typography variant='subtitle4'>241</Typography>
+            </Stack>
+            <Divider sx={{ width: spacing(2), bgcolor: palette.action.hover }} />
+            <Typography variant='buttonMedium'>Leaderboard</Typography>
+            <UiIcon componentName='chevronRight' size={4} sx={{ color: palette.text.secondary }} />
           </Stack>
-          <Divider sx={{ width: spacing(2), bgcolor: palette.action.hover }} />
-          <Typography variant='buttonMedium'>Leaderboard</Typography>
-          <UiIcon componentName='chevronRight' size={4} sx={{ color: palette.text.secondary }} />
-        </Stack>
+        </UiButton>
       </Stack>
       <LevelProgress />
     </Stack>

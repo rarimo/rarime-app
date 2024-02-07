@@ -35,7 +35,7 @@ export default function LimitedEvents() {
             </Typography>
             <Stack direction={'row'} alignItems={'center'} spacing={4}>
               <Typography
-                variant='caption2'
+                variant='subtitle4'
                 px={2}
                 py={1}
                 borderRadius={12}
@@ -49,8 +49,7 @@ export default function LimitedEvents() {
             </Stack>
           </Stack>
         </Stack>
-        {/* <UiButton size='medium'>Claim</UiButton> */}
-        <UiButton color='secondary' size='medium'>
+        <UiButton color='secondary' size='medium' sx={{ width: spacing(19), height: spacing(8) }}>
           View
         </UiButton>
       </Stack>
