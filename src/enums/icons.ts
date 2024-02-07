@@ -4,6 +4,7 @@ import AddPhotoAlternateOutlined from '@mui/icons-material/AddPhotoAlternateOutl
 import ArrowForward from '@mui/icons-material/ArrowForward'
 import CheckIcon from '@mui/icons-material/Check'
 import ChevronLeft from '@mui/icons-material/ChevronLeft'
+import ChevronRight from '@mui/icons-material/ChevronRight'
 import Close from '@mui/icons-material/Close'
 import ContentCopy from '@mui/icons-material/ContentCopy'
 import DarkModeOutlined from '@mui/icons-material/DarkModeOutlined'
@@ -38,6 +39,7 @@ export enum Icons {
   Twitter = 'twitter',
   Rarime = 'rarime',
   Gift = 'gift',
+  Trophy = 'trophy',
 }
 
 export const ICON_COMPONENTS = {
@@ -47,6 +49,7 @@ export const ICON_COMPONENTS = {
   arrowForward: ArrowForward,
   check: CheckIcon,
   chevronLeft: ChevronLeft,
+  chevronRight: ChevronRight,
   contentCopy: ContentCopy,
   close: Close,
   darkModeOutlined: DarkModeOutlined,

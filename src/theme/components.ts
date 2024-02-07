@@ -373,4 +373,20 @@ export const components: Components<Omit<Theme, 'components'>> = {
       }),
     },
   },
+  MuiLinearProgress: {
+    defaultProps: {
+      variant: 'determinate',
+    },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        borderRadius: 250,
+        height: theme.spacing(2),
+        backgroundColor: theme.palette.action.active,
+      }),
+      barColorPrimary: ({ theme }) => ({
+        borderRadius: 250,
+        backgroundColor: theme.palette.primary.dark,
+      }),
+    },
+  },
 }
