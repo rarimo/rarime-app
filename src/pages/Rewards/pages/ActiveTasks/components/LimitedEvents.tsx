@@ -1,5 +1,7 @@
 import { Box, Stack, Typography, useTheme } from '@mui/material'
+import { generatePath, NavLink } from 'react-router-dom'
 
+import { RoutePaths } from '@/enums'
 import { UiButton } from '@/ui'
 
 export default function LimitedEvents() {
@@ -29,7 +31,14 @@ export default function LimitedEvents() {
             }}
           />
           <Stack spacing={2}>
-            <Typography variant='subtitle4'>Initial setup of identity credentials</Typography>
+            <Typography
+              component={NavLink}
+              to={generatePath(RoutePaths.RewardsActiveId, { id: '1' })}
+              variant='subtitle4'
+              color={palette.text.primary}
+            >
+              Initial setup of identity credentials
+            </Typography>
             <Typography variant='body4' color={palette.text.secondary}>
               It is a long established fact that a reader will be distracted by the readable
             </Typography>
@@ -49,7 +58,13 @@ export default function LimitedEvents() {
             </Stack>
           </Stack>
         </Stack>
-        <UiButton color='secondary' size='medium' sx={{ width: spacing(19), height: spacing(8) }}>
+        <UiButton
+          component={NavLink}
+          to={generatePath(RoutePaths.RewardsActiveId, { id: '1' })}
+          color='secondary'
+          size='medium'
+          sx={{ width: spacing(19), height: spacing(8) }}
+        >
           View
         </UiButton>
       </Stack>

@@ -33,6 +33,15 @@ export default function History() {
     >
       <Typography variant='subtitle3'>My History</Typography>
       <Stack spacing={4}>
+        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+          <Typography variant='overline3' color={palette.text.secondary}>
+            Task name
+          </Typography>
+          <Typography variant='overline3' color={palette.text.secondary}>
+            Earned points
+          </Typography>
+        </Stack>
+        <Divider />
         {tasks.map((task, index) => (
           <Stack spacing={4} key={task.id}>
             <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
