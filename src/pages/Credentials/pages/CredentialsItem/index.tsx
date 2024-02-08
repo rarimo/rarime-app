@@ -77,7 +77,7 @@ export default function CredentialsItem() {
   const navigate = useNavigate()
   const [isPending, setIsPending] = useState(false)
 
-  const { palette } = useTheme()
+  const { palette, spacing } = useTheme()
 
   const { claimId = '' } = useParams<{ claimId: string }>()
 
@@ -178,7 +178,7 @@ export default function CredentialsItem() {
                 />
               </Box>
 
-              <Box width={360}>
+              <Box width={spacing(100)}>
                 <CredentialCard vc={vc} issuerDetails={issuerDetails} />
               </Box>
 
