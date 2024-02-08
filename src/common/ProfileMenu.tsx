@@ -41,7 +41,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
   return (
     <>
       <UiIconButton onClick={event => setAnchorEl(event.currentTarget)}>
-        <UserAvatar userDid={userDid} />
+        <UserAvatar userDid={userDid} size={8} />
       </UiIconButton>
       <Menu
         anchorEl={anchorEl}
@@ -61,7 +61,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
         }}
       >
         <Stack direction={'column'} p={4} alignItems={'center'}>
-          <UserAvatar sx={{ width: spacing(12), height: spacing(12) }} userDid={userDid} />
+          <UserAvatar userDid={userDid} size={12} />
           <Stack direction={'row'} mt={3} spacing={2}>
             <Typography
               variant={'subtitle4'}

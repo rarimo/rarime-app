@@ -25,6 +25,7 @@ import Notifications from '@mui/icons-material/Notifications'
 import OpenInNew from '@mui/icons-material/OpenInNew'
 import QrCode from '@mui/icons-material/QrCode'
 import Search from '@mui/icons-material/Search'
+import ShareOutlined from '@mui/icons-material/ShareOutlined'
 import Tune from '@mui/icons-material/Tune'
 import Verified from '@mui/icons-material/Verified'
 import WarningAmberIcon from '@mui/icons-material/WarningAmber'
@@ -70,6 +71,7 @@ export const ICON_COMPONENTS = {
   openInNew: OpenInNew,
   qrCode: QrCode,
   search: Search,
+  shareOutlined: ShareOutlined,
   tune: Tune,
   verified: Verified,
   warningAmber: WarningAmberIcon,
