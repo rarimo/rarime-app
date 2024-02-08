@@ -19,9 +19,7 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
   const { palette, spacing } = useTheme()
 
   const isRouteActive = useMemo(() => {
-    const locationRoot = location.pathname.split('/')[1]
-
-    return to.split('/').includes(locationRoot)
+    return location.pathname.startsWith(to)
   }, [location.pathname, to])
 
   return (
@@ -54,12 +52,11 @@ const AppNavbar = () => {
 
   const navbarItems = useMemo(
     () => [
-      { route: RoutePaths.Profiles, iconComponent: <UiIcon name={Icons.Wallet} size={5} /> },
+      { route: RoutePaths.Dashboard, iconComponent: <UiIcon name={Icons.House} size={5} /> },
       {
         route: RoutePaths.Credentials,
         iconComponent: <UiIcon componentName={'layers'} size={6} />,
       },
-      { route: RoutePaths.UiKit, iconComponent: <UiIcon componentName={'info'} size={5} /> },
     ],
     [],
   )
@@ -78,7 +75,7 @@ const AppNavbar = () => {
       borderColor={palette.divider}
     >
       <Stack spacing={4}>
-        <Stack component={NavLink} to={RoutePaths.Profiles} alignItems={'center'}>
+        <Stack component={NavLink} to={RoutePaths.Dashboard} alignItems={'center'}>
           <UiIcon name={Icons.Rarime} size={10} sx={{ color: palette.text.primary }} />
         </Stack>
         <Divider />
