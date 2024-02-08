@@ -35,13 +35,14 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber'
 import Work from '@mui/icons-material/Work'
 
 export enum Icons {
+  Facebook = 'facebook',
+  House = 'house',
+  Instagram = 'instagram',
   Metamask = 'metamask',
+  Rarime = 'rarime',
+  Twitter = 'twitter',
   User = 'user',
   Wallet = 'wallet',
-  Facebook = 'facebook',
-  Instagram = 'instagram',
-  Twitter = 'twitter',
-  Rarime = 'rarime',
 }
 
 export const ICON_COMPONENTS = {
