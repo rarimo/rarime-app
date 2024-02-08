@@ -107,3 +107,26 @@ export const formatCredentialType = (vcType: string[]) => {
       return startCase(vcType[1])
   }
 }
+
+export const getIssuerDetails = async (issuerDid: string): Promise<IssuerDetails> => {
+  // TODO: This is a temporary solution, we need to get issuer details from the backend
+  return {
+    did: issuerDid,
+    name: 'Rarimo',
+  }
+}
+
+export const getCredentialViewProperty = (vc: W3CCredential) => {
+  // TODO: This is a temporary solution, we need to get VC view property
+  return vc.credentialSubject.provider as string
+}
+
+export const formatCredentialType = (vcType: string[]) => {
+  switch (vcType[1]) {
+    case 'IdentityProviders': {
+      return 'Proof of Human'
+    }
+    default:
+      return startCase(vcType[1])
+  }
+}

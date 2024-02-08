@@ -81,13 +81,19 @@ export default function CredentialsItem() {
 
   const { claimId = '' } = useParams<{ claimId: string }>()
 
-  const { vcs } = useCredentialsContext()
+  const { vcs, issuersDetails } = useCredentialsContext()
 
   const { removeVerifiableCredentials } = useMetamaskZkpSnapContext()
 
   const vc = useMemo(() => {
     return vcs.find(vc => getClaimId(vc.id) === claimId)
   }, [claimId, vcs])
+
+  const issuerDetails = useMemo(() => {
+    if (!vc) return
+
+    return issuersDetails?.[vc.issuer]
+  }, [issuersDetails, vc])
 
   const requestRemoveVC = useCallback(async () => {
     if (!vc?.id) return
@@ -161,9 +167,9 @@ export default function CredentialsItem() {
       </Box>
 
       <UiPaper>
-        {vc ? (
+        {vc && issuerDetails ? (
           <Stack spacing={6}>
-            <Stack spacing={6} direction='row' alignItems='center'>
+            <Stack spacing={6} direction='row' alignItems='center' alignSelf='center'>
               <Box component={NavLink} to={prevVC} visibility={isFirstVC ? 'hidden' : 'visible'}>
                 <UiIcon
                   componentName='chevronLeft'
@@ -172,7 +178,9 @@ export default function CredentialsItem() {
                 />
               </Box>
 
-              <CredentialCard vc={vc} />
+              <Box width={360}>
+                <CredentialCard vc={vc} issuerDetails={issuerDetails} />
+              </Box>
 
               <Box component={NavLink} to={nextVC} visibility={isLastVC ? 'hidden' : 'visible'}>
                 <UiIcon
