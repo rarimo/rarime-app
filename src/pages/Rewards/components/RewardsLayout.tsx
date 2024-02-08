@@ -19,6 +19,7 @@ export default function RewardsLayout({ children }: PropsWithChildren) {
         />
         <UiButton
           component={'a'}
+          // TODO: Link to RariMe docs
           href='https://rarime.com'
           target='_blank'
           rel='noreferrer noopener'

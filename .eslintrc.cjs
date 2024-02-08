@@ -87,5 +87,6 @@ module.exports = {
     // disable unnecessary rules from recommendations
     'react/display-name': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    // 'react/jsx-curly-brace-presence': ['warn', 'always'],
   },
 }
