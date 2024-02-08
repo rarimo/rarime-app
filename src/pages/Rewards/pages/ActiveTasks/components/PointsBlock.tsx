@@ -31,8 +31,7 @@ export default function PointsBlock() {
           to={RoutePaths.RewardsLeaderboard}
           color='secondary'
           size='medium'
-          px={3}
-          sx={{ height: spacing(9) }}
+          sx={{ height: spacing(9), px: 3 }}
         >
           <Stack direction={'row'} alignItems={'center'} spacing={2}>
             <Stack direction={'row'} alignItems={'center'} spacing={1}>
