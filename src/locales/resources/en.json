@@ -55,5 +55,8 @@
   "org-list": {
     "title": "Organizations",
     "subtitle": "Manage your identity credentials and Soulbound Tokens (SBTs) easily from this app"
+  },
+  "credentials-list": {
+    "title": "Credentials"
   }
 }

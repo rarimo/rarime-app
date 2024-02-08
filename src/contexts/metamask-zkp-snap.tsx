@@ -12,14 +12,14 @@ import {
 } from '@rarimo/rarime-connector'
 import { createContext, FC, HTMLAttributes, useCallback, useState } from 'react'
 
-// TODO: remove
+// TODO: remove once the method is available
 type RemoveCredentialsRequestParams =
   | {
-      ids: string[]
+      credentialIds: string[]
       claimIds?: never
     }
   | {
-      ids?: never
+      credentialIds?: never
       claimIds: string[]
     }
 
@@ -157,9 +157,14 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
     async (params: RemoveCredentialsRequestParams) => {
       if (!connector) throw new TypeError('Connector is not defined')
 
+      // FIXME: use connector, once the method is available
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       return await window.ethereum.request({
         method: 'wallet_invokeSnap',
         params: {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           request: { method: 'remove_credentials', params },
           snapId: 'local:http://localhost:8081',
         },
@@ -199,7 +204,7 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
   }, [])
 
   const checkSnapExists = useCallback(async () => {
-    const _isSnapInstalled = await detectSnapInstalled('local:http://localhost:8081')
+    const _isSnapInstalled = await detectSnapInstalled()
 
     setIsSnapInstalled(_isSnapInstalled)
 
@@ -207,7 +212,7 @@ export const MetamaskZkpSnapContextProvider: FC<HTMLAttributes<HTMLDivElement>> 
   }, [])
 
   const connectOrInstallSnap = useCallback(async () => {
-    const snap = await enableSnap('local:http://localhost:8081')
+    const snap = await enableSnap()
     const connector = await snap.getConnector()
 
     setConnector(connector)

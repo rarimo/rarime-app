@@ -1,15 +1,14 @@
 import { Box, Divider, Stack, Typography, useTheme } from '@mui/material'
-import { ComponentProps, useCallback, useMemo } from 'react'
-import { generatePath, NavLink, useParams } from 'react-router-dom'
+import { ComponentProps, useCallback, useMemo, useState } from 'react'
+import { generatePath, NavLink, useNavigate, useParams } from 'react-router-dom'
 
-import { CredentialCard } from '@/common'
+import { CredentialCard, NoDataViewer } from '@/common'
 import { RoutePaths } from '@/enums'
 import { ErrorHandler, getClaimId } from '@/helpers'
 import { useMetamaskZkpSnapContext } from '@/hooks'
 import { useCredentialsContext } from '@/pages/Credentials/contexts'
 import { Transitions } from '@/theme/constants'
 import { UiButton, UiIcon, UiPaper } from '@/ui'
-import UiPopup from '@/ui/UiPopup'
 
 function ActionButton({
   children,
@@ -75,6 +74,9 @@ function ActionButton({
 }
 
 export default function CredentialsItem() {
+  const navigate = useNavigate()
+  const [isPending, setIsPending] = useState(false)
+
   const { palette } = useTheme()
 
   const { claimId = '' } = useParams<{ claimId: string }>()
@@ -90,13 +92,17 @@ export default function CredentialsItem() {
   const requestRemoveVC = useCallback(async () => {
     if (!vc?.id) return
 
+    setIsPending(true)
+
     try {
       await removeVerifiableCredentials({
-        ids: [vc.id],
+        credentialIds: [vc.id],
       })
     } catch (error) {
       ErrorHandler.process(error)
     }
+
+    setIsPending(false)
   }, [removeVerifiableCredentials, vc])
 
   const isLastVC = useMemo(() => {
@@ -143,8 +149,6 @@ export default function CredentialsItem() {
     })
   }, [vc, vcs])
 
-  if (!vc) return <></>
-
   return (
     <Stack spacing={6}>
       <Box component={NavLink} to={RoutePaths.CredentialsList} mb={8}>
@@ -157,65 +161,70 @@ export default function CredentialsItem() {
       </Box>
 
       <UiPaper>
-        <Stack spacing={6}>
-          <Stack spacing={6} direction='row' alignItems='center'>
-            <Box component={NavLink} to={prevVC} visibility={isFirstVC ? 'hidden' : 'visible'}>
-              <UiIcon componentName='chevronLeft' size={5} sx={{ color: palette.text.secondary }} />
-            </Box>
+        {vc ? (
+          <Stack spacing={6}>
+            <Stack spacing={6} direction='row' alignItems='center'>
+              <Box component={NavLink} to={prevVC} visibility={isFirstVC ? 'hidden' : 'visible'}>
+                <UiIcon
+                  componentName='chevronLeft'
+                  size={5}
+                  sx={{ color: palette.text.secondary }}
+                />
+              </Box>
 
-            <CredentialCard vc={vc} />
+              <CredentialCard vc={vc} />
 
-            <Box component={NavLink} to={nextVC} visibility={isLastVC ? 'hidden' : 'visible'}>
-              <UiIcon
-                componentName='chevronRight'
-                size={5}
-                sx={{ color: palette.text.secondary }}
-              />
-            </Box>
+              <Box component={NavLink} to={nextVC} visibility={isLastVC ? 'hidden' : 'visible'}>
+                <UiIcon
+                  componentName='chevronRight'
+                  size={5}
+                  sx={{ color: palette.text.secondary }}
+                />
+              </Box>
+            </Stack>
+
+            <Stack spacing={10} direction='row' justifyContent='center'>
+              <ActionButton
+                iconProps={{
+                  componentName: 'add',
+                }}
+                disabled={isPending}
+              >
+                Generate proof
+              </ActionButton>
+              <ActionButton
+                iconProps={{
+                  componentName: 'infoOutlined',
+                }}
+                disabled={isPending}
+              >
+                Get info
+              </ActionButton>
+
+              <ActionButton
+                iconProps={{
+                  componentName: 'deleteOutlined',
+                  color: 'error',
+                }}
+                onClick={requestRemoveVC}
+                disabled={isPending}
+              >
+                Remove Credential
+              </ActionButton>
+            </Stack>
+
+            <Divider />
           </Stack>
-
-          <Stack spacing={10} direction='row' justifyContent='center'>
-            <ActionButton
-              iconProps={{
-                componentName: 'add',
-              }}
-            >
-              Generate proof
-            </ActionButton>
-            <ActionButton
-              iconProps={{
-                componentName: 'infoOutlined',
-              }}
-            >
-              Get info
-            </ActionButton>
-
-            <UiPopup
-              trigger={
-                <ActionButton
-                  iconProps={{
-                    componentName: 'moreHoriz',
-                  }}
-                >
-                  More actions
-                </ActionButton>
-              }
-              menuItems={[
-                <UiButton
-                  key={0} // FIXME
-                  variant='text'
-                  startIcon={<UiIcon componentName='deleteOutlined' />}
-                  color='error'
-                  onClick={requestRemoveVC}
-                >
-                  Remove Credential
-                </UiButton>,
-              ]}
-            />
-          </Stack>
-
-          <Divider />
-        </Stack>
+        ) : (
+          <NoDataViewer
+            title={'Credential not found'}
+            action={
+              <UiButton size='medium' onClick={() => navigate(RoutePaths.CredentialsList)}>
+                Back
+              </UiButton>
+            }
+          />
+        )}
       </UiPaper>
     </Stack>
   )

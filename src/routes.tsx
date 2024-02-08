@@ -80,6 +80,7 @@ export const AppRoutes = () => {
         },
         {
           path: createDeepPath(RoutePaths.Credentials),
+          loader: authProtectedGuard,
           element: <Credentials />,
         },
         {
