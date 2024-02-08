@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { BusEvents, Icons } from '@/enums'
 import { bus } from '@/helpers'
 import { UiBasicModal, UiButton, UiDrawer, UiIcon, UiModal, UiPaper } from '@/ui'
+import UiPopup from '@/ui/UiPopup'
 
 export default function UiKitOther() {
   const [isDrawerShown, setIsDrawerShown] = useState(false)
@@ -30,6 +31,31 @@ export default function UiKitOther() {
           {<UiIcon componentName='delete' />}
           {<UiIcon componentName='accountCircle' />}
         </Stack>
+      </Stack>
+
+      <Stack spacing={2}>
+        <Typography variant={'h6'}>{`Popup`}</Typography>
+
+        <UiPopup
+          trigger={<UiButton>{`Popup`}</UiButton>}
+          menuItems={[
+            <UiButton
+              key={0}
+              variant='text'
+              startIcon={<UiIcon componentName='add' />}
+            >{`Item 1`}</UiButton>,
+            <UiButton
+              key={1}
+              variant='text'
+              startIcon={<UiIcon componentName='add' />}
+            >{`Item 2`}</UiButton>,
+            <UiButton
+              key={2}
+              variant='text'
+              startIcon={<UiIcon componentName='add' />}
+            >{`Item 3`}</UiButton>,
+          ]}
+        />
       </Stack>
 
       <Stack spacing={2}>

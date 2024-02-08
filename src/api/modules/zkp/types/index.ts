@@ -129,3 +129,8 @@ export type ParsedCredentialSchema = {
   type: string
   credSubjectProperties: ParsedCredentialSchemaProperty[]
 }
+
+export type IssuerDetails = {
+  did: string
+  name: string
+}

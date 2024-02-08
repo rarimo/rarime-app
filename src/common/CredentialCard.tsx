@@ -1,12 +1,10 @@
 import { alpha, Box, Divider, Stack, StackProps, Typography, useTheme } from '@mui/material'
 import { W3CCredential } from '@rarimo/rarime-connector'
+import startCase from 'lodash/startCase'
 
+import { formatCredentialType, getCredentialViewProperty, IssuerDetails } from '@/api/modules/zkp'
 import { formatDateMY } from '@/helpers'
 import { UiIcon } from '@/ui'
-
-type Props = StackProps & {
-  vc: W3CCredential
-}
 
 function DotsDecoration({ ...rest }: StackProps) {
   const { palette } = useTheme()
@@ -25,7 +23,7 @@ function DotsDecoration({ ...rest }: StackProps) {
               width={8}
               height={8}
               borderRadius={'50%'}
-              bgcolor={alpha(palette.background.default, 0.16)}
+              bgcolor={alpha(palette.common.white, 0.16)}
             />
           ))}
         </Stack>
@@ -34,7 +32,12 @@ function DotsDecoration({ ...rest }: StackProps) {
   )
 }
 
-export default function CredentialCard({ vc, ...rest }: Props) {
+type Props = StackProps & {
+  vc: W3CCredential
+  issuerDetails: IssuerDetails
+}
+
+export default function CredentialCard({ vc, issuerDetails, ...rest }: Props) {
   const { palette, spacing } = useTheme()
 
   return (
@@ -47,7 +50,7 @@ export default function CredentialCard({ vc, ...rest }: Props) {
         position: 'relative',
         width: '100%',
         // FIXME
-        background: 'linear-gradient(#8459FD 100%, #6E3FF3 100%)',
+        background: 'linear-gradient(#252C3B 100%, #0F1218 100%)',
       }}
     >
       <DotsDecoration
@@ -60,23 +63,38 @@ export default function CredentialCard({ vc, ...rest }: Props) {
       <Box
         width={40}
         height={40}
-        color={palette.background.default}
-        bgcolor={alpha(palette.background.default, 0.1)}
+        color={palette.common.white}
+        bgcolor={alpha(palette.common.white, 0.1)}
         borderRadius={'50%'}
         p={2}
       >
         <UiIcon componentName='fingerprint' />
       </Box>
-      <Typography variant='h6' color={palette.background.default}>
-        {vc.type[1]}
-      </Typography>
+
+      <Stack spacing={2}>
+        <Typography variant='h6' color={palette.common.white}>
+          {formatCredentialType(vc.type)}
+        </Typography>
+
+        <Box
+          sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            maxWidth: '50%',
+            color: alpha(palette.common.white, 0.6),
+          }}
+        >
+          <Typography variant='body3'>{issuerDetails.name}</Typography>
+        </Box>
+      </Stack>
+
       <Divider
         sx={{
-          backgroundColor: alpha(palette.background.default, 0.1),
+          backgroundColor: alpha(palette.common.white, 0.1),
         }}
       />
-      <Stack spacing={2}>
-        <Typography variant='body4' color={alpha(palette.background.default, 0.6)}>
+      <Stack spacing={2} direction='row' alignItems='center' justifyContent='space-between'>
+        <Typography variant='body4' color={alpha(palette.common.white, 0.6)}>
           <Stack direction='row' alignItems='center' spacing={2}>
             {vc.expirationDate ? (
               <>
@@ -86,6 +104,12 @@ export default function CredentialCard({ vc, ...rest }: Props) {
             ) : (
               <UiIcon componentName='allInclusiveOutlinedIcon' size={4} />
             )}
+          </Stack>
+        </Typography>
+
+        <Typography variant='body4' color={alpha(palette.common.white, 0.6)}>
+          <Stack direction='row' alignItems='center' spacing={2}>
+            <Typography>{startCase(getCredentialViewProperty(vc))}</Typography>
           </Stack>
         </Typography>
       </Stack>

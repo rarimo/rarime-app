@@ -1,4 +1,5 @@
-import { Box, Stack, StackProps } from '@mui/material'
+import { Box, Grid, Stack, StackProps } from '@mui/material'
+import isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import { generatePath, NavLink } from 'react-router-dom'
 
@@ -13,29 +14,29 @@ type Props = StackProps
 export default function CredentialsList({ ...rest }: Props) {
   const { t } = useTranslation()
 
-  const { vcs } = useCredentialsContext()
+  const { vcs, issuersDetails } = useCredentialsContext()
 
   return (
     <Stack {...rest}>
       <PageTitles title={t('credentials-list.title')} mb={6} />
 
       <UiPaper>
-        {vcs.length ? (
-          <Stack spacing={4} direction='row' flexWrap={'wrap'}>
+        {vcs.length && !isEmpty(issuersDetails) ? (
+          <Grid container spacing={4}>
             {vcs.map((vc, idx) => (
-              <Box
-                component={NavLink}
-                key={idx}
-                maxWidth={360}
-                width={'100%'}
-                to={generatePath(RoutePaths.CredentialsItem, {
-                  claimId: getClaimId(vc.id),
-                })}
-              >
-                <CredentialCard vc={vc} />
-              </Box>
+              <Grid key={idx} item xs={6}>
+                <Box
+                  component={NavLink}
+                  key={idx}
+                  to={generatePath(RoutePaths.CredentialsItem, {
+                    claimId: getClaimId(vc.id),
+                  })}
+                >
+                  <CredentialCard vc={vc} issuerDetails={issuersDetails[vc.issuer]} />
+                </Box>
+              </Grid>
             ))}
-          </Stack>
+          </Grid>
         ) : (
           <NoDataViewer title={'No Credentials'} />
         )}
