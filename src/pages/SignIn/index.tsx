@@ -8,7 +8,12 @@ import { bus, ErrorHandler, metamaskLink } from '@/helpers'
 import { useMetamaskZkpSnapContext } from '@/hooks'
 import { UiButton, UiIcon, UiTextField } from '@/ui'
 
-import { Steps } from './enums'
+enum Steps {
+  InstallMM = 'INSTALL_MM_STEP',
+  InstallSnap = 'INSTALL_SNAP_STEP',
+  SelectMethodGetIdentity = 'SELECT_METHOD_GET_IDENTITY_STEP',
+  ImportPrivateKey = 'IMPORT_PRIVATE_KEY_STEP',
+}
 
 export default function SignIn() {
   const { t } = useTranslation()
@@ -48,19 +53,21 @@ export default function SignIn() {
     setIsSelectImportIdentity(value)
   }, [])
 
-  const getIdentity = useCallback(() => {
-    //Todo: add get identity method
-  }, [])
-
-  const createIdentity = useCallback(async () => {
-    setIsPending(true)
-    try {
-      await _createIdentity()
-    } catch (error) {
-      ErrorHandler.processWithoutFeedback(error)
-    }
-    setIsPending(false)
-  }, [_createIdentity])
+  const createIdentity = useCallback(
+    // TODO: pass pkHex to createIdentity
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async (pkHex?: string) => {
+      setIsPending(true)
+      try {
+        // TODO: pass pkHex to createIdentity
+        await _createIdentity()
+      } catch (error) {
+        ErrorHandler.processWithoutFeedback(error)
+      }
+      setIsPending(false)
+    },
+    [_createIdentity],
+  )
 
   const stepSignIn = useMemo(() => {
     return {
@@ -85,24 +92,42 @@ export default function SignIn() {
       ),
 
       [Steps.SelectMethodGetIdentity]: (
-        <Stack spacing={2} direction={'row'}>
-          <UiButton sx={{ mt: 8 }} disabled={isPending} onClick={() => selectImportIdentity(true)}>
-            {'Import Identity'}
+        <Stack spacing={4} width={spacing(60)} mt={4}>
+          <UiButton disabled={isPending} onClick={() => createIdentity()}>
+            {!isPending ? 'Create new Identity' : 'Creating identity...'}
           </UiButton>
-          <UiButton sx={{ mt: 8 }} disabled={isPending} onClick={createIdentity}>
-            {!isPending ? 'Create Identity' : 'Creating identity...'}
+
+          <UiButton
+            color='secondary'
+            disabled={isPending}
+            onClick={() => selectImportIdentity(true)}
+          >
+            {'Import Identity'}
           </UiButton>
         </Stack>
       ),
       [Steps.ImportPrivateKey]: (
-        <Stack direction='row' alignItems='center' spacing={2}>
+        <Stack
+          component={'form'}
+          spacing={4}
+          width={spacing(80)}
+          mt={4}
+          textAlign={'left'}
+          onSubmit={e => {
+            e.preventDefault()
+            createIdentity(privateKey)
+          }}
+        >
           <UiTextField
             value={privateKey}
-            onChange={e => setPrivateKey(e.target.value)}
+            type='password'
             label='Enter your private key'
+            disabled={isPending}
+            helperText='Your private key will be stored in MetaMask'
+            onChange={e => setPrivateKey(e.target.value)}
           />
-          <UiButton sx={{ mt: 8 }} onClick={getIdentity}>
-            {'Confirm'}
+          <UiButton type='submit' disabled={!privateKey || isPending}>
+            {isPending ? 'Importing...' : 'Import'}
           </UiButton>
         </Stack>
       ),
@@ -113,9 +138,9 @@ export default function SignIn() {
     t,
     createIdentity,
     privateKey,
-    getIdentity,
     connectSnap,
     selectImportIdentity,
+    spacing,
   ])
 
   const currentStep = useMemo(() => {

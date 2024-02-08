@@ -1,4 +1,3 @@
-import { PROVIDERS } from '@distributedlab/w3p'
 import { useCallback, useMemo } from 'react'
 
 import { authorizeUser } from '@/api/modules/auth'
@@ -10,7 +9,7 @@ import { web3Store } from '@/store'
 
 // TODO: add jwt validations for specific org
 export const useAuth = () => {
-  const { init, provider } = useWeb3Context()
+  const { provider } = useWeb3Context()
   const {
     userDid,
     isSnapInstalled,
@@ -20,7 +19,7 @@ export const useAuth = () => {
     saveVerifiableCredentials,
     connectOrInstallSnap,
     checkSnapStatus,
-    createIdentity,
+    checkSnapExists,
   } = useMetamaskZkpSnapContext()
 
   const isAuthorized = useMemo(
@@ -35,24 +34,12 @@ export const useAuth = () => {
     web3Store.setProviderType(undefined)
   }, [checkSnapStatus, provider])
 
-  const connectProviders = useCallback(
-    async (providerType?: PROVIDERS) => {
-      const currentProviderType = providerType || web3Store.providerType
+  const connectSnap = useCallback(async () => {
+    await connectOrInstallSnap()
 
-      web3Store.setProviderType(currentProviderType)
-
-      if (!currentProviderType) return
-
-      await init(currentProviderType)
-
-      const connector = await connectOrInstallSnap()
-
-      await checkSnapStatus()
-
-      return createIdentity(connector)
-    },
-    [checkSnapStatus, connectOrInstallSnap, createIdentity, init],
-  )
+    await checkSnapExists()
+    //Todo: add get identity, when snap is updated
+  }, [checkSnapExists, connectOrInstallSnap])
 
   const authorize = useCallback(
     async ({
@@ -98,7 +85,7 @@ export const useAuth = () => {
   return {
     isAuthorized,
 
-    connectProviders,
+    connectProviders: connectSnap,
     logout,
 
     authorize,
