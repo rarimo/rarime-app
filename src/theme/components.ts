@@ -112,6 +112,10 @@ export const components: Components<Omit<Theme, 'components'>> = {
     },
   },
   MuiPaper: {
+    defaultProps: {
+      variant: 'outlined',
+      square: false,
+    },
     styleOverrides: {
       root: ({ theme }) => ({
         backgroundImage: 'unset',

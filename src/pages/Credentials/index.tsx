@@ -4,7 +4,7 @@ import { RoutePaths } from '@/enums'
 import { useNestedRoutes } from '@/hooks'
 import { CredentialsContextProvider } from '@/pages/Credentials/contexts'
 
-import { CredentialsItem, CredentialsList, CredentialsRequests } from './pages'
+import { CredentialsId, CredentialsList, CredentialsRequests } from './pages'
 
 export default function Credentials() {
   return (
@@ -23,8 +23,8 @@ export default function Credentials() {
           element: <CredentialsRequests />,
         },
         {
-          path: RoutePaths.CredentialsItem,
-          element: <CredentialsItem />,
+          path: RoutePaths.CredentialsId,
+          element: <CredentialsId />,
         },
         {
           path: '*',

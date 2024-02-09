@@ -56,20 +56,15 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
 
         const groupedVCs = groupVCsToOrgGroups(orgGroupRequests, vcs)
 
-        const issuerDids = vcs.reduce((acc, vc) => {
-          if (acc.includes(vc.issuer)) return acc
-
-          return [...acc, vc.issuer]
-        }, [] as string[])
+        const issuerDids = new Set(vcs.map(vc => vc.issuer))
 
         const issuersDetails = (
-          await Promise.all(issuerDids.map(issuerDid => getIssuerDetails(issuerDid)))
+          await Promise.all([...issuerDids].map(issuerDid => getIssuerDetails(issuerDid)))
         ).reduce((acc, issuerDetails) => {
-          return {
-            ...acc,
-            [issuerDetails.did]: issuerDetails,
-          }
-        }, {})
+          acc[issuerDetails.did] = issuerDetails
+
+          return acc
+        }, {} as Record<string, IssuerDetails>)
 
         return { vcs, orgGroupRequests, groupedVCs, issuersDetails }
       }

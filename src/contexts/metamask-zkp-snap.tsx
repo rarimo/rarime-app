@@ -13,15 +13,9 @@ import {
 import { createContext, FC, HTMLAttributes, useCallback, useState } from 'react'
 
 // TODO: remove once the method is available
-type RemoveCredentialsRequestParams =
-  | {
-      credentialIds: string[]
-      claimIds?: never
-    }
-  | {
-      credentialIds?: never
-      claimIds: string[]
-    }
+type RemoveCredentialsRequestParams = {
+  ids: string[]
+}
 
 /**
  * The snap origin to use.

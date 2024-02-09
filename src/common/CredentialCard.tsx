@@ -13,6 +13,7 @@ function DotsDecoration({ ...rest }: StackProps) {
   const maxDots = 5
   const betweenDotsSpacing = 2
 
+  // TODO: alpha(palette.common.white, ...) should be configured together with bg
   return (
     <Stack {...rest} alignItems={'flex-end'} spacing={betweenDotsSpacing}>
       {Array.from({ length: rowsCount }, (v, i) => i).map(rowIdx => (
@@ -49,7 +50,7 @@ export default function CredentialCard({ vc, issuerDetails, ...rest }: Props) {
       sx={{
         position: 'relative',
         width: '100%',
-        // FIXME
+        // TODO: use background from vc metadata or predefined bg map
         background: 'linear-gradient(#252C3B 100%, #0F1218 100%)',
       }}
     >
@@ -68,6 +69,7 @@ export default function CredentialCard({ vc, issuerDetails, ...rest }: Props) {
         borderRadius={'50%'}
         p={2}
       >
+        {/*TODO: define map for credential types*/}
         <UiIcon componentName='fingerprint' />
       </Box>
 

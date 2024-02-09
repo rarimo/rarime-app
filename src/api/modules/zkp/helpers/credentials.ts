@@ -72,15 +72,17 @@ export const getTargetProperty = (
 }
 
 export const getClaimIdFromVC = (credential: W3CCredential) => {
+  let claimId = ''
+
   try {
     const claimIdUrl = new URL(credential.id)
 
-    const pathNameParts = claimIdUrl.pathname.split('/')
-
-    return pathNameParts[pathNameParts.length - 1]
+    claimId = claimIdUrl.pathname.split('/').pop() ?? ''
   } catch (error) {
-    return credential.id
+    /* empty */
   }
+
+  return claimId || credential.id
 }
 
 export const getIssuerDetails = async (issuerDid: string): Promise<IssuerDetails> => {
