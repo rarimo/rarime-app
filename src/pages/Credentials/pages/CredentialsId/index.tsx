@@ -30,7 +30,7 @@ export default function CredentialsId() {
   const vcIndex = useMemo(() => {
     if (!vc) return -1
 
-    return vcs.findIndex(v => getClaimIdFromVC(v) === getClaimIdFromVC(vc))
+    return vcs.indexOf(vc)
   }, [vc, vcs])
 
   const issuerDetails = useMemo(() => {
@@ -63,7 +63,7 @@ export default function CredentialsId() {
     return vcIndex === 0
   }, [vcIndex])
 
-  const nextVC = useMemo(() => {
+  const nextVCPath = useMemo(() => {
     const nextIdx = vcIndex + 1
 
     if (nextIdx >= vcs.length) return ''
@@ -73,7 +73,7 @@ export default function CredentialsId() {
     })
   }, [vcIndex, vcs])
 
-  const prevVC = useMemo(() => {
+  const prevVCPath = useMemo(() => {
     const prevIdx = vcIndex - 1
 
     if (prevIdx < 0) return ''
@@ -103,7 +103,11 @@ export default function CredentialsId() {
         {vc && issuerDetails ? (
           <Stack spacing={6}>
             <Stack spacing={6} direction='row' alignItems='center' alignSelf='center'>
-              <Box component={NavLink} to={prevVC} visibility={isFirstVC ? 'hidden' : 'visible'}>
+              <Box
+                component={NavLink}
+                to={prevVCPath}
+                visibility={isFirstVC ? 'hidden' : 'visible'}
+              >
                 <UiIcon
                   componentName='chevronLeft'
                   size={5}
@@ -115,7 +119,7 @@ export default function CredentialsId() {
                 <CredentialCard vc={vc} issuerDetails={issuerDetails} />
               </Box>
 
-              <Box component={NavLink} to={nextVC} visibility={isLastVC ? 'hidden' : 'visible'}>
+              <Box component={NavLink} to={nextVCPath} visibility={isLastVC ? 'hidden' : 'visible'}>
                 <UiIcon
                   componentName='chevronRight'
                   size={5}
