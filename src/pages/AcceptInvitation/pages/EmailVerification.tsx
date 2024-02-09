@@ -5,8 +5,8 @@ import { buildFillRequestDetailsSearchParams, getInvitationDetails } from '@/api
 import { acceptInvitation, OrgUserRoles } from '@/api/modules/orgs'
 import { RoutePaths } from '@/enums'
 import { sleep } from '@/helpers'
-import { useAuth, useLoading, useMetamaskZkpSnapContext } from '@/hooks'
-import { authStore } from '@/store'
+import { useAuth, useLoading } from '@/hooks'
+import { authStore, useZkpSnapState } from '@/store'
 
 // DUMMY_INVITATION_LINK
 // http://localhost:8095/i?q=eyJvcmdfaWQiOiJlZmM3MjhmMC0zMzEwLTQxOWEtODdlZi01ZTVlNDAyOGI4YzAiLCJncm91cF9pZCI6IjU0NGQxNmY0LWQ4YzMtNDYyYy05NjIxLWVjYzg3OTQ5NGQ0MSIsImludml0ZV9lbWFpbF9pZCI6IjVjMmFmZWIwLWRmYjYtNDdiNS1iNmE1LWQ1NmIzOTVkNmU5MyIsIm90cCI6IjEyMzQ1NiJ9
@@ -14,7 +14,7 @@ import { authStore } from '@/store'
 export default function EmailVerification() {
   const [searchParams] = useSearchParams()
 
-  const { userDid } = useMetamaskZkpSnapContext()
+  const { userDid } = useZkpSnapState()
   const { authorize } = useAuth()
 
   const invitationDetails = useMemo(() => getInvitationDetails(searchParams), [searchParams])

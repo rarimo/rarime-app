@@ -4,7 +4,8 @@ import { ComponentProps, useCallback } from 'react'
 import { OrgGroupRequestWithClaims } from '@/api/modules/orgs'
 import { getClaimOffer, getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { ErrorHandler } from '@/helpers'
-import { useLoading, useMetamaskZkpSnapContext } from '@/hooks'
+import { useLoading } from '@/hooks'
+import { useZkpSnapState, zkpSnapStore } from '@/store'
 import { UiBasicModal, UiButton, UiIcon } from '@/ui'
 
 type Props = ComponentProps<typeof UiBasicModal> & {
@@ -12,7 +13,7 @@ type Props = ComponentProps<typeof UiBasicModal> & {
 }
 
 export default function ClaimVCsModal({ orgGroupRequest, onClose, ...rest }: Props) {
-  const { userDid, saveVerifiableCredentials } = useMetamaskZkpSnapContext()
+  const { userDid } = useZkpSnapState()
 
   const {
     data: { claimOffers, vcFields },
@@ -53,12 +54,12 @@ export default function ClaimVCsModal({ orgGroupRequest, onClose, ...rest }: Pro
   const saveAllVerifiableCredentials = useCallback(() => {
     try {
       claimOffers.forEach(async claimOffer => {
-        await saveVerifiableCredentials(claimOffer)
+        await zkpSnapStore.saveVerifiableCredentials(claimOffer)
       })
     } catch (error) {
       ErrorHandler.process(error)
     }
-  }, [claimOffers, saveVerifiableCredentials])
+  }, [claimOffers])
 
   return (
     <UiBasicModal

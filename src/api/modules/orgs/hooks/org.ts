@@ -1,10 +1,11 @@
 import { useCallback, useMemo } from 'react'
 
 import { loadOrgById, OrgsIncludes } from '@/api/modules/orgs'
-import { useLoading, useMetamaskZkpSnapContext } from '@/hooks'
+import { useLoading } from '@/hooks'
+import { useZkpSnapState } from '@/store'
 
 export const useOrg = (id: string) => {
-  const { userDid } = useMetamaskZkpSnapContext()
+  const { userDid } = useZkpSnapState()
 
   const loadOrg = useCallback(async () => {
     if (!id) return undefined
