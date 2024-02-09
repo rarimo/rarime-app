@@ -16,7 +16,7 @@ export default function BalanceBlock() {
 
   return (
     <Paper component={Stack} spacing={6}>
-      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={4}>
+      <Stack direction='row' justifyContent='space-between' alignItems='center' spacing={4}>
         <Stack spacing={2}>
           <Typography variant='body3' color={palette.text.secondary}>
             Reserved RMO
@@ -31,8 +31,8 @@ export default function BalanceBlock() {
           size='medium'
           sx={{ height: spacing(9), px: 3 }}
         >
-          <Stack direction={'row'} alignItems={'center'} spacing={2}>
-            <Stack direction={'row'} alignItems={'center'} spacing={1}>
+          <Stack direction='row' alignItems='center' spacing={2}>
+            <Stack direction='row' alignItems='center' spacing={1}>
               <UiIcon name={Icons.Trophy} size={5} />
               <Typography variant='subtitle4'>{balance?.rank ?? ''}</Typography>
             </Stack>
@@ -42,7 +42,7 @@ export default function BalanceBlock() {
         </Button>
       </Stack>
       <Divider />
-      <Stack direction={'row'} spacing={4} justifyContent={'space-between'} alignItems={'center'}>
+      <Stack direction='row' spacing={4} justifyContent='space-between' alignItems='center'>
         <Button
           size='medium'
           disabled={!balance}

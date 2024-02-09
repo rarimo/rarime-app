@@ -9701,7 +9701,7 @@ __metadata:
     valtio: "npm:^1.12.1"
     vite: "npm:^4.4.12"
     vite-plugin-checker: "npm:^0.6.1"
-    vite-plugin-html: "npm:^3.2.0"
+    vite-plugin-html: "npm:^3.2.2"
     vite-plugin-node-polyfills: "npm:^0.9.0"
     vite-plugin-svg-icons: "npm:^2.0.1"
     vite-tsconfig-paths: "npm:^4.0.3"
@@ -11773,7 +11773,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-html@npm:^3.2.0":
+"vite-plugin-html@npm:^3.2.2":
   version: 3.2.2
   resolution: "vite-plugin-html@npm:3.2.2"
   dependencies:

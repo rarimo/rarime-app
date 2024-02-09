@@ -20,18 +20,12 @@ export default function PageListFilters({ tabs, onSearchInput, actionBar, ...res
   const handleSearchInput = debounce((value: string) => onSearchInput?.(value), 500)
 
   return (
-    <Stack
-      {...rest}
-      direction='row'
-      alignItems='center'
-      justifyContent={'space-between'}
-      spacing={5}
-    >
+    <Stack {...rest} direction='row' alignItems='center' justifyContent='space-between' spacing={5}>
       {tabs && <UiNavTabs tabs={tabs} />}
 
-      <Stack direction={'row'} alignItems={'center'} spacing={6}>
+      <Stack direction='row' alignItems='center' spacing={6}>
         <UiSearchField
-          size={'small'}
+          size='small'
           placeholder={t('page-list-filters.search-input-placeholder')}
           onChange={e => handleSearchInput(e.target.value)}
         />

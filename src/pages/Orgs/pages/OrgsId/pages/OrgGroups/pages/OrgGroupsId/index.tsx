@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material'
+import { Drawer, Stack } from '@mui/material'
 import trimEnd from 'lodash/trimEnd'
 import { useCallback, useMemo, useState } from 'react'
 import { generatePath, Navigate } from 'react-router-dom'
@@ -14,7 +14,7 @@ import { RoutePaths } from '@/enums'
 import { useLoading, useNestedRoutes } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { useOrgGroupDetails } from '@/pages/Orgs/pages/OrgsId/pages/OrgGroups/hooks'
-import { UiButton, UiDrawer, UiIcon } from '@/ui'
+import { UiButton, UiIcon } from '@/ui'
 
 import { InviteMemberForm, List } from './components'
 
@@ -136,7 +136,7 @@ export default function OrgGroupsId() {
   return (
     <Stack flex={1}>
       <PageTitles
-        title={`Employer in the area`}
+        title='Employer in the area'
         subtitle='a person, company, or organization that pays people to work for them: The Air Force is the largest employer in this area.'
       />
 
@@ -166,13 +166,13 @@ export default function OrgGroupsId() {
       />
       <Stack flex={1}>{routes}</Stack>
 
-      <UiDrawer open={isInviteDrawerShown} onClose={() => setIsInviteDrawerShown(false)}>
+      <Drawer open={isInviteDrawerShown} onClose={() => setIsInviteDrawerShown(false)}>
         <InviteMemberForm
           onMemberInvitationCreated={handleMemberInvitationCreated}
           maxWidth={theme => theme.spacing(100)}
           p={6}
         />
-      </UiDrawer>
+      </Drawer>
     </Stack>
   )
 }

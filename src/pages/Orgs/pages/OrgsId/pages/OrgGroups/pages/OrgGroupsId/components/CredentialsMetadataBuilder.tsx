@@ -174,7 +174,7 @@ export default function CredentialsMetadataBuilder({
             control={control}
             render={({ field }) => (
               <UiSelect
-                label={'Role'}
+                label='Role'
                 {...field}
                 options={Object.entries(OrgUserRoles).map(([key, value]) => ({
                   value: value,

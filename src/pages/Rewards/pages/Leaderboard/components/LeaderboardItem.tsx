@@ -56,11 +56,11 @@ export default function LeaderboardItem({ balance, rank }: Props) {
 
   return (
     <Box py={4} {...wrapperProps}>
-      <Grid container spacing={16} alignItems={'center'}>
+      <Grid container spacing={16} alignItems='center'>
         <Grid item xs={2}>
           <Stack
-            justifyContent={'center'}
-            alignItems={'center'}
+            justifyContent='center'
+            alignItems='center'
             width={spacing(8)}
             height={spacing(8)}
             borderRadius={250}
@@ -71,8 +71,8 @@ export default function LeaderboardItem({ balance, rank }: Props) {
           </Stack>
         </Grid>
         <Grid item xs={6}>
-          <Stack direction={'row'} alignItems={'center'} spacing={4}>
-            <Stack direction={'row'} alignItems={'center'} spacing={2}>
+          <Stack direction='row' alignItems='center' spacing={4}>
+            <Stack direction='row' alignItems='center' spacing={2}>
               <UserAvatar userDid={balance.id} size={5} />
               <Typography variant='subtitle4'>
                 {`${formatDidShort(balance.id)} ${leaderIcon}`}
@@ -92,7 +92,7 @@ export default function LeaderboardItem({ balance, rank }: Props) {
             )}
           </Stack>
         </Grid>
-        <Grid item xs={4} textAlign={'right'}>
+        <Grid item xs={4} textAlign='right'>
           <Typography
             variant='subtitle4'
             px={4}

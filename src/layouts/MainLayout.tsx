@@ -8,10 +8,10 @@ const MainLayout = ({ children }: PropsWithChildren) => {
   const { spacing } = useTheme()
 
   return (
-    <Stack direction='row' spacing={4} height={vh(100)} width={'100%'}>
+    <Stack direction='row' spacing={4} height={vh(100)} width='100%'>
       <AppNavbar />
-      <Stack py={8} flex={1} overflow={'hidden auto'}>
-        <Stack mx={'auto'} maxWidth={spacing(220)} width={'100%'}>
+      <Stack py={8} flex={1} overflow='hidden auto'>
+        <Stack mx='auto' maxWidth={spacing(220)} width='100%'>
           {children}
         </Stack>
       </Stack>

@@ -64,15 +64,15 @@ export default function ProofValidationResult({ proof, isValid }: Props) {
       {validationDetails.map((detail, index) => (
         <Stack
           key={index}
-          direction={'row'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
+          direction='row'
+          justifyContent='space-between'
+          alignItems='center'
           spacing={2}
         >
-          <Typography variant={'body4'} color={palette.text.secondary}>
+          <Typography variant='body4' color={palette.text.secondary}>
             {detail.text}
           </Typography>
-          <Divider orientation={'horizontal'} sx={{ flex: 1, borderStyle: 'dashed' }} />
+          <Divider orientation='horizontal' sx={{ flex: 1, borderStyle: 'dashed' }} />
           {detail.value}
         </Stack>
       ))}

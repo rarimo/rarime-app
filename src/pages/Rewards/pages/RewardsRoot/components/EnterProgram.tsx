@@ -21,7 +21,7 @@ export default function EnterProgram() {
 
   return (
     <Paper>
-      <Stack spacing={5} alignItems='center' maxWidth={spacing(120)} mx={'auto'} textAlign='center'>
+      <Stack spacing={5} alignItems='center' maxWidth={spacing(120)} mx='auto' textAlign='center'>
         <Stack p={3} borderRadius={250} bgcolor={palette.action.active}>
           <UiIcon name={Icons.Rarimo} size={10} />
         </Stack>

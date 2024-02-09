@@ -27,7 +27,7 @@ export default function RewardsRoot() {
 
   return (
     <Stack spacing={8}>
-      <Stack direction={'row'} justifyContent={'space-between'}>
+      <Stack direction='row' justifyContent='space-between'>
         <PageTitles title='Rewards' />
         {isBalanceActive && (
           <Button

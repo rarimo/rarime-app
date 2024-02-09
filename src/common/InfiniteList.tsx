@@ -33,7 +33,7 @@ export default function InfiniteList<D>({
       {children}
       {loadingState === LoadingStates.NextLoading ? (
         <Stack alignItems='center'>
-          <CircularProgress color={'secondary'} size={spacing(6)} />
+          <CircularProgress color='secondary' size={spacing(6)} />
         </Stack>
       ) : loadingState === LoadingStates.Error ? (
         <Stack alignItems='center'>
@@ -47,7 +47,7 @@ export default function InfiniteList<D>({
     </Stack>
   ) : loadingState === LoadingStates.Loading ? (
     <Stack alignItems='center' p={20}>
-      <CircularProgress color={'secondary'} />
+      <CircularProgress color='secondary' />
     </Stack>
   ) : loadingState === LoadingStates.Error ? (
     <ErrorView

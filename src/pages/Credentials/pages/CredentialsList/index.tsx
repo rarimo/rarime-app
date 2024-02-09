@@ -44,7 +44,7 @@ export default function CredentialsList({ ...rest }: Props) {
           <Alert severity='error'>{`There's an error occurred, please, reload page`}</Alert>
         ) : !vcs.length || isEmpty(issuersDetails) ? (
           <NoDataView
-            title={'No Credentials'}
+            title='No Credentials'
             action={<UiButton onClick={reload}>Load Credentials</UiButton>}
           />
         ) : (
