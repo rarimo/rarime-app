@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 import { config } from '@/config'
 import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler, metamaskLink } from '@/helpers'
-import { useAuth, useMetamaskZkpSnapContext } from '@/hooks'
+import { useAuth } from '@/hooks'
+import { useZkpSnapState } from '@/store'
 import { UiButton, UiIcon } from '@/ui'
 
 export default function SignIn() {
@@ -15,7 +16,7 @@ export default function SignIn() {
   const [isPending, setIsPending] = useState(false)
 
   const { palette, spacing } = useTheme()
-  const { isMetamaskInstalled } = useMetamaskZkpSnapContext()
+  const { isMetamaskInstalled } = useZkpSnapState()
 
   const signIn = useCallback(async () => {
     setIsPending(true)

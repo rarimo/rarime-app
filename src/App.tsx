@@ -1,19 +1,17 @@
 import { CircularProgress, CssBaseline, Stack, ThemeProvider } from '@mui/material'
 import { FC, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState } from 'react'
 
+import { ToastsManager } from '@/contexts'
 import { ErrorHandler } from '@/helpers'
-import { useAuth, useMetamaskZkpSnapContext, useViewportSizes, useWeb3Context } from '@/hooks'
-
-import { ToastsManager } from './contexts'
-import { AppRoutes } from './routes'
-import { useUiState } from './store'
-import { createTheme } from './theme'
+import { useAuth, useViewportSizes, useWeb3Context } from '@/hooks'
+import { AppRoutes } from '@/routes'
+import { useUiState, zkpSnapStore } from '@/store'
+import { createTheme } from '@/theme'
 
 const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
   const [isAppInitialized, setIsAppInitialized] = useState(false)
 
   const { provider, isValidChain } = useWeb3Context()
-  const { checkSnapStatus } = useMetamaskZkpSnapContext()
   const { paletteMode } = useUiState()
   const { connectProviders } = useAuth()
 
@@ -23,7 +21,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
     if (provider?.address) return
 
     try {
-      const { isMetamaskInstalled, isSnapInstalled } = await checkSnapStatus()
+      const { isMetamaskInstalled, isSnapInstalled } = await zkpSnapStore.checkSnapStatus()
 
       if (isMetamaskInstalled && isSnapInstalled) {
         await connectProviders()
@@ -33,7 +31,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
     }
 
     setIsAppInitialized(true)
-  }, [provider?.address, checkSnapStatus, connectProviders])
+  }, [provider?.address, connectProviders])
 
   const theme = useMemo(() => createTheme(paletteMode), [paletteMode])
 

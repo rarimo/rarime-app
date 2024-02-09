@@ -7,7 +7,8 @@ import {
   OrgGroupRequestWithClaims,
   OrgGroupVCMap,
 } from '@/api/modules/orgs'
-import { useLoading, useMetamaskZkpSnapContext } from '@/hooks'
+import { useLoading } from '@/hooks'
+import { useZkpSnapState, zkpSnapStore } from '@/store'
 
 type CredentialsContextValue = {
   orgGroupRequests: OrgGroupRequestWithClaims[]
@@ -24,7 +25,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
   //  load all submitted and created requests
   //  load, parse and filter all credentials loaded from snap
 
-  const { userDid, getCredentials } = useMetamaskZkpSnapContext()
+  const { userDid } = useZkpSnapState()
 
   const {
     data: { orgGroupRequests, groupedVCs },
@@ -42,7 +43,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
       {
         const [orgGroupRequests, vcs] = await Promise.all([
           loadRequestsByUserDid(userDid),
-          getCredentials(),
+          zkpSnapStore.getCredentials(),
         ])
 
         const groupedVCs = groupVCsToOrgGroups(orgGroupRequests, vcs)
@@ -52,7 +53,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
     },
     {
       loadOnMount: !!userDid,
-      loadArgs: [getCredentials, userDid],
+      loadArgs: [userDid],
     },
   )
 
