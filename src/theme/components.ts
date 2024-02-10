@@ -1,4 +1,4 @@
-import { Components, Theme } from '@mui/material'
+import { alpha, Components, Theme } from '@mui/material'
 
 import { ICON_COMPONENTS } from '@/enums'
 
@@ -370,6 +370,46 @@ export const components: Components<Omit<Theme, 'components'>> = {
         bottom: theme.spacing(3),
         left: 'unset',
         right: theme.spacing(3),
+      }),
+    },
+  },
+  MuiAlert: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        borderRadius: theme.spacing(4),
+        backgroundColor: theme.palette.additional.pureBlack,
+        color: '#f0f0f0',
+        '& .MuiAlertTitle-root': {
+          color: theme.palette.common.white,
+        },
+        width: '100%',
+      }),
+      icon: ({ ownerState, theme }) => ({
+        ...(ownerState.severity === 'warning' &&
+          ownerState.variant === 'standard' && {
+            backgroundColor: alpha(theme.palette.warning.main, 0.2),
+          }),
+        ...(ownerState.severity === 'info' &&
+          ownerState.variant === 'standard' && {
+            backgroundColor: alpha(theme.palette.info.main, 0.2),
+          }),
+        ...(ownerState.severity === 'success' &&
+          ownerState.variant === 'standard' && {
+            backgroundColor: alpha(theme.palette.success.main, 0.2),
+          }),
+        ...(ownerState.severity === 'error' &&
+          ownerState.variant === 'standard' && {
+            backgroundColor: alpha(theme.palette.error.main, 0.2),
+          }),
+        marginRight: theme.spacing(4),
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        padding: theme.spacing(2),
+        borderRadius: theme.spacing(25),
+      }),
+      message: ({ theme }) => ({
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
       }),
     },
   },
