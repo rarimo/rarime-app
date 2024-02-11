@@ -40,6 +40,7 @@ export enum Icons {
   Twitter = 'twitter',
   Rarime = 'rarime',
   Gift = 'gift',
+  Swap = 'swap',
   Trophy = 'trophy',
 }
 

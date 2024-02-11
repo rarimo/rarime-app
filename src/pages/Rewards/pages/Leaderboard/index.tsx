@@ -118,7 +118,7 @@ export default function Leaderboard() {
             </Grid>
             <Grid item xs={4} justifySelf={'end'} textAlign={'right'}>
               <Typography variant='overline3' color={palette.text.secondary}>
-                Earned points
+                Reserved
               </Typography>
             </Grid>
           </Grid>

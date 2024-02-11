@@ -1,10 +1,10 @@
-import { LinearProgress, Stack, Typography, useTheme } from '@mui/material'
+import { LinearProgress, Stack, StackProps, Typography, useTheme } from '@mui/material'
 
-export default function LevelProgress() {
+export default function LevelProgress(props: StackProps) {
   const { palette } = useTheme()
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} {...props}>
       <LinearProgress value={90} />
       <Stack
         direction='row'

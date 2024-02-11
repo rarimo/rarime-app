@@ -105,6 +105,13 @@ export const components: Components<Omit<Theme, 'components'>> = {
           backgroundColor: theme.palette.action.hover,
         },
       }),
+      containedWarning: ({ theme }) => ({
+        color: theme.palette.warning.darker,
+        backgroundColor: theme.palette.warning.lighter,
+        '&:hover': {
+          backgroundColor: theme.palette.warning.light,
+        },
+      }),
     },
   },
   MuiButtonBase: {

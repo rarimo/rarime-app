@@ -1,13 +1,13 @@
 import { Stack } from '@mui/material'
 
+import BalanceBlock from './components/BalanceBlock'
 import LimitedEvents from './components/LimitedEvents'
-import PointsBlock from './components/PointsBlock'
 import TasksList from './components/TasksList'
 
 export default function ActiveTasks() {
   return (
     <Stack spacing={4}>
-      <PointsBlock />
+      <BalanceBlock />
       <LimitedEvents />
       <TasksList />
     </Stack>
