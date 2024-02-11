@@ -1,7 +1,13 @@
-import { EventsRequestFilters } from '../enums/events'
+import { EventMetadataFrequencies, EventsRequestFilters, EventStatuses } from '../enums/events'
+
+export type EventsRequestFiltersMap = {
+  [EventsRequestFilters.Did]?: string
+  [EventsRequestFilters.Status]?: EventStatuses[]
+  [EventsRequestFilters.MetaStaticName]?: string
+}
 
 export type EventsRequestQueryParams = {
-  filter?: EventsRequestFilters
+  filter?: EventsRequestFiltersMap
 }
 
 export type EventMetadata = {
@@ -10,22 +16,20 @@ export type EventMetadata = {
     reward: number
     title: string
     description: string
-    frequency: string
+    frequency: EventMetadataFrequencies
     no_auto_open: boolean
-    expires_at: string
+    expires_at?: string
   }
-  dynamic: {
-    id: string
-  } & Record<string, unknown>
+  dynamic?: Record<string, unknown>
 }
 
 export type Event = {
   id: string
-  type: string
-  status: string
+  type: 'event'
+  status: EventStatuses
   created_at: number
   updated_at: number
-  points_amount: number
+  points_amount?: number
   meta: EventMetadata
   balance: {
     id: string
