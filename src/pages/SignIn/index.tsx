@@ -1,8 +1,8 @@
-import { config } from '@config'
 import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { config } from '@/config'
 import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler, metamaskLink } from '@/helpers'
 import { useAuth } from '@/hooks'
