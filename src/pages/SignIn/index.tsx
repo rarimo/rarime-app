@@ -47,11 +47,13 @@ export default function SignIn() {
   const createIdentity = useCallback(
     // TODO: pass pkHex to createIdentity
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    async (pkHex?: string) => {
+    async (privateKeyHex?: string) => {
       setIsPending(true)
       try {
         // TODO: pass pkHex to createIdentity
-        await identityStore.createIdentity({})
+        await identityStore.createIdentity({
+          privateKeyHex,
+        })
       } catch (error) {
         ErrorHandler.processWithoutFeedback(error)
       }
@@ -111,6 +113,7 @@ export default function SignIn() {
         >
           <UiTextField
             value={privateKey}
+            autoFocus
             type='password'
             label='Enter your private key'
             disabled={isPending}
