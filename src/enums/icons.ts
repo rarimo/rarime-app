@@ -19,6 +19,7 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import Layers from '@mui/icons-material/Layers'
 import LightModeOutlined from '@mui/icons-material/LightModeOutlined'
 import Link from '@mui/icons-material/Link'
+import LockOpen from '@mui/icons-material/LockOpen'
 import Logout from '@mui/icons-material/Logout'
 import Notifications from '@mui/icons-material/Notifications'
 import OpenInNew from '@mui/icons-material/OpenInNew'
@@ -62,6 +63,7 @@ export const ICON_COMPONENTS = {
   layers: Layers,
   lightModeOutlined: LightModeOutlined,
   link: Link,
+  lockOpen: LockOpen,
   logOut: Logout,
   notifications: Notifications,
   openInNew: OpenInNew,
