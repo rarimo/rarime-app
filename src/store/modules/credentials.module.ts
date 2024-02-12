@@ -10,7 +10,7 @@ type CredentialsState = {
 }
 
 const [credentialsStore, useCredentialsState] = createStore(
-  'identity',
+  'credentials',
   {
     vcs: [],
     issuersDetails: {},
