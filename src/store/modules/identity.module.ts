@@ -1,17 +1,17 @@
 import { zkpSnap } from '@/api/clients'
 import { createStore } from '@/helpers'
 
-type ZkpSnapState = {
+type IdentityState = {
   userDid: string
   userDidBigIntString: string
 }
 
 const [identityStore, useIdentityState] = createStore(
-  'zkp-snap',
+  'identity',
   {
     userDid: '',
     userDidBigIntString: '',
-  } as ZkpSnapState,
+  } as IdentityState,
   state => ({
     createIdentity: async () => {
       const { identityIdString, identityIdBigIntString } = await zkpSnap.createIdentity({})
