@@ -1,7 +1,8 @@
 import get from 'lodash/get'
 
 const OTHER_BROWSER_METAMASK_LINK = 'https://metamask.io/download/'
-const CHROME_METAMASK_ADDON_LINK = 'https://chrome.google.com/webstore/detail/metamask/'
+const CHROME_METAMASK_ADDON_LINK =
+  'https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn'
 const FIREFOX_METAMASK_ADDON_LINK = 'https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/'
 const OPERA_METAMASK_ADDON_LINK = 'https://addons.opera.com/en/extensions/details/metamask-10/'
 

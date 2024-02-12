@@ -22,7 +22,7 @@ const [web3Store, useWeb3State] = createStore(
     },
     checkSnapStatus: async () => {
       state.isMetamaskInstalled = await isMetamaskInstalled()
-      state.isSnapInstalled = await isSnapInstalled('local:http://localhost:8081')
+      state.isSnapInstalled = await isSnapInstalled()
 
       return {
         isMetamaskInstalled: state.isMetamaskInstalled,
