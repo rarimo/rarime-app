@@ -3,11 +3,10 @@ import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { zkpSnap } from '@/api/clients'
 import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler, metamaskLink } from '@/helpers'
 import { useAuth } from '@/hooks'
-import { useWeb3State } from '@/store'
+import { identityStore, useWeb3State } from '@/store'
 import { UiButton, UiIcon, UiTextField } from '@/ui'
 
 enum Steps {
@@ -52,7 +51,7 @@ export default function SignIn() {
       setIsPending(true)
       try {
         // TODO: pass pkHex to createIdentity
-        await zkpSnap.createIdentity({})
+        await identityStore.createIdentity({})
       } catch (error) {
         ErrorHandler.processWithoutFeedback(error)
       }

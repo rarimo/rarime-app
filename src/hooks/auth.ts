@@ -30,7 +30,7 @@ export const useAuth = () => {
 
     await web3Store.checkSnapStatus()
 
-    return identityStore.createIdentity()
+    return identityStore.getIdentity()
   }, [])
 
   const authorize = useCallback(
