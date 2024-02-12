@@ -2,10 +2,10 @@ import { useCallback, useMemo } from 'react'
 
 import { loadOrgById, OrgsIncludes } from '@/api/modules/orgs'
 import { useLoading } from '@/hooks'
-import { useZkpSnapState } from '@/store'
+import { useIdentityState } from '@/store'
 
 export const useOrg = (id: string) => {
-  const { userDid } = useZkpSnapState()
+  const { userDid } = useIdentityState()
 
   const loadOrg = useCallback(async () => {
     if (!id) return undefined

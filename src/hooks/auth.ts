@@ -1,26 +1,27 @@
 import { PROVIDERS } from '@distributedlab/w3p'
 import { useCallback, useMemo } from 'react'
 
+import { initZkpSnap, zkpSnap } from '@/api/clients'
 import { authorizeUser } from '@/api/modules/auth'
 import { OrgUserRoles } from '@/api/modules/orgs'
 import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp'
 import { useWeb3Context } from '@/hooks/web3'
-import { useZkpSnapState, web3Store, zkpSnapStore } from '@/store'
+import { identityStore, useIdentityState, web3Store } from '@/store'
 
 // TODO: add jwt validations for specific org
 export const useAuth = () => {
   const { init, provider } = useWeb3Context()
 
-  const { userDid, isSnapInstalled } = useZkpSnapState()
+  const { userDid } = useIdentityState()
 
   const isAuthorized = useMemo(
-    () => Boolean(provider?.isConnected && isSnapInstalled),
-    [isSnapInstalled, provider?.isConnected],
+    () => Boolean(provider?.isConnected && userDid),
+    [provider?.isConnected, userDid],
   )
 
   const logout = useCallback(async () => {
     await provider?.disconnect()
-    await zkpSnapStore.checkSnapStatus()
+    await web3Store.checkSnapStatus()
 
     web3Store.setProviderType(undefined)
   }, [provider])
@@ -35,11 +36,11 @@ export const useAuth = () => {
 
       await init(currentProviderType)
 
-      await zkpSnapStore.connectOrInstallSnap()
+      await initZkpSnap()
 
-      await zkpSnapStore.checkSnapStatus()
+      await web3Store.checkSnapStatus()
 
-      return zkpSnapStore.createIdentity()
+      return identityStore.createIdentity()
     },
     [init],
   )
@@ -58,14 +59,14 @@ export const useAuth = () => {
     }) => {
       const claimOffer = await getClaimOffer(userDid, claimId)
 
-      const vc = await zkpSnapStore.saveVerifiableCredentials(claimOffer)
+      const vc = await zkpSnap.saveCredentials(claimOffer)
 
       if (!vc?.[0]?.issuer) throw new TypeError('VC issuer is undefined')
 
       if (!provider?.address) throw new TypeError('Provider address is undefined')
 
       // FIXME: define in zkp module
-      const proofResponse = await zkpSnapStore.createProof(
+      const proofResponse = await zkpSnap.createProof(
         buildAuthorizeRequest({
           providerAddress: provider?.address,
           isAdmin: false, // TODO: add check for admin role from VC

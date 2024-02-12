@@ -5,7 +5,7 @@ import { Controller } from 'react-hook-form'
 import { createOrg, Organization } from '@/api/modules/orgs'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
-import { useZkpSnapState } from '@/store'
+import { useIdentityState } from '@/store'
 import { UiButton, UiIcon, UiImageUploader, UiTextField } from '@/ui'
 
 interface Props extends StackProps {
@@ -29,7 +29,7 @@ const DEFAULT_VALUES = {
 }
 
 export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props) {
-  const { userDid } = useZkpSnapState()
+  const { userDid } = useIdentityState()
   const { palette } = useTheme()
 
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =

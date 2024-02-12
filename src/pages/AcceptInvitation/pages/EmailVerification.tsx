@@ -6,7 +6,7 @@ import { acceptInvitation, OrgUserRoles } from '@/api/modules/orgs'
 import { RoutePaths } from '@/enums'
 import { sleep } from '@/helpers'
 import { useAuth, useLoading } from '@/hooks'
-import { authStore, useZkpSnapState } from '@/store'
+import { authStore, useIdentityState } from '@/store'
 
 // DUMMY_INVITATION_LINK
 // http://localhost:8095/i?q=eyJvcmdfaWQiOiJlZmM3MjhmMC0zMzEwLTQxOWEtODdlZi01ZTVlNDAyOGI4YzAiLCJncm91cF9pZCI6IjU0NGQxNmY0LWQ4YzMtNDYyYy05NjIxLWVjYzg3OTQ5NGQ0MSIsImludml0ZV9lbWFpbF9pZCI6IjVjMmFmZWIwLWRmYjYtNDdiNS1iNmE1LWQ1NmIzOTVkNmU5MyIsIm90cCI6IjEyMzQ1NiJ9
@@ -14,7 +14,7 @@ import { authStore, useZkpSnapState } from '@/store'
 export default function EmailVerification() {
   const [searchParams] = useSearchParams()
 
-  const { userDid } = useZkpSnapState()
+  const { userDid } = useIdentityState()
   const { authorize } = useAuth()
 
   const invitationDetails = useMemo(() => getInvitationDetails(searchParams), [searchParams])

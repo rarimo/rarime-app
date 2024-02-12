@@ -5,7 +5,7 @@ import { ToastsManager } from '@/contexts'
 import { ErrorHandler } from '@/helpers'
 import { useAuth, useViewportSizes, useWeb3Context } from '@/hooks'
 import { AppRoutes } from '@/routes'
-import { useUiState, zkpSnapStore } from '@/store'
+import { useUiState, web3Store } from '@/store'
 import { createTheme } from '@/theme'
 
 const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
@@ -21,7 +21,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
     if (provider?.address) return
 
     try {
-      const { isMetamaskInstalled, isSnapInstalled } = await zkpSnapStore.checkSnapStatus()
+      const { isMetamaskInstalled, isSnapInstalled } = await web3Store.checkSnapStatus()
 
       if (isMetamaskInstalled && isSnapInstalled) {
         await connectProviders()

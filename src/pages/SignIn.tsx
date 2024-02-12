@@ -7,7 +7,7 @@ import { config } from '@/config'
 import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler, metamaskLink } from '@/helpers'
 import { useAuth } from '@/hooks'
-import { useZkpSnapState } from '@/store'
+import { useWeb3State } from '@/store'
 import { UiButton, UiIcon } from '@/ui'
 
 export default function SignIn() {
@@ -16,7 +16,7 @@ export default function SignIn() {
   const [isPending, setIsPending] = useState(false)
 
   const { palette, spacing } = useTheme()
-  const { isMetamaskInstalled } = useZkpSnapState()
+  const { isMetamaskInstalled } = useWeb3State()
 
   const signIn = useCallback(async () => {
     setIsPending(true)

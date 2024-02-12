@@ -7,14 +7,14 @@ import { loadOrgsCount, OrgsRequestFilters, OrgsRequestFiltersMap } from '@/api/
 import { PageListFilters, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useLoading, useNestedRoutes } from '@/hooks'
-import { useZkpSnapState } from '@/store'
+import { useIdentityState } from '@/store'
 import { UiButton } from '@/ui'
 
 import { List } from './components'
 
 export default function OrgsList() {
   const { t } = useTranslation()
-  const { userDid } = useZkpSnapState()
+  const { userDid } = useIdentityState()
 
   const [filter, setFilter] = useState<OrgsRequestFiltersMap>({})
 

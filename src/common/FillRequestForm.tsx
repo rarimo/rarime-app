@@ -8,7 +8,7 @@ import { CredentialRequest, fillOrgGroupRequest, OrgGroupRequest } from '@/api/m
 import { ParsedCredentialSchemaProperty } from '@/api/modules/zkp'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
-import { useZkpSnapState } from '@/store'
+import { useIdentityState } from '@/store'
 import { UiButton, UiTextField } from '@/ui'
 
 type Props = StackProps & {
@@ -25,7 +25,7 @@ export default function FillRequestForm({
   onRequestFilled,
   ...rest
 }: Props) {
-  const { userDid } = useZkpSnapState()
+  const { userDid } = useIdentityState()
 
   const {
     formState,
