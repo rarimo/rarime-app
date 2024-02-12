@@ -6,14 +6,15 @@ import { generatePath, NavLink } from 'react-router-dom'
 import { getClaimIdFromVC } from '@/api/modules/zkp'
 import { CredentialCard, NoDataViewer, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
-import { useCredentialsContext } from '@/pages/Credentials/contexts'
+import { credentialsStore, useCredentialsState } from '@/store'
+import { UiButton } from '@/ui'
 
 type Props = StackProps
 
 export default function CredentialsList({ ...rest }: Props) {
   const { t } = useTranslation()
 
-  const { vcs, issuersDetails } = useCredentialsContext()
+  const { vcs, issuersDetails } = useCredentialsState()
 
   return (
     <Stack {...rest}>
@@ -37,7 +38,10 @@ export default function CredentialsList({ ...rest }: Props) {
             ))}
           </Grid>
         ) : (
-          <NoDataViewer title={'No Credentials'} />
+          <NoDataViewer
+            title={'No Credentials'}
+            action={<UiButton onClick={credentialsStore.load}>Load Credentials</UiButton>}
+          />
         )}
       </Paper>
     </Stack>

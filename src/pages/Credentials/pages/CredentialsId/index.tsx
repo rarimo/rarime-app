@@ -7,7 +7,7 @@ import { getClaimIdFromVC } from '@/api/modules/zkp'
 import { CredentialCard, NoDataViewer } from '@/common'
 import { RoutePaths } from '@/enums'
 import { ErrorHandler } from '@/helpers'
-import { useCredentialsContext } from '@/pages/Credentials/contexts'
+import { useCredentialsState } from '@/store'
 import { UiIcon } from '@/ui'
 
 import { ActionButton } from './components'
@@ -19,7 +19,7 @@ export default function CredentialsId() {
 
   const { claimId = '' } = useParams<{ claimId: string }>()
 
-  const { vcs, issuersDetails } = useCredentialsContext()
+  const { vcs, issuersDetails } = useCredentialsState()
 
   const vc = useMemo(() => {
     return vcs.find(vc => getClaimIdFromVC(vc) === claimId)

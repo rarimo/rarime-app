@@ -7,7 +7,6 @@ import { OrgGroupRequestStatuses, OrgGroupRequestWithClaims } from '@/api/module
 import { PageTitles } from '@/common'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
-import { useCredentialsContext } from '@/pages/Credentials/contexts'
 import { UiButton, UiIcon } from '@/ui'
 
 import { ClaimVCsModal, FillRequestFormDrawer } from './components'
@@ -17,7 +16,8 @@ type Props = StackProps
 export default function CredentialsRequests({ ...rest }: Props) {
   const { t } = useTranslation()
 
-  const { orgGroupRequests } = useCredentialsContext()
+  // TODO: implement backend once ready
+  const [orgGroupRequests] = useState<OrgGroupRequestWithClaims[]>([])
 
   const [isFillFormDrawerShown, setIsFillFormDrawerShown] = useState(false)
   const [isClaimModalShown, setIsClaimModalShown] = useState(false)
