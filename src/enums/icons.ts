@@ -15,11 +15,11 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import FolderOff from '@mui/icons-material/FolderOff'
 import InfoIcon from '@mui/icons-material/Info'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import Key from '@mui/icons-material/Key'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import Layers from '@mui/icons-material/Layers'
 import LightModeOutlined from '@mui/icons-material/LightModeOutlined'
 import Link from '@mui/icons-material/Link'
-import LockOpen from '@mui/icons-material/LockOpen'
 import Logout from '@mui/icons-material/Logout'
 import Notifications from '@mui/icons-material/Notifications'
 import OpenInNew from '@mui/icons-material/OpenInNew'
@@ -59,11 +59,11 @@ export const ICON_COMPONENTS = {
   folderOff: FolderOff,
   info: InfoIcon,
   infoOutlined: InfoOutlinedIcon,
+  key: Key,
   keyboardArrowDownOutlined: KeyboardArrowDownOutlinedIcon,
   layers: Layers,
   lightModeOutlined: LightModeOutlined,
   link: Link,
-  lockOpen: LockOpen,
   logOut: Logout,
   notifications: Notifications,
   openInNew: OpenInNew,

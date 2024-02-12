@@ -92,7 +92,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
         {/*TODO: Add handler*/}
         <MenuItem onClick={exportIdentity} sx={menuItemSx} disabled={isExporting}>
           <ListItemIcon>
-            <UiIcon componentName={'lockOpen'} size={5} sx={{ color: palette.text.secondary }} />
+            <UiIcon componentName={'key'} size={5} sx={{ color: palette.text.secondary }} />
           </ListItemIcon>
           <Typography variant={'caption1'}>
             {isExporting ? 'Exporting...' : 'Export Identity'}
