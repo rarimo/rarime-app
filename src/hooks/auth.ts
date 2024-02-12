@@ -1,39 +1,30 @@
 import { PROVIDERS } from '@distributedlab/w3p'
 import { useCallback, useMemo } from 'react'
 
+import { initZkpSnap, zkpSnap } from '@/api/clients'
 import { authorizeUser } from '@/api/modules/auth'
 import { OrgUserRoles } from '@/api/modules/orgs'
 import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp'
-import { useMetamaskZkpSnapContext } from '@/hooks/metamask-zkp-snap'
 import { useWeb3Context } from '@/hooks/web3'
-import { web3Store } from '@/store'
+import { identityStore, useIdentityState, web3Store } from '@/store'
 
 // TODO: add jwt validations for specific org
 export const useAuth = () => {
   const { init, provider } = useWeb3Context()
-  const {
-    userDid,
-    isSnapInstalled,
 
-    createProof,
-
-    saveVerifiableCredentials,
-    connectOrInstallSnap,
-    checkSnapStatus,
-    createIdentity,
-  } = useMetamaskZkpSnapContext()
+  const { userDid } = useIdentityState()
 
   const isAuthorized = useMemo(
-    () => Boolean(provider?.isConnected && isSnapInstalled),
-    [isSnapInstalled, provider?.isConnected],
+    () => Boolean(provider?.isConnected && userDid),
+    [provider?.isConnected, userDid],
   )
 
   const logout = useCallback(async () => {
     await provider?.disconnect()
-    await checkSnapStatus()
+    await web3Store.checkSnapStatus()
 
     web3Store.setProviderType(undefined)
-  }, [checkSnapStatus, provider])
+  }, [provider])
 
   const connectProviders = useCallback(
     async (providerType?: PROVIDERS) => {
@@ -45,13 +36,13 @@ export const useAuth = () => {
 
       await init(currentProviderType)
 
-      const connector = await connectOrInstallSnap()
+      await initZkpSnap()
 
-      await checkSnapStatus()
+      await web3Store.checkSnapStatus()
 
-      return createIdentity(connector)
+      return identityStore.createIdentity()
     },
-    [checkSnapStatus, connectOrInstallSnap, createIdentity, init],
+    [init],
   )
 
   const authorize = useCallback(
@@ -68,14 +59,14 @@ export const useAuth = () => {
     }) => {
       const claimOffer = await getClaimOffer(userDid, claimId)
 
-      const vc = await saveVerifiableCredentials(claimOffer)
+      const vc = await zkpSnap.saveCredentials(claimOffer)
 
       if (!vc?.[0]?.issuer) throw new TypeError('VC issuer is undefined')
 
       if (!provider?.address) throw new TypeError('Provider address is undefined')
 
       // FIXME: define in zkp module
-      const proofResponse = await createProof(
+      const proofResponse = await zkpSnap.createProof(
         buildAuthorizeRequest({
           providerAddress: provider?.address,
           isAdmin: false, // TODO: add check for admin role from VC
@@ -92,7 +83,7 @@ export const useAuth = () => {
         zkProof: proofResponse.zkpProof,
       })
     },
-    [createProof, saveVerifiableCredentials, provider?.address, userDid],
+    [provider?.address, userDid],
   )
 
   return {

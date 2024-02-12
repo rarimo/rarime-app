@@ -6,14 +6,15 @@ import { Navigate, NavLink } from 'react-router-dom'
 import { loadOrgsCount, OrgsRequestFilters, OrgsRequestFiltersMap } from '@/api/modules/orgs'
 import { PageListFilters, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
-import { useLoading, useMetamaskZkpSnapContext, useNestedRoutes } from '@/hooks'
+import { useLoading, useNestedRoutes } from '@/hooks'
+import { useIdentityState } from '@/store'
 import { UiButton } from '@/ui'
 
 import { List } from './components'
 
 export default function OrgsList() {
   const { t } = useTranslation()
-  const { userDid } = useMetamaskZkpSnapContext()
+  const { userDid } = useIdentityState()
 
   const [filter, setFilter] = useState<OrgsRequestFiltersMap>({})
 
