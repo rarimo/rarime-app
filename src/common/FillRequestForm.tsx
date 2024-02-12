@@ -7,7 +7,8 @@ import type { ObjectShape } from 'yup'
 import { CredentialRequest, fillOrgGroupRequest, OrgGroupRequest } from '@/api/modules/orgs'
 import { ParsedCredentialSchemaProperty } from '@/api/modules/zkp'
 import { ErrorHandler } from '@/helpers'
-import { useForm, useMetamaskZkpSnapContext } from '@/hooks'
+import { useForm } from '@/hooks'
+import { useIdentityState } from '@/store'
 import { UiButton, UiTextField } from '@/ui'
 
 type Props = StackProps & {
@@ -24,7 +25,7 @@ export default function FillRequestForm({
   onRequestFilled,
   ...rest
 }: Props) {
-  const { userDid } = useMetamaskZkpSnapContext()
+  const { userDid } = useIdentityState()
 
   const {
     formState,

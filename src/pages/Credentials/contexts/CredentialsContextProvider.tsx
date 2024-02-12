@@ -1,13 +1,15 @@
 import { CircularProgress } from '@mui/material'
 import { createContext, PropsWithChildren, useContext } from 'react'
 
+import { zkpSnap } from '@/api/clients'
 import {
   groupVCsToOrgGroups,
   loadRequestsByUserDid,
   OrgGroupRequestWithClaims,
   OrgGroupVCMap,
 } from '@/api/modules/orgs'
-import { useLoading, useMetamaskZkpSnapContext } from '@/hooks'
+import { useLoading } from '@/hooks'
+import { useIdentityState } from '@/store'
 
 type CredentialsContextValue = {
   orgGroupRequests: OrgGroupRequestWithClaims[]
@@ -24,7 +26,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
   //  load all submitted and created requests
   //  load, parse and filter all credentials loaded from snap
 
-  const { userDid, getCredentials } = useMetamaskZkpSnapContext()
+  const { userDid } = useIdentityState()
 
   const {
     data: { orgGroupRequests, groupedVCs },
@@ -42,7 +44,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
       {
         const [orgGroupRequests, vcs] = await Promise.all([
           loadRequestsByUserDid(userDid),
-          getCredentials(),
+          zkpSnap.getCredentials(),
         ])
 
         const groupedVCs = groupVCsToOrgGroups(orgGroupRequests, vcs)
@@ -52,7 +54,7 @@ export const CredentialsContextProvider = ({ children }: PropsWithChildren) => {
     },
     {
       loadOnMount: !!userDid,
-      loadArgs: [getCredentials, userDid],
+      loadArgs: [userDid],
     },
   )
 

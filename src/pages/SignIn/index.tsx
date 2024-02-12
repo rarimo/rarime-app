@@ -3,9 +3,11 @@ import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { zkpSnap } from '@/api/clients'
 import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler, metamaskLink } from '@/helpers'
-import { useMetamaskZkpSnapContext } from '@/hooks'
+import { useAuth } from '@/hooks'
+import { useWeb3State } from '@/store'
 import { UiButton, UiIcon, UiTextField } from '@/ui'
 
 enum Steps {
@@ -21,24 +23,14 @@ export default function SignIn() {
   const [isSelectImportIdentity, setIsSelectImportIdentity] = useState(false)
   const [privateKey, setPrivateKey] = useState('')
   const { palette, spacing } = useTheme()
-  const {
-    isSnapInstalled,
-    isMetamaskInstalled,
-    connectOrInstallSnap,
-    createIdentity: _createIdentity,
-    checkSnapExists,
-  } = useMetamaskZkpSnapContext()
+  const { isSnapInstalled, isMetamaskInstalled } = useWeb3State()
+  const { connectProviders } = useAuth()
 
   const installMMLink = useMemo(() => {
     if (isMetamaskInstalled) return ''
 
     return metamaskLink()
   }, [isMetamaskInstalled])
-
-  const connectSnap = useCallback(async () => {
-    await connectOrInstallSnap()
-    await checkSnapExists()
-  }, [checkSnapExists, connectOrInstallSnap])
 
   const openInstallMetamaskLink = useCallback(() => {
     if (!installMMLink) {
@@ -60,13 +52,13 @@ export default function SignIn() {
       setIsPending(true)
       try {
         // TODO: pass pkHex to createIdentity
-        await _createIdentity()
+        await zkpSnap.createIdentity({})
       } catch (error) {
         ErrorHandler.processWithoutFeedback(error)
       }
       setIsPending(false)
     },
-    [_createIdentity],
+    [],
   )
 
   const stepSignIn = useMemo(() => {
@@ -85,7 +77,7 @@ export default function SignIn() {
         <UiButton
           startIcon={<UiIcon name={Icons.Rarime} size={5} />}
           sx={{ mt: 8 }}
-          onClick={() => connectSnap()}
+          onClick={() => connectProviders()}
         >
           {'Enable Rarime'}
         </UiButton>
@@ -136,11 +128,11 @@ export default function SignIn() {
     isPending,
     openInstallMetamaskLink,
     t,
-    createIdentity,
-    privateKey,
-    connectSnap,
-    selectImportIdentity,
     spacing,
+    privateKey,
+    connectProviders,
+    createIdentity,
+    selectImportIdentity,
   ])
 
   const currentStep = useMemo(() => {
