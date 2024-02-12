@@ -1,3 +1,5 @@
+import { CreateIdentityRequestParams } from '@rarimo/rarime-connector'
+
 import { zkpSnap } from '@/api/clients'
 import { createStore } from '@/helpers'
 
@@ -13,13 +15,16 @@ const [identityStore, useIdentityState] = createStore(
     userDidBigIntString: '',
   } as IdentityState,
   state => ({
-    createIdentity: async () => {
-      const { identityIdString, identityIdBigIntString } = await zkpSnap.createIdentity({})
+    createIdentity: async (params: CreateIdentityRequestParams) => {
+      const { identityIdString, identityIdBigIntString } = await zkpSnap.createIdentity(params)
 
       state.userDid = identityIdString
       state.userDidBigIntString = identityIdBigIntString
     },
   }),
+  {
+    isPersist: false,
+  },
 )
 
 export { identityStore, useIdentityState }
