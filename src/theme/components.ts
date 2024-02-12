@@ -1,4 +1,4 @@
-import { alpha, Components, Theme } from '@mui/material'
+import { AlertColor, alpha, Components, Theme } from '@mui/material'
 
 import { ICON_COMPONENTS } from '@/enums'
 
@@ -376,40 +376,39 @@ export const components: Components<Omit<Theme, 'components'>> = {
   MuiAlert: {
     styleOverrides: {
       root: ({ theme }) => ({
+        width: '100%',
         borderRadius: theme.spacing(4),
         backgroundColor: theme.palette.additional.pureBlack,
-        color: '#f0f0f0',
-        '& .MuiAlertTitle-root': {
-          color: theme.palette.common.white,
-        },
-        width: '100%',
+        color: alpha(theme.palette.common.white, 0.7),
       }),
-      icon: ({ ownerState, theme }) => ({
-        ...(ownerState.severity === 'warning' &&
-          ownerState.variant === 'standard' && {
-            backgroundColor: alpha(theme.palette.warning.main, 0.2),
-          }),
-        ...(ownerState.severity === 'info' &&
-          ownerState.variant === 'standard' && {
-            backgroundColor: alpha(theme.palette.info.main, 0.2),
-          }),
-        ...(ownerState.severity === 'success' &&
-          ownerState.variant === 'standard' && {
-            backgroundColor: alpha(theme.palette.success.main, 0.2),
-          }),
-        ...(ownerState.severity === 'error' &&
-          ownerState.variant === 'standard' && {
-            backgroundColor: alpha(theme.palette.error.main, 0.2),
-          }),
-        marginRight: theme.spacing(4),
-        marginTop: 'auto',
-        marginBottom: 'auto',
-        padding: theme.spacing(2),
-        borderRadius: theme.spacing(25),
-      }),
+      icon: ({ ownerState, theme }) => {
+        const severityToBgColor: Record<AlertColor, string> = {
+          success: alpha(theme.palette.success.main, 0.2),
+          warning: alpha(theme.palette.warning.main, 0.2),
+          error: alpha(theme.palette.error.main, 0.2),
+          info: alpha(theme.palette.info.main, 0.2),
+        }
+
+        return {
+          backgroundColor: severityToBgColor[ownerState.severity ?? 'info'],
+          marginRight: theme.spacing(4),
+          marginTop: 'auto',
+          marginBottom: 'auto',
+          padding: theme.spacing(2),
+          borderRadius: theme.spacing(25),
+        }
+      },
       message: ({ theme }) => ({
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
+      }),
+    },
+  },
+  MuiAlertTitle: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        ...typography.subtitle4,
+        color: theme.palette.common.white,
       }),
     },
   },

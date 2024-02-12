@@ -46,11 +46,21 @@ function ToastsManagerController({ children }: { children: ReactNode }) {
     [t],
   )
 
+  const defaultIcons = useMemo<Record<BusEvents, Icons | keyof typeof ICON_COMPONENTS>>(
+    () => ({
+      [BusEvents.success]: 'check',
+      [BusEvents.error]: 'errorOutline',
+      [BusEvents.warning]: 'warningAmber',
+      [BusEvents.info]: 'info',
+    }),
+    [],
+  )
+
   const showToast = useCallback(
     (messageType = BusEvents.info, payload: ToastPayload) => {
       const title = payload?.title || defaultTitles[messageType]
       const message = payload?.message || defaultMessages[messageType]
-      const icon = payload?.icon
+      const icon = payload?.icon || defaultIcons[messageType]
 
       enqueueSnackbar(message, {
         variant: 'defaultToast',
@@ -60,7 +70,7 @@ function ToastsManagerController({ children }: { children: ReactNode }) {
         icon,
       })
     },
-    [defaultTitles, defaultMessages, enqueueSnackbar],
+    [defaultTitles, defaultMessages, defaultIcons, enqueueSnackbar],
   )
 
   const showSuccessToast = useCallback(
