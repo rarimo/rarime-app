@@ -2,11 +2,11 @@ import { Box, Button, Divider, Paper, Stack, Typography, useTheme } from '@mui/m
 import { useCallback, useMemo, useState } from 'react'
 import { generatePath, NavLink, useParams } from 'react-router-dom'
 
+import { zkpSnap } from '@/api/clients'
 import { getClaimIdFromVC } from '@/api/modules/zkp'
 import { CredentialCard, NoDataViewer } from '@/common'
 import { RoutePaths } from '@/enums'
 import { ErrorHandler } from '@/helpers'
-import { useMetamaskZkpSnapContext } from '@/hooks'
 import { useCredentialsContext } from '@/pages/Credentials/contexts'
 import { UiIcon } from '@/ui'
 
@@ -20,8 +20,6 @@ export default function CredentialsId() {
   const { claimId = '' } = useParams<{ claimId: string }>()
 
   const { vcs, issuersDetails } = useCredentialsContext()
-
-  const { removeVerifiableCredentials } = useMetamaskZkpSnapContext()
 
   const vc = useMemo(() => {
     return vcs.find(vc => getClaimIdFromVC(vc) === claimId)
@@ -45,7 +43,7 @@ export default function CredentialsId() {
     setIsPending(true)
 
     try {
-      await removeVerifiableCredentials({
+      await zkpSnap.removeCredentials({
         ids: [vc.id],
       })
     } catch (error) {
@@ -53,7 +51,7 @@ export default function CredentialsId() {
     }
 
     setIsPending(false)
-  }, [removeVerifiableCredentials, vc])
+  }, [vc])
 
   const isLastVC = useMemo(() => {
     return vcIndex === vcs.length - 1

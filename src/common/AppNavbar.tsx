@@ -4,8 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom'
 
 import { ProfileMenu } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
-import { useMetamaskZkpSnapContext } from '@/hooks'
-import { uiStore, useUiState } from '@/store'
+import { uiStore, useIdentityState, useUiState } from '@/store'
 import { Transitions } from '@/theme/constants'
 import { UiIcon, UiIconButton } from '@/ui'
 
@@ -48,7 +47,7 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
 const AppNavbar = () => {
   const { palette } = useTheme()
   const { paletteMode } = useUiState()
-  const { userDid } = useMetamaskZkpSnapContext()
+  const { userDid } = useIdentityState()
 
   const navbarItems = useMemo(
     () => [
