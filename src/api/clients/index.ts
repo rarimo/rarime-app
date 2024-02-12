@@ -10,6 +10,6 @@ export const api = new JsonApiClient({
 export let zkpSnap: SnapConnector
 
 export const initZkpSnap = async () => {
-  const snap = await enableSnap()
+  const snap = await enableSnap('local:http://localhost:8081')
   zkpSnap = await snap.getConnector()
 }

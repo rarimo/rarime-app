@@ -2,11 +2,11 @@ import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { initZkpSnap } from '@/api/clients'
 import { config } from '@/config'
 import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler, metamaskLink } from '@/helpers'
-import { useAuth } from '@/hooks'
-import { identityStore, useWeb3State } from '@/store'
+import { identityStore, useWeb3State, web3Store } from '@/store'
 import { UiButton, UiIcon, UiTextField } from '@/ui'
 
 enum Steps {
@@ -23,13 +23,21 @@ export default function SignIn() {
   const [privateKey, setPrivateKey] = useState('')
   const { palette, spacing } = useTheme()
   const { isSnapInstalled, isMetamaskInstalled } = useWeb3State()
-  const { connectProviders } = useAuth()
 
   const installMMLink = useMemo(() => {
     if (isMetamaskInstalled) return ''
 
     return metamaskLink()
   }, [isMetamaskInstalled])
+
+  const installSnap = useCallback(async () => {
+    try {
+      await initZkpSnap()
+      await web3Store.checkSnapStatus()
+    } catch (error) {
+      ErrorHandler.process(error)
+    }
+  }, [])
 
   const openInstallMetamaskLink = useCallback(() => {
     if (!installMMLink) {
@@ -78,7 +86,7 @@ export default function SignIn() {
         <UiButton
           startIcon={<UiIcon name={Icons.Rarime} size={5} />}
           sx={{ mt: 8 }}
-          onClick={() => connectProviders()}
+          onClick={installSnap}
         >
           {'Enable Rarime'}
         </UiButton>
@@ -113,7 +121,6 @@ export default function SignIn() {
         >
           <UiTextField
             value={privateKey}
-            autoFocus
             type='password'
             label='Enter your private key'
             disabled={isPending}
@@ -130,9 +137,9 @@ export default function SignIn() {
     isPending,
     openInstallMetamaskLink,
     t,
+    installSnap,
     spacing,
     privateKey,
-    connectProviders,
     createIdentity,
     selectImportIdentity,
   ])
