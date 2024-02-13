@@ -1,5 +1,6 @@
 import { isMetamaskInstalled, isSnapInstalled } from '@rarimo/rarime-connector'
 
+import { config } from '@/config'
 import { createStore } from '@/helpers'
 import { SUPPORTED_PROVIDERS } from '@/types'
 
@@ -22,7 +23,7 @@ const [web3Store, useWeb3State] = createStore(
     },
     checkSnapStatus: async () => {
       state.isMetamaskInstalled = await isMetamaskInstalled()
-      state.isSnapInstalled = await isSnapInstalled()
+      state.isSnapInstalled = await isSnapInstalled(...config.SNAP_V_PARAMS)
 
       return {
         isMetamaskInstalled: state.isMetamaskInstalled,

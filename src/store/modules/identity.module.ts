@@ -28,6 +28,9 @@ const [identityStore, useIdentityState] = createStore(
       state.userDidBigIntString = identityIdBigIntString
     },
   }),
+  {
+    isPersist: false,
+  },
 )
 
 export { identityStore, useIdentityState }
