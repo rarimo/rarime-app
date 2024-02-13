@@ -1,17 +1,11 @@
 import { Navigate } from 'react-router-dom'
 
 import { RoutePaths } from '@/enums'
-import { useLoading, useNestedRoutes } from '@/hooks'
-import { credentialsStore } from '@/store'
+import { useNestedRoutes } from '@/hooks'
 
 import { CredentialsId, CredentialsList, CredentialsRequests } from './pages'
 
 export default function Credentials() {
-  const { isLoading } = useLoading(undefined, () => credentialsStore.load(), {
-    loadOnMount: true,
-  })
-
-  // TODO: fix loading
   return useNestedRoutes(RoutePaths.Credentials, [
     {
       index: true,
@@ -19,15 +13,15 @@ export default function Credentials() {
     },
     {
       path: RoutePaths.CredentialsList,
-      element: isLoading ? <CredentialsList /> : <></>,
+      element: <CredentialsList />,
     },
     {
       path: RoutePaths.CredentialsRequests,
-      element: isLoading ? <CredentialsRequests /> : <></>,
+      element: <CredentialsRequests />,
     },
     {
       path: RoutePaths.CredentialsId,
-      element: isLoading ? <CredentialsId /> : <></>,
+      element: <CredentialsId />,
     },
     {
       path: '*',
