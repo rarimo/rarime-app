@@ -18,8 +18,6 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
   useViewportSizes()
 
   const init = useCallback(async () => {
-    if (provider?.address) return
-
     try {
       const { isMetamaskInstalled, isSnapInstalled } = await web3Store.checkSnapStatus()
 
@@ -33,7 +31,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
     }
 
     setIsAppInitialized(true)
-  }, [provider?.address, connectProviders])
+  }, [connectProviders])
 
   const theme = useMemo(() => createTheme(paletteMode), [paletteMode])
 

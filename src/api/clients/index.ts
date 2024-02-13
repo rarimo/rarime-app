@@ -1,6 +1,7 @@
-import { config } from '@config'
 import { JsonApiClient } from '@distributedlab/jac'
 import { enableSnap, SnapConnector } from '@rarimo/rarime-connector'
+
+import { config } from '@/config'
 
 export const api = new JsonApiClient({
   baseUrl: config.API_URL,

@@ -1,4 +1,3 @@
-import { config } from '@config'
 import {
   Divider,
   ListItemIcon,
@@ -9,14 +8,16 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { zkpSnap } from '@/api/clients'
 import { UserAvatar } from '@/common'
+import { config } from '@/config'
 import { BusEvents } from '@/enums'
-import { bus, formatDid } from '@/helpers'
+import { bus, ErrorHandler, formatDid } from '@/helpers'
 import { useAuth, useCopyToClipboard } from '@/hooks'
-import { UiIcon, UiIconButton, UiTooltip } from '@/ui'
+import { UiIcon, UiIconButton } from '@/ui'
 
 interface ProfileMenuProps {
   userDid: string
@@ -27,6 +28,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
   const { logout } = useAuth()
   const { copy, isCopied } = useCopyToClipboard()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
+  const [isExporting, setIsExporting] = useState(false)
 
   const menuItemSx: SxProps = { py: 2.5, px: 4 }
 
@@ -37,6 +39,16 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
       bus.emit(BusEvents.error, 'Not copied, please try again')
     }
   }
+
+  const exportIdentity = useCallback(async () => {
+    try {
+      setIsExporting(true)
+      await zkpSnap.exportIdentity()
+    } catch (error) {
+      ErrorHandler.process(error)
+    }
+    setIsExporting(false)
+  }, [])
 
   return (
     <>
@@ -71,20 +83,20 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
             >
               {formatDid(userDid)}
             </Typography>
-            <UiTooltip title={'Copied'} open={isCopied && !!anchorEl}>
-              <UiIconButton onClick={copyUserDid}>
-                <UiIcon componentName={'contentCopy'} size={4} />
-              </UiIconButton>
-            </UiTooltip>
+            <UiIconButton onClick={copyUserDid} color={isCopied ? 'success' : 'primary'}>
+              <UiIcon componentName={isCopied ? 'check' : 'contentCopy'} size={4} />
+            </UiIconButton>
           </Stack>
         </Stack>
         <Divider sx={{ mb: 2 }} />
         {/*TODO: Add handler*/}
-        <MenuItem sx={menuItemSx}>
+        <MenuItem onClick={exportIdentity} sx={menuItemSx} disabled={isExporting}>
           <ListItemIcon>
-            <UiIcon componentName={'qrCode'} size={5} sx={{ color: palette.text.secondary }} />
+            <UiIcon componentName={'key'} size={5} sx={{ color: palette.text.secondary }} />
           </ListItemIcon>
-          <Typography variant={'caption1'}>QR login</Typography>
+          <Typography variant={'caption1'}>
+            {isExporting ? 'Exporting...' : 'Export Identity'}
+          </Typography>
         </MenuItem>
         <MenuItem
           component={Link}

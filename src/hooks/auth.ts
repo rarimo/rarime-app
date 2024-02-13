@@ -11,12 +11,11 @@ import { identityStore, useIdentityState, useWeb3State, web3Store } from '@/stor
 export const useAuth = () => {
   const { provider } = useWeb3Context()
 
+  const { userDid } = useIdentityState()
   const { isSnapInstalled } = useWeb3State()
 
-  const { userDid } = useIdentityState()
-
   const isAuthorized = useMemo(
-    () => Boolean(isSnapInstalled && userDid),
+    () => Boolean(userDid && isSnapInstalled),
     [isSnapInstalled, userDid],
   )
 
@@ -31,7 +30,7 @@ export const useAuth = () => {
 
     await web3Store.checkSnapStatus()
 
-    await identityStore.createIdentity({})
+    return identityStore.getIdentity()
   }, [])
 
   const authorize = useCallback(
