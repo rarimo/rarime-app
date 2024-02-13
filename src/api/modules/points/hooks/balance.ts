@@ -21,7 +21,7 @@ export const useBalance = (did: string) => {
   }, [did])
 
   const {
-    data: events,
+    data: balance,
     isLoading,
     isLoadingError,
     isEmpty,
@@ -31,7 +31,7 @@ export const useBalance = (did: string) => {
   })
 
   return {
-    events,
+    balance,
     isLoading,
     isLoadingError,
     isEmpty,

@@ -4,6 +4,17 @@ export enum EventsRequestFilters {
   MetaStaticName = 'meta.static.name',
 }
 
+export enum EventRequestPageProperties {
+  Limit = 'limit',
+  Cursor = 'cursor',
+  Order = 'order',
+}
+
+export enum EventRequestPageOrder {
+  Asc = 'asc',
+  Desc = 'desc',
+}
+
 export enum EventStatuses {
   Open = 'open',
   Fulfilled = 'fulfilled',

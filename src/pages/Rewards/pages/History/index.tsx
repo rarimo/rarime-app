@@ -1,26 +1,19 @@
 import { Divider, Stack, Typography, useTheme } from '@mui/material'
 
+import { EventsRequestFilters, EventStatuses, useEvents } from '@/api/modules/points'
+
 export default function History() {
   const { palette } = useTheme()
 
-  const tasks = [
-    {
-      id: '1',
-      title: 'Initial setup of identity credentials',
-      points: 25,
+  const { events, isLoading, isLoadingError, isEmpty } = useEvents({
+    filter: {
+      [EventsRequestFilters.Status]: [EventStatuses.Claimed],
     },
-    {
-      id: '2',
-      title: 'Generation of ZKPs',
-      points: 10,
-      completed: false,
-    },
-    {
-      id: '3',
-      title: 'Getting a Poh credential',
-      points: 15,
-    },
-  ]
+  })
+
+  if (isLoading) return <></>
+  if (isLoadingError) return <></>
+  if (isEmpty) return <></>
 
   return (
     <Stack
@@ -38,15 +31,15 @@ export default function History() {
             Task name
           </Typography>
           <Typography variant='overline3' color={palette.text.secondary}>
-            Earned points
+            Earned
           </Typography>
         </Stack>
         <Divider />
-        {tasks.map((task, index) => (
-          <Stack spacing={4} key={task.id}>
+        {events.map((event, index) => (
+          <Stack spacing={4} key={event.id}>
             <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
               <Typography variant='subtitle4' color={palette.text.primary}>
-                {task.title}
+                {event.meta.static.title}
               </Typography>
               <Stack direction={'row'} alignItems={'center'} spacing={6}>
                 <Typography
@@ -56,11 +49,11 @@ export default function History() {
                   borderRadius={12}
                   bgcolor={palette.action.active}
                 >
-                  {`🎁 +${task.points}`}
+                  {`🎁 +${event.points_amount}`}
                 </Typography>
               </Stack>
             </Stack>
-            {index !== tasks.length - 1 && <Divider />}
+            {index !== events.length - 1 && <Divider />}
           </Stack>
         ))}
       </Stack>

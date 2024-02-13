@@ -4,7 +4,12 @@ import { api } from '@/api/clients'
 import { ApiServicePaths } from '@/enums/api'
 import { sleep } from '@/helpers'
 
-import { EventMetadataFrequencies, EventsRequestFilters, EventStatuses } from '../enums'
+import {
+  EventMetadataFrequencies,
+  EventRequestPageProperties,
+  EventsRequestFilters,
+  EventStatuses,
+} from '../enums'
 import { Event, EventsMeta, EventsRequestQueryParams } from '../types/events'
 
 const EVENTS_MOCK: Event[] = [
@@ -21,7 +26,10 @@ const EVENTS_MOCK: Event[] = [
         reward: 100,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
+        short_description: '',
+        image_url: '',
         frequency: EventMetadataFrequencies.Weekly,
+        expires_at: '2024-03-12T00:00:00Z',
         no_auto_open: false,
       },
       dynamic: {},
@@ -44,6 +52,8 @@ const EVENTS_MOCK: Event[] = [
         reward: 100,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
+        short_description: '',
+        image_url: '',
         frequency: EventMetadataFrequencies.Weekly,
         no_auto_open: false,
       },
@@ -67,6 +77,8 @@ const EVENTS_MOCK: Event[] = [
         reward: 100,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
+        short_description: '',
+        image_url: '',
         frequency: EventMetadataFrequencies.Weekly,
         no_auto_open: false,
       },
@@ -90,8 +102,13 @@ const EVENTS_MOCK: Event[] = [
         reward: 100,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
+        expires_at: '2024-03-12T00:00:00Z',
+        short_description:
+          'This is a weekly event where users can earn free points. Users are eligible to participate once every week. Upon participation, users will receive 100 points. These points can be used for various features in the application. Participate every week and maximize your rewards!',
+        image_url: 'https://placekitten.com/g/150/150',
         frequency: EventMetadataFrequencies.Weekly,
         no_auto_open: false,
+        action_url: 'https://rarime.com',
       },
       dynamic: {},
     },
@@ -113,6 +130,8 @@ const EVENTS_MOCK: Event[] = [
         reward: 100,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
+        short_description: '',
+        image_url: '',
         frequency: EventMetadataFrequencies.Weekly,
         no_auto_open: false,
       },
@@ -136,6 +155,8 @@ const EVENTS_MOCK: Event[] = [
         reward: 100,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
+        short_description: '',
+        image_url: '',
         frequency: EventMetadataFrequencies.Weekly,
         no_auto_open: false,
       },
@@ -159,6 +180,8 @@ const EVENTS_MOCK: Event[] = [
         reward: 100,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
+        short_description: '',
+        image_url: '',
         frequency: EventMetadataFrequencies.Weekly,
         no_auto_open: false,
       },
@@ -182,6 +205,8 @@ const EVENTS_MOCK: Event[] = [
         reward: 100,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
+        short_description: '',
+        image_url: '',
         frequency: EventMetadataFrequencies.Weekly,
         no_auto_open: false,
       },
@@ -205,12 +230,19 @@ export const getEvents = async (query: EventsRequestQueryParams) => {
   const events = EVENTS_MOCK.filter(event => {
     const statuses = query.filter?.[EventsRequestFilters.Status]
     return statuses?.includes(event.status) ?? true
-  })
+  }).slice(0, query.page?.[EventRequestPageProperties.Limit])
 
   return {
     data: events,
     meta: { events_count: events.length },
   } as JsonApiResponse<Event[], EventsMeta>
+}
+
+export const getEventById = async (id: string) => {
+  // TODO: Uncomment when API is ready
+  // return api.get<Event>(`${ApiServicePaths.Points}/v1/events/${id}`)
+  await sleep(500)
+  return { data: EVENTS_MOCK.find(event => event.id === id) }
 }
 
 export const claimEvent = async (id: string) => {

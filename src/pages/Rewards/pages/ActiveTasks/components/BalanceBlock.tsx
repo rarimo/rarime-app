@@ -1,13 +1,21 @@
 import { Button, Divider, Stack, Typography, useTheme } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
+import { useBalance } from '@/api/modules/points'
 import { Icons, RoutePaths } from '@/enums'
+import { useIdentityState } from '@/store'
 import { UiButton, UiIcon } from '@/ui'
 
 import LevelProgress from './LevelProgress'
 
 export default function BalanceBlock() {
   const { palette, spacing } = useTheme()
+  const { userDid } = useIdentityState()
+  const { balance, isLoading, isLoadingError } = useBalance(userDid)
+
+  if (isLoading) return <></>
+  if (isLoadingError) return <></>
+  if (!balance) return <></>
 
   return (
     <Stack
@@ -23,7 +31,7 @@ export default function BalanceBlock() {
           <Typography variant='body3' color={palette.text.secondary}>
             Reserved
           </Typography>
-          <Typography variant='h4'>120 RMO</Typography>
+          <Typography variant='h4'>{balance.amount} RMO</Typography>
         </Stack>
 
         <UiButton
@@ -36,7 +44,7 @@ export default function BalanceBlock() {
           <Stack direction={'row'} alignItems={'center'} spacing={2}>
             <Stack direction={'row'} alignItems={'center'} spacing={1}>
               <UiIcon name={Icons.Trophy} size={5} />
-              <Typography variant='subtitle4'>241</Typography>
+              <Typography variant='subtitle4'>{balance.rank}</Typography>
             </Stack>
             <Typography variant='buttonMedium'>Leaderboard</Typography>
             <UiIcon componentName='chevronRight' size={4} />
@@ -53,7 +61,7 @@ export default function BalanceBlock() {
         >
           Withdraw
         </Button>
-        <LevelProgress width={spacing(80)} />
+        <LevelProgress balance={balance.amount} width={spacing(80)} />
       </Stack>
     </Stack>
   )

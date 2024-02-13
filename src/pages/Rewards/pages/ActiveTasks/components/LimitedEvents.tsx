@@ -1,11 +1,31 @@
 import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { generatePath, NavLink } from 'react-router-dom'
 
+import {
+  EventRequestPageProperties,
+  EventsRequestFilters,
+  EventStatuses,
+  useEvents,
+} from '@/api/modules/points'
 import { RoutePaths } from '@/enums'
+import { formatDateTime } from '@/helpers'
 import { UiButton } from '@/ui'
 
 export default function LimitedEvents() {
   const { palette, spacing } = useTheme()
+
+  const { events, isLoading, isLoadingError, isEmpty } = useEvents({
+    filter: {
+      [EventsRequestFilters.Status]: [EventStatuses.Open],
+    },
+    page: {
+      [EventRequestPageProperties.Limit]: 1,
+    },
+  })
+
+  if (isLoading) return <></>
+  if (isLoadingError) return <></>
+  if (isEmpty) return <></>
 
   return (
     <Stack
@@ -17,57 +37,80 @@ export default function LimitedEvents() {
       borderRadius={4}
     >
       <Typography variant='subtitle3'>🔥 Limited time events</Typography>
-      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-        <Stack direction={'row'} spacing={4}>
-          <Box
-            component='img'
-            src={'/branding/og-image.jpg'}
-            sx={{
-              bgcolor: palette.action.active,
-              borderRadius: 2,
-              objectFit: 'cover',
-              width: spacing(21),
-              height: spacing(21),
-            }}
-          />
-          <Stack spacing={2}>
-            <Typography
+      {events.map(event => (
+        <Stack
+          key={event.id}
+          direction={'row'}
+          justifyContent={'space-between'}
+          alignItems={'center'}
+          spacing={4}
+        >
+          <Stack direction={'row'} spacing={4}>
+            <Box
               component={NavLink}
-              to={generatePath(RoutePaths.RewardsActiveId, { id: '1' })}
-              variant='subtitle4'
-              color={palette.text.primary}
+              to={generatePath(RoutePaths.RewardsActiveId, { id: event.id })}
             >
-              Initial setup of identity credentials
-            </Typography>
-            <Typography variant='body4' color={palette.text.secondary}>
-              It is a long established fact that a reader will be distracted by the readable
-            </Typography>
-            <Stack direction={'row'} alignItems={'center'} spacing={4}>
+              <Box
+                component='img'
+                src={event.meta.static.image_url}
+                sx={{
+                  bgcolor: palette.action.active,
+                  borderRadius: 2,
+                  objectFit: 'cover',
+                  width: spacing(21),
+                  height: spacing(21),
+                }}
+              />
+            </Box>
+            <Stack spacing={2}>
               <Typography
+                component={NavLink}
+                to={generatePath(RoutePaths.RewardsActiveId, { id: event.id })}
                 variant='subtitle4'
-                px={2}
-                py={1}
-                borderRadius={12}
-                bgcolor={palette.warning.light}
+                color={palette.text.primary}
               >
-                🎁 +150
+                {event.meta.static.title}
               </Typography>
-              <Typography variant='caption2' color={palette.text.secondary}>
-                Exp: 24 sep, 2024, 10:00am
+              <Typography
+                variant='body4'
+                color={palette.text.secondary}
+                sx={{
+                  display: '-webkit-box',
+                  WebkitLineClamp: '2',
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {event.meta.static.short_description}
               </Typography>
+              <Stack direction={'row'} alignItems={'center'} spacing={4}>
+                <Typography
+                  variant='subtitle4'
+                  px={2}
+                  py={1}
+                  borderRadius={12}
+                  bgcolor={palette.warning.light}
+                >
+                  🎁 +{event.meta.static.reward}
+                </Typography>
+                <Typography variant='caption2' color={palette.text.secondary}>
+                  Exp: {formatDateTime(event.meta.static.expires_at!)}
+                </Typography>
+              </Stack>
             </Stack>
           </Stack>
+          <UiButton
+            component={NavLink}
+            to={generatePath(RoutePaths.RewardsActiveId, { id: event.id })}
+            color='secondary'
+            size='medium'
+            sx={{ width: spacing(19), height: spacing(8) }}
+          >
+            View
+          </UiButton>
         </Stack>
-        <UiButton
-          component={NavLink}
-          to={generatePath(RoutePaths.RewardsActiveId, { id: '1' })}
-          color='secondary'
-          size='medium'
-          sx={{ width: spacing(19), height: spacing(8) }}
-        >
-          View
-        </UiButton>
-      </Stack>
+      ))}
     </Stack>
   )
 }

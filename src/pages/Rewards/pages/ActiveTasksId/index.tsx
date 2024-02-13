@@ -1,30 +1,27 @@
 import { Box, Divider, Stack, Typography, useTheme } from '@mui/material'
 import { parse } from 'marked'
 import { useMemo } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 
+import { useEvent } from '@/api/modules/points'
 import { RoutePaths } from '@/enums'
+import { formatDateTime } from '@/helpers'
 import { typography } from '@/theme/typography'
 import { UiButton, UiIcon } from '@/ui'
 
 export default function ActiveTasksId() {
   const { palette, spacing } = useTheme()
 
-  const task = {
-    id: '1',
-    title: 'Initial setup of identity credentials',
-    endTime: '24 sep, 2024, 10:00am',
-    image: '/branding/og-image.jpg',
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.\n- Simply dummy text of the printing\n- There are many variations of passages\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.",
-    url: 'https://rarime.com',
-    points: 25,
-    completed: true,
-  }
+  const { id = '' } = useParams<{ id: string }>()
+  const { event, isLoading, isLoadingError } = useEvent(id)
 
   const parsedDescription = useMemo(() => {
-    return parse(task.description)
-  }, [task.description])
+    return parse(event?.meta.static.description ?? '')
+  }, [event?.meta.static.description])
+
+  if (isLoading) return <></>
+  if (isLoadingError) return <></>
+  if (!event) return <></>
 
   return (
     <Stack spacing={6}>
@@ -38,7 +35,7 @@ export default function ActiveTasksId() {
           startIcon={<UiIcon componentName={'chevronLeft'} size={5} />}
           sx={{ width: 'fit-content' }}
         >
-          Go Back
+          Active Tasks
         </UiButton>
 
         <UiButton
@@ -62,7 +59,7 @@ export default function ActiveTasksId() {
       >
         <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
           <Stack spacing={4}>
-            <Typography variant='subtitle2'>{task.title}</Typography>
+            <Typography variant='subtitle2'>{event.meta.static.title}</Typography>
             <Stack direction={'row'} alignItems={'center'} spacing={4}>
               <Typography
                 variant='subtitle4'
@@ -71,16 +68,18 @@ export default function ActiveTasksId() {
                 borderRadius={12}
                 bgcolor={palette.warning.light}
               >
-                🎁 +{task.points}
+                🎁 +{event.meta.static.reward}
               </Typography>
-              <Typography variant='caption2' color={palette.text.secondary}>
-                Exp: {task.endTime}
-              </Typography>
+              {event.meta.static.expires_at && (
+                <Typography variant='caption2' color={palette.text.secondary}>
+                  Exp: {formatDateTime(event.meta.static.expires_at!)}
+                </Typography>
+              )}
             </Stack>
           </Stack>
           <Box
             component='img'
-            src={task.image}
+            src={event.meta.static.image_url}
             sx={{
               bgcolor: palette.action.active,
               borderRadius: 2,
@@ -108,9 +107,16 @@ export default function ActiveTasksId() {
             '& li': typography.subtitle4,
           }}
         />
-        <UiButton component={'a'} href={task.url} target='_blank' sx={{ width: spacing(40) }}>
-          {"Let's Start"}
-        </UiButton>
+        {event.meta.static.action_url && (
+          <UiButton
+            component={'a'}
+            href={event.meta.static.action_url}
+            target='_blank'
+            sx={{ width: spacing(40) }}
+          >
+            {"Let's Start"}
+          </UiButton>
+        )}
       </Stack>
     </Stack>
   )

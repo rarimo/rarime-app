@@ -7,7 +7,7 @@ import { type Balance, type Withdrawal } from '../types'
 const BALANCE_MOCK: Balance = {
   id: 'did:example:123',
   type: 'balance',
-  amount: 100,
+  amount: 175,
   created_at: 1628793600,
   updated_at: 1628793600,
   rank: 291,

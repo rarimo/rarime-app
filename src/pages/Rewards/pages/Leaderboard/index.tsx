@@ -2,6 +2,7 @@ import { Divider, Grid, Stack, Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
 import { NavLink } from 'react-router-dom'
 
+import { useBalance, useLeaderboard } from '@/api/modules/points'
 import { UserAvatar } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useIdentityState } from '@/store'
@@ -20,53 +21,18 @@ export default function Leaderboard() {
   const { palette, spacing } = useTheme()
   const { userDid } = useIdentityState()
 
-  const participants = [
-    {
-      id: 'did:iden3:readonly:mhQHvqmvimneVHCL5EufeZvfzigRt',
-      points: 25345,
-    },
-    {
-      id: 'did:iden3:readonly:mi1QKgywFcFD7d35QRaHwd6b6Cxy',
-      points: 25123,
-    },
-    {
-      id: 'did:iden3:readonly:mmaJ5kAjbGLRVcfqwsMPi7kHK1f',
-      points: 23402,
-    },
-    {
-      id: 'did:iden3:readonly:mhQHvqmvimneVHCL5EufeZvfzigRv',
-      points: 21502,
-    },
-    {
-      id: 'did:iden3:readonly:mi1QKgywFcFD7d35QRaHwd6b6Cxb',
-      points: 20420,
-    },
-    {
-      id: 'did:iden3:readonly:mmaJ5kAjbGLRVcfqwsMPi7kHK1a',
-      points: 19499,
-    },
-    {
-      id: 'did:iden3:readonly:mi1QKgywFcFD7d35QRaHwd6b6Cxe',
-      points: 8992,
-    },
-    {
-      id: 'did:iden3:readonly:ahQHvqmvimneVHCL5EufeZvfzigRt',
-      points: 8150,
-    },
-    {
-      id: 'did:iden3:readonly:whQHvqmvimneVHCL5EufeZvfzigRt',
-      points: 4520,
-    },
-    {
-      id: 'did:iden3:readonly:mhQHvqmvimneVHCL5EufeZvfzigRa',
-      points: 1402,
-    },
-  ]
+  const {
+    leaderboard,
+    isLoading: isLeaderboardLoading,
+    isLoadingError: isLeaderboardLoadingError,
+    isEmpty: isLeaderboardEmpty,
+  } = useLeaderboard()
 
-  const myParticipant = {
-    position: 291,
-    points: 381,
-  }
+  const {
+    balance,
+    isLoading: isBalanceLoading,
+    isLoadingError: isBalanceLoadingError,
+  } = useBalance(userDid)
 
   const getLeaderIcon = (index: number) => {
     if (index === 0) {
@@ -81,6 +47,10 @@ export default function Leaderboard() {
     return ''
   }
 
+  if (isLeaderboardLoading || isBalanceLoading) return <></>
+  if (isLeaderboardLoadingError || isBalanceLoadingError) return <></>
+  if (isLeaderboardEmpty || !balance) return <></>
+
   return (
     <Stack spacing={6}>
       <UiButton
@@ -92,7 +62,7 @@ export default function Leaderboard() {
         startIcon={<UiIcon componentName={'chevronLeft'} size={5} />}
         sx={{ width: 'fit-content' }}
       >
-        Go Back
+        Active Tasks
       </UiButton>
 
       <Stack
@@ -113,7 +83,7 @@ export default function Leaderboard() {
             </Grid>
             <Grid item xs={6}>
               <Typography variant='overline3' color={palette.text.secondary}>
-                User DID
+                User
               </Typography>
             </Grid>
             <Grid item xs={4} justifySelf={'end'} textAlign={'right'}>
@@ -123,7 +93,7 @@ export default function Leaderboard() {
             </Grid>
           </Grid>
           <Divider />
-          {participants.map((participant, index) => (
+          {leaderboard.map((participant, index) => (
             <Stack spacing={4} key={participant.id}>
               <Grid container spacing={16}>
                 <Grid item xs={2}>
@@ -155,11 +125,11 @@ export default function Leaderboard() {
                     bgcolor={palette.action.active}
                     borderRadius={12}
                   >
-                    {new Intl.NumberFormat().format(participant.points)}
+                    {new Intl.NumberFormat().format(participant.amount)}
                   </Typography>
                 </Grid>
               </Grid>
-              {index !== participants.length - 1 && <Divider />}
+              {index !== leaderboard.length - 1 && <Divider />}
             </Stack>
           ))}
 
@@ -174,7 +144,7 @@ export default function Leaderboard() {
                   borderRadius={250}
                   bgcolor={palette.background.paper}
                 >
-                  <Typography variant='subtitle5'>{myParticipant.position}</Typography>
+                  <Typography variant='subtitle5'>{balance?.rank}</Typography>
                 </Stack>
               </Grid>
               <Grid item xs={6}>
@@ -203,7 +173,7 @@ export default function Leaderboard() {
                   bgcolor={palette.action.active}
                   borderRadius={12}
                 >
-                  {new Intl.NumberFormat().format(myParticipant.points)}
+                  {new Intl.NumberFormat().format(balance.amount)}
                 </Typography>
               </Grid>
             </Grid>
