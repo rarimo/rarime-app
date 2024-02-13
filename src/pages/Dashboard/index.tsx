@@ -14,7 +14,7 @@ import { UiButton } from '@/ui'
 export default function Dashboard() {
   const location = useLocation()
 
-  const { spacing } = useTheme()
+  const { spacing, palette } = useTheme()
 
   const { vcs, issuersDetails } = useCredentialsState()
 
@@ -41,7 +41,19 @@ export default function Dashboard() {
 
       <Paper>
         <Stack spacing={6}>
-          <Typography variant='subtitle3'>{'Latest Credentials'}</Typography>
+          <Stack direction='row' justifyContent='space-between' alignItems='center'>
+            <Typography variant='subtitle3'>{'Latest Credentials'}</Typography>
+
+            <Box
+              component={NavLink}
+              to={RoutePaths.Credentials}
+              state={{ from: location.pathname }}
+            >
+              <Typography variant='buttonMedium' color={palette.text.secondary}>
+                View All
+              </Typography>
+            </Box>
+          </Stack>
 
           {isLoading ? (
             <Grid container spacing={4}>
