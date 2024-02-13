@@ -1,51 +1,114 @@
-import { PROVIDERS } from '@distributedlab/w3p'
-import { Box, Stack, Typography, useTheme } from '@mui/material'
-import { useCallback, useMemo, useState } from 'react'
+import { Box, Button, Stack, Typography, useTheme } from '@mui/material'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { config } from '@/config'
-import { BusEvents, Icons } from '@/enums'
-import { bus, ErrorHandler, metamaskLink } from '@/helpers'
+import { Icons } from '@/enums'
+import { ErrorHandler, metamaskLink } from '@/helpers'
 import { useAuth } from '@/hooks'
-import { useWeb3State } from '@/store'
-import { UiButton, UiIcon } from '@/ui'
+import { identityStore, useWeb3State } from '@/store'
+import { UiIcon, UiTextField } from '@/ui'
 
 export default function SignIn() {
   const { t } = useTranslation()
-  const { connectProviders } = useAuth()
-  const [isPending, setIsPending] = useState(false)
-
   const { palette, spacing } = useTheme()
-  const { isMetamaskInstalled } = useWeb3State()
 
-  const signIn = useCallback(async () => {
-    setIsPending(true)
+  const { connectProviders } = useAuth()
+  const { isSnapInstalled, isMetamaskInstalled } = useWeb3State()
 
+  const [isPending, setIsPending] = useState(false)
+  const [isImporting, setIsImporting] = useState(false)
+  const [privateKey, setPrivateKey] = useState('')
+
+  const installSnap = useCallback(async () => {
     try {
-      await connectProviders(PROVIDERS.Metamask)
+      await connectProviders()
     } catch (error) {
       ErrorHandler.process(error)
-      setIsPending(false)
     }
   }, [connectProviders])
 
-  const installMMLink = useMemo(() => {
-    if (isMetamaskInstalled) return ''
+  const createIdentity = useCallback(async (privateKeyHex?: string) => {
+    setIsPending(true)
+    try {
+      await identityStore.createIdentity({ privateKeyHex })
+    } catch (error) {
+      ErrorHandler.process(error)
+    }
+    setIsPending(false)
+  }, [])
 
-    return metamaskLink()
-  }, [isMetamaskInstalled])
-
-  const openInstallMetamaskLink = useCallback(() => {
-    if (!installMMLink) {
-      bus.emit(BusEvents.warning, `Your browser is not support Metamask`)
-
-      return
+  const renderContent = useCallback(() => {
+    if (!isMetamaskInstalled) {
+      return (
+        <Button
+          component={'a'}
+          href={metamaskLink()}
+          target='_blank'
+          rel='noreferrer noopener'
+          startIcon={<UiIcon name={Icons.Metamask} size={5} />}
+        >
+          {t('sign-in-page.install-btn')}
+        </Button>
+      )
     }
 
-    setIsPending(true)
+    if (!isSnapInstalled) {
+      return (
+        <Button startIcon={<UiIcon name={Icons.Rarime} size={5} />} onClick={installSnap}>
+          Enable Rarime
+        </Button>
+      )
+    }
 
-    window.open(installMMLink, '_blank', 'noopener noreferrer')
-  }, [installMMLink])
+    if (isImporting) {
+      return (
+        <Stack
+          component={'form'}
+          spacing={4}
+          width={spacing(80)}
+          textAlign={'left'}
+          onSubmit={e => {
+            e.preventDefault()
+            createIdentity(privateKey)
+          }}
+        >
+          <UiTextField
+            value={privateKey}
+            type='password'
+            label='Enter your private key'
+            disabled={isPending}
+            helperText='Your private key will be stored in MetaMask'
+            onChange={e => setPrivateKey(e.target.value)}
+          />
+          <Button type='submit' disabled={!privateKey || isPending}>
+            {isPending ? 'Importing...' : 'Import'}
+          </Button>
+        </Stack>
+      )
+    }
+
+    return (
+      <Stack spacing={4} width={spacing(60)}>
+        <Button disabled={isPending} onClick={() => createIdentity()}>
+          {!isPending ? 'Create new Identity' : 'Creating identity...'}
+        </Button>
+        <Button color='secondary' disabled={isPending} onClick={() => setIsImporting(true)}>
+          Import Identity
+        </Button>
+      </Stack>
+    )
+  }, [
+    isImporting,
+    isMetamaskInstalled,
+    isSnapInstalled,
+    isPending,
+    privateKey,
+    t,
+    installSnap,
+    spacing,
+    createIdentity,
+  ])
 
   return (
     <Stack
@@ -68,26 +131,11 @@ export default function SignIn() {
           height: spacing(16),
         }}
       />
-
-      {/* TODO: add metamask not found texts */}
       <Typography variant='h3'>{t('sign-in-page.title')}</Typography>
       <Typography variant='body2' color={palette.text.secondary}>
         {t('sign-in-page.description')}
       </Typography>
-      <Box>
-        <UiButton
-          startIcon={<UiIcon name={Icons.Metamask} size={5} />}
-          disabled={isPending}
-          sx={{ mt: 8 }}
-          onClick={isMetamaskInstalled ? signIn : openInstallMetamaskLink}
-        >
-          {isMetamaskInstalled
-            ? t('sign-in-page.connect-btn')
-            : isPending
-            ? t('sign-in-page.reload-page-btn')
-            : t('sign-in-page.install-btn')}
-        </UiButton>
-      </Box>
+      <Box mt={4}>{renderContent()}</Box>
     </Stack>
   )
 }
