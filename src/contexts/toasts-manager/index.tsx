@@ -36,16 +36,6 @@ function ToastsManagerController({ children }: { children: ReactNode }) {
     [t],
   )
 
-  const defaultIcons = useMemo<Record<BusEvents, Icons | keyof typeof ICON_COMPONENTS>>(
-    () => ({
-      [BusEvents.success]: 'check',
-      [BusEvents.error]: 'errorOutline',
-      [BusEvents.warning]: 'warningAmber',
-      [BusEvents.info]: 'info',
-    }),
-    [],
-  )
-
   const defaultMessages = useMemo(
     () => ({
       [BusEvents.success]: t('notifications.default-message-success'),
@@ -54,6 +44,16 @@ function ToastsManagerController({ children }: { children: ReactNode }) {
       [BusEvents.info]: t('notifications.default-message-info'),
     }),
     [t],
+  )
+
+  const defaultIcons = useMemo<Record<BusEvents, Icons | keyof typeof ICON_COMPONENTS>>(
+    () => ({
+      [BusEvents.success]: 'check',
+      [BusEvents.error]: 'errorOutline',
+      [BusEvents.warning]: 'warningAmber',
+      [BusEvents.info]: 'info',
+    }),
+    [],
   )
 
   const showToast = useCallback(
