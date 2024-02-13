@@ -1,5 +1,15 @@
 import { time } from '@distributedlab/tools'
-import { Alert, Box, Button, Paper, Skeleton, Stack, Typography, useTheme } from '@mui/material'
+import {
+  Alert,
+  Box,
+  Button,
+  Paper,
+  Skeleton,
+  Stack,
+  StackProps,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import isEmpty from 'lodash/isEmpty'
 import { useMemo } from 'react'
 import { generatePath, NavLink, useLocation } from 'react-router-dom'
@@ -11,6 +21,15 @@ import { useLoading } from '@/hooks'
 import { credentialsStore, useCredentialsState } from '@/store'
 import { hiddenScrollbar } from '@/theme/constants'
 import { UiButton } from '@/ui'
+
+const containerProps: StackProps = {
+  direction: 'row',
+  flexWrap: 'nowrap',
+  overflow: 'auto',
+  spacing: 6,
+  borderRadius: 4,
+  sx: hiddenScrollbar,
+}
 
 export default function Dashboard() {
   const location = useLocation()
@@ -56,11 +75,19 @@ export default function Dashboard() {
           </Button>
         </Stack>
 
-        {isLoading ? (
-          <Stack direction='row' spacing={4}>
-            {/*FIXME: deal with transform*/}
-            <Skeleton width='100%' height={spacing(45)} sx={{ transform: 'none' }} />
-            <Skeleton width='100%' height={spacing(45)} sx={{ transform: 'none' }} />
+        {!isLoading ? (
+          <Stack {...containerProps}>
+            {Array.from({ length: 8 }, (_, i) => i).map(el => (
+              <Skeleton
+                key={el}
+                component={Box}
+                flex={'0 0 auto'}
+                minWidth={spacing(80)}
+                width={spacing(80)}
+                height={spacing(45)}
+                sx={{ transform: 'none' }}
+              />
+            ))}
           </Stack>
         ) : isLoadingError ? (
           <Alert severity='error'>{`There's an error occurred, please, reload page`}</Alert>
@@ -70,14 +97,7 @@ export default function Dashboard() {
             action={<UiButton onClick={reload}>Load Credentials</UiButton>}
           />
         ) : (
-          <Stack
-            direction='row'
-            flexWrap='nowrap'
-            overflow='auto'
-            spacing={6}
-            borderRadius={4}
-            sx={hiddenScrollbar}
-          >
+          <Stack {...containerProps}>
             {lastVCsDesc.map((vc, idx) => (
               <Box
                 flex='0 0 auto'
