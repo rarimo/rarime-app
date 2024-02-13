@@ -1,4 +1,5 @@
 import { Button, Divider, Stack, Typography, useTheme } from '@mui/material'
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { useBalance } from '@/api/modules/points'
@@ -7,11 +8,14 @@ import { useIdentityState } from '@/store'
 import { UiButton, UiIcon } from '@/ui'
 
 import LevelProgress from './LevelProgress'
+import WithdrawModal from './WithdrawModal'
 
 export default function BalanceBlock() {
   const { palette, spacing } = useTheme()
   const { userDid } = useIdentityState()
   const { balance, isLoading, isLoadingError } = useBalance(userDid)
+
+  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
 
   if (isLoading) return <></>
   if (isLoadingError) return <></>
@@ -58,11 +62,20 @@ export default function BalanceBlock() {
           size='medium'
           startIcon={<UiIcon name={Icons.Swap} size={5} />}
           sx={{ width: spacing(60), height: spacing(10) }}
+          onClick={() => setIsWithdrawModalOpen(true)}
         >
           Withdraw
         </Button>
         <LevelProgress balance={balance.amount} width={spacing(80)} />
       </Stack>
+
+      <WithdrawModal
+        open={isWithdrawModalOpen}
+        reservedBalance={balance.amount}
+        walletBalance={0}
+        onClose={() => setIsWithdrawModalOpen(false)}
+        onWithdraw={() => setIsWithdrawModalOpen(false)}
+      />
     </Stack>
   )
 }

@@ -23,22 +23,22 @@ export function UiDrawerTitle({ children, onClose, ...rest }: UiDrawerTitleProps
 
   return (
     <DialogTitle
+      {...rest}
       component={Stack}
       direction={'row'}
       justifyContent={'space-between'}
       width={'100%'}
-      p={5}
       borderBottom={1}
       borderColor={palette.divider}
-      {...rest}
+      sx={{ ...rest.sx, p: 5 }}
     >
       <Typography component={'p'} variant='h6'>
         {children}
       </Typography>
       <UiIconButton
+        color='secondary'
         aria-label='close'
         onClick={e => onClose?.(e, 'backdropClick')}
-        sx={{ color: palette.text.secondary }}
       >
         <UiIcon componentName='close' size={5} />
       </UiIconButton>

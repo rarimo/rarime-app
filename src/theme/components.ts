@@ -449,4 +449,13 @@ export const components: Components<Omit<Theme, 'components'>> = {
       }),
     },
   },
+  MuiDialog: {
+    styleOverrides: {
+      paper: ({ theme }) => ({
+        borderRadius: theme.spacing(3),
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: `inset 0 0 0 1px ${theme.palette.action.active}`,
+      }),
+    },
+  },
 }

@@ -173,6 +173,7 @@ const EVENTS_MOCK: Event[] = [
     status: EventStatuses.Claimed,
     created_at: 1628793600,
     updated_at: 1628793600,
+    points_amount: 100,
     meta: {
       static: {
         name: 'free_weekly',
@@ -198,6 +199,7 @@ const EVENTS_MOCK: Event[] = [
     status: EventStatuses.Claimed,
     created_at: 1628793600,
     updated_at: 1628793600,
+    points_amount: 100,
     meta: {
       static: {
         name: 'free_weekly',
