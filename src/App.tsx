@@ -5,7 +5,7 @@ import { ToastsManager } from '@/contexts'
 import { ErrorHandler } from '@/helpers'
 import { useAuth, useViewportSizes, useWeb3Context } from '@/hooks'
 import { AppRoutes } from '@/routes'
-import { useUiState, web3Store } from '@/store'
+import { credentialsStore, useUiState, web3Store } from '@/store'
 import { createTheme } from '@/theme'
 
 const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
@@ -23,6 +23,8 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
 
       if (isMetamaskInstalled && isSnapInstalled) {
         await connectProviders()
+
+        await credentialsStore.load()
       }
     } catch (error) {
       ErrorHandler.processWithoutFeedback(error)

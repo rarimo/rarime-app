@@ -10,6 +10,6 @@ export const api = new JsonApiClient({
 export let zkpSnap: SnapConnector
 
 export const initZkpSnap = async () => {
-  const snap = await enableSnap()
+  const snap = await enableSnap(...config.SNAP_V_PARAMS)
   zkpSnap = await snap.getConnector()
 }

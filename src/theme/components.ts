@@ -126,10 +126,18 @@ export const components: Components<Omit<Theme, 'components'>> = {
     },
   },
   MuiPaper: {
+    defaultProps: {
+      variant: 'outlined',
+      square: false,
+    },
     styleOverrides: {
-      root: {
+      root: ({ theme }) => ({
         backgroundImage: 'unset',
-      },
+        background: theme.palette.background.light,
+        padding: theme.spacing(6),
+        borderColor: theme.palette.additional.layerBorder,
+        borderRadius: theme.spacing(4),
+      }),
     },
   },
   MuiTextField: {
