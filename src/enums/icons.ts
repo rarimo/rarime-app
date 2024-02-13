@@ -15,6 +15,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import FolderOff from '@mui/icons-material/FolderOff'
 import InfoIcon from '@mui/icons-material/Info'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import Key from '@mui/icons-material/Key'
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import Layers from '@mui/icons-material/Layers'
 import LightModeOutlined from '@mui/icons-material/LightModeOutlined'
@@ -58,6 +59,7 @@ export const ICON_COMPONENTS = {
   folderOff: FolderOff,
   info: InfoIcon,
   infoOutlined: InfoOutlinedIcon,
+  key: Key,
   keyboardArrowDownOutlined: KeyboardArrowDownOutlinedIcon,
   layers: Layers,
   lightModeOutlined: LightModeOutlined,
