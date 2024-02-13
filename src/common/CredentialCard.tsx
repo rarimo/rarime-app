@@ -44,8 +44,8 @@ export default function CredentialCard({ vc, issuerDetails, ...rest }: Props) {
   return (
     <Stack
       {...rest}
-      spacing={6}
-      p={6}
+      spacing={4}
+      p={4}
       borderRadius={4}
       sx={{
         position: 'relative',

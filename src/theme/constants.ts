@@ -11,3 +11,14 @@ export enum FontWeight {
 export enum Transitions {
   Default = 'all 0.2s ease-out',
 }
+
+export const hiddenScrollbar = {
+  /* Hide scrollbar for: */
+  msOverflowStyle: 'none' /* IE and Edge */,
+  scrollbarWidth: 'none' /* Firefox */,
+
+  /* Chrome, Safari and Opera */
+  [`&::-webkit-scrollbar`]: {
+    display: 'none',
+  },
+}
