@@ -1,6 +1,5 @@
 import { time } from '@distributedlab/tools'
 import {
-  Alert,
   Box,
   Button,
   Paper,
@@ -77,7 +76,7 @@ export default function Dashboard() {
 
         {isLoading ? (
           <Stack {...containerProps}>
-            {Array.from({ length: 8 }, (_, i) => i).map(el => (
+            {Array.from({ length: 4 }, (_, i) => i).map(el => (
               <Skeleton
                 key={el}
                 component={Box}
@@ -90,7 +89,8 @@ export default function Dashboard() {
             ))}
           </Stack>
         ) : isLoadingError ? (
-          <Alert severity='error'>{`There's an error occurred, please, reload page`}</Alert>
+          // TODO: create ErrorMessage component
+          <Typography>{`There's an error occurred, please, reload page`}</Typography>
         ) : !lastVCsDesc.length || isEmpty(issuersDetails) ? (
           <NoDataViewer
             title={'No Credentials'}
