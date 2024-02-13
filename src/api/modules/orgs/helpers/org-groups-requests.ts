@@ -110,12 +110,16 @@ export const loadOrgGroupRequests = async (query?: OrgGroupRequestQueryParams) =
   return fakeLoadRequestsAll(query)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const loadRequestsByUserDid = async (did: string): Promise<OrgGroupRequestWithClaims[]> => {
-  const { data } = await api.get<OrgGroupRequestWithClaims[]>(
-    `${ApiServicePaths.Orgs}/v1/users/${did}/requests`,
-  )
+  // TODO: return once backend is ready
+  // const { data } = await api.get<OrgGroupRequestWithClaims[]>(
+  //   `${ApiServicePaths.Orgs}/v1/users/${did}/requests`,
+  // )
+  //
+  // return data
 
-  return data
+  return []
 }
 
 export const loadOrgGroupRequestById = async (orgId: string, groupId: string, reqId: string) => {

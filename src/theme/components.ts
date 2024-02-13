@@ -133,10 +133,18 @@ export const components: Components<Omit<Theme, 'components'>> = {
     },
   },
   MuiPaper: {
+    defaultProps: {
+      variant: 'outlined',
+      square: false,
+    },
     styleOverrides: {
-      root: {
+      root: ({ theme }) => ({
         backgroundImage: 'unset',
-      },
+        background: theme.palette.background.light,
+        padding: theme.spacing(6),
+        borderColor: theme.palette.additional.layerBorder,
+        borderRadius: theme.spacing(4),
+      }),
     },
   },
   MuiTextField: {
@@ -452,6 +460,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
   MuiDialog: {
     styleOverrides: {
       paper: ({ theme }) => ({
+        padding: 0,
         borderRadius: theme.spacing(3),
         backgroundColor: theme.palette.background.paper,
         boxShadow: `inset 0 0 0 1px ${theme.palette.action.active}`,

@@ -1,9 +1,9 @@
-import { Stack, Typography } from '@mui/material'
+import { Button, Stack, Typography } from '@mui/material'
 import { PropsWithChildren } from 'react'
 
 import { PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
-import { UiButton, UiIcon, UiNavTabs } from '@/ui'
+import { UiIcon, UiNavTabs } from '@/ui'
 
 export default function RewardsLayout({ children }: PropsWithChildren) {
   return (
@@ -17,7 +17,7 @@ export default function RewardsLayout({ children }: PropsWithChildren) {
             { label: 'History', route: RoutePaths.RewardsHistory },
           ]}
         />
-        <UiButton
+        <Button
           component={'a'}
           // TODO: Link to RariMe docs
           href='https://rarime.com'
@@ -31,7 +31,7 @@ export default function RewardsLayout({ children }: PropsWithChildren) {
             <UiIcon componentName='openInNew' size={4} />
             <Typography variant={'buttonSmall'}>Learn More</Typography>
           </Stack>
-        </UiButton>
+        </Button>
       </Stack>
 
       {children}

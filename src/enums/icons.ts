@@ -1,7 +1,9 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Add from '@mui/icons-material/Add'
 import AddPhotoAlternateOutlined from '@mui/icons-material/AddPhotoAlternateOutlined'
+import AllInclusiveOutlinedIcon from '@mui/icons-material/AllInclusiveOutlined'
 import ArrowForward from '@mui/icons-material/ArrowForward'
+import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined'
 import CheckIcon from '@mui/icons-material/Check'
 import ChevronLeft from '@mui/icons-material/ChevronLeft'
 import ChevronRight from '@mui/icons-material/ChevronRight'
@@ -13,6 +15,7 @@ import DeleteOutlined from '@mui/icons-material/DeleteOutlined'
 import DragIndicator from '@mui/icons-material/DragIndicator'
 import DriveFileRenameOutlineOutlined from '@mui/icons-material/DriveFileRenameOutlineOutlined'
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
+import FingerPrint from '@mui/icons-material/Fingerprint'
 import FolderOff from '@mui/icons-material/FolderOff'
 import InfoIcon from '@mui/icons-material/Info'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
@@ -22,6 +25,7 @@ import Layers from '@mui/icons-material/Layers'
 import LightModeOutlined from '@mui/icons-material/LightModeOutlined'
 import Link from '@mui/icons-material/Link'
 import Logout from '@mui/icons-material/Logout'
+import MoreHoriz from '@mui/icons-material/MoreHoriz'
 import Notifications from '@mui/icons-material/Notifications'
 import OpenInNew from '@mui/icons-material/OpenInNew'
 import QrCode from '@mui/icons-material/QrCode'
@@ -80,4 +84,8 @@ export const ICON_COMPONENTS = {
   verified: Verified,
   warningAmber: WarningAmberIcon,
   work: Work,
+  fingerprint: FingerPrint,
+  calendarTodayOutlinedIcon: CalendarTodayOutlinedIcon,
+  allInclusiveOutlinedIcon: AllInclusiveOutlinedIcon,
+  moreHoriz: MoreHoriz,
 }

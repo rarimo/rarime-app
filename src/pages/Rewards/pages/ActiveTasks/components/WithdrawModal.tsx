@@ -1,14 +1,7 @@
 import { Button, Dialog, DialogProps, Divider, Stack, Typography, useTheme } from '@mui/material'
 import { FormEvent } from 'react'
 
-import {
-  UiButton,
-  UiDrawerActions,
-  UiDrawerContent,
-  UiDrawerTitle,
-  UiIcon,
-  UiTextField,
-} from '@/ui'
+import { UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiIcon, UiTextField } from '@/ui'
 
 type Props = DialogProps & {
   reservedBalance: number
@@ -107,17 +100,17 @@ export default function WithdrawModal({
       </UiDrawerContent>
       <UiDrawerActions>
         <Stack spacing={2}>
-          <UiButton type='submit' fullWidth>
+          <Button type='submit' fullWidth>
             Send
-          </UiButton>
-          <UiButton
+          </Button>
+          <Button
             color='secondary'
             fullWidth
             sx={{ bgcolor: 'transparent' }}
             onClick={e => rest.onClose?.(e, 'escapeKeyDown')}
           >
             Cancel
-          </UiButton>
+          </Button>
         </Stack>
       </UiDrawerActions>
 

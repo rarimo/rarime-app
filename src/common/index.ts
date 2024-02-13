@@ -1,4 +1,5 @@
 export { default as AppNavbar } from './AppNavbar'
+export { default as CredentialCard } from './CredentialCard'
 export { default as FillRequestForm } from './FillRequestForm'
 export { default as NoDataViewer } from './NoDataViewer'
 export { default as PageListFilters } from './PageListFilters'

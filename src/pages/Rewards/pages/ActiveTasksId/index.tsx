@@ -1,4 +1,4 @@
-import { Box, Divider, Stack, Typography, useTheme } from '@mui/material'
+import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material'
 import { parse } from 'marked'
 import { useMemo } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
@@ -108,14 +108,14 @@ export default function ActiveTasksId() {
           }}
         />
         {event.meta.static.action_url && (
-          <UiButton
+          <Button
             component={'a'}
             href={event.meta.static.action_url}
             target='_blank'
             sx={{ width: spacing(40) }}
           >
             {"Let's Start"}
-          </UiButton>
+          </Button>
         )}
       </Stack>
     </Stack>

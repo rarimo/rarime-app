@@ -36,12 +36,16 @@ export default defineConfig(({ mode }) => {
       react(),
       tsconfigPaths(),
       createSvgIconsPlugin({
-        iconDirs: [path.resolve(process.cwd(), 'src/assets/icons'), path.resolve(process.cwd(), 'src/assets/illustrations')],
+        iconDirs: [
+          path.resolve(process.cwd(), 'src/assets/icons'),
+          path.resolve(process.cwd(), 'src/assets/illustrations'),
+        ],
         symbolId: '[name]',
       }),
       checker({
         overlay: {
           initialIsOpen: false,
+          position: 'br',
         },
         typescript: true,
         eslint: {
