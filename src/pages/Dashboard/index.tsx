@@ -75,7 +75,7 @@ export default function Dashboard() {
           </Button>
         </Stack>
 
-        {!isLoading ? (
+        {isLoading ? (
           <Stack {...containerProps}>
             {Array.from({ length: 8 }, (_, i) => i).map(el => (
               <Skeleton
