@@ -17,10 +17,14 @@ export default function CredentialsList({ ...rest }: Props) {
 
   const { vcs, issuersDetails } = useCredentialsState()
 
-  const { isLoading, isLoadingError } = useLoading(undefined, () => credentialsStore.load(), {
-    loadOnMount: !vcs.length,
-    loadArgs: [vcs],
-  })
+  const { isLoading, isLoadingError, reload } = useLoading(
+    undefined,
+    () => credentialsStore.load(),
+    {
+      loadOnMount: !vcs.length,
+      loadArgs: [vcs],
+    },
+  )
 
   return (
     <Stack {...rest}>
@@ -41,7 +45,7 @@ export default function CredentialsList({ ...rest }: Props) {
         ) : !vcs.length || isEmpty(issuersDetails) ? (
           <NoDataViewer
             title={'No Credentials'}
-            action={<UiButton onClick={credentialsStore.load}>Load Credentials</UiButton>}
+            action={<UiButton onClick={reload}>Load Credentials</UiButton>}
           />
         ) : (
           <Grid container spacing={4}>

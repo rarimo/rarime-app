@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Paper, Stack, Typography, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
-import { generatePath, NavLink, useParams } from 'react-router-dom'
+import { generatePath, NavLink, useLocation, useParams } from 'react-router-dom'
 
 import { zkpSnap } from '@/api/clients'
 import { getClaimIdFromVC } from '@/api/modules/zkp'
@@ -13,6 +13,8 @@ import { UiIcon } from '@/ui'
 import { ActionButton } from './components'
 
 export default function CredentialsId() {
+  const location = useLocation()
+
   const [isPending, setIsPending] = useState(false)
 
   const { palette, spacing } = useTheme()
@@ -85,7 +87,7 @@ export default function CredentialsId() {
     <Stack spacing={6}>
       <Stack
         component={NavLink}
-        to={RoutePaths.CredentialsList}
+        to={location.state?.from ?? RoutePaths.CredentialsList}
         mb={8}
         spacing={2}
         direction='row'
