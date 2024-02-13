@@ -98,6 +98,20 @@ export const components: Components<Omit<Theme, 'components'>> = {
           color: theme.palette.secondary.main,
         },
       }),
+      containedPrimary: ({ theme }) => ({
+        '&:disabled': {
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.text.primary,
+          opacity: 0.5,
+        },
+      }),
+      containedSecondary: ({ theme }) => ({
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.action.active,
+        '&:hover': {
+          backgroundColor: theme.palette.action.hover,
+        },
+      }),
     },
   },
   MuiButtonBase: {

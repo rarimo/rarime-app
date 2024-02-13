@@ -1,4 +1,3 @@
-import { config } from '@config'
 import {
   Divider,
   ListItemIcon,
@@ -13,6 +12,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { UserAvatar } from '@/common'
+import { config } from '@/config'
 import { BusEvents } from '@/enums'
 import { bus, formatDid } from '@/helpers'
 import { useAuth, useCopyToClipboard } from '@/hooks'
