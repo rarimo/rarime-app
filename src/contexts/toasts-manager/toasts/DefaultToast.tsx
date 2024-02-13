@@ -1,4 +1,4 @@
-import { Alert, AlertColor, AlertTitle } from '@mui/material'
+import { Alert, AlertColor, AlertTitle, Typography } from '@mui/material'
 import { CustomContentProps, SnackbarContent, useSnackbar } from 'notistack'
 import { forwardRef, useMemo } from 'react'
 
@@ -46,7 +46,7 @@ const DefaultToast = forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
         onClose={() => closeSnackbar(id)}
       >
         <AlertTitle>{title}</AlertTitle>
-        {message}
+        <Typography variant={'body4'}>{message}</Typography>
       </Alert>
     </SnackbarContent>
   )

@@ -18,7 +18,7 @@ import PublicLayout from './layouts/PublicLayout'
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
   const Credentials = lazy(() => import('@/pages/Credentials'))
-  const Profiles = lazy(() => import('@/pages/Profiles'))
+  const Dashboard = lazy(() => import('@/pages/Dashboard'))
   const UiKit = lazy(() => import('@/pages/UiKit'))
   const VerifyProofAlias = lazy(() => import('@/pages/VerifyProofAlias'))
   const AcceptInvitation = lazy(() => import('@/pages/AcceptInvitation'))
@@ -71,9 +71,9 @@ export const AppRoutes = () => {
       ),
       children: [
         {
-          path: createDeepPath(RoutePaths.Profiles),
+          path: createDeepPath(RoutePaths.Dashboard),
           loader: authProtectedGuard,
-          element: <Profiles />,
+          element: <Dashboard />,
         },
         {
           path: createDeepPath(RoutePaths.Orgs),
@@ -110,7 +110,7 @@ export const AppRoutes = () => {
         },
         {
           path: RoutePaths.Root,
-          element: <Navigate replace to={RoutePaths.Profiles} />,
+          element: <Navigate replace to={RoutePaths.Dashboard} />,
         },
         {
           path: '*',

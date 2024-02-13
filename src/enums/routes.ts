@@ -1,8 +1,9 @@
 export enum RoutePaths {
   Root = '/',
   UiKit = '/ui-kit',
-  Profiles = '/profiles',
   SignIn = '/sign-in',
+
+  Dashboard = '/dashboard',
 
   Orgs = '/organisations',
   OrgsList = '/organisations/list',

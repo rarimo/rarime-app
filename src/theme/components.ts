@@ -1,4 +1,4 @@
-import { Components, Theme } from '@mui/material'
+import { AlertColor, alpha, Components, Theme } from '@mui/material'
 
 import { ICON_COMPONENTS } from '@/enums'
 
@@ -96,6 +96,13 @@ export const components: Components<Omit<Theme, 'components'>> = {
         color: theme.palette.text.secondary,
         '&:hover': {
           color: theme.palette.secondary.main,
+        },
+      }),
+      containedPrimary: ({ theme }) => ({
+        '&:disabled': {
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.text.primary,
+          opacity: 0.5,
         },
       }),
       containedSecondary: ({ theme }) => ({
@@ -384,6 +391,45 @@ export const components: Components<Omit<Theme, 'components'>> = {
         bottom: theme.spacing(3),
         left: 'unset',
         right: theme.spacing(3),
+      }),
+    },
+  },
+  MuiAlert: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        width: '100%',
+        borderRadius: theme.spacing(4),
+        backgroundColor: theme.palette.additional.pureBlack,
+        color: alpha(theme.palette.common.white, 0.7),
+      }),
+      icon: ({ ownerState, theme }) => {
+        const severityToBgColor: Record<AlertColor, string> = {
+          success: alpha(theme.palette.success.main, 0.2),
+          warning: alpha(theme.palette.warning.main, 0.2),
+          error: alpha(theme.palette.error.main, 0.2),
+          info: alpha(theme.palette.info.main, 0.2),
+        }
+
+        return {
+          backgroundColor: severityToBgColor[ownerState.severity ?? 'info'],
+          marginRight: theme.spacing(4),
+          marginTop: 'auto',
+          marginBottom: 'auto',
+          padding: theme.spacing(2),
+          borderRadius: theme.spacing(25),
+        }
+      },
+      message: ({ theme }) => ({
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+      }),
+    },
+  },
+  MuiAlertTitle: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        ...typography.subtitle4,
+        color: theme.palette.common.white,
       }),
     },
   },

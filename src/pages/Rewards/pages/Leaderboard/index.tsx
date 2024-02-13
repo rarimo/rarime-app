@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 import { UserAvatar } from '@/common'
 import { RoutePaths } from '@/enums'
-import { useMetamaskZkpSnapContext } from '@/hooks'
+import { useIdentityState } from '@/store'
 import { UiButton, UiIcon } from '@/ui'
 
 // TODO: experimental, replace with formatter
@@ -18,7 +18,7 @@ function formatDid(value: string, maxLength = 16) {
 
 export default function Leaderboard() {
   const { palette, spacing } = useTheme()
-  const { userDid } = useMetamaskZkpSnapContext()
+  const { userDid } = useIdentityState()
 
   const participants = [
     {
