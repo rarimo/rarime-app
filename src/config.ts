@@ -29,5 +29,7 @@ export const config: Config = {
   DEFAULT_CHAIN: import.meta.env.VITE_DEFAULT_CHAIN || FALLBACK_DEFAULT_CHAIN,
   ROBOTORNOT_LINK: 'https://robotornot.mainnet-beta.rarimo.com/',
   SUPPORT_LINK: 'https://rarime.com',
-  SNAP_V_PARAMS: [], // ['local:http://localhost:8081', '2.1.0-rc.2'],
+  SNAP_V_PARAMS: [],
+  // SNAP_V_PARAMS: ['local:http://localhost:8081', '2.1.0-rc.3'],
+  // SNAP_V_PARAMS: ['npm:@rarimo/rarime', '2.1.0-rc.3'],
 }
