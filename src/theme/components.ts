@@ -409,8 +409,9 @@ export const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }) => ({
         width: '100%',
         borderRadius: theme.spacing(4),
-        backgroundColor: theme.palette.additional.pureBlack,
-        color: alpha(theme.palette.common.white, 0.7),
+        backgroundColor: theme.palette.background.paper,
+        color: alpha(theme.palette.text.primary, 0.7),
+        boxShadow: '0px 8px 16px 0px rgba(0, 0, 0, 0.04)',
       }),
       icon: ({ ownerState, theme }) => {
         const severityToBgColor: Record<AlertColor, string> = {
@@ -439,7 +440,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: ({ theme }) => ({
         ...typography.subtitle4,
-        color: theme.palette.common.white,
+        color: theme.palette.text.primary,
       }),
     },
   },

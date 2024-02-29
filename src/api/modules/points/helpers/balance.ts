@@ -5,7 +5,7 @@ import { sleep } from '@/helpers'
 import { type Balance, type Withdrawal } from '../types'
 
 const BALANCE_MOCK: Balance = {
-  id: 'did:example:123',
+  id: 'did:iden3:readonly:tTep1wgHSGULyrAgWD1SKDxtg1jAPGzZuXuHNPknH',
   type: 'balance',
   amount: 175,
   created_at: 1628793600,

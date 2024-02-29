@@ -17,7 +17,7 @@ export function useConfetti() {
       gravity: 0.4,
       decay: 0.95,
       startVelocity: 8,
-      shapes: ['circle'],
+      shapes: ['circle', 'star'],
       scalar: 1,
       origin: {
         x: (x + width / 2) / window.innerWidth,
