@@ -268,10 +268,12 @@ export const components: Components<Omit<Theme, 'components'>> = {
   MuiSkeleton: {
     defaultProps: {
       animation: 'wave',
+      variant: 'rectangular',
     },
     styleOverrides: {
       root: ({ theme }) => ({
         backgroundColor: theme.palette.divider,
+        borderRadius: theme.spacing(2),
       }),
     },
   },

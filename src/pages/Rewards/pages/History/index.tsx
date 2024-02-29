@@ -31,7 +31,7 @@ export default function History() {
             Task name
           </Typography>
           <Typography variant='overline3' color={palette.text.secondary}>
-            Earned
+            Earned RMO
           </Typography>
         </Stack>
         <Divider />
