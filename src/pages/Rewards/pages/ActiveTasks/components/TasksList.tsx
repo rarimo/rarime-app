@@ -75,7 +75,9 @@ export default function TasksList() {
                     {...sharedButtonProps}
                     onClick={e => {
                       fireConfetti(e.target as HTMLElement)
-                      bus.emit(BusEvents.success, { message: 'Task claimed' })
+                      bus.emit(BusEvents.success, {
+                        message: `${event.meta.static.reward} RMO claimed!`,
+                      })
                       setNewEvents(prev => prev.filter(e => e.id !== event.id))
                     }}
                   >
