@@ -1,4 +1,13 @@
-import { Button, Dialog, DialogProps, Divider, Stack, Typography, useTheme } from '@mui/material'
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogProps,
+  Divider,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import { FormEvent } from 'react'
 
 import { UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiIcon, UiTextField } from '@/ui'
@@ -114,7 +123,7 @@ export default function WithdrawModal({
         </Stack>
       </UiDrawerActions>
 
-      {/* {form.isFormDisabled && (
+      {false && (
         <Stack
           justifyContent={'center'}
           alignItems={'center'}
@@ -127,7 +136,7 @@ export default function WithdrawModal({
         >
           <CircularProgress color={'inherit'} />
         </Stack>
-      )} */}
+      )}
     </Dialog>
   )
 }

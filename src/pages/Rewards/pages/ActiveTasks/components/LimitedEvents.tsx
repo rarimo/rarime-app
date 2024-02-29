@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from '@mui/material'
+import { Box, Paper, Skeleton, Stack, Typography, useTheme } from '@mui/material'
 import { generatePath, NavLink } from 'react-router-dom'
 
 import {
@@ -23,19 +23,11 @@ export default function LimitedEvents() {
     },
   })
 
-  if (isLoading) return <></>
-  if (isLoadingError) return <></>
-  if (isEmpty) return <></>
+  if (isLoading) return <Skeleton height={180} sx={{ borderRadius: 4 }} />
+  if (isEmpty || isLoadingError) return <></>
 
   return (
-    <Stack
-      p={6}
-      spacing={6}
-      bgcolor={palette.background.light}
-      border={1}
-      borderColor={palette.additional.layerBorder}
-      borderRadius={4}
-    >
+    <Paper component={Stack} spacing={6}>
       <Typography variant='subtitle3'>🔥 Limited time events</Typography>
       {events.map(event => (
         <Stack
@@ -111,6 +103,6 @@ export default function LimitedEvents() {
           </UiButton>
         </Stack>
       ))}
-    </Stack>
+    </Paper>
   )
 }

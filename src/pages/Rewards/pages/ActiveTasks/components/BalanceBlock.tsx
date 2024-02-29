@@ -1,4 +1,4 @@
-import { Button, Divider, Stack, Typography, useTheme } from '@mui/material'
+import { Button, Divider, Paper, Skeleton, Stack, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
@@ -17,19 +17,12 @@ export default function BalanceBlock() {
 
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
 
-  if (isLoading) return <></>
+  if (isLoading) return <Skeleton height={190} sx={{ borderRadius: 4 }} />
   if (isLoadingError) return <></>
   if (!balance) return <></>
 
   return (
-    <Stack
-      p={6}
-      spacing={4}
-      bgcolor={palette.background.light}
-      border={1}
-      borderColor={palette.additional.layerBorder}
-      borderRadius={4}
-    >
+    <Paper component={Stack} spacing={6}>
       <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={4}>
         <Stack spacing={2}>
           <Typography variant='body3' color={palette.text.secondary}>
@@ -76,6 +69,6 @@ export default function BalanceBlock() {
         onClose={() => setIsWithdrawModalOpen(false)}
         onWithdraw={() => setIsWithdrawModalOpen(false)}
       />
-    </Stack>
+    </Paper>
   )
 }

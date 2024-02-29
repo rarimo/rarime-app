@@ -1,4 +1,4 @@
-import { Divider, Stack, Typography, useTheme } from '@mui/material'
+import { Divider, Paper, Skeleton, Stack, Typography, useTheme } from '@mui/material'
 
 import { EventsRequestFilters, EventStatuses, useEvents } from '@/api/modules/points'
 
@@ -11,19 +11,12 @@ export default function History() {
     },
   })
 
-  if (isLoading) return <></>
+  if (isLoading) return <Skeleton height={300} sx={{ borderRadius: 4 }} />
   if (isLoadingError) return <></>
   if (isEmpty) return <></>
 
   return (
-    <Stack
-      p={6}
-      spacing={6}
-      bgcolor={palette.background.light}
-      border={1}
-      borderColor={palette.additional.layerBorder}
-      borderRadius={4}
-    >
+    <Paper component={Stack} spacing={6}>
       <Typography variant='subtitle3'>My History</Typography>
       <Stack spacing={4}>
         <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
@@ -57,6 +50,6 @@ export default function History() {
           </Stack>
         ))}
       </Stack>
-    </Stack>
+    </Paper>
   )
 }

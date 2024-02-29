@@ -1,4 +1,4 @@
-import { ButtonProps, Divider, Stack, Typography, useTheme } from '@mui/material'
+import { ButtonProps, Divider, Skeleton, Stack, Typography, useTheme } from '@mui/material'
 import { generatePath, NavLink } from 'react-router-dom'
 
 import { EventsRequestFilters, EventStatuses, useEvents } from '@/api/modules/points'
@@ -22,7 +22,7 @@ export default function TasksList() {
     sx: { width: spacing(19), height: spacing(8) },
   }
 
-  if (isLoading) return <></>
+  if (isLoading) return <Skeleton height={300} sx={{ borderRadius: 4 }} />
   if (isLoadingError) return <></>
   if (isEmpty) return <></>
 
