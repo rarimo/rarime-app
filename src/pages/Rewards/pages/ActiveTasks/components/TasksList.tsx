@@ -1,14 +1,21 @@
-import { ButtonProps, Divider, Skeleton, Stack, Typography, useTheme } from '@mui/material'
+import { Button, ButtonProps, Divider, Skeleton, Stack, Typography, useTheme } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { generatePath, NavLink } from 'react-router-dom'
 
 import { EventsRequestFilters, EventStatuses, useEvents } from '@/api/modules/points'
-import { RoutePaths } from '@/enums'
+import { Event } from '@/api/modules/points/types/events'
+import { BusEvents, RoutePaths } from '@/enums'
+import { bus } from '@/helpers'
 import { useIdentityState } from '@/store'
 import { UiButton } from '@/ui'
+
+import { useConfetti } from '../hooks/useConfetti'
 
 export default function TasksList() {
   const { palette, spacing } = useTheme()
   const { userDid } = useIdentityState()
+  const [newEvents, setNewEvents] = useState<Event[]>([])
+  const { fireConfetti } = useConfetti()
 
   const { events, isLoading, isLoadingError, isEmpty } = useEvents({
     filter: {
@@ -21,6 +28,10 @@ export default function TasksList() {
     size: 'medium',
     sx: { width: spacing(19), height: spacing(8) },
   }
+
+  useEffect(() => {
+    setNewEvents(events)
+  }, [events])
 
   if (isLoading) return <Skeleton height={300} sx={{ borderRadius: 4 }} />
   if (isLoadingError) return <></>
@@ -37,7 +48,7 @@ export default function TasksList() {
     >
       <Typography variant='subtitle3'>Active tasks</Typography>
       <Stack spacing={4}>
-        {events.map((event, index) => (
+        {newEvents.map((event, index) => (
           <Stack spacing={4} key={event.id}>
             <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
               <Typography
@@ -60,7 +71,16 @@ export default function TasksList() {
                 </Typography>
 
                 {event.status === EventStatuses.Fulfilled ? (
-                  <UiButton {...sharedButtonProps}>Claim</UiButton>
+                  <Button
+                    {...sharedButtonProps}
+                    onClick={e => {
+                      fireConfetti(e.target as HTMLElement)
+                      bus.emit(BusEvents.success, { message: 'Task claimed' })
+                      setNewEvents(prev => prev.filter(e => e.id !== event.id))
+                    }}
+                  >
+                    Claim
+                  </Button>
                 ) : (
                   <UiButton
                     component={NavLink}
