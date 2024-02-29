@@ -2,9 +2,9 @@ import { Button, Divider, Paper, Skeleton, Stack, Typography, useTheme } from '@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { useBalance } from '@/api/modules/points'
 import { Icons, RoutePaths } from '@/enums'
-import { useIdentityState } from '@/store'
+import { useLoading } from '@/hooks'
+import { rewardsStore, useRewardsState } from '@/store/modules/rewards.module'
 import { UiButton, UiIcon } from '@/ui'
 
 import LevelProgress from './LevelProgress'
@@ -12,12 +12,16 @@ import WithdrawModal from './WithdrawModal'
 
 export default function BalanceBlock() {
   const { palette, spacing } = useTheme()
-  const { userDid } = useIdentityState()
-  const { balance, isLoading, isLoadingError } = useBalance(userDid)
+  const { balance } = useRewardsState()
+
+  const { isLoading, isLoadingError } = useLoading(balance, rewardsStore.loadBalance, {
+    loadOnMount: true,
+    loadArgs: [],
+  })
 
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
 
-  if (isLoading) return <Skeleton height={190} sx={{ borderRadius: 4 }} />
+  if (!balance && isLoading) return <Skeleton height={190} sx={{ borderRadius: 4 }} />
   if (isLoadingError) return <></>
   if (!balance) return <></>
 
