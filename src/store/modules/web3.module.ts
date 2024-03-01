@@ -1,6 +1,6 @@
-import { isMetamaskInstalled, isSnapInstalled } from '@rarimo/rarime-connector'
+import { isMetamaskInstalled } from '@rarimo/rarime-connector'
 
-import { config } from '@/config'
+import { zkpSnap } from '@/api/clients'
 import { createStore } from '@/helpers'
 import { SUPPORTED_PROVIDERS } from '@/types'
 
@@ -23,7 +23,7 @@ const [web3Store, useWeb3State] = createStore(
     },
     checkSnapStatus: async () => {
       state.isMetamaskInstalled = await isMetamaskInstalled()
-      state.isSnapInstalled = await isSnapInstalled(...config.SNAP_V_PARAMS)
+      state.isSnapInstalled = await zkpSnap.isInstalled()
 
       return {
         isMetamaskInstalled: state.isMetamaskInstalled,

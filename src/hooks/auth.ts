@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 
-import { initZkpSnap, zkpSnap } from '@/api/clients'
+import { zkpSnap } from '@/api/clients'
 import { authorizeUser } from '@/api/modules/auth'
 import { OrgUserRoles } from '@/api/modules/orgs'
 import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp'
@@ -26,7 +26,7 @@ export const useAuth = () => {
   }, [])
 
   const connectProviders = useCallback(async () => {
-    await initZkpSnap()
+    await zkpSnap.enable()
 
     await web3Store.checkSnapStatus()
 

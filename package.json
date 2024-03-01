@@ -31,9 +31,9 @@
     "rsc": "node scripts/release-sanity-check.mjs"
   },
   "dependencies": {
-    "@distributedlab/jac": "^1.0.0-rc.9",
-    "@distributedlab/tools": "^1.0.0-rc.9",
-    "@distributedlab/w3p": "^1.0.0-rc.9",
+    "@distributedlab/jac": "^1.0.0-rc.12",
+    "@distributedlab/tools": "^1.0.0-rc.12",
+    "@distributedlab/w3p": "^1.0.0-rc.12",
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/modifiers": "^7.0.0",
     "@dnd-kit/sortable": "^8.0.0",
@@ -43,7 +43,7 @@
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
     "@mui/x-date-pickers": "^6.18.7",
-    "@rarimo/rarime-connector": "^2.1.0-rc.3",
+    "@rarimo/rarime-connector": "*",
     "@walletconnect/modal": "^2.6.2",
     "copy-to-clipboard": "^3.3.3",
     "i18next": "^22.4.3",
@@ -97,5 +97,10 @@
     "vite-tsconfig-paths": "^4.0.3",
     "yorkie": "^2.0.0"
   },
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.0.2",
+  "resolutions": {
+    "rarime-snap-monorepo": "portal:/Users/lukachisama/Documents/RARIMO/IDENTITY/snaps/rarime",
+    "@rarimo/rarime-connector": "portal:/Users/lukachisama/Documents/RARIMO/IDENTITY/snaps/rarime/packages/connector",
+    "@rarimo/rarime": "portal:/Users/lukachisama/Documents/RARIMO/IDENTITY/snaps/rarime/packages/snap"
+  }
 }

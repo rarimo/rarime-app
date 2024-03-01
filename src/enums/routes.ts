@@ -29,4 +29,6 @@ export enum RoutePaths {
   CredentialsList = '/credentials/list',
   CredentialsId = '/credentials/:claimId',
   CredentialsRequests = '/credentials/requests',
+
+  Wallet = '/wallet',
 }

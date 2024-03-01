@@ -23,6 +23,8 @@ export const AppRoutes = () => {
   const VerifyProofAlias = lazy(() => import('@/pages/VerifyProofAlias'))
   const AcceptInvitation = lazy(() => import('@/pages/AcceptInvitation'))
 
+  const Wallet = lazy(() => import('@/pages/Wallet'))
+
   const { isAuthorized, logout } = useAuth()
 
   const signInGuard = useCallback(
@@ -82,6 +84,11 @@ export const AppRoutes = () => {
           path: createDeepPath(RoutePaths.Credentials),
           loader: authProtectedGuard,
           element: <Credentials />,
+        },
+        {
+          path: createDeepPath(RoutePaths.Wallet),
+          loader: authProtectedGuard,
+          element: <Wallet />,
         },
         {
           path: createDeepPath(RoutePaths.UiKit),

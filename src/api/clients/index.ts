@@ -1,5 +1,5 @@
 import { JsonApiClient } from '@distributedlab/jac'
-import { enableSnap, SnapConnector } from '@rarimo/rarime-connector'
+import { RarimeWallet, ZkpSnap } from '@rarimo/rarime-connector'
 
 import { config } from '@/config'
 
@@ -7,9 +7,10 @@ export const api = new JsonApiClient({
   baseUrl: config.API_URL,
 })
 
-export let zkpSnap: SnapConnector
+export const zkpSnap = new ZkpSnap('local:http://localhost:8081', '2.1.0-rc.3')
 
-export const initZkpSnap = async () => {
-  const snap = await enableSnap(...config.SNAP_V_PARAMS)
-  zkpSnap = await snap.getConnector()
-}
+export const rarimeWallet = new RarimeWallet(
+  'eightball-1',
+  'local:http://localhost:8081',
+  '2.1.0-rc.3',
+)
