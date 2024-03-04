@@ -25,7 +25,7 @@ export default function ActiveTasksId() {
           startIcon={<UiIcon componentName={'chevronLeft'} size={5} />}
           sx={{ width: 'fit-content' }}
         >
-          Active Tasks
+          Go back
         </Button>
 
         {event && (

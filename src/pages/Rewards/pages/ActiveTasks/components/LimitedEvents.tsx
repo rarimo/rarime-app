@@ -9,6 +9,7 @@ import {
 } from '@/api/modules/points'
 import { RoutePaths } from '@/enums'
 import { formatDateTime } from '@/helpers'
+import RewardChip from '@/pages/Rewards/components/RewardChip'
 import { UiButton } from '@/ui'
 
 export default function LimitedEvents() {
@@ -77,15 +78,7 @@ export default function LimitedEvents() {
                 {event.meta.static.short_description}
               </Typography>
               <Stack direction={'row'} alignItems={'center'} spacing={4}>
-                <Typography
-                  variant='subtitle4'
-                  px={2}
-                  py={1}
-                  borderRadius={12}
-                  bgcolor={palette.warning.light}
-                >
-                  🎁 +{event.meta.static.reward}
-                </Typography>
+                <RewardChip reward={event.meta.static.reward} />
                 <Typography variant='caption2' color={palette.text.secondary}>
                   Exp: {formatDateTime(event.meta.static.expires_at!)}
                 </Typography>

@@ -23,7 +23,7 @@ const EVENTS_MOCK: Event[] = [
       static: {
         name: 'free_weekly',
         title: 'Free weekly points',
-        reward: 100,
+        reward: 50,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
@@ -49,7 +49,7 @@ const EVENTS_MOCK: Event[] = [
       static: {
         name: 'free_weekly',
         title: 'Free weekly points',
-        reward: 100,
+        reward: 50,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
@@ -74,7 +74,7 @@ const EVENTS_MOCK: Event[] = [
       static: {
         name: 'free_weekly',
         title: 'Free weekly points',
-        reward: 100,
+        reward: 50,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
@@ -99,7 +99,7 @@ const EVENTS_MOCK: Event[] = [
       static: {
         name: 'free_weekly',
         title: 'Free weekly points',
-        reward: 100,
+        reward: 50,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         expires_at: '2024-03-12T00:00:00Z',
@@ -127,7 +127,7 @@ const EVENTS_MOCK: Event[] = [
       static: {
         name: 'free_weekly',
         title: 'Free weekly points',
-        reward: 100,
+        reward: 50,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
@@ -152,7 +152,7 @@ const EVENTS_MOCK: Event[] = [
       static: {
         name: 'free_weekly',
         title: 'Free weekly points',
-        reward: 100,
+        reward: 50,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
@@ -178,7 +178,7 @@ const EVENTS_MOCK: Event[] = [
       static: {
         name: 'free_weekly',
         title: 'Free weekly points',
-        reward: 100,
+        reward: 50,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
@@ -204,7 +204,7 @@ const EVENTS_MOCK: Event[] = [
       static: {
         name: 'free_weekly',
         title: 'Free weekly points',
-        reward: 100,
+        reward: 50,
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',

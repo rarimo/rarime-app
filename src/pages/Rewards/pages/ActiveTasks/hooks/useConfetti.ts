@@ -16,7 +16,7 @@ export function useConfetti() {
       ticks: 50,
       gravity: 0.4,
       decay: 0.95,
-      startVelocity: 8,
+      startVelocity: 6,
       shapes: ['circle', 'star'],
       scalar: 1,
       origin: {

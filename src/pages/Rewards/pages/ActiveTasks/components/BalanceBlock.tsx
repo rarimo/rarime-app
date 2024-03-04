@@ -7,7 +7,6 @@ import { useLoading } from '@/hooks'
 import { rewardsStore, useRewardsState } from '@/store/modules/rewards.module'
 import { UiButton, UiIcon } from '@/ui'
 
-import LevelProgress from './LevelProgress'
 import WithdrawModal from './WithdrawModal'
 
 export default function BalanceBlock() {
@@ -30,9 +29,9 @@ export default function BalanceBlock() {
       <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={4}>
         <Stack spacing={2}>
           <Typography variant='body3' color={palette.text.secondary}>
-            Reserved
+            Reserved RMO
           </Typography>
-          <Typography variant='h4'>{balance.amount} RMO</Typography>
+          <Typography variant='h4'>{balance.amount}</Typography>
         </Stack>
 
         <UiButton
@@ -55,15 +54,17 @@ export default function BalanceBlock() {
       <Divider />
       <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
         <Button
-          color='secondary'
           size='medium'
           startIcon={<UiIcon name={Icons.Swap} size={5} />}
           sx={{ width: spacing(60), height: spacing(10) }}
           onClick={() => setIsWithdrawModalOpen(true)}
         >
-          Withdraw
+          Claim
         </Button>
-        <LevelProgress balance={balance.amount} width={spacing(80)} />
+        <Typography variant='caption2' color={palette.text.secondary}>
+          {/* TODO: update claim end date */}
+          Please claim before 14 Dec 2023, Or you lose this RMO
+        </Typography>
       </Stack>
 
       <WithdrawModal

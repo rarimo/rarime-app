@@ -1,6 +1,7 @@
 import { Divider, Stack, Typography, useTheme } from '@mui/material'
 
 import { Event } from '@/api/modules/points/types/events'
+import RewardChip from '@/pages/Rewards/components/RewardChip'
 
 interface Props {
   events: Event[]
@@ -27,15 +28,7 @@ export default function EventsTable({ events }: Props) {
               {event.meta.static.title}
             </Typography>
             <Stack direction={'row'} alignItems={'center'} spacing={6}>
-              <Typography
-                variant='subtitle4'
-                px={2}
-                py={1}
-                borderRadius={12}
-                bgcolor={palette.action.active}
-              >
-                {`🎁 +${event.points_amount}`}
-              </Typography>
+              <RewardChip finished reward={event.meta.static.reward} />
             </Stack>
           </Stack>
           {index !== events.length - 1 && <Divider />}

@@ -41,6 +41,7 @@ export enum Icons {
   House = 'house',
   Instagram = 'instagram',
   Metamask = 'metamask',
+  Rarimo = 'rarimo',
   Rarime = 'rarime',
   Twitter = 'twitter',
   User = 'user',

@@ -1,35 +1,26 @@
 import { Button, Stack, Typography } from '@mui/material'
 import { PropsWithChildren } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import { PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
-import { UiIcon, UiNavTabs } from '@/ui'
+import { UiIcon } from '@/ui'
 
 export default function RewardsLayout({ children }: PropsWithChildren) {
   return (
-    <Stack spacing={6}>
-      <PageTitles title='Rewards' />
+    <Stack spacing={8}>
       <Stack direction={'row'} justifyContent={'space-between'}>
-        <UiNavTabs
-          width={'max-content'}
-          tabs={[
-            { label: 'Active Tasks', route: RoutePaths.RewardsActive },
-            { label: 'History', route: RoutePaths.RewardsHistory },
-          ]}
-        />
+        <PageTitles title='Rewards' />
         <Button
-          component={'a'}
-          // TODO: Link to RariMe docs
-          href='https://rarime.com'
-          target='_blank'
-          rel='noreferrer noopener'
+          component={NavLink}
+          to={RoutePaths.RewardsHistory}
           variant='text'
           size='small'
           color={'secondary'}
         >
           <Stack direction={'row'} spacing={2} alignItems={'center'}>
             <UiIcon componentName='openInNew' size={4} />
-            <Typography variant={'buttonSmall'}>Learn More</Typography>
+            <Typography variant={'buttonSmall'}>Earn History</Typography>
           </Stack>
         </Button>
       </Stack>

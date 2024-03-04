@@ -6,6 +6,7 @@ import { EventsRequestFilters, EventStatuses, useEvents } from '@/api/modules/po
 import { Event } from '@/api/modules/points/types/events'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
+import RewardChip from '@/pages/Rewards/components/RewardChip'
 import { useIdentityState } from '@/store'
 import { UiButton } from '@/ui'
 
@@ -60,16 +61,7 @@ export default function TasksList() {
                 {event.meta.static.title}
               </Typography>
               <Stack direction={'row'} alignItems={'center'} spacing={6}>
-                <Typography
-                  variant='subtitle4'
-                  px={2}
-                  py={1}
-                  borderRadius={12}
-                  bgcolor={palette.warning.light}
-                >
-                  {`🎁 +${event.meta.static.reward}`}
-                </Typography>
-
+                <RewardChip reward={event.meta.static.reward} />
                 {event.status === EventStatuses.Fulfilled ? (
                   <Button
                     {...sharedButtonProps}
