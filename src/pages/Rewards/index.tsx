@@ -4,6 +4,7 @@ import { RoutePaths } from '@/enums'
 import { useNestedRoutes } from '@/hooks'
 
 import RewardsLayout from './components/RewardsLayout'
+import About from './pages/About'
 import ActiveTasks from './pages/ActiveTasks'
 import ActiveTasksId from './pages/ActiveTasksId'
 import History from './pages/History'
@@ -38,6 +39,10 @@ export default function Rewards() {
     {
       path: RoutePaths.RewardsLeaderboard,
       element: <Leaderboard />,
+    },
+    {
+      path: RoutePaths.RewardsAbout,
+      element: <About />,
     },
     {
       path: '*',
