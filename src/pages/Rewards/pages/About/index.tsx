@@ -1,8 +1,7 @@
-import { Button, Paper, Stack, Typography, useTheme } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { Paper, Stack, Typography, useTheme } from '@mui/material'
 
+import BackLink from '@/common/BackLink'
 import { RoutePaths } from '@/enums'
-import { UiIcon } from '@/ui'
 
 export default function About() {
   const { palette } = useTheme()
@@ -26,18 +25,7 @@ export default function About() {
 
   return (
     <Stack spacing={6}>
-      <Button
-        component={NavLink}
-        to={RoutePaths.Rewards}
-        variant='text'
-        color='secondary'
-        size='small'
-        startIcon={<UiIcon componentName={'chevronLeft'} size={5} />}
-        sx={{ width: 'fit-content' }}
-      >
-        Go back
-      </Button>
-
+      <BackLink to={RoutePaths.Rewards} />
       <Paper component={Stack} spacing={6} sx={{ py: 8 }}>
         <Typography variant='subtitle4' component='h1'>
           About Reward Program

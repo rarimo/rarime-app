@@ -3,6 +3,7 @@ import { NavLink, useParams } from 'react-router-dom'
 
 import { useEvent } from '@/api/modules/points'
 import { NoDataViewer } from '@/common'
+import BackLink from '@/common/BackLink'
 import ErrorViewer from '@/common/ErrorViewer'
 import { RoutePaths } from '@/enums'
 import { UiIcon } from '@/ui'
@@ -16,18 +17,7 @@ export default function ActiveTasksId() {
   return (
     <Stack spacing={6}>
       <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-        <Button
-          component={NavLink}
-          to={RoutePaths.Rewards}
-          variant='text'
-          color='secondary'
-          size='small'
-          startIcon={<UiIcon componentName={'chevronLeft'} size={5} />}
-          sx={{ width: 'fit-content' }}
-        >
-          Go back
-        </Button>
-
+        <BackLink to={RoutePaths.Rewards} />
         {event && (
           <Button
             variant='text'

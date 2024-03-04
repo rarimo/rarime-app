@@ -18,7 +18,7 @@ export function useConfetti() {
       decay: 0.95,
       startVelocity: 6,
       shapes: ['circle', 'star'],
-      scalar: 1,
+      scalar: 0.5,
       origin: {
         x: (x + width / 2) / window.innerWidth,
         y: (y + height / 2) / window.innerHeight,
@@ -27,8 +27,8 @@ export function useConfetti() {
 
     const firingOptions: confetti.Options[] = [
       { ...commonOptions, particleCount: 20 },
-      { ...commonOptions, particleCount: 10, scalar: 0.33 },
-      { ...commonOptions, particleCount: 30, scalar: 0.5 },
+      { ...commonOptions, particleCount: 10, scalar: 0.15 },
+      { ...commonOptions, particleCount: 30, scalar: 0.25 },
     ]
 
     firingOptions.forEach(confetti)

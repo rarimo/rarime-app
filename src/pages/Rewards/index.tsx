@@ -26,11 +26,7 @@ export default function Rewards() {
     },
     {
       path: RoutePaths.RewardsHistory,
-      element: (
-        <RewardsLayout>
-          <History />
-        </RewardsLayout>
-      ),
+      element: <History />,
     },
     {
       path: RoutePaths.RewardsActiveId,

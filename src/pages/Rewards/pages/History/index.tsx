@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 
 import { EventsRequestFilters, EventStatuses, useEvents } from '@/api/modules/points'
 import { NoDataViewer } from '@/common'
+import BackLink from '@/common/BackLink'
 import ErrorViewer from '@/common/ErrorViewer'
 import { RoutePaths } from '@/enums'
 
@@ -15,27 +16,30 @@ export default function History() {
     },
   })
 
-  if (isLoading) {
-    return <Skeleton height={300} sx={{ borderRadius: 4 }} />
-  }
-
   return (
-    <Paper component={Stack} spacing={6}>
-      <Typography variant='subtitle3'>My History</Typography>
-      {isLoadingError ? (
-        <ErrorViewer title='Failed to load history' />
-      ) : isEmpty ? (
-        <NoDataViewer
-          title='No history yet'
-          action={
-            <Button component={NavLink} to={RoutePaths.RewardsActive} size='medium'>
-              View active tasks
-            </Button>
-          }
-        />
+    <Stack spacing={6}>
+      <BackLink to={RoutePaths.Rewards} />
+      {isLoading ? (
+        <Skeleton height={300} sx={{ borderRadius: 4 }} />
       ) : (
-        <EventsTable events={events} />
+        <Paper component={Stack} spacing={6}>
+          <Typography variant='subtitle3'>My History</Typography>
+          {isLoadingError ? (
+            <ErrorViewer title='Failed to load history' />
+          ) : isEmpty ? (
+            <NoDataViewer
+              title='No history yet'
+              action={
+                <Button component={NavLink} to={RoutePaths.RewardsActive} size='medium'>
+                  View active tasks
+                </Button>
+              }
+            />
+          ) : (
+            <EventsTable events={events} />
+          )}
+        </Paper>
       )}
-    </Paper>
+    </Stack>
   )
 }

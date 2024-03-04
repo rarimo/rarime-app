@@ -25,6 +25,8 @@ export default function WithdrawModal({
   ...rest
 }: Props) {
   const { palette, spacing } = useTheme()
+  // TODO: Replace with real data
+  const isLevelReached = false
 
   const balances = [
     { label: 'From', title: 'Reserved', value: reservedBalance },
@@ -46,27 +48,30 @@ export default function WithdrawModal({
       <UiDrawerTitle onClose={rest.onClose}>Withdraw RMO</UiDrawerTitle>
       <UiDrawerContent>
         <Stack spacing={5}>
-          <Stack
-            direction={'row'}
-            spacing={4}
-            justifyContent={'space-between'}
-            p={2}
-            borderRadius={2}
-            bgcolor={palette.warning.lighter}
-            color={palette.warning.darker}
-          >
-            <Stack direction={'row'} spacing={2} alignItems={'center'}>
-              <UiIcon componentName='infoOutlined' size={5} />
-              <Typography variant='body4'>You have to verify your identity</Typography>
-            </Stack>
-            <Button
-              variant='text'
-              size='small'
-              endIcon={<UiIcon componentName='arrowForward' size={4} />}
+          {!isLevelReached && (
+            <Stack
+              direction={'row'}
+              spacing={4}
+              justifyContent={'space-between'}
+              p={2}
+              borderRadius={2}
+              bgcolor={palette.warning.lighter}
+              color={palette.warning.darker}
             >
-              Verify
-            </Button>
-          </Stack>
+              <Stack direction={'row'} spacing={2} alignItems={'center'}>
+                <UiIcon componentName='infoOutlined' size={5} />
+                <Typography variant='body4'>You have to reach Level 2 to claim</Typography>
+              </Stack>
+              <Button
+                variant='text'
+                size='small'
+                endIcon={<UiIcon componentName='arrowForward' size={4} />}
+                onClick={e => rest.onClose?.(e, 'escapeKeyDown')}
+              >
+                Earn
+              </Button>
+            </Stack>
+          )}
 
           <Stack spacing={4} p={4} bgcolor={palette.action.active} borderRadius={2}>
             {balances.map((balance, index) => (
@@ -109,8 +114,8 @@ export default function WithdrawModal({
       </UiDrawerContent>
       <UiDrawerActions>
         <Stack spacing={2}>
-          <Button type='submit' fullWidth>
-            Send
+          <Button type='submit' fullWidth disabled={!isLevelReached}>
+            Claim
           </Button>
           <Button
             color='secondary'
