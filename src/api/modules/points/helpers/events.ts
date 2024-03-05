@@ -235,9 +235,20 @@ export const getEvents = async (query: EventsRequestQueryParams) => {
   }).slice(0, query.page?.[EventRequestPageProperties.Limit])
 
   return {
-    data: events,
+    data: new Array(20).fill(0).map((_, index) => ({
+      ...events[index % events.length],
+      id: `${events[index % events.length].id}-${index}`,
+      meta: {
+        ...events[index % events.length].meta,
+        static: {
+          ...events[index % events.length].meta.static,
+          title: `${events[index % events.length].meta.static.title} ${index}`,
+        },
+      },
+    })),
     meta: { events_count: events.length },
-  } as JsonApiResponse<Event[], EventsMeta>
+    fetchPage: () => getEvents(query),
+  } as unknown as JsonApiResponse<Event[], EventsMeta>
 }
 
 export const getEventById = async (id: string) => {

@@ -4,10 +4,10 @@ import { Event } from '@/api/modules/points/types/events'
 import RewardChip from '@/pages/Rewards/components/RewardChip'
 
 interface Props {
-  events: Event[]
+  items: Event[]
 }
 
-export default function EventsTable({ events }: Props) {
+export default function EventsTable({ items }: Props) {
   const { palette } = useTheme()
 
   return (
@@ -21,7 +21,7 @@ export default function EventsTable({ events }: Props) {
         </Typography>
       </Stack>
       <Divider />
-      {events.map((event, index) => (
+      {items.map((event, index) => (
         <Stack spacing={4} key={event.id}>
           <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
             <Typography variant='subtitle4' color={palette.text.primary}>
@@ -31,7 +31,7 @@ export default function EventsTable({ events }: Props) {
               <RewardChip finished reward={event.meta.static.reward} />
             </Stack>
           </Stack>
-          {index !== events.length - 1 && <Divider />}
+          {index !== items.length - 1 && <Divider />}
         </Stack>
       ))}
     </Stack>

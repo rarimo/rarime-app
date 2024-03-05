@@ -1,45 +1,44 @@
-import { Button, Paper, Skeleton, Stack, Typography } from '@mui/material'
+import { Button, Paper, Stack, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-import { EventsRequestFilters, EventStatuses, useEvents } from '@/api/modules/points'
-import { NoDataViewer } from '@/common'
+import { EventsRequestFilters, EventStatuses, getEvents } from '@/api/modules/points'
 import BackLink from '@/common/BackLink'
-import ErrorViewer from '@/common/ErrorViewer'
+import InfiniteList from '@/common/InfiniteList'
 import { RoutePaths } from '@/enums'
+import { useMultiPageLoading } from '@/hooks/multi-page-loading'
 
 import EventsTable from './components/EventsTable'
 
 export default function History() {
-  const { events, isLoading, isLoadingError, isEmpty } = useEvents({
-    filter: {
-      [EventsRequestFilters.Status]: [EventStatuses.Claimed],
-    },
-  })
+  const { data, loadingState, load, loadNext } = useMultiPageLoading(() =>
+    getEvents({
+      filter: {
+        [EventsRequestFilters.Status]: [EventStatuses.Claimed],
+      },
+    }),
+  )
 
   return (
     <Stack spacing={6}>
       <BackLink to={RoutePaths.Rewards} />
-      {isLoading ? (
-        <Skeleton height={300} sx={{ borderRadius: 4 }} />
-      ) : (
-        <Paper component={Stack} spacing={6}>
-          <Typography variant='subtitle3'>My History</Typography>
-          {isLoadingError ? (
-            <ErrorViewer title='Failed to load history' />
-          ) : isEmpty ? (
-            <NoDataViewer
-              title='No history yet'
-              action={
-                <Button component={NavLink} to={RoutePaths.RewardsActive} size='medium'>
-                  View active tasks
-                </Button>
-              }
-            />
-          ) : (
-            <EventsTable events={events} />
-          )}
-        </Paper>
-      )}
+      <Paper component={Stack} spacing={6}>
+        <Typography variant='subtitle3'>My History</Typography>
+        <InfiniteList
+          items={data}
+          loadingState={loadingState}
+          errorTitle='Failed to load history'
+          noDataTitle='No history yet'
+          noDataAction={
+            <Button component={NavLink} to={RoutePaths.RewardsActive} size='medium'>
+              View active tasks
+            </Button>
+          }
+          onLoadNext={loadNext}
+          onRetry={load}
+        >
+          <EventsTable items={data} />
+        </InfiniteList>
+      </Paper>
     </Stack>
   )
 }

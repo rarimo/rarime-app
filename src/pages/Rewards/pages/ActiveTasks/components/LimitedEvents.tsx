@@ -24,28 +24,25 @@ export default function LimitedEvents() {
     },
   })
 
-  if (isLoading) return <Skeleton height={180} sx={{ borderRadius: 4 }} />
   if (isEmpty || isLoadingError) return <></>
 
   return (
     <Paper component={Stack} spacing={6}>
       <Typography variant='subtitle3'>🔥 Limited time events</Typography>
-      {events.map(event => (
-        <Stack
-          key={event.id}
-          direction={'row'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
-          spacing={4}
-        >
+      {isLoading ? (
+        <Skeleton height={180} sx={{ borderRadius: 4 }} />
+      ) : isEmpty || isLoadingError ? (
+        <></>
+      ) : (
+        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'} spacing={4}>
           <Stack direction={'row'} spacing={4}>
             <Box
               component={NavLink}
-              to={generatePath(RoutePaths.RewardsActiveId, { id: event.id })}
+              to={generatePath(RoutePaths.RewardsActiveId, { id: events[0].id })}
             >
               <Box
                 component='img'
-                src={event.meta.static.image_url}
+                src={events[0].meta.static.image_url}
                 sx={{
                   bgcolor: palette.action.active,
                   borderRadius: 2,
@@ -58,11 +55,11 @@ export default function LimitedEvents() {
             <Stack spacing={2}>
               <Typography
                 component={NavLink}
-                to={generatePath(RoutePaths.RewardsActiveId, { id: event.id })}
+                to={generatePath(RoutePaths.RewardsActiveId, { id: events[0].id })}
                 variant='subtitle4'
                 color={palette.text.primary}
               >
-                {event.meta.static.title}
+                {events[0].meta.static.title}
               </Typography>
               <Typography
                 variant='body4'
@@ -75,19 +72,19 @@ export default function LimitedEvents() {
                   textOverflow: 'ellipsis',
                 }}
               >
-                {event.meta.static.short_description}
+                {events[0].meta.static.short_description}
               </Typography>
               <Stack direction={'row'} alignItems={'center'} spacing={4}>
-                <RewardChip reward={event.meta.static.reward} />
+                <RewardChip reward={events[0].meta.static.reward} />
                 <Typography variant='caption2' color={palette.text.secondary}>
-                  Exp: {formatDateTime(event.meta.static.expires_at!)}
+                  Exp: {formatDateTime(events[0].meta.static.expires_at!)}
                 </Typography>
               </Stack>
             </Stack>
           </Stack>
           <UiButton
             component={NavLink}
-            to={generatePath(RoutePaths.RewardsActiveId, { id: event.id })}
+            to={generatePath(RoutePaths.RewardsActiveId, { id: events[0].id })}
             color='secondary'
             size='medium'
             sx={{ width: spacing(19), height: spacing(8) }}
@@ -95,7 +92,7 @@ export default function LimitedEvents() {
             View
           </UiButton>
         </Stack>
-      ))}
+      )}
     </Paper>
   )
 }
