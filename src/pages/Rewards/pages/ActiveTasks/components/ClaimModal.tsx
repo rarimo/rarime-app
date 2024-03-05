@@ -4,13 +4,22 @@ import {
   Dialog,
   DialogProps,
   Divider,
+  FormControl,
   Stack,
-  Typography,
   useTheme,
 } from '@mui/material'
-import { FormEvent } from 'react'
+import { useCallback } from 'react'
+import { Controller } from 'react-hook-form'
 
-import { UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiIcon, UiTextField } from '@/ui'
+import { withdrawPoints } from '@/api/modules/points'
+import { BusEvents } from '@/enums'
+import { bus, ErrorHandler } from '@/helpers'
+import { useForm } from '@/hooks'
+import { useIdentityState } from '@/store'
+import { UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiTextField } from '@/ui'
+
+import ClaimBalances from './ClaimBalances'
+import ClaimWarning from './ClaimWarning'
 
 type Props = DialogProps & {
   reservedBalance: number
@@ -18,92 +27,95 @@ type Props = DialogProps & {
   onClaim: () => void
 }
 
+enum FieldNames {
+  Amount = 'amount',
+}
+
+const DEFAULT_VALUES = {
+  [FieldNames.Amount]: '',
+}
+
 export default function ClaimModal({ reservedBalance, walletBalance, onClaim, ...rest }: Props) {
-  const { palette, spacing } = useTheme()
+  const { spacing } = useTheme()
+  const { userDid } = useIdentityState()
+
   // TODO: Replace with real data
   const isLevelReached = false
 
-  const balances = [
-    { label: 'From', title: 'Reserved', value: reservedBalance },
-    { label: 'To', title: 'Balance', value: walletBalance },
-  ]
+  const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
+    useForm(DEFAULT_VALUES, yup =>
+      yup.object().shape({
+        [FieldNames.Amount]: yup.number().required().min(1).max(reservedBalance),
+      }),
+    )
+
+  const submit = useCallback(
+    async (formData: typeof DEFAULT_VALUES) => {
+      disableForm()
+
+      try {
+        await withdrawPoints(
+          userDid,
+          Number(formData[FieldNames.Amount]),
+          // TODO: Replace with real Rarimo address
+          'rarimo',
+        )
+        bus.emit(BusEvents.success, {
+          message: `Claimed ${formData[FieldNames.Amount]} RMO`,
+        })
+        onClaim()
+      } catch (error) {
+        ErrorHandler.process(error)
+      }
+
+      enableForm()
+    },
+    [disableForm, enableForm, onClaim, userDid],
+  )
 
   return (
     <Dialog
       {...rest}
       PaperProps={{
         component: 'form',
-        onSubmit: (e: FormEvent<HTMLFormElement>) => {
-          e.preventDefault()
-          onClaim()
-        },
+        onSubmit: handleSubmit(submit),
         sx: { width: spacing(110) },
       }}
     >
       <UiDrawerTitle onClose={rest.onClose}>Claim RMO</UiDrawerTitle>
       <UiDrawerContent>
         <Stack spacing={5}>
-          {!isLevelReached && (
-            <Stack
-              direction={'row'}
-              spacing={4}
-              justifyContent={'space-between'}
-              p={2}
-              borderRadius={2}
-              bgcolor={palette.warning.lighter}
-              color={palette.warning.darker}
-            >
-              <Stack direction={'row'} spacing={2} alignItems={'center'}>
-                <UiIcon componentName='infoOutlined' size={5} />
-                <Typography variant='body4'>You have to reach Level 2 to claim</Typography>
-              </Stack>
-              <Button
-                variant='text'
-                size='small'
-                endIcon={<UiIcon componentName='arrowForward' size={4} />}
-                onClick={e => rest.onClose?.(e, 'escapeKeyDown')}
-              >
-                Earn
-              </Button>
-            </Stack>
-          )}
-
-          <Stack spacing={4} p={4} bgcolor={palette.action.active} borderRadius={2}>
-            {balances.map((balance, index) => (
-              <Stack key={index} spacing={4}>
-                <Stack direction={'row'} justifyContent={'space-between'}>
-                  <Stack direction={'row'} spacing={4} alignItems={'center'}>
-                    <Typography
-                      variant='buttonMedium'
-                      color={palette.text.secondary}
-                      width={spacing(10)}
-                    >
-                      {balance.label}
-                    </Typography>
-                    <Divider orientation='vertical' flexItem />
-                    <Typography variant='body3'>{balance.title}</Typography>
-                  </Stack>
-                  <Typography variant='subtitle5'>{balance.value} RMO</Typography>
-                </Stack>
-                {index !== balances.length - 1 && (
-                  <Divider sx={{ width: spacing(63), mx: 'auto' }} />
-                )}
-              </Stack>
-            ))}
-          </Stack>
-          <UiTextField
-            label='Claim amount'
-            placeholder='Enter amount'
-            InputProps={{
-              endAdornment: (
-                <Stack direction={'row'} spacing={4} alignItems={'center'}>
-                  <Divider orientation='vertical' flexItem />
-                  <Button variant='text' size='medium' color='secondary'>
-                    MAX
-                  </Button>
-                </Stack>
-              ),
-            }}
+          {!isLevelReached && <ClaimWarning onAction={e => rest.onClose?.(e, 'escapeKeyDown')} />}
+          <ClaimBalances reservedBalance={reservedBalance} walletBalance={walletBalance} />
+          <Controller
+            name={FieldNames.Amount}
+            control={control}
+            render={({ field }) => (
+              <FormControl>
+                <UiTextField
+                  {...field}
+                  label='Claim amount'
+                  placeholder='Enter amount'
+                  errorMessage={getErrorMessage(FieldNames.Amount)}
+                  disabled={isFormDisabled}
+                  InputProps={{
+                    endAdornment: (
+                      <Stack direction={'row'} spacing={4} alignItems={'center'}>
+                        <Divider orientation='vertical' flexItem />
+                        <Button
+                          variant='text'
+                          size='medium'
+                          color='secondary'
+                          onClick={() => field.onChange(reservedBalance)}
+                        >
+                          MAX
+                        </Button>
+                      </Stack>
+                    ),
+                  }}
+                />
+              </FormControl>
+            )}
           />
         </Stack>
       </UiDrawerContent>
@@ -123,7 +135,7 @@ export default function ClaimModal({ reservedBalance, walletBalance, onClaim, ..
         </Stack>
       </UiDrawerActions>
 
-      {false && (
+      {isFormDisabled && (
         <Stack
           justifyContent={'center'}
           alignItems={'center'}
