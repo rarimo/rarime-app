@@ -7,7 +7,7 @@ import { useLoading } from '@/hooks'
 import { rewardsStore, useRewardsState } from '@/store/modules/rewards.module'
 import { UiButton, UiIcon } from '@/ui'
 
-import WithdrawModal from './WithdrawModal'
+import ClaimModal from './ClaimModal'
 
 export default function BalanceBlock() {
   const { palette, spacing } = useTheme()
@@ -18,7 +18,7 @@ export default function BalanceBlock() {
     loadArgs: [],
   })
 
-  const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false)
+  const [isClaimModalOpen, setIsClaimModalOpen] = useState(false)
 
   if (!balance && isLoading) return <Skeleton height={190} sx={{ borderRadius: 4 }} />
   if (isLoadingError) return <></>
@@ -57,7 +57,7 @@ export default function BalanceBlock() {
           size='medium'
           startIcon={<UiIcon name={Icons.Swap} size={5} />}
           sx={{ width: spacing(60), height: spacing(10) }}
-          onClick={() => setIsWithdrawModalOpen(true)}
+          onClick={() => setIsClaimModalOpen(true)}
         >
           Claim
         </Button>
@@ -67,12 +67,12 @@ export default function BalanceBlock() {
         </Typography>
       </Stack>
 
-      <WithdrawModal
-        open={isWithdrawModalOpen}
+      <ClaimModal
+        open={isClaimModalOpen}
         reservedBalance={balance.amount}
         walletBalance={0}
-        onClose={() => setIsWithdrawModalOpen(false)}
-        onWithdraw={() => setIsWithdrawModalOpen(false)}
+        onClose={() => setIsClaimModalOpen(false)}
+        onClaim={() => setIsClaimModalOpen(false)}
       />
     </Paper>
   )

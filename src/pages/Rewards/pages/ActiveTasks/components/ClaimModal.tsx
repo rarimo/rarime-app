@@ -15,15 +15,10 @@ import { UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiIcon, UiTextField } 
 type Props = DialogProps & {
   reservedBalance: number
   walletBalance: number
-  onWithdraw: () => void
+  onClaim: () => void
 }
 
-export default function WithdrawModal({
-  reservedBalance,
-  walletBalance,
-  onWithdraw,
-  ...rest
-}: Props) {
+export default function ClaimModal({ reservedBalance, walletBalance, onClaim, ...rest }: Props) {
   const { palette, spacing } = useTheme()
   // TODO: Replace with real data
   const isLevelReached = false
@@ -40,12 +35,12 @@ export default function WithdrawModal({
         component: 'form',
         onSubmit: (e: FormEvent<HTMLFormElement>) => {
           e.preventDefault()
-          onWithdraw()
+          onClaim()
         },
         sx: { width: spacing(110) },
       }}
     >
-      <UiDrawerTitle onClose={rest.onClose}>Withdraw RMO</UiDrawerTitle>
+      <UiDrawerTitle onClose={rest.onClose}>Claim RMO</UiDrawerTitle>
       <UiDrawerContent>
         <Stack spacing={5}>
           {!isLevelReached && (
@@ -97,7 +92,7 @@ export default function WithdrawModal({
             ))}
           </Stack>
           <UiTextField
-            label='Withdraw amount'
+            label='Claim amount'
             placeholder='Enter amount'
             InputProps={{
               endAdornment: (
