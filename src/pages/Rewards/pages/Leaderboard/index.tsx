@@ -1,58 +1,40 @@
-import { CircularProgress, Paper, Stack, Typography } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { Paper, Stack, Typography } from '@mui/material'
+import { useEffect } from 'react'
 
-import { useBalance, useLeaderboard } from '@/api/modules/points'
-import { NoDataViewer } from '@/common'
-import ErrorViewer from '@/common/ErrorViewer'
+import { getLeaderboard } from '@/api/modules/points'
+import BackLink from '@/common/BackLink'
+import InfiniteList from '@/common/InfiniteList'
 import { RoutePaths } from '@/enums'
-import { useIdentityState } from '@/store'
-import { UiButton, UiIcon } from '@/ui'
+import { useMultiPageLoading } from '@/hooks/multi-page-loading'
+import { rewardsStore, useRewardsState } from '@/store/modules/rewards.module'
 
 import LeaderboardTable from './components/LeaderboardTable'
 
 export default function Leaderboard() {
-  const { userDid } = useIdentityState()
+  const { balance } = useRewardsState()
 
-  const {
-    leaderboard,
-    isLoading: isLeaderboardLoading,
-    isLoadingError: isLeaderboardLoadingError,
-    isEmpty: isLeaderboardEmpty,
-  } = useLeaderboard()
+  const { data: leaderboard, loadingState, load } = useMultiPageLoading(() => getLeaderboard())
 
-  const {
-    balance,
-    isLoading: isBalanceLoading,
-    isLoadingError: isBalanceLoadingError,
-  } = useBalance(userDid)
+  useEffect(() => {
+    rewardsStore.loadBalance()
+  }, [])
 
   return (
     <Stack spacing={6}>
-      <UiButton
-        component={NavLink}
-        to={RoutePaths.Rewards}
-        variant='text'
-        color='secondary'
-        size='small'
-        startIcon={<UiIcon componentName={'chevronLeft'} size={5} />}
-        sx={{ width: 'fit-content' }}
-      >
-        Active Tasks
-      </UiButton>
-
+      <BackLink to={RoutePaths.Rewards} />
       <Paper component={Stack} spacing={4}>
         <Typography variant='subtitle3'>Leaderboard</Typography>
-        {isLeaderboardLoading || isBalanceLoading ? (
-          <Stack alignItems='center' p={20}>
-            <CircularProgress color={'secondary'} />
-          </Stack>
-        ) : isLeaderboardLoadingError || isBalanceLoadingError ? (
-          <ErrorViewer title='Leaderbord cannot be loaded :(' />
-        ) : isLeaderboardEmpty || !balance ? (
-          <NoDataViewer title='Leaderboard is empty' />
-        ) : (
+        <InfiniteList
+          items={leaderboard}
+          loadingState={loadingState}
+          errorTitle='Leaderbord cannot be loaded :('
+          noDataTitle='Leaderboard is empty'
+          // Now loading only the first page
+          onLoadNext={() => {}}
+          onRetry={load}
+        >
           <LeaderboardTable leaderboard={leaderboard} balance={balance} />
-        )}
+        </InfiniteList>
       </Paper>
     </Stack>
   )

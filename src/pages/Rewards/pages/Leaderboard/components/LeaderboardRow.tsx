@@ -42,14 +42,21 @@ export default function LeaderboardRow({ balance, rank }: Props) {
     ? {
         bgcolor: palette.action.active,
         px: 6,
-        py: 4,
         mx: -6,
         borderRadius: 2,
+        sx: {
+          '& + .MuiBox-root': {
+            borderTop: 0,
+          },
+        },
       }
-    : {}
+    : {
+        borderTop: 1,
+        borderColor: palette.divider,
+      }
 
   return (
-    <Box {...boxProps}>
+    <Box py={4} {...boxProps}>
       <Grid container spacing={16} alignItems={'center'}>
         <Grid item xs={2}>
           <Stack
@@ -65,7 +72,7 @@ export default function LeaderboardRow({ balance, rank }: Props) {
             border={1}
             borderColor={rank <= 3 ? palette.primary.main : palette.action.active}
           >
-            <Typography variant={rank > 100 ? 'subtitle5' : 'subtitle4'}>{rank}</Typography>
+            <Typography variant={rank >= 100 ? 'subtitle5' : 'subtitle4'}>{rank}</Typography>
           </Stack>
         </Grid>
         <Grid item xs={6}>

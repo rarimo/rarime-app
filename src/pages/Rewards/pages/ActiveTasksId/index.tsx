@@ -6,6 +6,7 @@ import { NoDataViewer } from '@/common'
 import BackLink from '@/common/BackLink'
 import ErrorViewer from '@/common/ErrorViewer'
 import { RoutePaths } from '@/enums'
+import { useCopyToClipboard } from '@/hooks'
 import { UiIcon } from '@/ui'
 
 import EventView from './components/EventView'
@@ -13,6 +14,8 @@ import EventView from './components/EventView'
 export default function ActiveTasksId() {
   const { id = '' } = useParams<{ id: string }>()
   const { event, isLoading, isLoadingError } = useEvent(id)
+
+  const { copy, isCopied } = useCopyToClipboard()
 
   return (
     <Stack spacing={6}>
@@ -25,8 +28,9 @@ export default function ActiveTasksId() {
             size='small'
             startIcon={<UiIcon componentName={'shareOutlined'} size={5} />}
             sx={{ width: 'fit-content' }}
+            onClick={() => copy(window.location.href)}
           >
-            Share
+            {isCopied ? 'Link copied' : 'Share'}
           </Button>
         )}
       </Stack>

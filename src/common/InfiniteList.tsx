@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Stack, useTheme } from '@mui/material'
+import { Button, CircularProgress, Stack, useTheme } from '@mui/material'
 import { PropsWithChildren, ReactNode } from 'react'
 
 import { NoDataViewer } from '@/common'
@@ -45,7 +45,7 @@ export default function InfiniteList<D>({
   ) : !items.length ? (
     <NoDataViewer title={noDataTitle} action={noDataAction} />
   ) : (
-    <Box position='relative'>
+    <Stack position='relative' spacing={4}>
       {children}
       {loadingState === LoadingStates.NextLoading ? (
         <Stack alignItems='center'>
@@ -60,6 +60,6 @@ export default function InfiniteList<D>({
       ) : (
         <IntersectionAnchor bottom={spacing(50)} onIntersect={onLoadNext} />
       )}
-    </Box>
+    </Stack>
   )
 }

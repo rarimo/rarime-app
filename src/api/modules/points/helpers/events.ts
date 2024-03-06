@@ -237,7 +237,7 @@ export const getEvents = async (query: EventsRequestQueryParams) => {
   return {
     data: new Array(20).fill(0).map((_, index) => ({
       ...events[index % events.length],
-      id: `${events[index % events.length].id}-${index}`,
+      id: events[index % events.length].id,
       meta: {
         ...events[index % events.length].meta,
         static: {

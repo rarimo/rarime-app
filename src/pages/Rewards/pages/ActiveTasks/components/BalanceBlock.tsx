@@ -20,7 +20,7 @@ export default function BalanceBlock() {
 
   const [isClaimModalOpen, setIsClaimModalOpen] = useState(false)
 
-  if (!balance && isLoading) return <Skeleton height={190} sx={{ borderRadius: 4 }} />
+  if (!balance && isLoading) return <Skeleton height={spacing(52)} sx={{ borderRadius: 4 }} />
 
   return (
     <Paper component={Stack} spacing={6}>

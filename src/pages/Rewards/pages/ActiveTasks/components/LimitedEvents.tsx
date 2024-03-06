@@ -24,13 +24,11 @@ export default function LimitedEvents() {
     },
   })
 
-  if (isEmpty || isLoadingError) return <></>
-
   return (
     <Paper component={Stack} spacing={6}>
       <Typography variant='subtitle3'>🔥 Limited time events</Typography>
       {isLoading ? (
-        <Skeleton height={180} sx={{ borderRadius: 4 }} />
+        <Skeleton height={spacing(21)} />
       ) : isEmpty || isLoadingError ? (
         <></>
       ) : (

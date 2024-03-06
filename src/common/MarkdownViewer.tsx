@@ -10,11 +10,11 @@ export default function MarkdownViewer({ overrides, ...rest }: MuiMarkdownWithOv
         ...getOverrides({}),
         h2: {
           component: Typography,
-          props: { variant: 'h6', component: 'h2', sx: { mb: 2 } },
+          props: { variant: 'subtitle2', component: 'h2', sx: { mb: 2 } },
         },
         h3: {
           component: Typography,
-          props: { variant: 'subtitle2', sx: { mb: 2 } },
+          props: { variant: 'subtitle3', component: 'h3', sx: { mb: 2 } },
         },
         p: {
           component: Typography,

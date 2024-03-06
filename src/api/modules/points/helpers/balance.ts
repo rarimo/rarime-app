@@ -1,3 +1,5 @@
+import { JsonApiResponse } from '@distributedlab/jac'
+
 import { api } from '@/api/clients'
 import { ApiServicePaths } from '@/enums/api'
 import { sleep } from '@/helpers'
@@ -111,8 +113,10 @@ export const createPointsBalance = async (did: string) => {
 export const getLeaderboard = async () => {
   // TODO: Uncomment when API is ready
   // return api.get<Balance[]>(`${ApiServicePaths.Points}/v1/balances`)
-  await sleep(500)
-  return { data: LEADERBOARD_MOCK }
+  await sleep(300)
+  return {
+    data: LEADERBOARD_MOCK,
+  } as unknown as JsonApiResponse<Balance[]>
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
