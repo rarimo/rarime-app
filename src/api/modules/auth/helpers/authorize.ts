@@ -12,11 +12,11 @@ export const authorizeUser = async ({
   groupId,
   zkProof,
 }: {
-  role: OrgUserRoles
   userDid: string
-  orgDid: string
-  groupId: string
-  zkProof: ZKProof
+  role?: OrgUserRoles
+  orgDid?: string
+  groupId?: string
+  zkProof?: ZKProof
 }) => {
   const { data } = await api.post<AuthTokensGroup>(`${ApiServicePaths.Auth}/v1/authorize`, {
     body: {

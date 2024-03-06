@@ -124,7 +124,8 @@ export const getPointsBalance = async (did: string) => {
   // TODO: Uncomment when API is ready
   // return api.get<Balance>(`${ApiServicePaths.Points}/v1/balances/${did}`)
   await sleep(500)
-  return { data: BALANCE_MOCK }
+  return { data: null } as unknown as JsonApiResponse<Balance>
+  // return { data: BALANCE_MOCK } as unknown as JsonApiResponse<Balance>
 }
 
 // Withdrawals

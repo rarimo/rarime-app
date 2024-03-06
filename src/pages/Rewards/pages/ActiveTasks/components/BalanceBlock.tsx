@@ -1,10 +1,9 @@
-import { Button, Divider, Paper, Skeleton, Stack, Typography, useTheme } from '@mui/material'
+import { Button, Divider, Paper, Stack, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
-import { useLoading } from '@/hooks'
-import { rewardsStore, useRewardsState } from '@/store/modules/rewards.module'
+import { useRewardsState } from '@/store/modules/rewards.module'
 import { UiButton, UiIcon } from '@/ui'
 
 import ClaimModal from './ClaimModal'
@@ -13,14 +12,7 @@ export default function BalanceBlock() {
   const { palette, spacing } = useTheme()
   const { balance } = useRewardsState()
 
-  const { isLoading } = useLoading(balance, rewardsStore.loadBalance, {
-    loadOnMount: true,
-    loadArgs: [],
-  })
-
   const [isClaimModalOpen, setIsClaimModalOpen] = useState(false)
-
-  if (!balance && isLoading) return <Skeleton height={spacing(52)} sx={{ borderRadius: 4 }} />
 
   return (
     <Paper component={Stack} spacing={6}>
