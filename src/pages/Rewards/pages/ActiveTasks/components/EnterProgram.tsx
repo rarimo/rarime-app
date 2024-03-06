@@ -1,10 +1,23 @@
-import { Button, Divider, Paper, Stack, Typography, useTheme } from '@mui/material'
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  Paper,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material'
 
 import { Icons } from '@/enums'
+import { useLoading } from '@/hooks'
+import { rewardsStore } from '@/store/modules/rewards.module'
 import { UiIcon } from '@/ui'
 
 export default function EnterProgram() {
   const { palette, spacing } = useTheme()
+  const { isLoading, reload } = useLoading(undefined, rewardsStore.authorize, {
+    loadOnMount: false,
+  })
 
   return (
     <Paper>
@@ -19,7 +32,15 @@ export default function EnterProgram() {
           Claim airdrops & earn RMO
         </Typography>
         <Divider flexItem />
-        <Button fullWidth>{`Let's Start`}</Button>
+        <Button
+          fullWidth
+          size='large'
+          startIcon={isLoading && <CircularProgress size={spacing(5)} color='secondary' />}
+          disabled={isLoading}
+          onClick={reload}
+        >
+          {isLoading ? 'Authorizing...' : 'Enter Program'}
+        </Button>
       </Stack>
     </Paper>
   )

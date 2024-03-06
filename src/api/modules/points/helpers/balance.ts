@@ -1,8 +1,9 @@
-import { JsonApiResponse } from '@distributedlab/jac'
+import { JsonApiResponse, NotFoundError, UnauthorizedError } from '@distributedlab/jac'
 
 import { api } from '@/api/clients'
 import { ApiServicePaths } from '@/enums/api'
 import { sleep } from '@/helpers'
+import { rewardsStore } from '@/store/modules/rewards.module'
 
 import { type Balance, type Withdrawal } from '../types'
 
@@ -124,8 +125,15 @@ export const getPointsBalance = async (did: string) => {
   // TODO: Uncomment when API is ready
   // return api.get<Balance>(`${ApiServicePaths.Points}/v1/balances/${did}`)
   await sleep(500)
-  return { data: null } as unknown as JsonApiResponse<Balance>
-  // return { data: BALANCE_MOCK } as unknown as JsonApiResponse<Balance>
+
+  // eslint-disable-next-line
+  // @ts-ignore
+  if (!rewardsStore.isAuthorized) throw new UnauthorizedError({})
+
+  // eslint-disable-next-line
+  // @ts-ignore
+  throw new NotFoundError({})
+  return { data: BALANCE_MOCK } as unknown as JsonApiResponse<Balance>
 }
 
 // Withdrawals

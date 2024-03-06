@@ -1,37 +1,41 @@
-import { JsonApiResponse, NotFoundError, UnauthorizedError } from '@distributedlab/jac'
+import { UnauthorizedError } from '@distributedlab/jac'
 
 import { authorizeUser } from '@/api/modules/auth'
-import { Balance, createPointsBalance, getPointsBalance } from '@/api/modules/points'
+import { Balance, getPointsBalance } from '@/api/modules/points'
 import { createStore } from '@/helpers'
 
 import { identityStore } from './identity.module'
 
 type RewardsState = {
   balance: Balance | null
+  isAuthorized: boolean
 }
 
 const [rewardsStore, useRewardsState] = createStore(
   'rewards',
   {
     balance: null,
+    isAuthorized: false,
   } as RewardsState,
   state => ({
     loadBalance: async () => {
-      let response: JsonApiResponse<Balance> | null = null
       try {
-        response = await getPointsBalance(identityStore.userDid)
+        const { data } = await getPointsBalance(identityStore.userDid)
+        state.balance = data
+        state.isAuthorized = true
       } catch (error) {
+        state.balance = null
         if (error instanceof UnauthorizedError) {
-          await authorizeUser({ userDid: identityStore.userDid })
-          response = await getPointsBalance(identityStore.userDid)
-        } else if (error instanceof NotFoundError) {
-          response = await createPointsBalance(identityStore.userDid)
-        } else {
-          throw error
+          state.isAuthorized = false
+          return
         }
-      }
 
-      state.balance = response?.data ?? null
+        throw error
+      }
+    },
+    authorize: async () => {
+      await authorizeUser({ userDid: identityStore.userDid })
+      state.isAuthorized = true
     },
   }),
   { isPersist: false },
