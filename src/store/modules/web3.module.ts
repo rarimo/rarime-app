@@ -1,26 +1,39 @@
+import {
+  createProvider,
+  MetamaskProvider,
+  Provider,
+  ProviderDetector,
+  ProviderProxyConstructor,
+  PROVIDERS,
+} from '@distributedlab/w3p'
 import { isMetamaskInstalled } from '@rarimo/rarime-connector'
+import { ref } from 'valtio'
 
 import { zkpSnap } from '@/api/clients'
 import { createStore } from '@/helpers'
-import { SUPPORTED_PROVIDERS } from '@/types'
 
-type Web3State = {
-  providerType?: SUPPORTED_PROVIDERS
-  isMetamaskInstalled?: boolean
-  isSnapInstalled?: boolean
+type Web3Store = {
+  isMetamaskInstalled: boolean
+  isSnapInstalled: boolean
+  provider: Provider | undefined
+  isValidChain: boolean
 }
 
-const [web3Store, useWeb3State] = createStore(
+const providerDetector = new ProviderDetector()
+
+const PROVIDERS_PROXIES: { [key in PROVIDERS]?: ProviderProxyConstructor } = {
+  [PROVIDERS.Metamask]: MetamaskProvider,
+}
+
+export const [web3Store, useWeb3State] = createStore(
   'web3',
   {
-    providerType: undefined,
     isMetamaskInstalled: false,
     isSnapInstalled: false,
-  } as Web3State,
+    provider: undefined,
+    isValidChain: false,
+  } as Web3Store,
   state => ({
-    setProviderType: (providerType: SUPPORTED_PROVIDERS | undefined) => {
-      state.providerType = providerType
-    },
     checkSnapStatus: async () => {
       state.isMetamaskInstalled = await isMetamaskInstalled()
       state.isSnapInstalled = await zkpSnap.isInstalled()
@@ -30,7 +43,33 @@ const [web3Store, useWeb3State] = createStore(
         isSnapInstalled: state.isSnapInstalled,
       }
     },
-  }),
-)
+    connect: async (providerType: PROVIDERS) => {
+      if (!(providerType in PROVIDERS_PROXIES)) throw new TypeError('Provider not supported')
 
-export { useWeb3State, web3Store }
+      const providerProxy = PROVIDERS_PROXIES[providerType]
+
+      if (!providerProxy) throw new TypeError('Provider not supported')
+
+      state.provider?.clearHandlers?.()
+
+      state.provider = ref(
+        await createProvider(providerProxy, {
+          providerDetector,
+          listeners: {
+            onChainChanged: () => {
+              web3Store.connect(providerType)
+            },
+            onAccountChanged: () => {
+              web3Store.connect(providerType)
+            },
+          },
+        }),
+      )
+
+      await state.provider.connect()
+    },
+  }),
+  {
+    isPersist: false,
+  },
+)
