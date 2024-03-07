@@ -43,7 +43,7 @@ export default function EarnHistory() {
           noDataTitle='No history yet'
           noDataAction={
             <Button component={NavLink} to={RoutePaths.Rewards} size='medium'>
-              View active tasks
+              View tasks
             </Button>
           }
           onLoadNext={loadNext}

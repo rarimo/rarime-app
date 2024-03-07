@@ -7,11 +7,11 @@ import { useLoading } from '@/hooks'
 import { rewardsStore, useRewardsState } from '@/store/modules/rewards.module'
 import { UiIcon } from '@/ui'
 
+import ActiveEventsList from './components/ActiveEventsList'
 import BalanceBlock from './components/BalanceBlock'
 import EnterProgram from './components/EnterProgram'
 import LimitedEvents from './components/LimitedEvents'
 import ProgramDetails from './components/ProgramDetails'
-import TasksList from './components/TasksList'
 
 export default function RewardsRoot() {
   const { spacing } = useTheme()
@@ -42,7 +42,7 @@ export default function RewardsRoot() {
           <>
             <BalanceBlock />
             <LimitedEvents />
-            <TasksList />
+            <ActiveEventsList />
           </>
         ) : isLoading ? (
           <>

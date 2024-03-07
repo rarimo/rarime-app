@@ -42,12 +42,12 @@ export default function BalanceBlock() {
         </UiButton>
       </Stack>
       <Divider />
-      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+      <Stack direction={'row'} spacing={4} justifyContent={'space-between'} alignItems={'center'}>
         <Button
           size='medium'
           disabled={!balance}
           startIcon={<UiIcon name={Icons.Swap} size={5} />}
-          sx={{ width: spacing(60), height: spacing(10) }}
+          sx={{ width: spacing(68), height: spacing(10) }}
           onClick={() => setIsClaimModalOpen(true)}
         >
           Claim

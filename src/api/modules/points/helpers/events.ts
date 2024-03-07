@@ -225,7 +225,7 @@ const EVENTS_MOCK: Event[] = [
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getEvents = async (query: EventsRequestQueryParams) => {
   // TODO: Uncomment when API is ready
-  // return api.get<Event[], EventsMeta>(`${ApiServicePaths.Points}/v1/events`, {
+  // return api.get<Event[], EventsMeta>(`${ApiServicePaths.Points}/v1/public/events`, {
   //   query,
   // })
   await sleep(500)
@@ -257,7 +257,7 @@ export const getEvents = async (query: EventsRequestQueryParams) => {
 
 export const getEventById = async (id: string) => {
   // TODO: Uncomment when API is ready
-  // return api.get<Event>(`${ApiServicePaths.Points}/v1/events/${id}`)
+  // return api.get<Event>(`${ApiServicePaths.Points}/v1/public/events/${id}`)
   await sleep(500)
   // eslint-disable-next-line
   // @ts-ignore
@@ -267,7 +267,7 @@ export const getEventById = async (id: string) => {
 }
 
 export const claimEvent = async (id: string) => {
-  return api.post<Event>(`${ApiServicePaths.Points}/v1/events/${id}`, {
+  return api.post<Event>(`${ApiServicePaths.Points}/v1/public/events/${id}`, {
     body: {
       data: {
         id,

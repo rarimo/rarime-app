@@ -101,7 +101,7 @@ const LEADERBOARD_MOCK: Balance[] = [
 
 // Balances
 export const createPointsBalance = async (did: string) => {
-  return api.post<Balance>(`${ApiServicePaths.Points}/v1/balances`, {
+  return api.post<Balance>(`${ApiServicePaths.Points}/v1/public/balances`, {
     body: {
       data: {
         id: did,
@@ -113,7 +113,7 @@ export const createPointsBalance = async (did: string) => {
 
 export const getLeaderboard = async () => {
   // TODO: Uncomment when API is ready
-  // return api.get<Balance[]>(`${ApiServicePaths.Points}/v1/balances`)
+  // return api.get<Balance[]>(`${ApiServicePaths.Points}/v1/public/balances`)
   await sleep(300)
   return {
     data: LEADERBOARD_MOCK,
@@ -123,7 +123,7 @@ export const getLeaderboard = async () => {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getPointsBalance = async (did: string) => {
   // TODO: Uncomment when API is ready
-  // return api.get<Balance>(`${ApiServicePaths.Points}/v1/balances/${did}`)
+  // return api.get<Balance>(`${ApiServicePaths.Points}/v1/public/balances/${did}`)
   await sleep(500)
 
   // eslint-disable-next-line
@@ -132,17 +132,17 @@ export const getPointsBalance = async (did: string) => {
 
   // eslint-disable-next-line
   // @ts-ignore
-  // throw new NotFoundError({})
+  throw new NotFoundError({})
   return { data: BALANCE_MOCK } as unknown as JsonApiResponse<Balance>
 }
 
 // Withdrawals
 export const getWithdrawalHistory = async (did: string) => {
-  return api.get<Withdrawal[]>(`${ApiServicePaths.Link}/v1/proofs?creator=${did}`)
+  return api.get<Withdrawal[]>(`${ApiServicePaths.Points}/v1/public/balances/${did}/withdrawals`)
 }
 
 export const withdrawPoints = async (did: string, amount: number, address: string) => {
-  return api.post<Withdrawal>(`${ApiServicePaths.Points}/v1/balances/${did}/withdrawals`, {
+  return api.post<Withdrawal>(`${ApiServicePaths.Points}/v1/public/balances/${did}/withdrawals`, {
     body: {
       data: {
         type: 'withdraw',
