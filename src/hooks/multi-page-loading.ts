@@ -19,6 +19,7 @@ export const useMultiPageLoading = <D, M>(
   meta?: M
   loadingState: LoadingStates
   load: () => Promise<void>
+  reload: () => Promise<void>
   loadNext: () => Promise<void>
 } => {
   const [response, setResponse] = useState<JsonApiResponse<D[], M>>()
@@ -28,7 +29,6 @@ export const useMultiPageLoading = <D, M>(
   const [hasNext, setHasNext] = useState(true)
 
   const load = useCallback(async () => {
-    reset()
     setLoadingState(LoadingStates.Loading)
     try {
       const res = await loadFn()
@@ -58,12 +58,17 @@ export const useMultiPageLoading = <D, M>(
     }
   }, [response, hasNext, loadingState])
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setData([])
     setMeta(undefined)
     setLoadingState(LoadingStates.Initial)
     setHasNext(true)
-  }
+  }, [])
+
+  const reload = useCallback(async () => {
+    reset()
+    await load()
+  }, [load, reset])
 
   useEffect(() => {
     if (loadOnMount) load()
@@ -75,6 +80,7 @@ export const useMultiPageLoading = <D, M>(
     meta,
     loadingState,
     load,
+    reload,
     loadNext,
   }
 }

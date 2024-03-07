@@ -17,6 +17,7 @@ import DriveFileRenameOutlineOutlined from '@mui/icons-material/DriveFileRenameO
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import FingerPrint from '@mui/icons-material/Fingerprint'
 import FolderOff from '@mui/icons-material/FolderOff'
+import History from '@mui/icons-material/History'
 import InfoIcon from '@mui/icons-material/Info'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import Key from '@mui/icons-material/Key'
@@ -68,6 +69,7 @@ export const ICON_COMPONENTS = {
   driveFileRenameOutlineOutlined: DriveFileRenameOutlineOutlined,
   errorOutline: ErrorOutlineIcon,
   folderOff: FolderOff,
+  history: History,
   info: InfoIcon,
   infoOutlined: InfoOutlinedIcon,
   key: Key,

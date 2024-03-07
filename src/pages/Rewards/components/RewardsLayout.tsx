@@ -23,7 +23,7 @@ export default function RewardsLayout({ children }: PropsWithChildren) {
             color={'secondary'}
           >
             <Stack direction={'row'} spacing={2} alignItems={'center'}>
-              <UiIcon componentName='openInNew' size={4} />
+              <UiIcon componentName='history' size={4} />
               <Typography variant={'buttonSmall'}>Earn History</Typography>
             </Stack>
           </Button>

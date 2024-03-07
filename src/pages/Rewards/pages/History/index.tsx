@@ -1,5 +1,6 @@
+import { UnauthorizedError } from '@distributedlab/jac'
 import { Button, Paper, Stack, Typography } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { EventsRequestFilters, EventStatuses, getEvents } from '@/api/modules/points'
 import BackLink from '@/common/BackLink'
@@ -10,13 +11,25 @@ import { useMultiPageLoading } from '@/hooks/multi-page-loading'
 import EventsTable from './components/EventsTable'
 
 export default function History() {
-  const { data, loadingState, load, loadNext } = useMultiPageLoading(() =>
-    getEvents({
-      filter: {
-        [EventsRequestFilters.Status]: [EventStatuses.Claimed],
-      },
-    }),
-  )
+  const navigate = useNavigate()
+
+  const loadEvents = async () => {
+    try {
+      return await getEvents({
+        filter: {
+          [EventsRequestFilters.Status]: [EventStatuses.Claimed],
+        },
+      })
+    } catch (error) {
+      if (error instanceof UnauthorizedError) {
+        navigate(RoutePaths.Rewards)
+      }
+
+      throw error
+    }
+  }
+
+  const { data, loadingState, load, loadNext } = useMultiPageLoading(loadEvents)
 
   return (
     <Stack spacing={6}>

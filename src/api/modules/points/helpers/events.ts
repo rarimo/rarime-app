@@ -1,8 +1,9 @@
-import { JsonApiResponse } from '@distributedlab/jac'
+import { JsonApiResponse, UnauthorizedError } from '@distributedlab/jac'
 
 import { api } from '@/api/clients'
 import { ApiServicePaths } from '@/enums/api'
 import { sleep } from '@/helpers'
+import { rewardsStore } from '@/store/modules/rewards.module'
 
 import {
   EventMetadataFrequencies,
@@ -228,6 +229,9 @@ export const getEvents = async (query: EventsRequestQueryParams) => {
   //   query,
   // })
   await sleep(500)
+  // eslint-disable-next-line
+  // @ts-ignore
+  if (!rewardsStore.isAuthorized) throw new UnauthorizedError({})
 
   const events = EVENTS_MOCK.filter(event => {
     const statuses = query.filter?.[EventsRequestFilters.Status]
@@ -255,6 +259,10 @@ export const getEventById = async (id: string) => {
   // TODO: Uncomment when API is ready
   // return api.get<Event>(`${ApiServicePaths.Points}/v1/events/${id}`)
   await sleep(500)
+  // eslint-disable-next-line
+  // @ts-ignore
+  if (!rewardsStore.isAuthorized) throw new UnauthorizedError({})
+
   return { data: EVENTS_MOCK.find(event => event.id === id) }
 }
 

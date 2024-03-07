@@ -1,27 +1,33 @@
 import { Box, Paper, Skeleton, Stack, Typography, useTheme } from '@mui/material'
 import { generatePath, NavLink } from 'react-router-dom'
 
-import {
-  EventRequestPageProperties,
-  EventsRequestFilters,
-  EventStatuses,
-  useEvents,
-} from '@/api/modules/points'
+import { EventsRequestFilters, EventStatuses, getEvents } from '@/api/modules/points'
 import { RoutePaths } from '@/enums'
 import { formatDateTime } from '@/helpers'
+import { useLoading } from '@/hooks'
 import RewardChip from '@/pages/Rewards/components/RewardChip'
 import { UiButton } from '@/ui'
 
 export default function LimitedEvents() {
   const { palette, spacing } = useTheme()
 
-  const { events, isLoading, isLoadingError, isEmpty } = useEvents({
-    filter: {
-      [EventsRequestFilters.Status]: [EventStatuses.Open],
-    },
-    page: {
-      [EventRequestPageProperties.Limit]: 1,
-    },
+  const loadEvents = async () => {
+    const { data } = await getEvents({
+      filter: {
+        [EventsRequestFilters.Status]: [EventStatuses.Open],
+      },
+    })
+    return data
+  }
+
+  const {
+    data: events,
+    isLoading,
+    isLoadingError,
+    isEmpty,
+  } = useLoading([], loadEvents, {
+    loadOnMount: true,
+    loadArgs: [],
   })
 
   return (

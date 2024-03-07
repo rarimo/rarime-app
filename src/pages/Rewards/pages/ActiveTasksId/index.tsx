@@ -1,21 +1,37 @@
+import { UnauthorizedError } from '@distributedlab/jac'
 import { Button, CircularProgress, Paper, Stack } from '@mui/material'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 
-import { useEvent } from '@/api/modules/points'
+import { getEventById } from '@/api/modules/points'
 import { NoDataViewer } from '@/common'
 import BackLink from '@/common/BackLink'
 import ErrorViewer from '@/common/ErrorViewer'
 import { RoutePaths } from '@/enums'
-import { useCopyToClipboard } from '@/hooks'
+import { useCopyToClipboard, useLoading } from '@/hooks'
 import { UiIcon } from '@/ui'
 
 import EventView from './components/EventView'
 
 export default function ActiveTasksId() {
   const { id = '' } = useParams<{ id: string }>()
-  const { event, isLoading, isLoadingError } = useEvent(id)
-
   const { copy, isCopied } = useCopyToClipboard()
+  const navigate = useNavigate()
+
+  const loadEvent = async () => {
+    try {
+      const { data } = await getEventById(id)
+      return data
+    } catch (error) {
+      if (error instanceof UnauthorizedError) {
+        navigate(RoutePaths.Rewards)
+        return null
+      }
+
+      throw error
+    }
+  }
+
+  const { data: event, isLoading, isLoadingError } = useLoading(null, loadEvent)
 
   return (
     <Stack spacing={6}>
