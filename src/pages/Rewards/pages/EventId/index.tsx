@@ -12,7 +12,7 @@ import { UiIcon } from '@/ui'
 
 import EventView from './components/EventView'
 
-export default function ActiveTasksId() {
+export default function EventId() {
   const { id = '' } = useParams<{ id: string }>()
   const { copy, isCopied } = useCopyToClipboard()
   const navigate = useNavigate()
@@ -60,7 +60,7 @@ export default function ActiveTasksId() {
           <ErrorViewer
             title='Task cannot be loaded :('
             action={
-              <Button component={NavLink} to={RoutePaths.RewardsActive} size='medium'>
+              <Button component={NavLink} to={RoutePaths.Rewards} size='medium'>
                 View all tasks
               </Button>
             }
@@ -69,7 +69,7 @@ export default function ActiveTasksId() {
           <NoDataViewer
             title='Task not found'
             action={
-              <Button component={NavLink} to={RoutePaths.RewardsActive} size='medium'>
+              <Button component={NavLink} to={RoutePaths.Rewards} size='medium'>
                 View all tasks
               </Button>
             }

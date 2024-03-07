@@ -55,7 +55,7 @@ export default function TasksList() {
               <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
                 <Typography
                   component={NavLink}
-                  to={generatePath(RoutePaths.RewardsActiveId, { id: event.id })}
+                  to={generatePath(RoutePaths.RewardsEventId, { id: event.id })}
                   variant='subtitle4'
                   color={palette.text.primary}
                 >
@@ -78,7 +78,7 @@ export default function TasksList() {
                   ) : (
                     <UiButton
                       component={NavLink}
-                      to={generatePath(RoutePaths.RewardsActiveId, { id: event.id })}
+                      to={generatePath(RoutePaths.RewardsEventId, { id: event.id })}
                       color='secondary'
                       {...sharedButtonProps}
                     >

@@ -42,7 +42,7 @@ export default function LimitedEvents() {
           <Stack direction={'row'} spacing={4}>
             <Box
               component={NavLink}
-              to={generatePath(RoutePaths.RewardsActiveId, { id: events[0].id })}
+              to={generatePath(RoutePaths.RewardsEventId, { id: events[0].id })}
             >
               <Box
                 component='img'
@@ -59,7 +59,7 @@ export default function LimitedEvents() {
             <Stack spacing={2}>
               <Typography
                 component={NavLink}
-                to={generatePath(RoutePaths.RewardsActiveId, { id: events[0].id })}
+                to={generatePath(RoutePaths.RewardsEventId, { id: events[0].id })}
                 variant='subtitle4'
                 color={palette.text.primary}
               >
@@ -88,7 +88,7 @@ export default function LimitedEvents() {
           </Stack>
           <UiButton
             component={NavLink}
-            to={generatePath(RoutePaths.RewardsActiveId, { id: events[0].id })}
+            to={generatePath(RoutePaths.RewardsEventId, { id: events[0].id })}
             color='secondary'
             size='medium'
             sx={{ width: spacing(19), height: spacing(8) }}

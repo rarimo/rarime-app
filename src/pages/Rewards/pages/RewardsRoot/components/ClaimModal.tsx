@@ -6,6 +6,7 @@ import {
   Divider,
   FormControl,
   Stack,
+  Typography,
   useTheme,
 } from '@mui/material'
 import { useCallback } from 'react'
@@ -36,7 +37,7 @@ const DEFAULT_VALUES = {
 }
 
 export default function ClaimModal({ reservedBalance, walletBalance, onClaim, ...rest }: Props) {
-  const { spacing } = useTheme()
+  const { palette, spacing } = useTheme()
   const { userDid } = useIdentityState()
 
   // TODO: Replace with real data
@@ -120,18 +121,14 @@ export default function ClaimModal({ reservedBalance, walletBalance, onClaim, ..
         </Stack>
       </UiDrawerContent>
       <UiDrawerActions>
-        <Stack spacing={2}>
+        <Stack spacing={2} alignItems={'center'} textAlign='center'>
           <Button type='submit' fullWidth disabled={!isLevelReached}>
             Claim
           </Button>
-          <Button
-            color='secondary'
-            fullWidth
-            sx={{ bgcolor: 'transparent' }}
-            onClick={e => rest.onClose?.(e, 'escapeKeyDown')}
-          >
-            Cancel
-          </Button>
+          <Typography variant='body4' maxWidth={spacing(80)} color={palette.text.secondary}>
+            After claiming you will be{' '}
+            <Typography variant='subtitle5'>downgraded in Leaderboard</Typography>
+          </Typography>
         </Stack>
       </UiDrawerActions>
 

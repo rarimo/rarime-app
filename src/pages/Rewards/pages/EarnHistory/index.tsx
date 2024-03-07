@@ -1,5 +1,5 @@
 import { UnauthorizedError } from '@distributedlab/jac'
-import { Button, Paper, Stack, Typography } from '@mui/material'
+import { Button, Divider, Paper, Stack, Typography } from '@mui/material'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { EventsRequestFilters, EventStatuses, getEvents } from '@/api/modules/points'
@@ -8,9 +8,9 @@ import InfiniteList from '@/common/InfiniteList'
 import { RoutePaths } from '@/enums'
 import { useMultiPageLoading } from '@/hooks/multi-page-loading'
 
-import EventsTable from './components/EventsTable'
+import EventRow from './components/EventRow'
 
-export default function History() {
+export default function EarnHistory() {
   const navigate = useNavigate()
 
   const loadEvents = async () => {
@@ -35,21 +35,26 @@ export default function History() {
     <Stack spacing={6}>
       <BackLink to={RoutePaths.Rewards} />
       <Paper component={Stack} spacing={6}>
-        <Typography variant='subtitle3'>My History</Typography>
+        <Typography variant='subtitle3'>Earn History</Typography>
         <InfiniteList
           items={data}
           loadingState={loadingState}
           errorTitle='Failed to load history'
           noDataTitle='No history yet'
           noDataAction={
-            <Button component={NavLink} to={RoutePaths.RewardsActive} size='medium'>
+            <Button component={NavLink} to={RoutePaths.Rewards} size='medium'>
               View active tasks
             </Button>
           }
           onLoadNext={loadNext}
           onRetry={load}
         >
-          <EventsTable items={data} />
+          {data.map((event, index) => (
+            <Stack spacing={4} key={event.id}>
+              <EventRow event={event} />
+              {index < data.length - 1 && <Divider sx={{ ml: 14 }} />}
+            </Stack>
+          ))}
         </InfiniteList>
       </Paper>
     </Stack>

@@ -14,17 +14,17 @@ export default function EventRow({ event }: Props) {
   const { palette } = useTheme()
 
   return (
-    <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+    <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
       <Stack direction={'row'} spacing={4} alignItems='center'>
         <Stack
-          p={2}
+          p={2.5}
           bgcolor={palette.action.active}
           color={palette.text.secondary}
           borderRadius={250}
         >
           <UiIcon name={Icons.Gift} size={5} />
         </Stack>
-        <Stack>
+        <Stack spacing={1}>
           <Typography variant='subtitle4' color={palette.text.primary}>
             {event.meta.static.title}
           </Typography>
@@ -33,9 +33,7 @@ export default function EventRow({ event }: Props) {
           </Typography>
         </Stack>
       </Stack>
-      <Stack direction={'row'} alignItems={'center'} spacing={6}>
-        <RewardChip finished reward={event.meta.static.reward} />
-      </Stack>
+      <RewardChip finished reward={event.meta.static.reward} />
     </Stack>
   )
 }
