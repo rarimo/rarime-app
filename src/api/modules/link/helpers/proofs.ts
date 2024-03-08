@@ -1,6 +1,6 @@
 import { api } from '@/api/clients'
 import { type Proof, type ProofLink } from '@/api/modules/link'
-import { ApiServicePaths } from '@/enums/api'
+import { ApiServicePaths } from '@/enums'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DUMMY_PROOFS: Proof[] = [

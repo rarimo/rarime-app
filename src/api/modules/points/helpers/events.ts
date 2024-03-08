@@ -1,5 +1,5 @@
 import { api } from '@/api/clients'
-import { ApiServicePaths } from '@/enums/api'
+import { ApiServicePaths } from '@/enums'
 
 import { EventMetadataFrequencies, EventsRequestFilters, EventStatuses } from '../enums'
 import { Event, EventsMeta, EventsRequestQueryParams } from '../types/events'

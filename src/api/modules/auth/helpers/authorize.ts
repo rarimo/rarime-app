@@ -3,7 +3,7 @@ import type { ZKProof } from '@rarimo/rarime-connector'
 import { api } from '@/api/clients'
 import { AuthTokensGroup, FillRequestDetails, InvitationDetails } from '@/api/modules/auth'
 import { OrgUserRoles } from '@/api/modules/orgs'
-import { ApiServicePaths } from '@/enums/api'
+import { ApiServicePaths } from '@/enums'
 
 export const authorizeUser = async ({
   role,

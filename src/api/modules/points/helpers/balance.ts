@@ -1,5 +1,5 @@
 import { api } from '@/api/clients'
-import { ApiServicePaths } from '@/enums/api'
+import { ApiServicePaths } from '@/enums'
 
 import { type Balance, type Withdrawal } from '../types'
 
