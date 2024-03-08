@@ -1,8 +1,7 @@
 import { Button, CircularProgress, Stack, useTheme } from '@mui/material'
 import { PropsWithChildren, ReactNode } from 'react'
 
-import { NoDataView } from '@/common'
-import ErrorView from '@/common/ErrorView'
+import { ErrorView, NoDataView } from '@/common'
 import { LoadingStates } from '@/enums'
 
 import IntersectionAnchor from './IntersectionAnchor'

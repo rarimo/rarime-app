@@ -1,8 +1,8 @@
 import { Divider, Stack, Typography, useTheme } from '@mui/material'
 
 import { EventsRequestFilters, EventStatuses, getEvents } from '@/api/modules/points'
-import InfiniteList from '@/common/InfiniteList'
-import { useMultiPageLoading } from '@/hooks/multi-page-loading'
+import { InfiniteList } from '@/common'
+import { useMultiPageLoading } from '@/hooks'
 import { useIdentityState } from '@/store'
 
 import EventItem from './EventItem'

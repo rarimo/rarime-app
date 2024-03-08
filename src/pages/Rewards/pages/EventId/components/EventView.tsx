@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material'
 
-import { Event } from '@/api/modules/points/types/events'
-import MarkdownViewer from '@/common/MarkdownViewer'
+import { Event } from '@/api/modules/points'
+import { MarkdownViewer } from '@/common'
 import { formatDateTime } from '@/helpers'
 import RewardChip from '@/pages/Rewards/components/RewardChip'
 

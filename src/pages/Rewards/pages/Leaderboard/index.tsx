@@ -2,10 +2,9 @@ import { Paper, Stack, Typography } from '@mui/material'
 import { useEffect } from 'react'
 
 import { getLeaderboard } from '@/api/modules/points'
-import BackLink from '@/common/BackLink'
-import InfiniteList from '@/common/InfiniteList'
+import { BackLink, InfiniteList } from '@/common'
 import { RoutePaths } from '@/enums'
-import { useMultiPageLoading } from '@/hooks/multi-page-loading'
+import { useMultiPageLoading } from '@/hooks'
 import { rewardsStore, useRewardsState } from '@/store/modules/rewards.module'
 
 import LeaderboardTable from './components/LeaderboardTable'

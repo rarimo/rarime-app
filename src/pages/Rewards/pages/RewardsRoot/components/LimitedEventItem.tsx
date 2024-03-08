@@ -1,7 +1,7 @@
 import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { generatePath, NavLink } from 'react-router-dom'
 
-import { Event } from '@/api/modules/points/types/events'
+import { Event } from '@/api/modules/points'
 import { RoutePaths } from '@/enums'
 import { formatDateTime } from '@/helpers'
 import RewardChip from '@/pages/Rewards/components/RewardChip'

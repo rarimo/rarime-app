@@ -1,19 +1,10 @@
-import { JsonApiResponse, UnauthorizedError } from '@distributedlab/jac'
-
 import { api } from '@/api/clients'
 import { ApiServicePaths } from '@/enums/api'
-import { sleep } from '@/helpers'
-import { rewardsStore } from '@/store/modules/rewards.module'
 
-import {
-  EventMetadataFrequencies,
-  EventRequestPageProperties,
-  EventsRequestFilters,
-  EventStatuses,
-} from '../enums'
+import { EventMetadataFrequencies, EventsRequestFilters, EventStatuses } from '../enums'
 import { Event, EventsMeta, EventsRequestQueryParams } from '../types/events'
 
-const EVENTS_MOCK: Event[] = [
+export const EVENTS_MOCK: Event[] = [
   {
     id: '1',
     type: 'event',
@@ -222,57 +213,23 @@ const EVENTS_MOCK: Event[] = [
   },
 ]
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getEvents = async (query: EventsRequestQueryParams) => {
-  // TODO: Uncomment when API is ready
-  // const statuses = query.filter?.[EventsRequestFilters.Status]
-  // return api.get<Event[], EventsMeta>(`${ApiServicePaths.Points}/v1/public/events`, {
-  //   query: {
-  //     ...query,
-  //     filter: {
-  //       ...query.filter,
-  //       // JsonApiClient doesn't support nested arrays in query params,
-  //       // so we need to join them manually
-  //       ...(statuses && { [EventsRequestFilters.Status]: statuses.join(',') }),
-  //     },
-  //   },
-  // })
-  await sleep(500)
-  // eslint-disable-next-line
-  // @ts-ignore
-  if (!rewardsStore.isAuthorized) throw new UnauthorizedError({})
-
-  const events = EVENTS_MOCK.filter(event => {
-    const statuses = query.filter?.[EventsRequestFilters.Status]
-    return statuses?.includes(event.status) ?? true
-  }).slice(0, query.page?.[EventRequestPageProperties.Limit])
-
-  return {
-    data: new Array(20).fill(0).map((_, index) => ({
-      ...events[index % events.length],
-      id: events[index % events.length].id,
-      meta: {
-        ...events[index % events.length].meta,
-        static: {
-          ...events[index % events.length].meta.static,
-          title: `${events[index % events.length].meta.static.title} ${index}`,
-        },
+  const statuses = query.filter?.[EventsRequestFilters.Status]
+  return api.get<Event[], EventsMeta>(`${ApiServicePaths.Points}/v1/public/events`, {
+    query: {
+      ...query,
+      filter: {
+        ...query.filter,
+        // JsonApiClient doesn't support nested arrays in query params,
+        // so we need to join them manually
+        ...(statuses && { [EventsRequestFilters.Status]: statuses.join(',') }),
       },
-    })),
-    meta: { events_count: events.length },
-    fetchPage: () => getEvents(query),
-  } as unknown as JsonApiResponse<Event[], EventsMeta>
+    },
+  })
 }
 
 export const getEventById = async (id: string) => {
-  // TODO: Uncomment when API is ready
-  // return api.get<Event>(`${ApiServicePaths.Points}/v1/public/events/${id}`)
-  await sleep(500)
-  // eslint-disable-next-line
-  // @ts-ignore
-  if (!rewardsStore.isAuthorized) throw new UnauthorizedError({})
-
-  return { data: EVENTS_MOCK.find(event => event.id === id) }
+  return api.get<Event>(`${ApiServicePaths.Points}/v1/public/events/${id}`)
 }
 
 export const claimEvent = async (id: string) => {

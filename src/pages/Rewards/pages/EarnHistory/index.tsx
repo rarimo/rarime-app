@@ -3,10 +3,9 @@ import { Button, Divider, Paper, Stack, Typography } from '@mui/material'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { EventsRequestFilters, EventStatuses, getEvents } from '@/api/modules/points'
-import BackLink from '@/common/BackLink'
-import InfiniteList from '@/common/InfiniteList'
+import { BackLink, InfiniteList } from '@/common'
 import { RoutePaths } from '@/enums'
-import { useMultiPageLoading } from '@/hooks/multi-page-loading'
+import { useMultiPageLoading } from '@/hooks'
 
 import EventItem from './components/EventItem'
 

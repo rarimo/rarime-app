@@ -1,6 +1,6 @@
 import { Paper, Stack, Typography, useTheme } from '@mui/material'
 
-import BackLink from '@/common/BackLink'
+import { BackLink } from '@/common'
 import { RoutePaths } from '@/enums'
 
 export default function About() {

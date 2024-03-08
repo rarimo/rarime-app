@@ -1,6 +1,6 @@
 import { Stack, Typography, useTheme } from '@mui/material'
 
-import { Event } from '@/api/modules/points/types/events'
+import { Event } from '@/api/modules/points'
 import { Icons } from '@/enums'
 import { formatDateDMY, timestampToDate } from '@/helpers'
 import RewardChip from '@/pages/Rewards/components/RewardChip'

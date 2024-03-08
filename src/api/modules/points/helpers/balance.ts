@@ -1,13 +1,9 @@
-import { JsonApiResponse, NotFoundError, UnauthorizedError } from '@distributedlab/jac'
-
 import { api } from '@/api/clients'
 import { ApiServicePaths } from '@/enums/api'
-import { sleep } from '@/helpers'
-import { rewardsStore } from '@/store/modules/rewards.module'
 
 import { type Balance, type Withdrawal } from '../types'
 
-const BALANCE_MOCK: Balance = {
+export const BALANCE_MOCK: Balance = {
   id: 'did:iden3:readonly:tTep1wgHSGULyrAgWD1SKDxtg1jAPGzZuXuHNPknH',
   type: 'balance',
   amount: 175,
@@ -16,7 +12,7 @@ const BALANCE_MOCK: Balance = {
   rank: 291,
 }
 
-const LEADERBOARD_MOCK: Balance[] = [
+export const LEADERBOARD_MOCK: Balance[] = [
   {
     id: 'did:iden3:readonly:mhQHvqmvimneVHCL5EufeZvfzigRt',
     amount: 25345,
@@ -112,28 +108,11 @@ export const createPointsBalance = async (did: string) => {
 }
 
 export const getLeaderboard = async () => {
-  // TODO: Uncomment when API is ready
-  // return api.get<Balance[]>(`${ApiServicePaths.Points}/v1/public/balances`)
-  await sleep(300)
-  return {
-    data: LEADERBOARD_MOCK,
-  } as unknown as JsonApiResponse<Balance[]>
+  return api.get<Balance[]>(`${ApiServicePaths.Points}/v1/public/balances`)
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getPointsBalance = async (did: string) => {
-  // TODO: Uncomment when API is ready
-  // return api.get<Balance>(`${ApiServicePaths.Points}/v1/public/balances/${did}`)
-  await sleep(500)
-
-  // eslint-disable-next-line
-  // @ts-ignore
-  if (!rewardsStore.isAuthorized) throw new UnauthorizedError({})
-
-  // eslint-disable-next-line
-  // @ts-ignore
-  // throw new NotFoundError({})
-  return { data: BALANCE_MOCK } as unknown as JsonApiResponse<Balance>
+  return api.get<Balance>(`${ApiServicePaths.Points}/v1/public/balances/${did}`)
 }
 
 // Withdrawals

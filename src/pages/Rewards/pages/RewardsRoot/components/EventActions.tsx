@@ -1,8 +1,7 @@
 import { Button, ButtonProps, useTheme } from '@mui/material'
 import { generatePath, NavLink } from 'react-router-dom'
 
-import { EventStatuses } from '@/api/modules/points'
-import { Event } from '@/api/modules/points/types/events'
+import { Event, EventStatuses } from '@/api/modules/points'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
 
