@@ -2,7 +2,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Add from '@mui/icons-material/Add'
 import AddPhotoAlternateOutlined from '@mui/icons-material/AddPhotoAlternateOutlined'
 import AllInclusiveOutlinedIcon from '@mui/icons-material/AllInclusiveOutlined'
+import ArrowBack from '@mui/icons-material/ArrowBack'
+import ArrowDownward from '@mui/icons-material/ArrowDownward'
 import ArrowForward from '@mui/icons-material/ArrowForward'
+import ArrowUpward from '@mui/icons-material/ArrowUpward'
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined'
 import CheckIcon from '@mui/icons-material/Check'
 import ChevronLeft from '@mui/icons-material/ChevronLeft'
@@ -30,6 +33,7 @@ import Notifications from '@mui/icons-material/Notifications'
 import OpenInNew from '@mui/icons-material/OpenInNew'
 import QrCode from '@mui/icons-material/QrCode'
 import Search from '@mui/icons-material/Search'
+import ShowChart from '@mui/icons-material/ShowChart'
 import Tune from '@mui/icons-material/Tune'
 import Verified from '@mui/icons-material/Verified'
 import WarningAmberIcon from '@mui/icons-material/WarningAmber'
@@ -51,6 +55,9 @@ export const ICON_COMPONENTS = {
   add: Add,
   addPhotoAlternativeOutlined: AddPhotoAlternateOutlined,
   arrowForward: ArrowForward,
+  arrowDownward: ArrowDownward,
+  arrowUpward: ArrowUpward,
+  arrowBack: ArrowBack,
   check: CheckIcon,
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
@@ -83,4 +90,5 @@ export const ICON_COMPONENTS = {
   calendarTodayOutlinedIcon: CalendarTodayOutlinedIcon,
   allInclusiveOutlinedIcon: AllInclusiveOutlinedIcon,
   moreHoriz: MoreHoriz,
+  showChart: ShowChart,
 }

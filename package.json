@@ -43,9 +43,7 @@
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
     "@mui/x-date-pickers": "^6.18.7",
-    "@rarimo/client": "*",
-    "@rarimo/rarime-connector": "*",
-    "@rarimo/shared": "*",
+    "@rarimo/rarime-connector": "^2.1.0-rc.9",
     "@walletconnect/modal": "^2.6.2",
     "copy-to-clipboard": "^3.3.3",
     "i18next": "^22.4.3",
@@ -58,6 +56,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
     "react-i18next": "^12.1.1",
+    "react-qrcode-logo": "^2.9.0",
     "react-router-dom": "^6.20.1",
     "react-use": "^17.4.2",
     "uuid": "^9.0.1",
@@ -99,26 +98,5 @@
     "vite-tsconfig-paths": "^4.0.3",
     "yorkie": "^2.0.0"
   },
-  "packageManager": "yarn@4.0.2",
-  "resolutions": {
-    "rarime-snap-monorepo": "portal:/Users/lukachisama/Documents/RARIMO/IDENTITY/snaps/rarime",
-    "@rarimo/rarime-connector": "portal:/Users/lukachisama/Documents/RARIMO/IDENTITY/snaps/rarime/packages/connector",
-    "@rarimo/rarime": "portal:/Users/lukachisama/Documents/RARIMO/IDENTITY/snaps/rarime/packages/snap",
-    "rarimo-js-sdk-monorepo-root": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk",
-    "@rarimo/auth-zkp-iden3": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/auth-zkp-iden3",
-    "@rarimo/bridge": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/bridge",
-    "@rarimo/client": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/client",
-    "@rarimo/identity-gen-iden3": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/identity-gen-iden3",
-    "@rarimo/nft-checkout": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/nft-checkout",
-    "@rarimo/provider": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/provider",
-    "@rarimo/providers-evm": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/providers-evm",
-    "@rarimo/providers-near": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/providers-near",
-    "@rarimo/providers-solana": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/providers-solana",
-    "@rarimo/react-nft-checkout": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/react-nft-checkout",
-    "@rarimo/react-provider": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/react-provider",
-    "@rarimo/shared": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/shared",
-    "@rarimo/shared-zkp-iden3": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/shared-zkp-iden3",
-    "@rarimo/swap": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/swap",
-    "@rarimo/zkp-gen-iden3": "portal:/Users/lukachisama/Documents/RARIMO/js-sdk/packages/zkp-gen-iden3"
-  }
+  "packageManager": "yarn@4.0.2"
 }

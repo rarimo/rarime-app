@@ -1,6 +1,7 @@
 export * from './modals'
 export { default as UiButton } from './UiButton'
 export { default as UiCheckbox } from './UiCheckbox'
+export { default as UiCopyField } from './UiCopyField'
 export { default as UiDatePicker } from './UiDatePicker'
 export { default as UiDrawer, UiDrawerActions, UiDrawerContent, UiDrawerTitle } from './UiDrawer'
 export { default as UiIcon } from './UiIcon'
