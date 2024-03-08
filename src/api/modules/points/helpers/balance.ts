@@ -132,7 +132,7 @@ export const getPointsBalance = async (did: string) => {
 
   // eslint-disable-next-line
   // @ts-ignore
-  throw new NotFoundError({})
+  // throw new NotFoundError({})
   return { data: BALANCE_MOCK } as unknown as JsonApiResponse<Balance>
 }
 

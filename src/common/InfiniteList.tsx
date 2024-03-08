@@ -1,8 +1,8 @@
 import { Button, CircularProgress, Stack, useTheme } from '@mui/material'
 import { PropsWithChildren, ReactNode } from 'react'
 
-import { NoDataViewer } from '@/common'
-import ErrorViewer from '@/common/ErrorViewer'
+import { NoDataView } from '@/common'
+import ErrorView from '@/common/ErrorView'
 import { LoadingStates } from '@/hooks/multi-page-loading'
 
 import IntersectionAnchor from './IntersectionAnchor'
@@ -34,7 +34,7 @@ export default function InfiniteList<D>({
       <CircularProgress color={'secondary'} />
     </Stack>
   ) : !items.length && loadingState === LoadingStates.Error ? (
-    <ErrorViewer
+    <ErrorView
       title={errorTitle}
       action={
         <Button size='medium' onClick={onRetry}>
@@ -43,7 +43,7 @@ export default function InfiniteList<D>({
       }
     />
   ) : !items.length ? (
-    <NoDataViewer title={noDataTitle} action={noDataAction} />
+    <NoDataView title={noDataTitle} action={noDataAction} />
   ) : (
     <Stack position='relative' spacing={4}>
       {children}

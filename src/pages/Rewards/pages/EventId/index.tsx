@@ -3,9 +3,9 @@ import { Button, CircularProgress, Paper, Stack } from '@mui/material'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 
 import { getEventById } from '@/api/modules/points'
-import { NoDataViewer } from '@/common'
+import { NoDataView } from '@/common'
 import BackLink from '@/common/BackLink'
-import ErrorViewer from '@/common/ErrorViewer'
+import ErrorView from '@/common/ErrorView'
 import { RoutePaths } from '@/enums'
 import { useCopyToClipboard, useLoading } from '@/hooks'
 import { UiIcon } from '@/ui'
@@ -57,7 +57,7 @@ export default function EventId() {
             <CircularProgress color={'secondary'} />
           </Stack>
         ) : isLoadingError ? (
-          <ErrorViewer
+          <ErrorView
             title='Task cannot be loaded :('
             action={
               <Button component={NavLink} to={RoutePaths.Rewards} size='medium'>
@@ -66,7 +66,7 @@ export default function EventId() {
             }
           />
         ) : !event ? (
-          <NoDataViewer
+          <NoDataView
             title='Task not found'
             action={
               <Button component={NavLink} to={RoutePaths.Rewards} size='medium'>

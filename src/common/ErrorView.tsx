@@ -10,7 +10,7 @@ interface Props extends StackProps {
   action?: ReactNode
 }
 
-export default function ErrorViewer({
+export default function ErrorView({
   icon = <UiIcon componentName='errorOutline' />,
   title = 'Error',
   description,

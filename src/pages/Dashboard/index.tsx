@@ -14,7 +14,7 @@ import { useMemo } from 'react'
 import { generatePath, NavLink, useLocation } from 'react-router-dom'
 
 import { getClaimIdFromVC } from '@/api/modules/zkp'
-import { CredentialCard, NoDataViewer, PageTitles } from '@/common'
+import { CredentialCard, NoDataView, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useLoading } from '@/hooks'
 import { credentialsStore, useCredentialsState } from '@/store'
@@ -92,7 +92,7 @@ export default function Dashboard() {
           // TODO: create ErrorMessage component
           <Typography>{`There's an error occurred, please, reload page`}</Typography>
         ) : !lastVCsDesc.length || isEmpty(issuersDetails) ? (
-          <NoDataViewer
+          <NoDataView
             title={'No Credentials'}
             action={<UiButton onClick={reload}>Load Credentials</UiButton>}
           />

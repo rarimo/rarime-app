@@ -10,7 +10,7 @@ interface Props extends StackProps {
   action?: ReactNode
 }
 
-export default function NoDataViewer({
+export default function NoDataView({
   icon = <UiIcon componentName='folderOff' />,
   title = 'No data',
   description,
