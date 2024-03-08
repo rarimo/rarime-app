@@ -5,13 +5,11 @@ import { getLeaderboard } from '@/api/modules/points'
 import { BackLink, InfiniteList } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useMultiPageLoading } from '@/hooks'
-import { rewardsStore, useRewardsState } from '@/store/modules/rewards.module'
+import { rewardsStore } from '@/store'
 
-import LeaderboardTable from './components/LeaderboardTable'
+import LeaderboardList from './components/LeaderboardList'
 
 export default function Leaderboard() {
-  const { balance } = useRewardsState()
-
   const { data: leaderboard, loadingState, load } = useMultiPageLoading(() => getLeaderboard())
 
   useEffect(() => {
@@ -28,11 +26,11 @@ export default function Leaderboard() {
           loadingState={loadingState}
           errorTitle='Leaderbord cannot be loaded :('
           noDataTitle='Leaderboard is empty'
-          // Now loading only the first page
+          // For now displaying only the first page
           onLoadNext={() => {}}
           onRetry={load}
         >
-          <LeaderboardTable leaderboard={leaderboard} balance={balance} />
+          <LeaderboardList leaderboard={leaderboard} />
         </InfiniteList>
       </Paper>
     </Stack>

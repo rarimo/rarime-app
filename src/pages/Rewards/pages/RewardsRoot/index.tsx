@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useLoading } from '@/hooks'
-import { rewardsStore, useRewardsState } from '@/store/modules/rewards.module'
+import { rewardsStore, useRewardsState } from '@/store'
 import { UiIcon } from '@/ui'
 
 import ActiveEventsList from './components/ActiveEventsList'

@@ -9,11 +9,12 @@ import { UiIcon } from '@/ui'
 
 import EventActions from './EventActions'
 
-type Props = {
+interface Props {
   event: Event
+  onClaim: () => Promise<void>
 }
 
-export default function EventItem({ event }: Props) {
+export default function EventItem({ event, onClaim }: Props) {
   const { palette } = useTheme()
 
   return (
@@ -43,7 +44,7 @@ export default function EventItem({ event }: Props) {
       </Stack>
       <Stack direction={'row'} alignItems={'center'} spacing={4}>
         <RewardChip reward={event.meta.static.reward} />
-        <EventActions event={event} />
+        <EventActions event={event} onClaim={onClaim} />
       </Stack>
     </Stack>
   )

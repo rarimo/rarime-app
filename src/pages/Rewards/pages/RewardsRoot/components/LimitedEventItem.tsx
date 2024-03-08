@@ -9,11 +9,12 @@ import { lineClamp } from '@/theme/helpers'
 
 import EventActions from './EventActions'
 
-type Props = {
+interface Props {
   event: Event
+  onClaim: () => Promise<void>
 }
 
-export default function LimitedEventItem({ event }: Props) {
+export default function LimitedEventItem({ event, onClaim }: Props) {
   const { palette, spacing } = useTheme()
 
   return (
@@ -52,7 +53,7 @@ export default function LimitedEventItem({ event }: Props) {
           </Stack>
         </Stack>
       </Stack>
-      <EventActions event={event} />
+      <EventActions event={event} onClaim={onClaim} />
     </Stack>
   )
 }

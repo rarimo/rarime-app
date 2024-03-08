@@ -1,76 +1,71 @@
-import { Box, BoxProps, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { Box, BoxProps, Grid, Stack, StackProps, Typography, useTheme } from '@mui/material'
 import { useMemo } from 'react'
 
 import { Balance } from '@/api/modules/points'
 import { UserAvatar } from '@/common'
+import { formatDidShort, formatNumber } from '@/helpers'
 import { useIdentityState } from '@/store'
-
-// TODO: experimental, replace with formatter
-function formatDid(value: string, maxLength = 16) {
-  const startLength = Math.floor(maxLength / 2)
-  const endLength = maxLength - startLength
-
-  const did = value.replace('did:iden3:readonly:', '')
-  return did.length > maxLength ? did.slice(0, startLength) + '...' + did.slice(-endLength) : did
-}
 
 interface Props {
   balance: Balance
   rank: number
 }
 
-export default function LeaderboardRow({ balance, rank }: Props) {
+export default function LeaderboardItem({ balance, rank }: Props) {
   const { palette, spacing } = useTheme()
   const { userDid } = useIdentityState()
 
   const leaderIcon = useMemo(() => {
-    switch (rank) {
-      case 1:
-        return '🥇'
-      case 2:
-        return '🥈'
-      case 3:
-        return '🥉'
-      default:
-        return ''
-    }
+    return ['', '🥇', '🥈', '🥉'][rank] ?? ''
   }, [rank])
 
   const isMyDid = useMemo(() => userDid === balance.id, [userDid, balance.id])
 
-  const boxProps: BoxProps = isMyDid
-    ? {
-        bgcolor: palette.action.active,
-        px: 6,
-        mx: -6,
-        borderRadius: 2,
-        sx: {
-          '& + .MuiBox-root': {
-            borderTop: 0,
+  const wrapperProps = useMemo<BoxProps>(() => {
+    return isMyDid
+      ? {
+          bgcolor: palette.action.active,
+          px: 6,
+          mx: -6,
+          borderRadius: 2,
+          sx: {
+            '& + .MuiBox-root': {
+              borderTop: 0,
+            },
           },
-        },
-      }
-    : {
-        borderTop: 1,
-        borderColor: palette.divider,
-      }
+        }
+      : {
+          borderTop: 1,
+          borderColor: palette.divider,
+        }
+  }, [isMyDid, palette])
+
+  const rankProps = useMemo<StackProps>(() => {
+    return rank > 3
+      ? {
+          bgcolor: isMyDid ? palette.background.paper : undefined,
+          color: palette.text.primary,
+          borderColor: palette.action.active,
+        }
+      : {
+          bgcolor: palette.primary.main,
+          color: palette.common.black,
+          borderColor: palette.primary.main,
+        }
+  }, [isMyDid, palette, rank])
 
   return (
-    <Box py={4} {...boxProps}>
+    <Box py={4} {...wrapperProps}>
       <Grid container spacing={16} alignItems={'center'}>
         <Grid item xs={2}>
           <Stack
             justifyContent={'center'}
             alignItems={'center'}
-            bgcolor={
-              rank <= 3 ? palette.primary.main : isMyDid ? palette.background.paper : undefined
-            }
-            color={rank <= 3 ? palette.common.black : palette.text.primary}
             width={spacing(8)}
             height={spacing(8)}
             borderRadius={250}
             border={1}
-            borderColor={rank <= 3 ? palette.primary.main : palette.action.active}
+            {...rankProps}
           >
             <Typography variant={rank >= 100 ? 'subtitle5' : 'subtitle4'}>{rank}</Typography>
           </Stack>
@@ -80,7 +75,7 @@ export default function LeaderboardRow({ balance, rank }: Props) {
             <Stack direction={'row'} alignItems={'center'} spacing={2}>
               <UserAvatar userDid={balance.id} size={5} />
               <Typography variant='subtitle4'>
-                {`${formatDid(balance.id, 24)} ${leaderIcon}`}
+                {`${formatDidShort(balance.id)} ${leaderIcon}`}
               </Typography>
             </Stack>
             {isMyDid && (
@@ -105,7 +100,7 @@ export default function LeaderboardRow({ balance, rank }: Props) {
             bgcolor={palette.action.active}
             borderRadius={12}
           >
-            {new Intl.NumberFormat().format(balance.amount)}
+            {formatNumber(balance.amount)}
           </Typography>
         </Grid>
       </Grid>

@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 
 declare module 'canvas-confetti' {
   interface Options {
+    // canvas-confetti does not have a type definition for flat
     flat?: boolean
   }
 }
@@ -11,7 +12,7 @@ export function useConfetti() {
   const fireConfetti = useCallback((target: HTMLElement) => {
     const { x, y, width, height } = target.getBoundingClientRect()
 
-    const commonOptions: confetti.Options = {
+    const commonOpts: confetti.Options = {
       spread: 360,
       ticks: 50,
       gravity: 0.4,
@@ -25,13 +26,9 @@ export function useConfetti() {
       },
     }
 
-    const firingOptions: confetti.Options[] = [
-      { ...commonOptions, particleCount: 20 },
-      { ...commonOptions, particleCount: 10, scalar: 0.15 },
-      { ...commonOptions, particleCount: 30, scalar: 0.25 },
-    ]
-
-    firingOptions.forEach(confetti)
+    confetti({ ...commonOpts, particleCount: 20 })
+    confetti({ ...commonOpts, particleCount: 10, scalar: 0.15 })
+    confetti({ ...commonOpts, particleCount: 30, scalar: 0.25 })
   }, [])
 
   return { fireConfetti }

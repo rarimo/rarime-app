@@ -21,7 +21,7 @@ export default function EventView({ event }: Props) {
             <RewardChip reward={event.meta.static.reward} />
             {event.meta.static.expires_at && (
               <Typography variant='caption2' color={palette.text.secondary}>
-                Exp: {formatDateTime(event.meta.static.expires_at!)}
+                Exp: {formatDateTime(event.meta.static.expires_at)}
               </Typography>
             )}
           </Stack>
@@ -45,6 +45,7 @@ export default function EventView({ event }: Props) {
           component={'a'}
           href={event.meta.static.action_url}
           target='_blank'
+          rel='noreferrer noopener'
           sx={{ width: spacing(40) }}
         >
           {"Let's Start"}

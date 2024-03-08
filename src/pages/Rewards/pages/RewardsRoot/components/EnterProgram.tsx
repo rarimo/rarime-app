@@ -10,7 +10,7 @@ import {
 
 import { Icons } from '@/enums'
 import { useLoading } from '@/hooks'
-import { rewardsStore } from '@/store/modules/rewards.module'
+import { rewardsStore } from '@/store'
 import { UiIcon } from '@/ui'
 
 export default function EnterProgram() {

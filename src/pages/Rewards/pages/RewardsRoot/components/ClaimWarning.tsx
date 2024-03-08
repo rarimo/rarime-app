@@ -3,7 +3,7 @@ import { MouseEvent } from 'react'
 
 import { UiIcon } from '@/ui'
 
-type Props = StackProps & {
+interface Props extends StackProps {
   onAction?: (event: MouseEvent<HTMLButtonElement>) => void
 }
 

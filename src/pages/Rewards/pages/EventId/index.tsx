@@ -29,7 +29,7 @@ export default function EventId() {
     }
   }
 
-  const { data: event, isLoading, isLoadingError } = useLoading(null, loadEvent)
+  const { data: event, isLoading, isLoadingError, reload } = useLoading(null, loadEvent)
 
   return (
     <Stack spacing={6}>
@@ -56,24 +56,24 @@ export default function EventId() {
           </Stack>
         ) : isLoadingError ? (
           <ErrorView
-            title='Task cannot be loaded :('
+            title='Event cannot be loaded'
             action={
-              <Button component={NavLink} to={RoutePaths.Rewards} size='medium'>
-                View all tasks
+              <Button size='medium' onClick={reload}>
+                Retry
               </Button>
             }
           />
-        ) : !event ? (
-          <NoDataView
-            title='Task not found'
-            action={
-              <Button component={NavLink} to={RoutePaths.Rewards} size='medium'>
-                View all tasks
-              </Button>
-            }
-          />
-        ) : (
+        ) : event ? (
           <EventView event={event} />
+        ) : (
+          <NoDataView
+            title='Event not found'
+            action={
+              <Button component={NavLink} to={RoutePaths.Rewards} size='medium'>
+                View all events
+              </Button>
+            }
+          />
         )}
       </Paper>
     </Stack>

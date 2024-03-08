@@ -16,15 +16,13 @@ import { withdrawPoints } from '@/api/modules/points'
 import { BusEvents } from '@/enums'
 import { bus, ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
-import { useIdentityState } from '@/store'
+import { useIdentityState, useRewardsState } from '@/store'
 import { UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiTextField } from '@/ui'
 
 import ClaimBalances from './ClaimBalances'
 import ClaimWarning from './ClaimWarning'
 
-type Props = DialogProps & {
-  reservedBalance: number
-  walletBalance: number
+interface Props extends DialogProps {
   onClaim: () => void
 }
 
@@ -36,17 +34,22 @@ const DEFAULT_VALUES = {
   [FieldNames.Amount]: '',
 }
 
-export default function ClaimModal({ reservedBalance, walletBalance, onClaim, ...rest }: Props) {
+export default function ClaimModal({ onClaim, ...rest }: Props) {
   const { palette, spacing } = useTheme()
   const { userDid } = useIdentityState()
+  const { balance } = useRewardsState()
 
-  // TODO: Replace with real data
+  // TODO: Replace with real level check
   const isLevelReached = false
 
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
       yup.object().shape({
-        [FieldNames.Amount]: yup.number().required().min(1).max(reservedBalance),
+        [FieldNames.Amount]: yup
+          .number()
+          .required()
+          .min(1)
+          .max(balance?.amount ?? 0),
       }),
     )
 
@@ -62,7 +65,7 @@ export default function ClaimModal({ reservedBalance, walletBalance, onClaim, ..
           'rarimo',
         )
         bus.emit(BusEvents.success, {
-          message: `Claimed ${formData[FieldNames.Amount]} RMO`,
+          message: `${formData[FieldNames.Amount]} RMO claimed`,
         })
         onClaim()
       } catch (error) {
@@ -87,7 +90,7 @@ export default function ClaimModal({ reservedBalance, walletBalance, onClaim, ..
       <UiDrawerContent>
         <Stack spacing={5}>
           {!isLevelReached && <ClaimWarning onAction={e => rest.onClose?.(e, 'escapeKeyDown')} />}
-          <ClaimBalances reservedBalance={reservedBalance} walletBalance={walletBalance} />
+          <ClaimBalances />
           <Controller
             name={FieldNames.Amount}
             control={control}
@@ -107,7 +110,7 @@ export default function ClaimModal({ reservedBalance, walletBalance, onClaim, ..
                           variant='text'
                           size='medium'
                           color='secondary'
-                          onClick={() => field.onChange(reservedBalance)}
+                          onClick={() => field.onChange(balance?.amount ?? 0)}
                         >
                           MAX
                         </Button>

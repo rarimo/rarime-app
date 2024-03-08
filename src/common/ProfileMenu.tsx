@@ -89,7 +89,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
               variant={'subtitle4'}
               overflow={'hidden'}
               textOverflow={'ellipsis'}
-              maxWidth={spacing(30)}
+              maxWidth={spacing(40)}
             >
               {formatDid(userDid)}
             </Typography>

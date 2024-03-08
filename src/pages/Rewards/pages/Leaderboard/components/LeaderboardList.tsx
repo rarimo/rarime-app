@@ -2,16 +2,17 @@ import { Grid, Stack, Typography, useTheme } from '@mui/material'
 import { useMemo } from 'react'
 
 import { Balance } from '@/api/modules/points'
+import { useRewardsState } from '@/store'
 
-import LeaderboardRow from './LeaderboardRow'
+import LeaderboardItem from './LeaderboardItem'
 
 interface Props {
   leaderboard: Balance[]
-  balance: Balance | null
 }
 
-export default function LeaderboardTable({ leaderboard, balance }: Props) {
+export default function LeaderboardList({ leaderboard }: Props) {
   const { palette } = useTheme()
+  const { balance } = useRewardsState()
 
   const hasMyBalance = useMemo(() => {
     return leaderboard.some(participant => participant.id === balance?.id)
@@ -38,10 +39,10 @@ export default function LeaderboardTable({ leaderboard, balance }: Props) {
       </Grid>
       <Stack>
         {leaderboard.map((participant, index) => (
-          <LeaderboardRow key={participant.id} balance={participant} rank={index + 1} />
+          <LeaderboardItem key={participant.id} balance={participant} rank={index + 1} />
         ))}
 
-        {balance && !hasMyBalance && <LeaderboardRow balance={balance} rank={balance.rank} />}
+        {balance && !hasMyBalance && <LeaderboardItem balance={balance} rank={balance.rank} />}
       </Stack>
     </Stack>
   )

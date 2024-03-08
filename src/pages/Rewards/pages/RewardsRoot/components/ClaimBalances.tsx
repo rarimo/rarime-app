@@ -1,20 +1,20 @@
-import { Divider, Stack, StackProps, Typography, useTheme } from '@mui/material'
+import { Divider, Stack, Typography, useTheme } from '@mui/material'
 
-type Props = StackProps & {
-  reservedBalance: number
-  walletBalance: number
-}
+import { useRewardsState } from '@/store'
 
-export default function ClaimBalances({ reservedBalance, walletBalance, ...rest }: Props) {
+export default function ClaimBalances() {
   const { palette, spacing } = useTheme()
+  const { balance } = useRewardsState()
+  // TODO: replace with real wallet balance
+  const walletBalance = 0
 
   const balances = [
-    { label: 'From', title: 'Reserved', value: reservedBalance },
+    { label: 'From', title: 'Reserved', value: balance?.amount ?? 0 },
     { label: 'To', title: 'Balance', value: walletBalance },
   ]
 
   return (
-    <Stack spacing={4} p={4} bgcolor={palette.action.active} borderRadius={2} {...rest}>
+    <Stack spacing={4} p={4} bgcolor={palette.action.active} borderRadius={2}>
       {balances.map((balance, index) => (
         <Stack key={index} spacing={4}>
           <Stack direction={'row'} justifyContent={'space-between'}>

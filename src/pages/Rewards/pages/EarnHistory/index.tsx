@@ -6,17 +6,20 @@ import { EventsRequestFilters, EventStatuses, getEvents } from '@/api/modules/po
 import { BackLink, InfiniteList } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useMultiPageLoading } from '@/hooks'
+import { useIdentityState } from '@/store'
 
 import EventItem from './components/EventItem'
 
 export default function EarnHistory() {
   const navigate = useNavigate()
+  const { userDid } = useIdentityState()
 
   const loadEvents = async () => {
     try {
       return await getEvents({
         filter: {
           [EventsRequestFilters.Status]: [EventStatuses.Claimed],
+          [EventsRequestFilters.Did]: userDid,
         },
       })
     } catch (error) {
@@ -42,7 +45,7 @@ export default function EarnHistory() {
           noDataTitle='No history yet'
           noDataAction={
             <Button component={NavLink} to={RoutePaths.Rewards} size='medium'>
-              View tasks
+              View active events
             </Button>
           }
           onLoadNext={loadNext}

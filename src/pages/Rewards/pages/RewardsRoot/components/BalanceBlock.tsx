@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
-import { useRewardsState } from '@/store/modules/rewards.module'
+import { useRewardsState } from '@/store'
 import { UiIcon } from '@/ui'
 
 import ClaimModal from './ClaimModal'
@@ -60,8 +60,6 @@ export default function BalanceBlock() {
 
       <ClaimModal
         open={isClaimModalOpen}
-        reservedBalance={balance?.amount ?? 0}
-        walletBalance={0}
         onClose={() => setIsClaimModalOpen(false)}
         onClaim={() => setIsClaimModalOpen(false)}
       />

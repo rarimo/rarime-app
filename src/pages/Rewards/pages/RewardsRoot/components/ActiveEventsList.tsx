@@ -33,15 +33,15 @@ export default function ActiveEventsList() {
       <InfiniteList
         items={data}
         loadingState={loadingState}
-        errorTitle='Failed to load active tasks'
-        noDataTitle='No active tasks yet'
+        errorTitle='Failed to load active events'
+        noDataTitle='No active events yet'
         onLoadNext={loadNext}
         onRetry={load}
       >
         <Stack spacing={4}>
           {data.map((event, index) => (
             <Stack spacing={4} key={event.id}>
-              <EventItem event={event} />
+              <EventItem event={event} onClaim={load} />
               {index < data.length - 1 && <Divider sx={{ ml: 14 }} />}
             </Stack>
           ))}

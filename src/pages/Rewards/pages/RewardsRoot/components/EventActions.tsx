@@ -1,35 +1,46 @@
-import { Button, ButtonProps, useTheme } from '@mui/material'
+import { Button, SxProps, useTheme } from '@mui/material'
+import { useMemo, useRef } from 'react'
 import { generatePath, NavLink } from 'react-router-dom'
 
-import { Event, EventStatuses } from '@/api/modules/points'
+import { claimEvent, Event, EventStatuses } from '@/api/modules/points'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
+import { useLoading } from '@/hooks'
 
 import { useConfetti } from '../hooks/useConfetti'
 
-type Props = {
+interface Props {
   event: Event
+  onClaim: () => Promise<void>
 }
 
-export default function EventActions({ event }: Props) {
+export default function EventActions({ event, onClaim }: Props) {
   const { spacing } = useTheme()
   const { fireConfetti } = useConfetti()
 
-  const sharedButtonProps: ButtonProps = {
-    size: 'medium',
-    sx: { width: spacing(19), height: spacing(8) },
+  const claimRef = useRef<HTMLButtonElement>(null)
+  const sxProps: SxProps = useMemo(() => {
+    return {
+      width: spacing(19),
+      height: spacing(8),
+    }
+  }, [spacing])
+
+  const handleClaim = async () => {
+    await claimEvent(event.id)
+    await onClaim()
+    fireConfetti(claimRef.current!)
+    bus.emit(BusEvents.success, {
+      message: `${event.meta.static.reward} RMO claimed!`,
+    })
   }
 
+  const { isLoading, reload } = useLoading(undefined, () => handleClaim(), {
+    loadOnMount: false,
+  })
+
   return event.status === EventStatuses.Fulfilled ? (
-    <Button
-      {...sharedButtonProps}
-      onClick={e => {
-        fireConfetti(e.target as HTMLElement)
-        bus.emit(BusEvents.success, {
-          message: `${event.meta.static.reward} RMO claimed!`,
-        })
-      }}
-    >
+    <Button ref={claimRef} disabled={isLoading} sx={sxProps} onClick={reload}>
       Claim
     </Button>
   ) : (
@@ -37,7 +48,7 @@ export default function EventActions({ event }: Props) {
       component={NavLink}
       to={generatePath(RoutePaths.RewardsEventId, { id: event.id })}
       color='secondary'
-      {...sharedButtonProps}
+      sx={sxProps}
     >
       View
     </Button>
