@@ -3,7 +3,7 @@ import { PropsWithChildren, ReactNode } from 'react'
 
 import { NoDataView } from '@/common'
 import ErrorView from '@/common/ErrorView'
-import { LoadingStates } from '@/hooks/multi-page-loading'
+import { LoadingStates } from '@/enums'
 
 import IntersectionAnchor from './IntersectionAnchor'
 
@@ -29,22 +29,7 @@ export default function InfiniteList<D>({
 }: Props<D>) {
   const { spacing } = useTheme()
 
-  return loadingState === LoadingStates.Loading ? (
-    <Stack alignItems='center' p={20}>
-      <CircularProgress color={'secondary'} />
-    </Stack>
-  ) : !items.length && loadingState === LoadingStates.Error ? (
-    <ErrorView
-      title={errorTitle}
-      action={
-        <Button size='medium' onClick={onRetry}>
-          Retry
-        </Button>
-      }
-    />
-  ) : !items.length ? (
-    <NoDataView title={noDataTitle} action={noDataAction} />
-  ) : (
+  return items.length ? (
     <Stack position='relative' spacing={4}>
       {children}
       {loadingState === LoadingStates.NextLoading ? (
@@ -61,5 +46,20 @@ export default function InfiniteList<D>({
         <IntersectionAnchor bottom={spacing(50)} onIntersect={onLoadNext} />
       )}
     </Stack>
+  ) : loadingState === LoadingStates.Loading ? (
+    <Stack alignItems='center' p={20}>
+      <CircularProgress color={'secondary'} />
+    </Stack>
+  ) : loadingState === LoadingStates.Error ? (
+    <ErrorView
+      title={errorTitle}
+      action={
+        <Button size='medium' onClick={onRetry}>
+          Retry
+        </Button>
+      }
+    />
+  ) : (
+    <NoDataView title={noDataTitle} action={noDataAction} />
   )
 }

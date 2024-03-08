@@ -1,15 +1,8 @@
 import { JsonApiLinkFields, JsonApiResponse } from '@distributedlab/jac'
 import { useCallback, useEffect, useState } from 'react'
 
+import { LoadingStates } from '@/enums'
 import { ErrorHandler } from '@/helpers'
-
-export enum LoadingStates {
-  Initial,
-  Loading,
-  Error,
-  NextLoading,
-  Loaded,
-}
 
 export const useMultiPageLoading = <D, M>(
   loadFn: () => Promise<JsonApiResponse<D[], M>>,
@@ -49,7 +42,7 @@ export const useMultiPageLoading = <D, M>(
     try {
       const res = await response?.fetchPage(JsonApiLinkFields.next)
       setResponse(res)
-      setData(prev => [...prev, ...res.data])
+      setData(prev => prev.concat(res.data))
       setHasNext(res.data.length > 0)
       setLoadingState(LoadingStates.Loaded)
     } catch (error) {

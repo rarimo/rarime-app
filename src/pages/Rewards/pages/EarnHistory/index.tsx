@@ -8,7 +8,7 @@ import InfiniteList from '@/common/InfiniteList'
 import { RoutePaths } from '@/enums'
 import { useMultiPageLoading } from '@/hooks/multi-page-loading'
 
-import EventRow from './components/EventRow'
+import EventItem from './components/EventItem'
 
 export default function EarnHistory() {
   const navigate = useNavigate()
@@ -51,7 +51,7 @@ export default function EarnHistory() {
         >
           {data.map((event, index) => (
             <Stack spacing={4} key={event.id}>
-              <EventRow event={event} />
+              <EventItem event={event} />
               {index < data.length - 1 && <Divider sx={{ ml: 14 }} />}
             </Stack>
           ))}

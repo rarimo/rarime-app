@@ -2,7 +2,7 @@ import { Stack, Typography, useTheme } from '@mui/material'
 
 import { Event } from '@/api/modules/points/types/events'
 import { Icons } from '@/enums'
-import { formatDateDMY } from '@/helpers'
+import { formatDateDMY, timestampToDate } from '@/helpers'
 import RewardChip from '@/pages/Rewards/components/RewardChip'
 import { UiIcon } from '@/ui'
 
@@ -10,7 +10,7 @@ interface Props {
   event: Event
 }
 
-export default function EventRow({ event }: Props) {
+export default function EventItem({ event }: Props) {
   const { palette } = useTheme()
 
   return (
@@ -29,7 +29,7 @@ export default function EventRow({ event }: Props) {
             {event.meta.static.title}
           </Typography>
           <Typography variant='body4' color={palette.text.secondary}>
-            {formatDateDMY(new Date(event.created_at * 1000))}
+            {formatDateDMY(timestampToDate(event.created_at))}
           </Typography>
         </Stack>
       </Stack>

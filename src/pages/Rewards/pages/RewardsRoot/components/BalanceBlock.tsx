@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
 import { useRewardsState } from '@/store/modules/rewards.module'
-import { UiButton, UiIcon } from '@/ui'
+import { UiIcon } from '@/ui'
 
 import ClaimModal from './ClaimModal'
 
@@ -24,7 +24,7 @@ export default function BalanceBlock() {
           <Typography variant='h4'>{balance?.amount ?? '–'}</Typography>
         </Stack>
 
-        <UiButton
+        <Button
           component={NavLink}
           to={RoutePaths.RewardsLeaderboard}
           color='warning'
@@ -39,7 +39,7 @@ export default function BalanceBlock() {
             <Typography variant='buttonMedium'>Leaderboard</Typography>
             <UiIcon componentName='chevronRight' size={4} />
           </Stack>
-        </UiButton>
+        </Button>
       </Stack>
       <Divider />
       <Stack direction={'row'} spacing={4} justifyContent={'space-between'} alignItems={'center'}>

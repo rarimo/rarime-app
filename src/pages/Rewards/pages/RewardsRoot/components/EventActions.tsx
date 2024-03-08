@@ -5,7 +5,6 @@ import { EventStatuses } from '@/api/modules/points'
 import { Event } from '@/api/modules/points/types/events'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
-import { UiButton } from '@/ui'
 
 import { useConfetti } from '../hooks/useConfetti'
 
@@ -35,13 +34,13 @@ export default function EventActions({ event }: Props) {
       Claim
     </Button>
   ) : (
-    <UiButton
+    <Button
       component={NavLink}
       to={generatePath(RoutePaths.RewardsEventId, { id: event.id })}
       color='secondary'
       {...sharedButtonProps}
     >
       View
-    </UiButton>
+    </Button>
   )
 }

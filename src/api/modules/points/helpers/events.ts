@@ -225,8 +225,17 @@ const EVENTS_MOCK: Event[] = [
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const getEvents = async (query: EventsRequestQueryParams) => {
   // TODO: Uncomment when API is ready
+  // const statuses = query.filter?.[EventsRequestFilters.Status]
   // return api.get<Event[], EventsMeta>(`${ApiServicePaths.Points}/v1/public/events`, {
-  //   query,
+  //   query: {
+  //     ...query,
+  //     filter: {
+  //       ...query.filter,
+  //       // JsonApiClient doesn't support nested arrays in query params,
+  //       // so we need to join them manually
+  //       ...(statuses && { [EventsRequestFilters.Status]: statuses.join(',') }),
+  //     },
+  //   },
   // })
   await sleep(500)
   // eslint-disable-next-line
