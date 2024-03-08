@@ -1,4 +1,4 @@
-import { Button, SxProps, useTheme } from '@mui/material'
+import { Button, ButtonProps, useTheme } from '@mui/material'
 import { useMemo, useRef } from 'react'
 import { generatePath, NavLink } from 'react-router-dom'
 
@@ -19,10 +19,13 @@ export default function EventActions({ event, onClaim }: Props) {
   const { fireConfetti } = useConfetti()
 
   const claimRef = useRef<HTMLButtonElement>(null)
-  const sxProps: SxProps = useMemo(() => {
+  const commonButtonProps: ButtonProps = useMemo(() => {
     return {
-      width: spacing(19),
-      height: spacing(8),
+      size: 'medium',
+      sx: {
+        width: spacing(19),
+        height: spacing(8),
+      },
     }
   }, [spacing])
 
@@ -40,7 +43,7 @@ export default function EventActions({ event, onClaim }: Props) {
   })
 
   return event.status === EventStatuses.Fulfilled ? (
-    <Button ref={claimRef} disabled={isLoading} sx={sxProps} onClick={reload}>
+    <Button ref={claimRef} disabled={isLoading} onClick={reload} {...commonButtonProps}>
       Claim
     </Button>
   ) : (
@@ -48,7 +51,7 @@ export default function EventActions({ event, onClaim }: Props) {
       component={NavLink}
       to={generatePath(RoutePaths.RewardsEventId, { id: event.id })}
       color='secondary'
-      sx={sxProps}
+      {...commonButtonProps}
     >
       View
     </Button>
