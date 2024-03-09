@@ -1,8 +1,38 @@
+import { time } from '@distributedlab/tools'
 import { Button, Paper, Stack, Typography, useTheme } from '@mui/material'
 
-import { PageTitles } from '@/common'
+import { LineChart, PageTitles } from '@/common'
 
-import Chart from './Chart'
+const weeklyData = [
+  {
+    label: '2024-01-01',
+    value: 120.12,
+  },
+  {
+    label: '2024-01-02',
+    value: 136.63,
+  },
+  {
+    label: '2024-01-03',
+    value: 130.12,
+  },
+  {
+    label: '2024-01-04',
+    value: 140.63,
+  },
+  {
+    label: '2024-01-05',
+    value: 154.12,
+  },
+  {
+    label: '2024-01-06',
+    value: 150.63,
+  },
+  {
+    label: '2024-01-07',
+    value: 160.12,
+  },
+]
 
 export default function Analytics() {
   const { palette } = useTheme()
@@ -51,7 +81,13 @@ export default function Analytics() {
             </Button>
           </Stack>
         </Stack>
-        <Chart />
+
+        <LineChart
+          data={weeklyData}
+          height={400}
+          labelFormatter={label => time(label).format('D MMM')}
+          valueFormatter={value => `${value} (RMO)`}
+        />
       </Paper>
     </Stack>
   )
