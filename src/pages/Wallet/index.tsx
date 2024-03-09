@@ -11,11 +11,11 @@ import {
 } from '@mui/material'
 import { CHAINS } from '@rarimo/rarime-connector'
 import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { rarimeWallet } from '@/api/clients'
 import { NoDataViewer, PageTitles } from '@/common'
-import { Icons } from '@/enums'
+import { Icons, RoutePaths } from '@/enums'
 import { formatAmount } from '@/helpers'
 import { useLoading } from '@/hooks'
 import { useWalletState, walletStore } from '@/store'
@@ -84,8 +84,8 @@ export default function Wallet() {
               </Button>
             </Stack>
             <Button
-              component={Link}
-              to=''
+              component={NavLink}
+              to={RoutePaths.WalletAnalytics}
               startIcon={
                 <UiIcon
                   componentName='showChart'

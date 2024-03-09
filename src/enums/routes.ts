@@ -31,4 +31,5 @@ export enum RoutePaths {
   CredentialsRequests = '/credentials/requests',
 
   Wallet = '/wallet',
+  WalletAnalytics = '/wallet/analytics',
 }
