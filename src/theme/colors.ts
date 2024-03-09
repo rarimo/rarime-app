@@ -1,6 +1,7 @@
 import { PaletteOptions } from '@mui/material/styles'
 
 export const lightPalette: PaletteOptions = {
+  mode: 'light',
   // DesignSystem: base
   common: {
     black: '#202020',
@@ -81,6 +82,7 @@ export const lightPalette: PaletteOptions = {
 }
 
 export const darkPalette: PaletteOptions = {
+  mode: 'dark',
   // DesignSystem: base
   common: {
     black: '#202020',
