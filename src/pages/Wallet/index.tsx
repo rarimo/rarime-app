@@ -9,11 +9,9 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import { CHAINS } from '@rarimo/rarime-connector'
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import { rarimeWallet } from '@/api/clients'
 import { NoDataViewer, PageTitles } from '@/common'
 import { Icons } from '@/enums'
 import { formatAmount } from '@/helpers'
@@ -21,16 +19,14 @@ import { useLoading } from '@/hooks'
 import { useWalletState, walletStore } from '@/store'
 import { UiIcon } from '@/ui'
 
-import { ReceiveModal } from './components'
+import { ReceiveModal, SendModal } from './components'
 
 export default function Wallet() {
   const { spacing, palette } = useTheme()
 
-  const { balance } = useWalletState()
+  const { balances } = useWalletState()
 
-  const chainInfo = useMemo(() => {
-    return CHAINS[rarimeWallet.chainId]
-  }, [])
+  const mainBalance = useMemo(() => balances?.[0], [balances])
 
   const { isLoading, isLoadingError } = useLoading(undefined, walletStore.connect, {
     loadOnMount: true,
@@ -64,10 +60,10 @@ export default function Wallet() {
         <Stack spacing={4}>
           <Stack spacing={2}>
             <Typography color={alpha(palette.text.secondary, 0.6)}>
-              {`Available ${chainInfo.currencies[0].coinDenom}`}
+              {`Available ${mainBalance?.denom}`}
             </Typography>
             <Typography variant='h4'>
-              {formatAmount(balance ?? '0', chainInfo.currencies[0].coinDecimals)}
+              {formatAmount(mainBalance?.amount, mainBalance?.decimals)}
             </Typography>
           </Stack>
           <Divider />
@@ -79,9 +75,7 @@ export default function Wallet() {
 
               <ReceiveModal />
 
-              <Button color='secondary' startIcon={<UiIcon componentName='arrowUpward' />}>
-                Send
-              </Button>
+              <SendModal />
             </Stack>
             <Button
               component={Link}
@@ -122,7 +116,7 @@ export default function Wallet() {
           </Stack>
 
           <Stack spacing={1}>
-            <Typography variant='subtitle3'>Earn RMO</Typography>
+            <Typography variant='subtitle3'>Earn {mainBalance?.denom}</Typography>
             <Typography color={alpha(palette.text.secondary, 0.6)}>Scan your passport</Typography>
           </Stack>
 
