@@ -5,28 +5,37 @@ import { config } from '@/config'
 import { vh } from '@/theme/helpers'
 
 const PublicLayout = ({ children }: PropsWithChildren) => {
-  const { palette } = useTheme()
+  const { palette, spacing } = useTheme()
 
   return (
     <Stack direction={'row'} height={vh(100)}>
-      <Stack spacing={15} pl={14} pr={8} py={8} flex={1}>
-        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-          <Box component={'img'} src='/branding/logo-sign-in.svg' alt={config.APP_NAME} />
-          <Button
-            component={'a'}
-            href={'https://rarime.com'}
-            target={'_blank'}
-            variant='text'
-            color={'secondary'}
-            size={'medium'}
-          >
-            Visit Landing page
-          </Button>
-        </Stack>
+      <Stack pl={14} pr={8} py={8} flex={1}>
+        <Box flex={1} position={'relative'}>
+          <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+            <Box component={'img'} src='/branding/logo-sign-in.svg' alt={config.APP_NAME} />
+            <Button
+              component={'a'}
+              href={'https://rarime.com'}
+              target={'_blank'}
+              variant='text'
+              color={'secondary'}
+              size={'medium'}
+            >
+              Visit Landing page
+            </Button>
+          </Stack>
 
-        <Stack p={20} mx='auto'>
-          {children}
-        </Stack>
+          <Stack
+            position={'absolute'}
+            top={'50%'}
+            left={'50%'}
+            width={'100%'}
+            maxWidth={spacing(100)}
+            sx={{ transform: 'translate(-50%, -50%)' }}
+          >
+            {children}
+          </Stack>
+        </Box>
       </Stack>
 
       <Stack

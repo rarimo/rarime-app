@@ -8,7 +8,7 @@ import { identityStore, useWeb3State } from '@/store'
 import { UiIcon, UiTextField } from '@/ui'
 
 export default function SignIn() {
-  const { palette, spacing } = useTheme()
+  const { palette } = useTheme()
 
   const { connectProviders } = useAuth()
   const { isSnapInstalled, isMetamaskInstalled } = useWeb3State()
@@ -51,7 +51,7 @@ export default function SignIn() {
       )
     }
 
-    if (isSnapInstalled) {
+    if (!isSnapInstalled) {
       return (
         <Button fullWidth startIcon={<UiIcon name={Icons.Rarime} size={5} />} onClick={installSnap}>
           Enable Rarime
@@ -111,7 +111,7 @@ export default function SignIn() {
   ])
 
   return (
-    <Stack spacing={4} alignItems={'center'} maxWidth={spacing(100)} textAlign={'center'}>
+    <Stack spacing={4} alignItems={'center'} textAlign={'center'}>
       <UiIcon name={Icons.Rarime} size={12} />
       <Typography variant='h3'>Welcome</Typography>
       <Typography variant='body2' color={palette.text.secondary}>
