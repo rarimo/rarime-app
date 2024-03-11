@@ -12,8 +12,8 @@ import { RoutePaths } from '@/enums'
 import { useAuth } from '@/hooks'
 
 import { createDeepPath } from './helpers'
+import AuthLayout from './layouts/AuthLayout'
 import MainLayout from './layouts/MainLayout'
-import PublicLayout from './layouts/PublicLayout'
 
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
@@ -55,7 +55,7 @@ export const AppRoutes = () => {
   )
 
   const LayoutComponent = useMemo(() => {
-    return isAuthorized ? MainLayout : PublicLayout
+    return isAuthorized ? MainLayout : AuthLayout
   }, [isAuthorized])
 
   const router = createBrowserRouter([
