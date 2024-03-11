@@ -1,18 +1,22 @@
+import { CHAINS } from '@rarimo/rarime-connector'
+
 import { initRarimoClient, rarimoClient } from '@/api/clients'
 import { createStore } from '@/helpers'
 
 type WalletStore = {
   address: string
-  balance: string
-  denom: string
+  balances: {
+    amount: string
+    denom: string
+    decimals: number
+  }[]
 }
 
 export const [walletStore, useWalletState] = createStore(
   'wallet',
   {
     address: '',
-    balance: '',
-    denom: '',
+    balances: [],
   } as WalletStore,
   state => ({
     connect: async () => {
@@ -22,10 +26,32 @@ export const [walletStore, useWalletState] = createStore(
 
       const coins = await rarimoClient.query.getAllBalances(rarimoClient.wallet.address)
 
-      if (!coins.length) return
+      state.balances = coins.map(coin => {
+        const decimals = CHAINS[rarimoClient.wallet.chainId].currencies.find(
+          currency => currency.coinDenom.toLowerCase() === coin.denom.toLowerCase(),
+        )?.coinDecimals
 
-      state.balance = coins[0].amount
-      state.denom = coins[0].denom
+        if (!decimals)
+          throw new TypeError(
+            `Currency ${coin.denom} on Chain ${rarimoClient.wallet.chainId} has no decimals`,
+          )
+
+        return {
+          amount: coin.amount,
+          denom: coin.denom,
+          decimals,
+        }
+      })
+
+      if (!state.balances.length) {
+        state.balances = [
+          {
+            amount: '',
+            denom: CHAINS[rarimoClient.wallet.chainId].currencies[0].coinDenom,
+            decimals: CHAINS[rarimoClient.wallet.chainId].currencies[0].coinDecimals,
+          },
+        ]
+      }
     },
   }),
   {
