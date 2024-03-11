@@ -1,5 +1,5 @@
 import { Button, Paper, Stack, Typography, useTheme } from '@mui/material'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { formatNumber } from '@/helpers'
 import { useWalletState } from '@/store'
@@ -9,8 +9,10 @@ import BalanceChart from './BalanceChart'
 
 export default function BalanceHistory() {
   const { palette } = useTheme()
-  const { balance } = useWalletState()
+  const { balances } = useWalletState()
   const [activeDuration, setActiveDuration] = useState(HistoryDurations.Week)
+
+  const mainBalance = useMemo(() => balances?.[0], [balances])
 
   const durationOptions = [
     {
@@ -38,7 +40,7 @@ export default function BalanceHistory() {
           <Typography variant='body3' color={palette.text.secondary}>
             Total RMO
           </Typography>
-          <Typography variant='h4'>{formatNumber(Number(balance || 0))}</Typography>
+          <Typography variant='h4'>{formatNumber(Number(mainBalance?.amount || 0))}</Typography>
           {/* TODO: replace with real data */}
           <Typography variant='caption2' color={palette.text.secondary}>
             ≈ ${formatNumber(4506.4)}{' '}

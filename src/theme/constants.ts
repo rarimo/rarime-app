@@ -1,3 +1,5 @@
+import { keyframes } from '@emotion/react'
+
 export const FONT_FAMILY = "'Inter', sans-serif"
 
 export enum FontWeight {
@@ -22,3 +24,24 @@ export const hiddenScrollbar = {
     display: 'none',
   },
 }
+
+// Keyframes
+export const fadeInAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+
+export const bottomAppearAnimation = keyframes`
+  from {
+    transform: translateY(80%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`

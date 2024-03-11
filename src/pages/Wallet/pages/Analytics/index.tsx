@@ -11,7 +11,7 @@ import BalanceHistory from './components/BalanceHistory'
 
 export default function Analytics() {
   const { spacing } = useTheme()
-  const { balance } = useWalletState()
+  const { balances } = useWalletState()
   const { isLoading } = useLoading(undefined, walletStore.connect, {
     loadOnMount: true,
   })
@@ -30,7 +30,7 @@ export default function Analytics() {
         Go back
       </Button>
       <PageTitles title={'Wallet Analytics'} />
-      {!balance && isLoading ? (
+      {!balances.length && isLoading ? (
         <Skeleton variant='rounded' height={spacing(132)} sx={{ borderRadius: 4 }} />
       ) : (
         <BalanceHistory />

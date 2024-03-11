@@ -6,6 +6,7 @@ import { AreaPlot, LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart'
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer'
 import { useCallback, useId, useMemo } from 'react'
 
+import { bottomAppearAnimation, fadeInAnimation } from '@/theme/constants'
 import { typography } from '@/theme/typography'
 
 import ChartGradient from './ChartGradient'
@@ -70,14 +71,10 @@ export default function LineChart({
         sx={{
           '& .MuiAreaElement-root': {
             fill: `url(#${bgGradientId})`,
+            animation: `${fadeInAnimation} 300ms ease-out`,
           },
-          '@keyframes fade-in': {
-            from: { opacity: 0 },
-            to: { opacity: 1 },
-          },
-          '@keyframes from-bottom': {
-            from: { transform: 'translateY(80%)', opacity: 0 },
-            to: { transform: 'translateY(0)', opacity: 1 },
+          '& .MuiLineElement-root': {
+            animation: `${bottomAppearAnimation} 300ms ease-out`,
           },
         }}
       >
@@ -91,8 +88,8 @@ export default function LineChart({
           />
         </defs>
         <g clipPath={`url(#${clipPathId})`}>
-          <LinePlot style={{ animation: 'from-bottom 300ms ease-in-out' }} />
-          <AreaPlot style={{ animation: 'fade-in 300ms ease-in-out' }} />
+          <LinePlot />
+          <AreaPlot />
         </g>
         <LineHighlightPlot slots={{ lineHighlight: ChartHighlightElement }} />
         <ChartsXAxis
