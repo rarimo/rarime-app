@@ -449,18 +449,13 @@ export const components: Components<Omit<Theme, 'components'>> = {
       }),
       cell: ({ theme }) => ({
         '&.MuiChartsTooltip-labelCell, &.MuiChartsTooltip-markCell': {
-          padding: '0 !important',
           display: 'none',
-          width: 0,
-          height: 0,
         },
         '&.MuiChartsTooltip-valueCell': {
           padding: '0 !important',
           display: 'flex',
           color: theme.palette.common.white,
-          '& .MuiTypography-root': {
-            ...typography.buttonSmall,
-          },
+          '& .MuiTypography-root': typography.buttonSmall,
         },
       }),
     },
