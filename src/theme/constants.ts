@@ -25,16 +25,7 @@ export const hiddenScrollbar = {
   },
 }
 
-// Keyframes
-export const fadeInAnimation = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`
-
+/* Animations */
 export const bottomAppearAnimation = keyframes`
   from {
     transform: translateY(80%);
