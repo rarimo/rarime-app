@@ -4,7 +4,7 @@ import { type ChartsTextStyle } from '@mui/x-charts/ChartsText'
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis'
 import { AreaPlot, LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart'
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer'
-import { useId, useMemo } from 'react'
+import { useCallback, useId, useMemo } from 'react'
 
 import { typography } from '@/theme/typography'
 
@@ -13,7 +13,7 @@ import ChartHighlightElement from './ChartHighlightElement'
 
 interface Props {
   data: { label: string; value: number }[]
-  height: number
+  height: number | string
   valueFormatter?: (value: number) => string
   labelFormatter?: (label: string) => string
 }
@@ -34,10 +34,19 @@ export default function LineChart({
   const values = useMemo(() => data.map(({ value }) => value), [data])
   const minValue = useMemo(() => Math.min(...values), [values])
 
+  const getTickLabelInterval = useCallback(
+    (index: number) => {
+      const MAX_TICKS = 10
+      const step = Math.ceil(labels.length / MAX_TICKS)
+      return index % step === 0
+    },
+    [labels],
+  )
+
   return (
     <Box height={height}>
       <ResponsiveChartContainer
-        margin={{ top: 0, right: 20, bottom: 20, left: 20 }}
+        margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
         series={[
           {
             type: 'line',
@@ -90,6 +99,7 @@ export default function LineChart({
           axisId={xAxisId}
           disableLine
           disableTicks
+          tickLabelInterval={(_, index) => getTickLabelInterval(index)}
           tickLabelStyle={{
             ...(typography.buttonSmall as ChartsTextStyle),
             fill: palette.text.placeholder,

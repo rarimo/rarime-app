@@ -9,10 +9,11 @@ function ChartHighlightElement(props: LineHighlightElementProps) {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null)
 
   const anchorClassName = useMemo(() => `line-highlight-root-${anchorId}`, [anchorId])
-  const isNearLeftSide = useMemo(() => props.x < 50, [props.x])
+  const isNearLeftSide = useMemo(() => props.x < 100, [props.x])
 
   useEffect(() => {
     if (!anchorEl) {
+      // Cannot assign ID to the LineHighlightElement, so we need to find it by class name
       setAnchorEl(document.getElementsByClassName(anchorClassName)[0])
     }
   }, [anchorClassName, anchorEl])
