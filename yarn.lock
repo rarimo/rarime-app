@@ -95,34 +95,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@distributedlab/tools@npm:1.0.0-rc.10, @distributedlab/tools@npm:^1.0.0-rc.9":
-  version: 1.0.0-rc.10
-  resolution: "@distributedlab/tools@npm:1.0.0-rc.10"
+"@distributedlab/tools@npm:1.0.0-rc.14, @distributedlab/tools@npm:^1.0.0-rc.14":
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/tools@npm:1.0.0-rc.14"
   dependencies:
     bignumber.js: "npm:^9.1.1"
     dayjs: "npm:^1.11.7"
     tslib: "npm:^2.5.0"
-  checksum: 4d762b55080ecb1b1e2fa70d1fe4e18218aac03355416ef3b144d4d4c1b828970724ccac19f2d1f3fa612cc1ee62a92a7709819683c13f23479d5847341fbf43
+  checksum: 37c17513ba4cd80f7222c7e789af68ebceb5b4a718f8d364a828f4424ea50694af7aaddc5f6240ae157c177e0cd4b11f3546a06ad31ebd12151baec4ca1c0007
   languageName: node
   linkType: hard
 
-"@distributedlab/w3p@npm:^1.0.0-rc.9":
-  version: 1.0.0-rc.10
-  resolution: "@distributedlab/w3p@npm:1.0.0-rc.10"
+"@distributedlab/w3p@npm:^1.0.0-rc.14":
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/w3p@npm:1.0.0-rc.14"
   dependencies:
-    "@distributedlab/tools": "npm:1.0.0-rc.10"
+    "@distributedlab/tools": "npm:1.0.0-rc.14"
     "@ethersproject/abstract-provider": "npm:^5.7.0"
     "@ethersproject/properties": "npm:^5.7.0"
     "@near-wallet-selector/core": "npm:^7.8.2"
     "@near-wallet-selector/my-near-wallet": "npm:^7.8.2"
     "@solana/web3.js": "npm:^1.73.2"
+    "@walletconnect/modal": "npm:^2.6.1"
     "@walletconnect/universal-provider": "npm:^2.10.0"
     bs58: "npm:^5.0.0"
     ethers: "npm:^5.7.2"
     near-api-js: "npm:^1.1.0"
-  peerDependencies:
-    "@walletconnect/modal": ^2.6.1
-  checksum: 86f07e56b60621275dda555e08d5e2173451bfb3ace64554c1806c29b949669bab9711ca0ebf4056a4c82a5053e159a719d114841f9c5ccfe45556fad8d3b750
+  checksum: 227587b13d4d96b38f1ab0949fcc80c09e4b2323921a8d1e820816e35646f63b0f51864a82a1dcc05cc6a88bd9c6f0f27a81f19ad85e4eaf585fc98f50758a47
   languageName: node
   linkType: hard
 
@@ -2702,7 +2701,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/modal@npm:^2.6.2":
+"@walletconnect/modal@npm:^2.6.1, @walletconnect/modal@npm:^2.6.2":
   version: 2.6.2
   resolution: "@walletconnect/modal@npm:2.6.2"
   dependencies:
@@ -9002,8 +9001,8 @@ __metadata:
   resolution: "rarime-app@workspace:."
   dependencies:
     "@distributedlab/jac": "npm:^1.0.0-rc.14"
-    "@distributedlab/tools": "npm:^1.0.0-rc.9"
-    "@distributedlab/w3p": "npm:^1.0.0-rc.9"
+    "@distributedlab/tools": "npm:^1.0.0-rc.14"
+    "@distributedlab/w3p": "npm:^1.0.0-rc.14"
     "@dnd-kit/core": "npm:^6.1.0"
     "@dnd-kit/modifiers": "npm:^7.0.0"
     "@dnd-kit/sortable": "npm:^8.0.0"
