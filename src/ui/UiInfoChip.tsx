@@ -6,7 +6,7 @@ import { UiIcon } from '@/ui/index'
 type Props = StackProps & {
   icon?: ReactNode
   message: string
-  severity: 'error' | 'info' | 'success' | 'warning'
+  severity: 'error' | 'success' | 'warning'
 }
 
 export default function UiInfoChip({ icon, message, severity, ...rest }: Props) {
@@ -18,10 +18,6 @@ export default function UiInfoChip({ icon, message, severity, ...rest }: Props) 
         error: {
           background: palette.error.lighter,
           color: palette.error.darker,
-        },
-        info: {
-          background: palette.warning.lighter,
-          color: palette.warning.darker,
         },
         success: {
           background: palette.success.lighter,

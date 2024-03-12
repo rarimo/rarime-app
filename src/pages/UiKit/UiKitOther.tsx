@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { BusEvents, Icons } from '@/enums'
 import { bus } from '@/helpers'
-import { UiBasicModal, UiButton, UiDrawer, UiIcon, UiModal } from '@/ui'
+import { UiBasicModal, UiButton, UiCopyField, UiDrawer, UiIcon, UiInfoChip, UiModal } from '@/ui'
 import UiPopup from '@/ui/UiPopup'
 
 export default function UiKitOther() {
@@ -19,6 +19,38 @@ export default function UiKitOther() {
 
   return (
     <Stack spacing={8}>
+      <Stack spacing={2}>
+        <Typography variant={`h6`}>{`Copy field`}</Typography>
+        <Stack
+          direction={'row'}
+          flexWrap={`wrap`}
+          gap={theme => theme.spacing(2)}
+          justifyContent={`flex-start`}
+        >
+          <UiCopyField label='Address' value='ox182374698127364asdjkfb!' />
+        </Stack>
+      </Stack>
+
+      <Stack spacing={2}>
+        <Typography variant={`h6`}>{`Info chip`}</Typography>
+        <Stack
+          direction={'row'}
+          flexWrap={`wrap`}
+          gap={theme => theme.spacing(2)}
+          justifyContent={`flex-start`}
+        >
+          <UiInfoChip
+            message='success lorem ipsum dolor sit amet concestetur!'
+            severity='success'
+          />
+          <UiInfoChip
+            message='warning lorem ipsum dolor sit amet concestetur!'
+            severity='warning'
+          />
+          <UiInfoChip message='error lorem ipsum dolor sit amet concestetur!' severity='error' />
+        </Stack>
+      </Stack>
+
       <Stack spacing={2}>
         <Typography variant={`h6`}>{`Icons`}</Typography>
         <Stack
