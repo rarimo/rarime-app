@@ -4,7 +4,7 @@ import { generatePath, NavLink, useLocation, useParams } from 'react-router-dom'
 
 import { zkpSnap } from '@/api/clients'
 import { getClaimIdFromVC } from '@/api/modules/zkp'
-import { CredentialCard, NoDataViewer } from '@/common'
+import { CredentialCard, NoDataView } from '@/common'
 import { RoutePaths } from '@/enums'
 import { ErrorHandler } from '@/helpers'
 import { useCredentialsState } from '@/store'
@@ -161,7 +161,7 @@ export default function CredentialsId() {
             <Divider />
           </Stack>
         ) : (
-          <NoDataViewer
+          <NoDataView
             title={'Credential not found'}
             action={
               <Button component={NavLink} to={RoutePaths.CredentialsList} size='medium'>

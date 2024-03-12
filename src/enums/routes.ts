@@ -29,4 +29,10 @@ export enum RoutePaths {
   CredentialsList = '/credentials/list',
   CredentialsId = '/credentials/:claimId',
   CredentialsRequests = '/credentials/requests',
+
+  Rewards = '/rewards',
+  RewardsEventId = '/rewards/events/:id',
+  RewardsEarnHistory = '/rewards/earn-history',
+  RewardsLeaderboard = '/rewards/leaderboard',
+  RewardsAbout = '/rewards/about',
 }

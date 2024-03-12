@@ -22,6 +22,7 @@ export const AppRoutes = () => {
   const UiKit = lazy(() => import('@/pages/UiKit'))
   const VerifyProofAlias = lazy(() => import('@/pages/VerifyProofAlias'))
   const AcceptInvitation = lazy(() => import('@/pages/AcceptInvitation'))
+  const Rewards = lazy(() => import('@/pages/Rewards'))
 
   const { isAuthorized, logout } = useAuth()
 
@@ -82,6 +83,11 @@ export const AppRoutes = () => {
           path: createDeepPath(RoutePaths.Credentials),
           loader: authProtectedGuard,
           element: <Credentials />,
+        },
+        {
+          path: createDeepPath(RoutePaths.Rewards),
+          loader: authProtectedGuard,
+          element: <Rewards />,
         },
         {
           path: createDeepPath(RoutePaths.UiKit),

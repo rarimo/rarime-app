@@ -1,5 +1,6 @@
 export * from './auth.module'
 export * from './credentials.module'
 export * from './identity.module'
+export * from './rewards.module'
 export * from './ui.module'
 export * from './web3.module'

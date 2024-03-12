@@ -17,6 +17,7 @@ import DriveFileRenameOutlineOutlined from '@mui/icons-material/DriveFileRenameO
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import FingerPrint from '@mui/icons-material/Fingerprint'
 import FolderOff from '@mui/icons-material/FolderOff'
+import History from '@mui/icons-material/History'
 import InfoIcon from '@mui/icons-material/Info'
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
 import Key from '@mui/icons-material/Key'
@@ -30,6 +31,7 @@ import Notifications from '@mui/icons-material/Notifications'
 import OpenInNew from '@mui/icons-material/OpenInNew'
 import QrCode from '@mui/icons-material/QrCode'
 import Search from '@mui/icons-material/Search'
+import ShareOutlined from '@mui/icons-material/ShareOutlined'
 import Tune from '@mui/icons-material/Tune'
 import Verified from '@mui/icons-material/Verified'
 import WarningAmberIcon from '@mui/icons-material/WarningAmber'
@@ -40,10 +42,14 @@ export enum Icons {
   House = 'house',
   Instagram = 'instagram',
   Metamask = 'metamask',
+  Rarimo = 'rarimo',
   Rarime = 'rarime',
   Twitter = 'twitter',
   User = 'user',
   Wallet = 'wallet',
+  Gift = 'gift',
+  Swap = 'swap',
+  Trophy = 'trophy',
 }
 
 export const ICON_COMPONENTS = {
@@ -63,6 +69,7 @@ export const ICON_COMPONENTS = {
   driveFileRenameOutlineOutlined: DriveFileRenameOutlineOutlined,
   errorOutline: ErrorOutlineIcon,
   folderOff: FolderOff,
+  history: History,
   info: InfoIcon,
   infoOutlined: InfoOutlinedIcon,
   key: Key,
@@ -75,6 +82,7 @@ export const ICON_COMPONENTS = {
   openInNew: OpenInNew,
   qrCode: QrCode,
   search: Search,
+  shareOutlined: ShareOutlined,
   tune: Tune,
   verified: Verified,
   warningAmber: WarningAmberIcon,

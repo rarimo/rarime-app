@@ -76,53 +76,52 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@distributedlab/fetcher@npm:1.0.0-rc.10":
-  version: 1.0.0-rc.10
-  resolution: "@distributedlab/fetcher@npm:1.0.0-rc.10"
+"@distributedlab/fetcher@npm:1.0.0-rc.14":
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/fetcher@npm:1.0.0-rc.14"
   dependencies:
     uuid: "npm:^9.0.0"
-  checksum: 9931562ea2b25deb881d9aa72a302bd4d4454b4f532c0300ef023aa090420244c2acf8b88b673a039ba3d6ea475e2993a8e63536962bc889f8b6856b2c45fc90
+  checksum: 1784e4bec58984174a502d63e9c4ca92cc2ca2a1b9d927fd2831514e70712aa2c403f66e61cc3236654067bddeae7b0644e57f73a486515d401b595288f74eca
   languageName: node
   linkType: hard
 
-"@distributedlab/jac@npm:^1.0.0-rc.9":
-  version: 1.0.0-rc.10
-  resolution: "@distributedlab/jac@npm:1.0.0-rc.10"
+"@distributedlab/jac@npm:^1.0.0-rc.14":
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/jac@npm:1.0.0-rc.14"
   dependencies:
-    "@distributedlab/fetcher": "npm:1.0.0-rc.10"
+    "@distributedlab/fetcher": "npm:1.0.0-rc.14"
     lodash: "npm:^4.17.21"
-  checksum: 3e7efcf0c7813601b7dabf46669daf07476ee30bcb70e80a0a131ca76c5e16a83344e5b66909740126e5c3eb96fc4df588ca536ce00ac17fa526f432e33c6b71
+  checksum: 3a9abd428d10fc937401751571247d14ea8d6dc2edfbd8b528f564758085a892797fc6589abc25573cd22ca4c5e83fa1d9d3d5be19c2fabcb6dcfc519c86a0f3
   languageName: node
   linkType: hard
 
-"@distributedlab/tools@npm:1.0.0-rc.10, @distributedlab/tools@npm:^1.0.0-rc.9":
-  version: 1.0.0-rc.10
-  resolution: "@distributedlab/tools@npm:1.0.0-rc.10"
+"@distributedlab/tools@npm:1.0.0-rc.14, @distributedlab/tools@npm:^1.0.0-rc.14":
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/tools@npm:1.0.0-rc.14"
   dependencies:
     bignumber.js: "npm:^9.1.1"
     dayjs: "npm:^1.11.7"
     tslib: "npm:^2.5.0"
-  checksum: 4d762b55080ecb1b1e2fa70d1fe4e18218aac03355416ef3b144d4d4c1b828970724ccac19f2d1f3fa612cc1ee62a92a7709819683c13f23479d5847341fbf43
+  checksum: 37c17513ba4cd80f7222c7e789af68ebceb5b4a718f8d364a828f4424ea50694af7aaddc5f6240ae157c177e0cd4b11f3546a06ad31ebd12151baec4ca1c0007
   languageName: node
   linkType: hard
 
-"@distributedlab/w3p@npm:^1.0.0-rc.9":
-  version: 1.0.0-rc.10
-  resolution: "@distributedlab/w3p@npm:1.0.0-rc.10"
+"@distributedlab/w3p@npm:^1.0.0-rc.14":
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/w3p@npm:1.0.0-rc.14"
   dependencies:
-    "@distributedlab/tools": "npm:1.0.0-rc.10"
+    "@distributedlab/tools": "npm:1.0.0-rc.14"
     "@ethersproject/abstract-provider": "npm:^5.7.0"
     "@ethersproject/properties": "npm:^5.7.0"
     "@near-wallet-selector/core": "npm:^7.8.2"
     "@near-wallet-selector/my-near-wallet": "npm:^7.8.2"
     "@solana/web3.js": "npm:^1.73.2"
+    "@walletconnect/modal": "npm:^2.6.1"
     "@walletconnect/universal-provider": "npm:^2.10.0"
     bs58: "npm:^5.0.0"
     ethers: "npm:^5.7.2"
     near-api-js: "npm:^1.1.0"
-  peerDependencies:
-    "@walletconnect/modal": ^2.6.1
-  checksum: 86f07e56b60621275dda555e08d5e2173451bfb3ace64554c1806c29b949669bab9711ca0ebf4056a4c82a5053e159a719d114841f9c5ccfe45556fad8d3b750
+  checksum: 227587b13d4d96b38f1ab0949fcc80c09e4b2323921a8d1e820816e35646f63b0f51864a82a1dcc05cc6a88bd9c6f0f27a81f19ad85e4eaf585fc98f50758a47
   languageName: node
   linkType: hard
 
@@ -2240,6 +2239,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/canvas-confetti@npm:^1.6.4":
+  version: 1.6.4
+  resolution: "@types/canvas-confetti@npm:1.6.4"
+  checksum: 4a821690f0b9cdd81b0d02c0946c5b4e9e80f189e868fd8a159884d5eb9da0bdf0bfc380a61c971cc5d7b9ca2521625d46bcb5e4653988375118f57523ebe5a4
+  languageName: node
+  linkType: hard
+
 "@types/connect@npm:^3.4.33":
   version: 3.4.38
   resolution: "@types/connect@npm:3.4.38"
@@ -2304,6 +2310,13 @@ __metadata:
   version: 4.0.2
   resolution: "@types/parse-json@npm:4.0.2"
   checksum: b1b863ac34a2c2172fbe0807a1ec4d5cb684e48d422d15ec95980b81475fac4fdb3768a8b13eef39130203a7c04340fc167bae057c7ebcafd7dec9fe6c36aeb1
+  languageName: node
+  linkType: hard
+
+"@types/prismjs@npm:^1.26.0":
+  version: 1.26.3
+  resolution: "@types/prismjs@npm:1.26.3"
+  checksum: 3e8a64bcf0ab5f9a47ec2590938c5a8a20ac849b4949a95ed96e73e64cb890fc56e9c9b724286914717458267b28405f965709e1b9f80db5d68817a7ce5a18a9
   languageName: node
   linkType: hard
 
@@ -2688,7 +2701,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@walletconnect/modal@npm:^2.6.2":
+"@walletconnect/modal@npm:^2.6.1, @walletconnect/modal@npm:^2.6.2":
   version: 2.6.2
   resolution: "@walletconnect/modal@npm:2.6.2"
   dependencies:
@@ -3656,6 +3669,13 @@ __metadata:
   version: 5.3.1
   resolution: "camelcase@npm:5.3.1"
   checksum: 92ff9b443bfe8abb15f2b1513ca182d16126359ad4f955ebc83dc4ddcc4ef3fdd2c078bc223f2673dc223488e75c99b16cc4d056624374b799e6a1555cf61b23
+  languageName: node
+  linkType: hard
+
+"canvas-confetti@npm:^1.9.2":
+  version: 1.9.2
+  resolution: "canvas-confetti@npm:1.9.2"
+  checksum: 6247eb95bf710522f5822728dc29d74d0747b7ca0a85dfa90fd159f0f405527fbaedbdbb0e6917f6cd1560cf1355286c2c94bd3e89bc2147fb0fcf8e1c64126a
   languageName: node
   linkType: hard
 
@@ -7504,6 +7524,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"markdown-to-jsx@npm:^7.4.1":
+  version: 7.4.1
+  resolution: "markdown-to-jsx@npm:7.4.1"
+  peerDependencies:
+    react: ">= 0.14.0"
+  checksum: f40d9ab632a659ef7fd3afcae9c40e11ce77d57ae856275eb9439bf6762738eefb9897cfb65fc0495347cf8fc3b1cfef6cb9dcfe96959ded3ebd122375155323
+  languageName: node
+  linkType: hard
+
 "material-ui-popup-state@npm:^5.0.10":
   version: 5.0.10
   resolution: "material-ui-popup-state@npm:5.0.10"
@@ -7820,6 +7849,25 @@ __metadata:
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: d924b57e7312b3b63ad21fc5b3dc0af5e78d61a1fc7cfb5457edaf26326bf62be5307cc87ffb6862ef1c2b33b0233cdb5d4f01c4c958cc0d660948b65a287a48
+  languageName: node
+  linkType: hard
+
+"mui-markdown@npm:^1.1.13":
+  version: 1.1.13
+  resolution: "mui-markdown@npm:1.1.13"
+  dependencies:
+    prism-react-renderer: "npm:^2.0.3"
+  peerDependencies:
+    "@emotion/react": ^11.10.8
+    "@emotion/styled": ^11.10.8
+    "@mui/material": ^5.12.2
+    markdown-to-jsx: ^7.3.0
+    react: ">= 17.0.2"
+    react-dom: ">= 17.0.2"
+  dependenciesMeta:
+    prism-react-renderer:
+      optional: true
+  checksum: a786ca94e763f93d352ebd9eac3366d7eb0a9c2b926c7d3c662fabb538bf13ff33968b21032d74d4973a4c9161579d15bdf5df767acf75157ffdb7adbe30da75
   languageName: node
   linkType: hard
 
@@ -8746,6 +8794,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prism-react-renderer@npm:^2.0.3":
+  version: 2.3.1
+  resolution: "prism-react-renderer@npm:2.3.1"
+  dependencies:
+    "@types/prismjs": "npm:^1.26.0"
+    clsx: "npm:^2.0.0"
+  peerDependencies:
+    react: ">=16.0.0"
+  checksum: 566932127ca18049a651aa038a8f8c7c1ca15950d21b659c2ce71fd95bd03bef2b5d40c489e7aa3453eaf15d984deef542a609d7842e423e6a13427dd90bd371
+  languageName: node
+  linkType: hard
+
 "proc-log@npm:^3.0.0":
   version: 3.0.0
   resolution: "proc-log@npm:3.0.0"
@@ -8940,9 +9000,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "rarime-app@workspace:."
   dependencies:
-    "@distributedlab/jac": "npm:^1.0.0-rc.9"
-    "@distributedlab/tools": "npm:^1.0.0-rc.9"
-    "@distributedlab/w3p": "npm:^1.0.0-rc.9"
+    "@distributedlab/jac": "npm:^1.0.0-rc.14"
+    "@distributedlab/tools": "npm:^1.0.0-rc.14"
+    "@distributedlab/w3p": "npm:^1.0.0-rc.14"
     "@dnd-kit/core": "npm:^6.1.0"
     "@dnd-kit/modifiers": "npm:^7.0.0"
     "@dnd-kit/sortable": "npm:^8.0.0"
@@ -8955,6 +9015,7 @@ __metadata:
     "@mui/material": "npm:^5.14.20"
     "@mui/x-date-pickers": "npm:^6.18.7"
     "@rarimo/rarime-connector": "npm:^2.1.0-rc.3"
+    "@types/canvas-confetti": "npm:^1.6.4"
     "@types/lodash": "npm:^4"
     "@types/react": "npm:^18.2.37"
     "@types/react-dom": "npm:^18.2.15"
@@ -8963,6 +9024,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^6.10.0"
     "@vitejs/plugin-react-swc": "npm:^3.5.0"
     "@walletconnect/modal": "npm:^2.6.2"
+    canvas-confetti: "npm:^1.9.2"
     copy-to-clipboard: "npm:^3.3.3"
     dotenv: "npm:^16.3.1"
     dotenv-cli: "npm:^7.2.1"
@@ -8981,7 +9043,9 @@ __metadata:
     jdenticon: "npm:^3.2.0"
     lodash: "npm:^4.17.21"
     loglevel: "npm:^1.8.1"
+    markdown-to-jsx: "npm:^7.4.1"
     material-ui-popup-state: "npm:^5.0.10"
+    mui-markdown: "npm:^1.1.13"
     notistack: "npm:^3.0.1"
     postcss: "npm:^8.4.24"
     prettier: "npm:^2.7.1"
