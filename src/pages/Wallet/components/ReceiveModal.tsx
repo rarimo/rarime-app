@@ -1,12 +1,13 @@
-import { Button, Divider, Paper, Stack, Typography, useTheme } from '@mui/material'
+import { Button, Divider, Stack, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 import { QRCode } from 'react-qrcode-logo'
 
 import { useWalletState } from '@/store'
-import { UiCopyField, UiIcon, UiModal } from '@/ui'
+import { toRem } from '@/theme/helpers'
+import { UiBasicModal, UiCopyField, UiIcon, UiInfoChip } from '@/ui'
 
 export default function ReceiveModal() {
-  const { palette, spacing } = useTheme()
+  const { palette } = useTheme()
 
   const [isModalShown, setIsModalShown] = useState(false)
 
@@ -22,38 +23,22 @@ export default function ReceiveModal() {
         Receive
       </Button>
 
-      <UiModal open={isModalShown} onClose={() => setIsModalShown(false)}>
-        <Paper
-          sx={theme => ({
-            overflow: 'hidden',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            background: theme.palette.background.default,
-            borderRadius: theme.shape.borderRadius,
-            p: 0,
-          })}
-        >
-          <Stack spacing={5}>
-            <Stack direction='row' alignItems='center' justifyContent='space-between' p={5} pb={0}>
-              <Typography variant='h6'>Receive</Typography>
+      <UiBasicModal open={isModalShown} onClose={() => setIsModalShown(false)}>
+        <Stack>
+          <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
+            <Typography variant='h6'>Receive</Typography>
 
-              <Button variant='text' onClick={() => setIsModalShown(false)}>
-                <UiIcon componentName='close' sx={{ color: palette.text.secondary }} />
-              </Button>
-            </Stack>
+            <Button variant='text' onClick={() => setIsModalShown(false)}>
+              <UiIcon componentName='close' sx={{ color: palette.text.secondary }} />
+            </Button>
+          </Stack>
 
-            <Divider />
+          <Divider />
 
-            <Stack
-              alignSelf='center'
-              sx={{
-                borderWidth: spacing(1),
-                borderColor: palette.common.black,
-                borderStyle: 'solid',
-              }}
-            >
+          <Stack p={5} spacing={5}>
+            <UiInfoChip severity='warning' message='Informational message' />
+
+            <Stack alignSelf='center' border={`${toRem(4)} solid ${palette.common.black}`}>
               <QRCode
                 logoImage='/branding/logo.svg'
                 logoPadding={5}
@@ -63,12 +48,10 @@ export default function ReceiveModal() {
               />
             </Stack>
 
-            <Stack p={5} alignItems='center' spacing={5}>
-              <UiCopyField label='Deposit Address' value={address} />
-            </Stack>
+            <UiCopyField label='Deposit Address' value={address} />
           </Stack>
-        </Paper>
-      </UiModal>
+        </Stack>
+      </UiBasicModal>
     </>
   )
 }

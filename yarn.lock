@@ -293,48 +293,48 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@distributedlab/fetcher@npm:1.0.0-rc.13, @distributedlab/fetcher@npm:^1.0.0-rc.13":
-  version: 1.0.0-rc.13
-  resolution: "@distributedlab/fetcher@npm:1.0.0-rc.13"
+"@distributedlab/fetcher@npm:1.0.0-rc.14, @distributedlab/fetcher@npm:^1.0.0-rc.13":
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/fetcher@npm:1.0.0-rc.14"
   dependencies:
     uuid: "npm:^9.0.0"
-  checksum: 0bc540786478afcc5abc170ee8f098e82485d874a874bf17bcdc3e6005a0bd5373aa7aecce7d2f045a640d4598fc42b9fc4c167a11003730e793f4a16560ff79
+  checksum: 1784e4bec58984174a502d63e9c4ca92cc2ca2a1b9d927fd2831514e70712aa2c403f66e61cc3236654067bddeae7b0644e57f73a486515d401b595288f74eca
   languageName: node
   linkType: hard
 
 "@distributedlab/jac@npm:^1.0.0-rc.13":
-  version: 1.0.0-rc.13
-  resolution: "@distributedlab/jac@npm:1.0.0-rc.13"
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/jac@npm:1.0.0-rc.14"
   dependencies:
-    "@distributedlab/fetcher": "npm:1.0.0-rc.13"
+    "@distributedlab/fetcher": "npm:1.0.0-rc.14"
     lodash: "npm:^4.17.21"
-  checksum: e90c7063cf635935713f1802eddc1d9017bdcb424cbb538628e94e991720237b4a2150682b53fb83d96902b207686809159766c305ebac554698b7b64c2f115d
+  checksum: 3a9abd428d10fc937401751571247d14ea8d6dc2edfbd8b528f564758085a892797fc6589abc25573cd22ca4c5e83fa1d9d3d5be19c2fabcb6dcfc519c86a0f3
   languageName: node
   linkType: hard
 
 "@distributedlab/reactivity@npm:^1.0.0-rc.13":
-  version: 1.0.0-rc.13
-  resolution: "@distributedlab/reactivity@npm:1.0.0-rc.13"
-  checksum: 407a43ca43bae5141301b721255b592f5b749a89163d55c17ff205ee6cf885ded5544e28fc71d1db4a9d6dc216601022913743f145e688beec4fc73febf6b47f
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/reactivity@npm:1.0.0-rc.14"
+  checksum: 3a5e4f60829bf68f2b2072712558ecd6f95677a1a288205054fc6fcc2a6ab2acc40ad27c6d9534c15a7cca3192878cb171dffca4ae05508465e577eb10ce76b8
   languageName: node
   linkType: hard
 
-"@distributedlab/tools@npm:1.0.0-rc.13, @distributedlab/tools@npm:^1.0.0-rc.13":
-  version: 1.0.0-rc.13
-  resolution: "@distributedlab/tools@npm:1.0.0-rc.13"
+"@distributedlab/tools@npm:1.0.0-rc.14, @distributedlab/tools@npm:^1.0.0-rc.13":
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/tools@npm:1.0.0-rc.14"
   dependencies:
     bignumber.js: "npm:^9.1.1"
     dayjs: "npm:^1.11.7"
     tslib: "npm:^2.5.0"
-  checksum: 0d526fde365cfbac8c9431e3a2914b9f746b454a0a1a44768e3faa827356ba33688171d240a5a9f48d7afe94ffb68b58e9988bbdd42f5bcca29b0e6cf2e0fb8d
+  checksum: 37c17513ba4cd80f7222c7e789af68ebceb5b4a718f8d364a828f4424ea50694af7aaddc5f6240ae157c177e0cd4b11f3546a06ad31ebd12151baec4ca1c0007
   languageName: node
   linkType: hard
 
 "@distributedlab/w3p@npm:^1.0.0-rc.13":
-  version: 1.0.0-rc.13
-  resolution: "@distributedlab/w3p@npm:1.0.0-rc.13"
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/w3p@npm:1.0.0-rc.14"
   dependencies:
-    "@distributedlab/tools": "npm:1.0.0-rc.13"
+    "@distributedlab/tools": "npm:1.0.0-rc.14"
     "@ethersproject/abstract-provider": "npm:^5.7.0"
     "@ethersproject/properties": "npm:^5.7.0"
     "@near-wallet-selector/core": "npm:^7.8.2"
@@ -345,7 +345,7 @@ __metadata:
     bs58: "npm:^5.0.0"
     ethers: "npm:^5.7.2"
     near-api-js: "npm:^1.1.0"
-  checksum: f7a579de0868effd3faad9a603ad67bd80fe94544d027bd01a837bde4505167d9a01358b0b0ad2a8e31dfb2edffba2dbf19d1141f8a7e25c85ccc325eac6e2d7
+  checksum: 227587b13d4d96b38f1ab0949fcc80c09e4b2323921a8d1e820816e35646f63b0f51864a82a1dcc05cc6a88bd9c6f0f27a81f19ad85e4eaf585fc98f50758a47
   languageName: node
   linkType: hard
 
@@ -1430,7 +1430,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/gen-mapping@npm:^0.3.0":
+"@jridgewell/gen-mapping@npm:^0.3.5":
   version: 0.3.5
   resolution: "@jridgewell/gen-mapping@npm:0.3.5"
   dependencies:
@@ -1456,12 +1456,12 @@ __metadata:
   linkType: hard
 
 "@jridgewell/source-map@npm:^0.3.3":
-  version: 0.3.5
-  resolution: "@jridgewell/source-map@npm:0.3.5"
+  version: 0.3.6
+  resolution: "@jridgewell/source-map@npm:0.3.6"
   dependencies:
-    "@jridgewell/gen-mapping": "npm:^0.3.0"
-    "@jridgewell/trace-mapping": "npm:^0.3.9"
-  checksum: b985d9ebd833a21a6e9ace820c8a76f60345a34d9e28d98497c16b6e93ce1f131bff0abd45f8585f14aa382cce678ed680d628c631b40a9616a19cfbc2049b68
+    "@jridgewell/gen-mapping": "npm:^0.3.5"
+    "@jridgewell/trace-mapping": "npm:^0.3.25"
+  checksum: 6a4ecc713ed246ff8e5bdcc1ef7c49aaa93f7463d948ba5054dda18b02dcc6a055e2828c577bcceee058f302ce1fc95595713d44f5c45e43d459f88d267f2f04
   languageName: node
   linkType: hard
 
@@ -1472,7 +1472,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/trace-mapping@npm:^0.3.24, @jridgewell/trace-mapping@npm:^0.3.9":
+"@jridgewell/trace-mapping@npm:^0.3.24, @jridgewell/trace-mapping@npm:^0.3.25":
   version: 0.3.25
   resolution: "@jridgewell/trace-mapping@npm:0.3.25"
   dependencies:
@@ -2138,41 +2138,40 @@ __metadata:
   linkType: hard
 
 "@rarimo/client@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@rarimo/client@npm:2.0.0"
+  version: 2.1.0
+  resolution: "@rarimo/client@npm:2.1.0"
   dependencies:
     "@cosmjs/launchpad": "npm:^0.27.1"
     "@cosmjs/proto-signing": "npm:^0.32.2"
     "@cosmjs/stargate": "npm:^0.32.2"
     "@distributedlab/fetcher": "npm:^1.0.0-rc.13"
     "@distributedlab/reactivity": "npm:^1.0.0-rc.13"
-    "@rarimo/shared": "npm:^2.0.0"
-  checksum: aae4cf68f504ad79a69e12e17ba82f4afc1bf7f0644312bafbd89c2d669d9d2c599197085bf8ef4e698972d0597932a269378d44694b8c86d828f011bfe776e8
+    "@rarimo/shared": "npm:^2.1.0"
+  checksum: a2c0efe78e8b55a31cb0a5c76b1d30f4031e2ec8d3197af92c9ba8be3c1a750d43abf157369a739d14931bf9d0a42b17bcf214cf68c3d6daa75dd445b30befa8
   languageName: node
   linkType: hard
 
 "@rarimo/rarime-connector@npm:^2.1.0-rc.10":
-  version: 2.1.0-rc.10
-  resolution: "@rarimo/rarime-connector@npm:2.1.0-rc.10"
+  version: 2.1.0-rc.11
+  resolution: "@rarimo/rarime-connector@npm:2.1.0-rc.11"
   dependencies:
     "@cosmjs/amino": "npm:^0.32.2"
     "@cosmjs/proto-signing": "npm:^0.32.2"
     "@ethersproject/providers": "npm:5.7.2"
-    "@rarimo/client": "npm:^2.0.0"
     compare-versions: "npm:^6.1.0"
     ethers: "npm:5.7.2"
     long: "npm:^5.2.3"
-  checksum: d62dbaa670892b5def7fa7c6b18abdf5422cc24718c4fc7d94a2bdf666c032e3633b9be6d84929fd7662832b4f7302e2f44e51375a35afea7f3d9c2a15c2111f
+  checksum: e437d1058069c7374c8442928964c4315999e8f462e427df7d2dd1423542a5394a2590bc4f2daf4c623a970d2dcbc01345102ecfae73c4d7a9c475fe82ca603f
   languageName: node
   linkType: hard
 
-"@rarimo/shared@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@rarimo/shared@npm:2.0.0"
+"@rarimo/shared@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@rarimo/shared@npm:2.1.0"
   dependencies:
     "@distributedlab/jac": "npm:^1.0.0-rc.13"
     "@distributedlab/tools": "npm:^1.0.0-rc.13"
-  checksum: 9024646ac61bc5d90f868ed1b11c7960923f8d310ed2c3c44bf4025e19aeab0751573bfe937526add253da44b85aec5e5dbe7c87c4097c6d0e77f2d95354ffd2
+  checksum: 8bef14475190e9ce53c31adcb78697123c933cd04e3c1cc52f754b66d3fef07a8ada21275a855973c068bfc5f527d84d3407cc4e9a0e443cb0b2650dc0a32283
   languageName: node
   linkType: hard
 
@@ -2602,9 +2601,9 @@ __metadata:
   linkType: hard
 
 "@types/lodash@npm:^4":
-  version: 4.14.202
-  resolution: "@types/lodash@npm:4.14.202"
-  checksum: 6064d43c8f454170841bd67c8266cc9069d9e570a72ca63f06bceb484cb4a3ee60c9c1f305c1b9e3a87826049fd41124b8ef265c4dd08b00f6766609c7fe9973
+  version: 4.17.0
+  resolution: "@types/lodash@npm:4.17.0"
+  checksum: 4c5b41c9a6c41e2c05d08499e96f7940bcf194dcfa84356235b630da920c2a5e05f193618cea76006719bec61c76617dff02defa9d29934f9f6a76a49291bd8f
   languageName: node
   linkType: hard
 
@@ -2616,11 +2615,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:>=13.7.0":
-  version: 20.11.25
-  resolution: "@types/node@npm:20.11.25"
+  version: 20.11.26
+  resolution: "@types/node@npm:20.11.26"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: 3a65a0469309d503e572a3198d81c9248876236b1bcc0c9943e995cfa536df7ce9a9302638258984877420d1613167a8a82dbfb3a92197319fb79ebebf9abc83
+  checksum: 2df81e4f109588c4c490f2c7d616a06d2b3b9298f217468134b80711af810c9a6017a59beb3e6b1c596eb9b6c5a39d33403b99179acb89006badfbc55f2468bb
   languageName: node
   linkType: hard
 
@@ -2664,13 +2663,13 @@ __metadata:
   linkType: hard
 
 "@types/react@npm:*, @types/react@npm:^18.2.37":
-  version: 18.2.64
-  resolution: "@types/react@npm:18.2.64"
+  version: 18.2.65
+  resolution: "@types/react@npm:18.2.65"
   dependencies:
     "@types/prop-types": "npm:*"
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
-  checksum: ab3ba9597990d08ffd419a5ad28fd22393c7a9a241ae455fb1d5d193d209471aa1909fa7ad016fd8d161eab6d0babba77b013b56a5170bedf78833085b9ee424
+  checksum: 91158b5a9e90489a5984bb610c3692001ecdf1d286c78384252698bcb306ef88e9434e75f01bf7739017e949e7690b7d6f1b7ef9d7097f86f3f649482a33604b
   languageName: node
   linkType: hard
 
@@ -3578,7 +3577,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"available-typed-arrays@npm:^1.0.6, available-typed-arrays@npm:^1.0.7":
+"available-typed-arrays@npm:^1.0.7":
   version: 1.0.7
   resolution: "available-typed-arrays@npm:1.0.7"
   dependencies:
@@ -5148,12 +5147,12 @@ __metadata:
   linkType: hard
 
 "enhanced-resolve@npm:^5.12.0":
-  version: 5.15.1
-  resolution: "enhanced-resolve@npm:5.15.1"
+  version: 5.16.0
+  resolution: "enhanced-resolve@npm:5.16.0"
   dependencies:
     graceful-fs: "npm:^4.2.4"
     tapable: "npm:^2.2.0"
-  checksum: f56a0f3726dc5fb65cb4518ab0806aecfd553f4cd4146f403ffe618ece36610443d8624a89d18fe0bb0be307b1c9ca8fb835267345ca4afc25d2932d58ced715
+  checksum: dd69669cbb638ccacefd03e04d5e195ee6a99b7f5f8012f86d2df7781834de357923e06064ea621137c4ce0b37cc12b872b4e6d1ac6ab15fe98e7f1dfbbb08c4
   languageName: node
   linkType: hard
 
@@ -6596,7 +6595,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"has-tostringtag@npm:^1.0.0, has-tostringtag@npm:^1.0.1, has-tostringtag@npm:^1.0.2":
+"has-tostringtag@npm:^1.0.0, has-tostringtag@npm:^1.0.2":
   version: 1.0.2
   resolution: "has-tostringtag@npm:1.0.2"
   dependencies:
@@ -6676,11 +6675,11 @@ __metadata:
   linkType: hard
 
 "hasown@npm:^2.0.0, hasown@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "hasown@npm:2.0.1"
+  version: 2.0.2
+  resolution: "hasown@npm:2.0.2"
   dependencies:
     function-bind: "npm:^1.1.2"
-  checksum: 9e27e70e8e4204f4124c8f99950d1ba2b1f5174864fd39ff26da190f9ea6488c1b3927dcc64981c26d1f637a971783c9489d62c829d393ea509e6f1ba20370bb
+  checksum: 3769d434703b8ac66b209a4cca0737519925bbdb61dd887f93a16372b14694c63ff4e797686d87c90f08168e81082248b9b028bad60d4da9e0d1148766f56eb9
   languageName: node
   linkType: hard
 
@@ -9593,6 +9592,7 @@ __metadata:
     "@mui/icons-material": "npm:^5.14.19"
     "@mui/material": "npm:^5.14.20"
     "@mui/x-date-pickers": "npm:^6.18.7"
+    "@rarimo/client": "npm:^2.0.0"
     "@rarimo/rarime-connector": "npm:^2.1.0-rc.10"
     "@types/lodash": "npm:^4"
     "@types/react": "npm:^18.2.37"
@@ -11961,15 +11961,15 @@ __metadata:
   linkType: hard
 
 "which-typed-array@npm:^1.1.14, which-typed-array@npm:^1.1.2, which-typed-array@npm:^1.1.9":
-  version: 1.1.14
-  resolution: "which-typed-array@npm:1.1.14"
+  version: 1.1.15
+  resolution: "which-typed-array@npm:1.1.15"
   dependencies:
-    available-typed-arrays: "npm:^1.0.6"
-    call-bind: "npm:^1.0.5"
+    available-typed-arrays: "npm:^1.0.7"
+    call-bind: "npm:^1.0.7"
     for-each: "npm:^0.3.3"
     gopd: "npm:^1.0.1"
-    has-tostringtag: "npm:^1.0.1"
-  checksum: 0960f1e77807058819451b98c51d4cd72031593e8de990b24bd3fc22e176f5eee22921d68d852297c786aec117689f0423ed20aa4fde7ce2704d680677891f56
+    has-tostringtag: "npm:^1.0.2"
+  checksum: 4465d5348c044032032251be54d8988270e69c6b7154f8fcb2a47ff706fe36f7624b3a24246b8d9089435a8f4ec48c1c1025c5d6b499456b9e5eff4f48212983
   languageName: node
   linkType: hard
 

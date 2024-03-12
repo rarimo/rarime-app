@@ -1,10 +1,9 @@
+import { BN } from '@distributedlab/tools'
 import {
-  alpha,
   Button,
   Divider,
   FormControl,
   InputAdornment,
-  Paper,
   Stack,
   Typography,
   useTheme,
@@ -12,10 +11,12 @@ import {
 import { useCallback, useMemo, useState } from 'react'
 import { Controller } from 'react-hook-form'
 
-import { ErrorHandler, formatAmount } from '@/helpers'
+import { RARIMO_EXPLORER_URLS, rarimoClient } from '@/api/clients'
+import { BusEvents } from '@/enums'
+import { bus, ErrorHandler, formatAmount } from '@/helpers'
 import { useForm } from '@/hooks'
-import { useWalletState } from '@/store'
-import { UiIcon, UiModal, UiTextField } from '@/ui'
+import { useWalletState, walletStore } from '@/store'
+import { UiBasicModal, UiIcon, UiInfoChip, UiTextField } from '@/ui'
 
 enum FieldNames {
   Address = 'address',
@@ -31,30 +32,100 @@ export default function SendModal() {
 
   const mainBalance = useMemo(() => balances?.[0], [balances])
 
-  const { isFormDisabled, handleSubmit, disableForm, enableForm, getErrorMessage, control } =
-    useForm(
-      {
-        [FieldNames.Address]: '',
-        [FieldNames.Amount]: '',
-      },
-      yup =>
-        yup.object().shape({
-          [FieldNames.Address]: yup.string().required(),
-          [FieldNames.Amount]: yup.string().required(),
-        }),
-    )
+  const maxAmountBN = useMemo(() => {
+    return BN.fromBigInt(mainBalance.amount, mainBalance?.decimals)
+  }, [mainBalance.amount, mainBalance?.decimals])
+
+  const {
+    formState,
+    isFormDisabled,
+    handleSubmit,
+    disableForm,
+    enableForm,
+    getErrorMessage,
+    control,
+  } = useForm(
+    {
+      [FieldNames.Address]: '',
+      [FieldNames.Amount]: '',
+    },
+    yup =>
+      yup.object().shape({
+        [FieldNames.Address]: yup.string().required(),
+        [FieldNames.Amount]: yup
+          .number()
+          .max(
+            Number(
+              maxAmountBN.format({
+                decimals: mainBalance?.decimals,
+                groupSeparator: '',
+                decimalSeparator: '.',
+              }),
+            ),
+          )
+          .required(),
+      }),
+  )
+
+  const totalAmountAfterFee = useMemo(() => {
+    try {
+      const amountBN = BN.fromRaw(formState[FieldNames.Amount], mainBalance?.decimals)
+
+      const feeBN = BN.fromRaw(rarimoClient.config.gasPrice.amount, mainBalance?.decimals)
+
+      return amountBN.sub(feeBN).value
+    } catch (error) {
+      return '0'
+    }
+  }, [formState, mainBalance?.decimals])
 
   const send = useCallback(async () => {
     disableForm()
 
     try {
-      /* empty */
+      const receipt = await rarimoClient.tx.send(
+        rarimoClient.wallet.address,
+        formState[FieldNames.Address],
+        [
+          {
+            denom: mainBalance.denom,
+            amount: BN.fromRaw(formState[FieldNames.Amount], rarimoClient.config.currency.decimals)
+              .value,
+          },
+        ],
+      )
+
+      const explorerLink = `${RARIMO_EXPLORER_URLS[rarimoClient.wallet.chainId]}/transactions/${
+        receipt.transactionHash
+      }`
+
+      bus.emit(BusEvents.success, {
+        message: (
+          <Stack spacing={1}>
+            <Typography>Tokens sent. See tx on</Typography>
+            <Typography
+              component='a'
+              color={palette.primary.main}
+              fontWeight='bold'
+              href={explorerLink}
+              target='_blank'
+              rel='noreferrer'
+            >
+              explorer
+            </Typography>
+          </Stack>
+        ),
+      })
+
+      await walletStore.loadBalances()
+
+      setIsModalShown(false)
     } catch (error) {
       ErrorHandler.process(error)
     }
 
     enableForm()
-  }, [disableForm, enableForm])
+  }, [disableForm, enableForm, formState, mainBalance.denom, palette.primary.main])
 
   return (
     <>
@@ -65,61 +136,28 @@ export default function SendModal() {
       >
         Send
       </Button>
-      <UiModal open={isModalShown} onClose={() => setIsModalShown(false)}>
-        <Paper
-          sx={theme => ({
-            overflow: 'hidden',
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            background: theme.palette.background.default,
-            borderRadius: theme.shape.borderRadius,
-            p: 0,
-            width: spacing(115),
-          })}
-        >
-          <Stack spacing={5}>
-            <Stack direction='row' alignItems='center' justifyContent='space-between' p={5} pb={0}>
-              <Typography variant='h6'>Send {mainBalance?.denom}</Typography>
+      <UiBasicModal open={isModalShown} onClose={() => setIsModalShown(false)}>
+        <Stack width={spacing(115)}>
+          <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
+            <Typography variant='h6'>Send {mainBalance?.denom}</Typography>
 
-              <Button variant='text' onClick={() => setIsModalShown(false)}>
-                <UiIcon componentName='close' sx={{ color: palette.text.secondary }} />
-              </Button>
+            <Button variant='text' onClick={() => setIsModalShown(false)}>
+              <UiIcon componentName='close' sx={{ color: palette.text.secondary }} />
+            </Button>
+          </Stack>
+
+          <Divider />
+
+          <Stack spacing={5} pt={5}>
+            <Stack px={5}>
+              <UiInfoChip severity='warning' message='Informational message' />
             </Stack>
 
-            <Divider />
-
             <form onSubmit={handleSubmit(send)}>
-              <Stack spacing={5} p={5} pt={0}>
-                <Controller
-                  name={FieldNames.Address}
-                  control={control}
-                  render={({ field }) => (
-                    <FormControl>
-                      <UiTextField
-                        {...field}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position='end'>
-                              <UiIcon
-                                componentName='qrCode'
-                                sx={{ color: palette.text.secondary }}
-                              />
-                            </InputAdornment>
-                          ),
-                        }}
-                        label={FieldNames.Address}
-                        errorMessage={getErrorMessage(FieldNames.Address)}
-                        disabled={isFormDisabled}
-                      />
-                    </FormControl>
-                  )}
-                />
-
-                <Stack spacing={2}>
+              <Stack spacing={5}>
+                <Stack spacing={5} px={5}>
                   <Controller
-                    name={FieldNames.Amount}
+                    name={FieldNames.Address}
                     control={control}
                     render={({ field }) => (
                       <FormControl>
@@ -128,59 +166,101 @@ export default function SendModal() {
                           InputProps={{
                             endAdornment: (
                               <InputAdornment position='end'>
-                                <Stack
-                                  spacing={2}
-                                  direction='row'
-                                  alignItems='center'
-                                  borderLeft={`2px solid ${alpha(palette.text.secondary, 0.1)}`}
-                                  pl={4}
-                                >
-                                  <Button variant='text'>MAX</Button>
-                                </Stack>
+                                <UiIcon
+                                  componentName='qrCode'
+                                  sx={{ color: palette.text.secondary }}
+                                />
                               </InputAdornment>
                             ),
                           }}
-                          label={FieldNames.Amount}
-                          errorMessage={getErrorMessage(FieldNames.Amount)}
+                          label={FieldNames.Address}
+                          errorMessage={getErrorMessage(FieldNames.Address)}
                           disabled={isFormDisabled}
                         />
                       </FormControl>
                     )}
                   />
 
-                  <Stack spacing={2} direction='row' justifyContent='space-between'>
-                    <Typography variant='body4' color={palette.text.secondary}>
-                      Available:
-                    </Typography>
-                    <Typography variant='body4'>
-                      {formatAmount(mainBalance?.amount, mainBalance?.decimals)}{' '}
-                      {mainBalance?.denom}
-                    </Typography>
+                  <Stack spacing={2}>
+                    <Controller
+                      name={FieldNames.Amount}
+                      control={control}
+                      render={({ field }) => (
+                        <FormControl>
+                          <UiTextField
+                            {...field}
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position='end'>
+                                  <Stack
+                                    spacing={2}
+                                    direction='row'
+                                    alignItems='center'
+                                    borderLeft={`2px solid ${palette.action.active}`}
+                                    pl={4}
+                                  >
+                                    <Button
+                                      variant='text'
+                                      sx={{ color: palette.text.secondary }}
+                                      onClick={() =>
+                                        field.onChange(
+                                          formatAmount(maxAmountBN, maxAmountBN.decimals),
+                                        )
+                                      }
+                                      disabled={isFormDisabled}
+                                    >
+                                      MAX
+                                    </Button>
+                                  </Stack>
+                                </InputAdornment>
+                              ),
+                            }}
+                            label={FieldNames.Amount}
+                            errorMessage={getErrorMessage(FieldNames.Amount)}
+                            disabled={isFormDisabled}
+                          />
+                        </FormControl>
+                      )}
+                    />
+
+                    <Stack spacing={2} direction='row' justifyContent='space-between'>
+                      <Typography variant='body4' color={palette.text.secondary}>
+                        Available:
+                      </Typography>
+                      <Typography variant='body4'>
+                        {formatAmount(maxAmountBN, maxAmountBN.decimals)} {mainBalance?.denom}
+                      </Typography>
+                    </Stack>
                   </Stack>
                 </Stack>
 
                 <Divider />
 
-                <Stack direction='row' spacing={4} justifyContent='space-between'>
+                <Stack direction='row' spacing={4} justifyContent='space-between' p={5} pt={0}>
                   <Stack spacing={1}>
                     <Typography variant='body4' color={palette.text.secondary}>
                       Receive amount:
                     </Typography>
                     <Stack direction='row' alignItems='baseline' spacing={1}>
-                      <Typography variant='subtitle3'>0.0 {mainBalance?.denom}</Typography>
+                      <Typography variant='subtitle3'>
+                        {formatAmount(totalAmountAfterFee, mainBalance?.decimals)}{' '}
+                        {mainBalance?.denom}
+                      </Typography>
                       <Typography variant='body4' color={palette.text.secondary}>
                         Fee: 0.005 {mainBalance?.denom}
                       </Typography>
                     </Stack>
                   </Stack>
 
-                  <Button sx={{ width: spacing(42) }}>Send</Button>
+                  <Button sx={{ width: spacing(42) }} type='submit' disabled={isFormDisabled}>
+                    Send
+                  </Button>
                 </Stack>
               </Stack>
             </form>
           </Stack>
-        </Paper>
-      </UiModal>
+        </Stack>
+      </UiBasicModal>
     </>
   )
 }

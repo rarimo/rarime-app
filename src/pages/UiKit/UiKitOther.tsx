@@ -155,6 +155,21 @@ export default function UiKitOther() {
           >
             {`Info message`}
           </UiButton>
+
+          <UiButton
+            onClick={() => {
+              bus.emit(BusEvents.success, {
+                message: (
+                  <a href={'https://google.com'} target='_blank' rel='noreferrer'>
+                    Google Link
+                  </a>
+                ),
+              })
+            }}
+            color={`info`}
+          >
+            {`Tx message`}
+          </UiButton>
         </Stack>
       </Stack>
 

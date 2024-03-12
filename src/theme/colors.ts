@@ -1,3 +1,4 @@
+import { alpha } from '@mui/material'
 import { PaletteOptions } from '@mui/material/styles'
 
 export const lightPalette: PaletteOptions = {
@@ -39,16 +40,18 @@ export const lightPalette: PaletteOptions = {
     contrastText: '#FFFFFF',
   },
   warning: {
+    // warning/warning-darker
     darker: '#A4541E',
     dark: '#CA6725',
     main: '#F17B2C',
     light: '#FCE5D5',
-    lighter: '#FEF6F0',
+    // warning/warning-lighter
+    lighter: alpha('#F17B2C', 0.05),
     contrastText: '#FFFFFF',
   },
-  // DesignSystem: text & icons
   text: {
     primary: '#202020',
+    // DesignSystem: text & icons/secondary
     secondary: 'rgba(32, 32, 32, 0.56)',
     placeholder: 'rgba(32, 32, 32, 0.44)',
     disabled: 'rgba(32, 32, 32, 0.28)',

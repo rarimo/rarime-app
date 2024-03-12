@@ -1,5 +1,4 @@
 import {
-  alpha,
   Button,
   Divider,
   IconButton,
@@ -28,18 +27,37 @@ export default function Wallet() {
 
   const mainBalance = useMemo(() => balances?.[0], [balances])
 
-  const { isLoading, isLoadingError } = useLoading(undefined, walletStore.connect, {
-    loadOnMount: true,
-  })
+  const { isLoading, isLoadingError } = useLoading(
+    undefined,
+    async () => {
+      await walletStore.connect()
+      await walletStore.loadBalances()
+    },
+    {
+      loadOnMount: true,
+    },
+  )
 
   if (isLoading)
     return (
-      <Stack>
+      <Stack spacing={4}>
         <PageTitles title='Wallet' />
 
-        <Skeleton height={spacing(80)} />
-        <Skeleton height={spacing(50)} />
-        <Skeleton height={spacing(50)} />
+        <Paper>
+          <Skeleton variant='rectangular' height={spacing(50)} />
+        </Paper>
+        <Paper>
+          <Skeleton variant='rectangular' height={spacing(25)} />
+        </Paper>
+        <Paper>
+          <Stack spacing={2}>
+            <Skeleton variant='rectangular' height={spacing(25)} />
+
+            <Skeleton variant='rectangular' height={spacing(5)} />
+            <Skeleton variant='rectangular' height={spacing(5)} />
+            <Skeleton variant='rectangular' height={spacing(5)} />
+          </Stack>
+        </Paper>
       </Stack>
     )
 
@@ -59,24 +77,23 @@ export default function Wallet() {
       <Paper sx={{ mt: spacing(8) }}>
         <Stack spacing={4}>
           <Stack spacing={2}>
-            <Typography color={alpha(palette.text.secondary, 0.6)}>
+            <Typography color={palette.text.secondary}>
               {`Available ${mainBalance?.denom}`}
             </Typography>
             <Typography variant='h4'>
               {formatAmount(mainBalance?.amount, mainBalance?.decimals)}
             </Typography>
           </Stack>
+
           <Divider />
+
           <Stack spacing={3} direction='row' alignItems='center' justifyContent='space-between'>
             <Stack spacing={3} direction='row'>
-              <Button color='secondary' startIcon={<UiIcon componentName='add' />}>
-                Buy
-              </Button>
-
               <ReceiveModal />
 
               <SendModal />
             </Stack>
+
             <Button
               component={Link}
               to=''
@@ -86,15 +103,15 @@ export default function Wallet() {
                   sx={{
                     borderLeft: `2px solid`,
                     borderBottom: `2px solid`,
-                    borderColor: alpha(palette.text.secondary, 0.6),
-                    color: alpha(palette.text.secondary, 0.6),
+                    borderColor: palette.text.secondary,
+                    color: palette.text.secondary,
                   }}
                   size={4}
                 />
               }
               variant='text'
             >
-              <Typography variant='buttonMedium' sx={{ color: alpha(palette.text.secondary, 0.6) }}>
+              <Typography variant='buttonMedium' color={palette.text.secondary}>
                 Wallet Analytics
               </Typography>
             </Button>
@@ -117,7 +134,7 @@ export default function Wallet() {
 
           <Stack spacing={1}>
             <Typography variant='subtitle3'>Earn {mainBalance?.denom}</Typography>
-            <Typography color={alpha(palette.text.secondary, 0.6)}>Scan your passport</Typography>
+            <Typography color={palette.text.secondary}>Scan your passport</Typography>
           </Stack>
 
           <IconButton sx={{ background: palette.primary.main, p: 1, ml: 'auto' }}>
@@ -132,6 +149,8 @@ export default function Wallet() {
             <Typography>History</Typography>
             <UiIcon componentName='chevronRight' />
           </Stack>
+
+          <NoDataViewer />
         </Stack>
       </Paper>
     </Stack>

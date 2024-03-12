@@ -22,7 +22,6 @@ export default function UiBasicModal({ open, onClose, children, modalProps, ...r
           transform: 'translate(-50%, -50%)',
           background: theme.palette.background.default,
           borderRadius: theme.shape.borderRadius,
-          padding: theme.spacing(4),
         })}
       >
         {children}

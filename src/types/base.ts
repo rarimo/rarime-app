@@ -13,6 +13,3 @@ type DeepKeys<T, S extends string> = T extends object
     ? `${S}`
     : keyof T & string
   : ''
-
-export type ErrorHandlerPayload = { error: Error; message?: string }
-export type StatusMessagePayload = string | ErrorHandlerPayload | { message?: string }

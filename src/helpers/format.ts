@@ -1,4 +1,4 @@
-import { BN, time } from '@distributedlab/tools'
+import { BN, BnLike, time } from '@distributedlab/tools'
 
 const FORMATTED_DID_MAX_LENGTH = 12
 
@@ -10,10 +10,14 @@ export function formatDateMY(date: string) {
   return time(date).format('MM / YYYY')
 }
 
-export function formatAmount(amount: string, decimals: number) {
+export function formatAmount(amount: BnLike, decimals: number) {
   if (!Number(amount)) return '0'
 
   if (isNaN(Number(amount))) throw new TypeError('Amount is not a number')
 
-  return BN.fromBigInt(amount, decimals).format({ groupSeparator: ',' })
+  return amountTrimZero(BN.fromBigInt(amount, decimals).toString())
+}
+
+export function amountTrimZero(amount: string) {
+  return amount.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.$/, '')
 }
