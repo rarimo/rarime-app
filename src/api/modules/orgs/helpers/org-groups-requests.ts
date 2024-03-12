@@ -19,7 +19,7 @@ import {
   getTargetProperty,
   loadAndParseCredentialSchema,
 } from '@/api/modules/zkp'
-import { ApiServicePaths } from '@/enums/api'
+import { ApiServicePaths } from '@/enums'
 
 const fakeLoadRequestsAll = async (query?: OrgGroupRequestQueryParams) => {
   return DUMMY_ORG_GROUP_REQUESTS.filter(req => {

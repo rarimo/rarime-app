@@ -14,7 +14,16 @@ const UserAvatar = ({ userDid, size = 12, ...rest }: UserAvatarProps) => {
     return jdenticon.toSvg(userDid, parseInt(spacing(size)))
   }, [size, userDid, spacing])
 
-  return <Avatar {...rest} src={`data:image/svg+xml;utf8,${encodeURIComponent(userAvatar)}`} />
+  return (
+    <Avatar
+      {...rest}
+      src={`data:image/svg+xml;utf8,${encodeURIComponent(userAvatar)}`}
+      sx={{
+        width: spacing(size),
+        height: spacing(size),
+      }}
+    />
+  )
 }
 
 export default UserAvatar

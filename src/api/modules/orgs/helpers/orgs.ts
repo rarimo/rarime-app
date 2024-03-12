@@ -11,7 +11,7 @@ import {
   type OrgUser,
   type OrgVerificationCode,
 } from '@/api/modules/orgs'
-import { ApiServicePaths } from '@/enums/api'
+import { ApiServicePaths } from '@/enums'
 
 export const DUMMY_ORGS: Organization[] = [
   {

@@ -53,7 +53,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
   return (
     <>
       <UiIconButton onClick={event => setAnchorEl(event.currentTarget)}>
-        <UserAvatar userDid={userDid} />
+        <UserAvatar userDid={userDid} size={8} />
       </UiIconButton>
       <Menu
         anchorEl={anchorEl}
@@ -62,6 +62,16 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
         onClose={() => setAnchorEl(null)}
         anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
         transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        slotProps={{
+          paper: {
+            sx: {
+              p: 0,
+              border: 0,
+              zIndex: 100,
+              bgcolor: palette.background.paper,
+            },
+          },
+        }}
         MenuListProps={{
           sx: {
             width: spacing(60),
@@ -73,13 +83,13 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
         }}
       >
         <Stack direction={'column'} p={4} alignItems={'center'}>
-          <UserAvatar sx={{ width: spacing(12), height: spacing(12) }} userDid={userDid} />
+          <UserAvatar userDid={userDid} size={12} />
           <Stack direction={'row'} mt={3} spacing={2}>
             <Typography
               variant={'subtitle4'}
               overflow={'hidden'}
               textOverflow={'ellipsis'}
-              maxWidth={spacing(30)}
+              maxWidth={spacing(40)}
             >
               {formatDid(userDid)}
             </Typography>

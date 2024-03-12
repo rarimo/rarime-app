@@ -1,7 +1,7 @@
 import { Stack, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 
-import { NoDataViewer } from '@/common'
+import { NoDataView } from '@/common'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiButton, UiIcon } from '@/ui'
 
@@ -41,7 +41,7 @@ export default function LinksBlock() {
         {links.length ? (
           links.map((link, index) => <LinkItem key={index} link={link} />)
         ) : (
-          <NoDataViewer
+          <NoDataView
             title={'No Links'}
             action={
               isOrgOwner && (

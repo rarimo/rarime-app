@@ -6,6 +6,7 @@ import { config } from '@/config'
 
 export const api = new JsonApiClient({
   baseUrl: config.API_URL,
+  credentials: 'include',
 })
 
 export const zkpSnap = new ZkpSnap()

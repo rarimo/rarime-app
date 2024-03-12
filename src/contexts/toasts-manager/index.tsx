@@ -7,7 +7,7 @@ import { bus } from '@/helpers'
 
 import { DefaultToast } from './toasts'
 
-const STATUS_MESSAGE_AUTO_HIDE_DURATION = 30 * 1000
+const STATUS_MESSAGE_AUTO_HIDE_DURATION = 5 * 1000
 
 export type ToastPayload = {
   messageType?: BusEvents
