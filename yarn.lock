@@ -76,22 +76,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@distributedlab/fetcher@npm:1.0.0-rc.10":
-  version: 1.0.0-rc.10
-  resolution: "@distributedlab/fetcher@npm:1.0.0-rc.10"
+"@distributedlab/fetcher@npm:1.0.0-rc.14":
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/fetcher@npm:1.0.0-rc.14"
   dependencies:
     uuid: "npm:^9.0.0"
-  checksum: 9931562ea2b25deb881d9aa72a302bd4d4454b4f532c0300ef023aa090420244c2acf8b88b673a039ba3d6ea475e2993a8e63536962bc889f8b6856b2c45fc90
+  checksum: 1784e4bec58984174a502d63e9c4ca92cc2ca2a1b9d927fd2831514e70712aa2c403f66e61cc3236654067bddeae7b0644e57f73a486515d401b595288f74eca
   languageName: node
   linkType: hard
 
-"@distributedlab/jac@npm:^1.0.0-rc.9":
-  version: 1.0.0-rc.10
-  resolution: "@distributedlab/jac@npm:1.0.0-rc.10"
+"@distributedlab/jac@npm:^1.0.0-rc.14":
+  version: 1.0.0-rc.14
+  resolution: "@distributedlab/jac@npm:1.0.0-rc.14"
   dependencies:
-    "@distributedlab/fetcher": "npm:1.0.0-rc.10"
+    "@distributedlab/fetcher": "npm:1.0.0-rc.14"
     lodash: "npm:^4.17.21"
-  checksum: 3e7efcf0c7813601b7dabf46669daf07476ee30bcb70e80a0a131ca76c5e16a83344e5b66909740126e5c3eb96fc4df588ca536ce00ac17fa526f432e33c6b71
+  checksum: 3a9abd428d10fc937401751571247d14ea8d6dc2edfbd8b528f564758085a892797fc6589abc25573cd22ca4c5e83fa1d9d3d5be19c2fabcb6dcfc519c86a0f3
   languageName: node
   linkType: hard
 
@@ -9001,7 +9001,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "rarime-app@workspace:."
   dependencies:
-    "@distributedlab/jac": "npm:^1.0.0-rc.9"
+    "@distributedlab/jac": "npm:^1.0.0-rc.14"
     "@distributedlab/tools": "npm:^1.0.0-rc.9"
     "@distributedlab/w3p": "npm:^1.0.0-rc.9"
     "@dnd-kit/core": "npm:^6.1.0"

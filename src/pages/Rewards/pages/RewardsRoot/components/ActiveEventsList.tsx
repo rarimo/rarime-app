@@ -7,17 +7,22 @@ import { useIdentityState } from '@/store'
 
 import EventItem from './EventItem'
 
+const EVENTS_LIMIT = 20
+
 export default function ActiveEventsList() {
   const { palette } = useTheme()
   const { userDid } = useIdentityState()
 
-  const { data, loadingState, load, loadNext } = useMultiPageLoading(() =>
-    getEvents({
-      filter: {
-        [EventsRequestFilters.Did]: userDid,
-        [EventsRequestFilters.Status]: [EventStatuses.Open, EventStatuses.Fulfilled],
-      },
-    }),
+  const { data, loadingState, load, loadNext } = useMultiPageLoading(
+    () =>
+      getEvents({
+        filter: {
+          [EventsRequestFilters.Did]: userDid,
+          [EventsRequestFilters.Status]: [EventStatuses.Open, EventStatuses.Fulfilled],
+        },
+        page: { limit: EVENTS_LIMIT },
+      }),
+    { pageLimit: EVENTS_LIMIT },
   )
 
   return (

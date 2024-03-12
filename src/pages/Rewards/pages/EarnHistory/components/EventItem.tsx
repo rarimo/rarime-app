@@ -2,7 +2,7 @@ import { Stack, Typography, useTheme } from '@mui/material'
 
 import { Event } from '@/api/modules/points'
 import { Icons } from '@/enums'
-import { formatDateDMY, timestampToDate } from '@/helpers'
+import { formatDateDMY } from '@/helpers'
 import RewardChip from '@/pages/Rewards/components/RewardChip'
 import { UiIcon } from '@/ui'
 
@@ -29,11 +29,11 @@ export default function EventItem({ event }: Props) {
             {event.meta.static.title}
           </Typography>
           <Typography variant='body4' color={palette.text.secondary}>
-            {formatDateDMY(timestampToDate(event.created_at))}
+            {formatDateDMY(event.created_at)}
           </Typography>
         </Stack>
       </Stack>
-      <RewardChip finished reward={event.meta.static.reward} />
+      <RewardChip isFinished reward={event.meta.static.reward} />
     </Stack>
   )
 }

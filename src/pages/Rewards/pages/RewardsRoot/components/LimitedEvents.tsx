@@ -31,16 +31,16 @@ export default function LimitedEvents() {
     loadArgs: [],
   })
 
-  return (
+  return events.length ? (
     <Paper component={Stack} spacing={6}>
       <Typography variant='subtitle3'>🔥 Limited time events</Typography>
-      {events.length ? (
-        <LimitedEventItem event={events[0]} onClaim={update} />
-      ) : isLoading ? (
+      {isLoading ? (
         <Skeleton height={spacing(21)} />
       ) : (
-        <></>
+        <LimitedEventItem event={events[0]} onClaim={update} />
       )}
     </Paper>
+  ) : (
+    <></>
   )
 }

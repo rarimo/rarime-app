@@ -19,7 +19,14 @@ export default function ProgramDetails() {
           Get invited to the Rarime rewards program and earn RMO
         </Typography>
         <Divider flexItem />
-        <Button fullWidth>Get Invitation</Button>
+        <Button
+          component='a'
+          href='https://discord.com/invite/Bzjm5MDXrU'
+          target='_blank'
+          fullWidth
+        >
+          Get Invitation
+        </Button>
       </Stack>
     </Paper>
   )

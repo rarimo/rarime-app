@@ -6,6 +6,7 @@ import { claimEvent, Event, EventStatuses } from '@/api/modules/points'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
 import { useLoading } from '@/hooks'
+import { rewardsStore } from '@/store'
 
 import { useConfetti } from '../hooks/useConfetti'
 
@@ -32,6 +33,8 @@ export default function EventActions({ event, onClaim }: Props) {
   const handleClaim = async () => {
     await claimEvent(event.id)
     await onClaim()
+    rewardsStore.loadBalance()
+
     fireConfetti(claimRef.current!)
     bus.emit(BusEvents.success, {
       message: `${event.meta.static.reward} RMO claimed!`,

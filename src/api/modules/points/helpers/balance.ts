@@ -96,12 +96,15 @@ export const LEADERBOARD_MOCK: Balance[] = [
 ]
 
 // Balances
-export const createPointsBalance = async (did: string) => {
+export const createPointsBalance = async (did: string, referredBy: string) => {
   return api.post<Balance>(`${ApiServicePaths.Points}/v1/public/balances`, {
     body: {
       data: {
         id: did,
         type: 'create_balance',
+        attributes: {
+          referred_by: referredBy,
+        },
       },
     },
   })
@@ -112,7 +115,7 @@ export const getLeaderboard = async () => {
 }
 
 export const getPointsBalance = async (did: string) => {
-  return api.get<Balance>(`${ApiServicePaths.Points}/v1/public/balances/${did}`)
+  return api.get<Balance>(`${ApiServicePaths.Points}/v1/public/balances/${did}?rank=true`)
 }
 
 // Withdrawals

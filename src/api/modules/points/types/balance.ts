@@ -4,6 +4,8 @@ export type Balance = {
   amount: number
   created_at: number
   updated_at: number
+  is_disabled?: boolean
+  is_verified?: boolean
   rank: number
 }
 

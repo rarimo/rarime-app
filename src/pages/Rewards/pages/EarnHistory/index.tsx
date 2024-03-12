@@ -10,6 +10,8 @@ import { useIdentityState } from '@/store'
 
 import EventItem from './components/EventItem'
 
+const EVENTS_LIMIT = 20
+
 export default function EarnHistory() {
   const navigate = useNavigate()
   const { userDid } = useIdentityState()
@@ -21,6 +23,7 @@ export default function EarnHistory() {
           [EventsRequestFilters.Status]: [EventStatuses.Claimed],
           [EventsRequestFilters.Did]: userDid,
         },
+        page: { limit: EVENTS_LIMIT },
       })
     } catch (error) {
       if (error instanceof UnauthorizedError) {
@@ -31,7 +34,9 @@ export default function EarnHistory() {
     }
   }
 
-  const { data, loadingState, load, loadNext } = useMultiPageLoading(loadEvents)
+  const { data, loadingState, load, loadNext } = useMultiPageLoading(loadEvents, {
+    pageLimit: EVENTS_LIMIT,
+  })
 
   return (
     <Stack spacing={6}>

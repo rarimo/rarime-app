@@ -233,7 +233,7 @@ export const getEventById = async (id: string) => {
 }
 
 export const claimEvent = async (id: string) => {
-  return api.post<Event>(`${ApiServicePaths.Points}/v1/public/events/${id}`, {
+  return api.patch<Event>(`${ApiServicePaths.Points}/v1/public/events/${id}`, {
     body: {
       data: {
         id,

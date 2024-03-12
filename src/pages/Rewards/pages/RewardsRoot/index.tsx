@@ -1,4 +1,5 @@
 import { Button, Skeleton, Stack, useTheme } from '@mui/material'
+import { useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { PageTitles } from '@/common'
@@ -20,11 +21,15 @@ export default function RewardsRoot() {
     loadArgs: [isAuthorized],
   })
 
+  const isBalanceActive = useMemo(() => {
+    return !!balance && !balance.is_disabled
+  }, [balance])
+
   return (
     <Stack spacing={8}>
       <Stack direction={'row'} justifyContent={'space-between'}>
         <PageTitles title='Rewards' />
-        {!!balance && (
+        {isBalanceActive && (
           <Button
             component={NavLink}
             to={RoutePaths.RewardsEarnHistory}
@@ -38,7 +43,7 @@ export default function RewardsRoot() {
         )}
       </Stack>
       <Stack spacing={4}>
-        {balance ? (
+        {isBalanceActive ? (
           <>
             <BalanceBlock />
             <LimitedEvents />

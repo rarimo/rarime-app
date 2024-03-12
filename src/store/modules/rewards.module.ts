@@ -1,4 +1,4 @@
-import { UnauthorizedError } from '@distributedlab/jac'
+import { NotFoundError, UnauthorizedError } from '@distributedlab/jac'
 
 import { authorizeUser } from '@/api/modules/auth'
 import { Balance, getPointsBalance } from '@/api/modules/points'
@@ -27,6 +27,11 @@ const [rewardsStore, useRewardsState] = createStore(
         state.balance = null
         if (error instanceof UnauthorizedError) {
           state.isAuthorized = false
+          return
+        }
+
+        if (error instanceof NotFoundError) {
+          state.isAuthorized = true
           return
         }
 
