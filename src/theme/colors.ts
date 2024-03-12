@@ -64,6 +64,7 @@ export const lightPalette: PaletteOptions = {
     // DesignSystem: background/component/pressed
     focus: 'rgba(32, 32, 32, 0.15)',
     selected: 'rgba(32, 32, 32, 0.05)',
+    // DesignSystem: background/component/disabled
     disabled: 'rgba(32, 32, 32, 0.05)',
   },
   // DesignSystem: background/bg
