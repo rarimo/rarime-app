@@ -11,7 +11,7 @@ import {
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import { NoDataViewer, PageTitles } from '@/common'
+import { NoDataView, PageTitles } from '@/common'
 import { Icons } from '@/enums'
 import { formatAmount } from '@/helpers'
 import { useLoading } from '@/hooks'
@@ -66,7 +66,7 @@ export default function Wallet() {
       <Stack spacing={4}>
         <PageTitles title='Wallet' />
 
-        <NoDataViewer title='Error loading wallet' />
+        <NoDataView title='Error loading wallet' />
       </Stack>
     )
 
@@ -150,7 +150,7 @@ export default function Wallet() {
             <UiIcon componentName='chevronRight' />
           </Stack>
 
-          <NoDataViewer />
+          <NoDataView />
         </Stack>
       </Paper>
     </Stack>
