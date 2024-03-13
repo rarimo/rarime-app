@@ -66,7 +66,7 @@ const UiImageUploader = forwardRef<HTMLInputElement, Props>(
             justifyContent='center'
             alignItems='center'
             bgcolor={palette.background.default}
-            borderRadius={'50%'}
+            borderRadius='50%'
           >
             <UiIcon componentName='addPhotoAlternativeOutlined' size={6} />
           </Stack>

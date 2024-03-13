@@ -46,7 +46,7 @@ const DefaultToast = forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
         onClose={() => closeSnackbar(id)}
       >
         <AlertTitle>{title}</AlertTitle>
-        <Typography variant={'body4'}>{message}</Typography>
+        <Typography variant='body4'>{message}</Typography>
       </Alert>
     </SnackbarContent>
   )

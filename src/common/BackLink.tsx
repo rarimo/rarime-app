@@ -17,7 +17,7 @@ export default function BackLink({ to, ...rest }: Props) {
       variant='text'
       color='secondary'
       size='small'
-      startIcon={<UiIcon componentName={'chevronLeft'} size={5} />}
+      startIcon={<UiIcon componentName='chevronLeft' size={5} />}
       {...rest}
       sx={{ width: 'fit-content', ...rest.sx }}
     >

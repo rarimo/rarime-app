@@ -36,13 +36,19 @@ export default function LevelProgress({ balance, ...props }: Props) {
       <LinearProgress value={level.progress} />
       <Stack
         direction='row'
-        justifyContent={'space-between'}
+        justifyContent='space-between'
         spacing={4}
         color={palette.text.secondary}
       >
-        <Typography variant='caption2'>Level {level.rank}</Typography>
         <Typography variant='caption2'>
-          Level {level.rank + 1} ({levels[level.rank]})
+          {'Level '}
+          {level.rank}
+        </Typography>
+        <Typography variant='caption2'>
+          {'Level '}
+          {level.rank + 1}
+          {' ('}
+          {levels[level.rank]})
         </Typography>
       </Stack>
     </Stack>

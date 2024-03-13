@@ -48,25 +48,25 @@ export default function UiKitFields() {
   return (
     <Stack
       gap={theme => theme.spacing(2)}
-      justifyContent={`flex-start`}
+      justifyContent='flex-start'
       paddingBottom={theme => theme.spacing(10)}
     >
-      <Typography variant={`h6`}>{`Input`}</Typography>
+      <Typography variant='h6'>Input</Typography>
       <Stack
-        direction={'row'}
-        flexWrap={`wrap`}
+        direction='row'
+        flexWrap='wrap'
         gap={theme => theme.spacing(2)}
-        justifyContent={`flex-start`}
+        justifyContent='flex-start'
       >
         <UiTextField />
-        <UiTextField label={'label'} />
-        <UiTextField placeholder={'placeholder'} />
-        <UiTextField label={'label'} placeholder={'placeholder'} />
-        <UiTextField label={'disabled'} disabled={true} />
-        <UiTextField label={'error'} error errorMessage={`there is error`} />
+        <UiTextField label='label' />
+        <UiTextField placeholder='placeholder' />
+        <UiTextField label='label' placeholder='placeholder' />
+        <UiTextField label='disabled' disabled={true} />
+        <UiTextField label='error' error errorMessage='there is error' />
 
         <UiTextField
-          label={'label'}
+          label='label'
           InputProps={{
             startAdornment: (
               <InputAdornment position='start'>
@@ -77,7 +77,7 @@ export default function UiKitFields() {
         />
 
         <UiTextField
-          label={'label'}
+          label='label'
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
@@ -88,7 +88,7 @@ export default function UiKitFields() {
         />
 
         <UiTextField
-          label={'label'}
+          label='label'
           InputProps={{
             startAdornment: (
               <InputAdornment position='start'>
@@ -103,37 +103,37 @@ export default function UiKitFields() {
           }}
         />
 
-        <UiTextField label={'success'} placeholder={'placeholder'} color='success' />
-        <UiTextField label={'error'} placeholder={'placeholder'} color='error' />
-        <UiTextField label={'warning'} placeholder={'placeholder'} color='warning' />
-        <UiTextField label={'info'} placeholder={'placeholder'} color='info' />
+        <UiTextField label='success' placeholder='placeholder' color='success' />
+        <UiTextField label='error' placeholder='placeholder' color='error' />
+        <UiTextField label='warning' placeholder='placeholder' color='warning' />
+        <UiTextField label='info' placeholder='placeholder' color='info' />
       </Stack>
 
-      <Typography variant={`h6`}>{`Select`}</Typography>
+      <Typography variant='h6'>Select</Typography>
       <Typography>{`Selected value: ${selectedValue}`}</Typography>
       <Stack
-        direction={'row'}
-        flexWrap={`wrap`}
+        direction='row'
+        flexWrap='wrap'
         gap={theme => theme.spacing(2)}
-        justifyContent={`flex-start`}
+        justifyContent='flex-start'
       >
         <UiSelect options={SELECT_OPTIONS} value={selectedValue} updateValue={setSelectedValue} />
         <UiSelect
-          label={'label'}
+          label='label'
           options={SELECT_OPTIONS}
           value={selectedValue}
           updateValue={setSelectedValue}
         />
         <UiSelect
-          label={'label'}
+          label='label'
           options={SELECT_OPTIONS}
           value={selectedValue}
           updateValue={setSelectedValue}
-          errorMessage={'there is error'}
+          errorMessage='there is error'
         />
 
         <UiSelect
-          label={'label'}
+          label='label'
           options={SELECT_OPTIONS.map(el => ({
             ...el,
             adornmentLeft: <UiIcon componentName='accountCircle' />,
@@ -143,7 +143,7 @@ export default function UiKitFields() {
         />
 
         <UiSelect
-          label={'label'}
+          label='label'
           options={SELECT_OPTIONS.map(el => ({
             ...el,
             adornmentRight: <UiIcon componentName='accountCircle' />,
@@ -153,7 +153,7 @@ export default function UiKitFields() {
         />
 
         <UiSelect
-          label={'label'}
+          label='label'
           options={SELECT_OPTIONS.map(el => ({
             ...el,
             adornmentLeft: <UiIcon componentName='accountCircle' />,
@@ -164,30 +164,30 @@ export default function UiKitFields() {
         />
       </Stack>
 
-      <Typography variant={`h6`}>{`Checkbox`}</Typography>
+      <Typography variant='h6'>Checkbox</Typography>
       <Stack
-        direction={'row'}
-        flexWrap={`wrap`}
+        direction='row'
+        flexWrap='wrap'
         gap={theme => theme.spacing(2)}
-        justifyContent={`flex-start`}
+        justifyContent='flex-start'
       >
         <UiCheckbox />
         <UiCheckbox disabled />
-        <UiCheckbox label={'label'} />
-        <UiCheckbox label={'label'} disabled />
-        <UiCheckbox label={'label'} required />
+        <UiCheckbox label='label' />
+        <UiCheckbox label='label' disabled />
+        <UiCheckbox label='label' required />
       </Stack>
 
-      <Typography variant={`h6`}>{`Radio group`}</Typography>
+      <Typography variant='h6'>Radio group</Typography>
       <Typography>{`Radio group value: ${radioGroupValue}`}</Typography>
       <UiRadioGroup groupOptions={RADIO_GROUP_OPTIONS} updateValue={setRadioGroupValue} />
 
-      <Typography variant={`h6`}>{`Switch Field`}</Typography>
+      <Typography variant='h6'>Switch Field</Typography>
       <Stack
-        direction={'row'}
-        flexWrap={`wrap`}
+        direction='row'
+        flexWrap='wrap'
         gap={theme => theme.spacing(2)}
-        justifyContent={`flex-start`}
+        justifyContent='flex-start'
       >
         <UiSwitch />
         <UiSwitch disabled />

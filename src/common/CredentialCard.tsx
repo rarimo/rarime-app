@@ -15,7 +15,7 @@ function DotsDecoration({ ...rest }: StackProps) {
 
   // TODO: alpha(palette.common.white, ...) should be configured together with bg
   return (
-    <Stack {...rest} alignItems={'flex-end'} spacing={betweenDotsSpacing}>
+    <Stack {...rest} alignItems='flex-end' spacing={betweenDotsSpacing}>
       {Array.from({ length: rowsCount }, (v, i) => i).map(rowIdx => (
         <Stack key={rowIdx} direction='row' spacing={betweenDotsSpacing}>
           {Array.from({ length: maxDots - rowIdx }, (v, i) => i).map(boxIdx => (
@@ -23,7 +23,7 @@ function DotsDecoration({ ...rest }: StackProps) {
               key={boxIdx}
               width={8}
               height={8}
-              borderRadius={'50%'}
+              borderRadius='50%'
               bgcolor={alpha(palette.common.white, 0.16)}
             />
           ))}
@@ -66,7 +66,7 @@ export default function CredentialCard({ vc, issuerDetails, ...rest }: Props) {
         height={40}
         color={palette.common.white}
         bgcolor={alpha(palette.common.white, 0.1)}
-        borderRadius={'50%'}
+        borderRadius='50%'
         p={2}
       >
         {/*TODO: define map for credential types*/}

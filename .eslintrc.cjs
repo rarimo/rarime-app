@@ -84,6 +84,7 @@ module.exports = {
     ],
     'react-i18n/no-dynamic-translation-keys': 'error',
     'react-i18n/no-missing-interpolation-keys': 'error',
+    'react/jsx-curly-brace-presence': ['warn', 'never'],
     // disable unnecessary rules from recommendations
     'react/display-name': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',

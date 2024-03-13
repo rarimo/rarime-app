@@ -34,17 +34,17 @@ export default function LinkItem({ link }: Props) {
 
   return (
     <Stack
-      component={'a'}
+      component='a'
       href={link.url}
-      target={'_blank'}
-      rel={'noreferrer noopener'}
-      direction={'row'}
-      alignItems={'center'}
+      target='_blank'
+      rel='noreferrer noopener'
+      direction='row'
+      alignItems='center'
       spacing={2}
       p={2}
       borderRadius={3}
       bgcolor={palette.action.active}
-      overflow={'hidden'}
+      overflow='hidden'
       sx={{
         transition: Transitions.Default,
         '&:hover': {
@@ -54,7 +54,7 @@ export default function LinkItem({ link }: Props) {
     >
       <UiIcon {...iconProps} size={6} sx={{ color: palette.text.primary }} />
       <Typography
-        variant={'body3'}
+        variant='body3'
         color={palette.text.primary}
         sx={{
           overflow: 'hidden',

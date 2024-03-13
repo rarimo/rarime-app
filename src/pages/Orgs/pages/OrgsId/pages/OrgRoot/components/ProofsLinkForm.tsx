@@ -47,7 +47,7 @@ export default function ProofsLinkForm({ isLoading, onLinkIdChange }: Props) {
       <UiSearchField
         value={linkOrLinkId}
         size='medium'
-        placeholder={'Enter the Proof Link ID or URL'}
+        placeholder='Enter the Proof Link ID or URL'
         sx={{ mt: 2 }}
         InputProps={{
           endAdornment: (

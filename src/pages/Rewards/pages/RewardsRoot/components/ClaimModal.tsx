@@ -104,7 +104,7 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
                   disabled={isFormDisabled}
                   InputProps={{
                     endAdornment: (
-                      <Stack direction={'row'} spacing={4} alignItems={'center'}>
+                      <Stack direction='row' spacing={4} alignItems='center'>
                         <Divider orientation='vertical' flexItem />
                         <Button
                           variant='text'
@@ -124,12 +124,12 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
         </Stack>
       </UiDrawerContent>
       <UiDrawerActions>
-        <Stack spacing={2} alignItems={'center'} textAlign='center'>
+        <Stack spacing={2} alignItems='center' textAlign='center'>
           <Button type='submit' fullWidth disabled={!isLevelReached}>
             Claim
           </Button>
           <Typography variant='body4' maxWidth={spacing(80)} color={palette.text.secondary}>
-            After claiming you will be{' '}
+            {'After claiming you will be'}{' '}
             <Typography variant='subtitle5'>downgraded in Leaderboard</Typography>
           </Typography>
         </Stack>
@@ -137,16 +137,16 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
 
       {isFormDisabled && (
         <Stack
-          justifyContent={'center'}
-          alignItems={'center'}
-          position={'absolute'}
+          justifyContent='center'
+          alignItems='center'
+          position='absolute'
           top={0}
           left={0}
           bottom={0}
           right={0}
           bgcolor={theme => theme.palette.background.light}
         >
-          <CircularProgress color={'inherit'} />
+          <CircularProgress color='inherit' />
         </Stack>
       )}
     </Dialog>

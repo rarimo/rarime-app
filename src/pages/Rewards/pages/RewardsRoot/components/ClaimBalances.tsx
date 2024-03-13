@@ -17,15 +17,18 @@ export default function ClaimBalances() {
     <Stack spacing={4} p={4} bgcolor={palette.action.active} borderRadius={2}>
       {balances.map((balance, index) => (
         <Stack key={index} spacing={4}>
-          <Stack direction={'row'} justifyContent={'space-between'}>
-            <Stack direction={'row'} spacing={4} alignItems={'center'}>
+          <Stack direction='row' justifyContent='space-between'>
+            <Stack direction='row' spacing={4} alignItems='center'>
               <Typography variant='buttonMedium' color={palette.text.secondary} width={spacing(10)}>
                 {balance.label}
               </Typography>
               <Divider orientation='vertical' flexItem />
               <Typography variant='body3'>{balance.title}</Typography>
             </Stack>
-            <Typography variant='subtitle5'>{balance.value} RMO</Typography>
+            <Typography variant='subtitle5'>
+              {balance.value}
+              {' RMO'}
+            </Typography>
           </Stack>
           {index !== balances.length - 1 && <Divider sx={{ width: spacing(63), mx: 'auto' }} />}
         </Stack>

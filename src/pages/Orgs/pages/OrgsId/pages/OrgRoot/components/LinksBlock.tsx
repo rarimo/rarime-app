@@ -23,13 +23,13 @@ export default function LinksBlock() {
       borderColor={palette.divider}
       borderRadius={4}
     >
-      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
-        <Typography variant={'subtitle3'}>Links</Typography>
+      <Stack direction='row' justifyContent='space-between' alignItems='center'>
+        <Typography variant='subtitle3'>Links</Typography>
         {!!links.length && isOrgOwner && (
           <UiButton
-            variant={'text'}
-            size={'medium'}
-            color={'secondary'}
+            variant='text'
+            size='medium'
+            color='secondary'
             startIcon={<UiIcon componentName='driveFileRenameOutlineOutlined' size={5} />}
             onClick={() => setIsLinkDrawerShown(true)}
           >
@@ -37,12 +37,12 @@ export default function LinksBlock() {
           </UiButton>
         )}
       </Stack>
-      <Stack direction={'row'} spacing={4} flexWrap={'wrap'}>
+      <Stack direction='row' spacing={4} flexWrap='wrap'>
         {links.length ? (
           links.map((link, index) => <LinkItem key={index} link={link} />)
         ) : (
           <NoDataView
-            title={'No Links'}
+            title='No Links'
             action={
               isOrgOwner && (
                 <UiButton size='medium' onClick={() => setIsLinkDrawerShown(true)}>

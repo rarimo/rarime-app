@@ -18,8 +18,8 @@ export default function EventItem({ event, onClaim }: Props) {
   const { palette } = useTheme()
 
   return (
-    <Stack direction={'row'} spacing={4} justifyContent={'space-between'} alignItems={'center'}>
-      <Stack direction={'row'} spacing={4} alignItems='center'>
+    <Stack direction='row' spacing={4} justifyContent='space-between' alignItems='center'>
+      <Stack direction='row' spacing={4} alignItems='center'>
         <Stack
           p={2.5}
           bgcolor={palette.additional.pureBlack}
@@ -42,7 +42,7 @@ export default function EventItem({ event, onClaim }: Props) {
           </Typography>
         </Stack>
       </Stack>
-      <Stack direction={'row'} alignItems={'center'} spacing={4}>
+      <Stack direction='row' alignItems='center' spacing={4}>
         <RewardChip reward={event.meta.static.reward} />
         <EventActions event={event} onClaim={onClaim} />
       </Stack>

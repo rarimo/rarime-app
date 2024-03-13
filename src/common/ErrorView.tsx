@@ -22,9 +22,9 @@ export default function ErrorView({
   return (
     <Stack
       spacing={4}
-      alignItems={'center'}
-      width={'100%'}
-      justifyContent={'center'}
+      alignItems='center'
+      width='100%'
+      justifyContent='center'
       p={8}
       border={1}
       borderColor={palette.error.light}
@@ -33,8 +33,8 @@ export default function ErrorView({
       {...rest}
     >
       <Stack
-        alignItems={'center'}
-        justifyContent={'center'}
+        alignItems='center'
+        justifyContent='center'
         bgcolor={palette.error.lighter}
         color={palette.error.main}
         borderRadius={250}
@@ -43,7 +43,7 @@ export default function ErrorView({
       >
         {icon}
       </Stack>
-      <Stack spacing={1} textAlign={'center'}>
+      <Stack spacing={1} textAlign='center'>
         <Typography variant='body3'>{title}</Typography>
         {description && (
           <Typography variant='body3' color={palette.text.secondary}>

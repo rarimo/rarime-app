@@ -56,11 +56,11 @@ export default function Dashboard() {
 
   return (
     <Stack spacing={8}>
-      <PageTitles title={'Dashboard'} />
+      <PageTitles title='Dashboard' />
 
       <Paper component={Stack} spacing={6}>
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
-          <Typography variant='subtitle3'>{'Latest Credentials'}</Typography>
+          <Typography variant='subtitle3'>Latest Credentials</Typography>
 
           <Button
             variant='text'
@@ -70,7 +70,7 @@ export default function Dashboard() {
             to={RoutePaths.Credentials}
             state={{ from: location.pathname }}
           >
-            {`View All`}
+            View All
           </Button>
         </Stack>
 
@@ -80,7 +80,7 @@ export default function Dashboard() {
               <Skeleton
                 key={el}
                 component={Box}
-                flex={'0 0 auto'}
+                flex='0 0 auto'
                 minWidth={spacing(80)}
                 width={spacing(80)}
                 height={spacing(45)}
@@ -93,7 +93,7 @@ export default function Dashboard() {
           <Typography>{`There's an error occurred, please, reload page`}</Typography>
         ) : !lastVCsDesc.length || isEmpty(issuersDetails) ? (
           <NoDataView
-            title={'No Credentials'}
+            title='No Credentials'
             action={<UiButton onClick={reload}>Load Credentials</UiButton>}
           />
         ) : (

@@ -36,7 +36,7 @@ export default function ActionButton({
           justifyContent='center'
           alignItems='center'
           bgcolor={palette.background.paper}
-          borderRadius={'50%'}
+          borderRadius='50%'
           sx={{
             transition: Transitions.Default,
           }}

@@ -162,7 +162,7 @@ export default function CredentialsId() {
           </Stack>
         ) : (
           <NoDataView
-            title={'Credential not found'}
+            title='Credential not found'
             action={
               <Button component={NavLink} to={RoutePaths.CredentialsList} size='medium'>
                 View all credentials
