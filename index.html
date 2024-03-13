@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <title>Rarime App</title>
+  <title><%- host %></title>
 
   <noscript>
     <style>
@@ -16,12 +16,11 @@
   <meta name="theme-color" content="#ffffff">
 
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-  <meta name="description" content="Manage your identity credentials and Soulbound Tokens (SBTs) easily from the Rarime App">
-  <meta property="og:title" content="Rarime App">
-  <meta property="og:description" content="Manage your identity credentials and Soulbound Tokens (SBTs) easily from the Rarime App.">
-  <!-- TODO: fix link to the actual one -->
-  <meta property="og:url" content="https://app.rarime.com">
-  <meta property="og:image" content="https://app.rarime.com/branding/logo.png">
+  <meta name="description" content="Manage your identity credentials and Soulbound Tokens (SBTs). Generate Zero-Knowledge Proofs and share without exposing personal data.">
+  <meta property="og:title" content="Manage your identity | RariMe App">
+  <meta property="og:description" content="Manage your identity credentials and Soulbound Tokens (SBTs). Generate Zero-Knowledge Proofs and share without exposing personal data.">
+  <meta property="og:url" content="<%- host %>">
+  <meta property="og:image" content="<%- host %>/branding/og-img.png">
   <meta property="og:locale" content="en_GB">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
@@ -40,7 +39,6 @@
 
   <link href="/noscript/style.css" type="text/css" rel="stylesheet">
   <link href="/init-loader/style.css" type="text/css" rel="stylesheet">
-  <script type="module" src="/src/main.tsx"></script>
 </head>
 
 <body>
