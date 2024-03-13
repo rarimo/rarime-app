@@ -49,7 +49,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
             <AppRoutes />
           ) : (
             <Stack alignItems='center' justifyContent='center' flex={1}>
-              <CircularProgress color={'secondary'} />
+              <CircularProgress color='secondary' />
             </Stack>
           )}
         </div>

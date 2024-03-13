@@ -25,14 +25,14 @@ export function UiDrawerTitle({ children, onClose, ...rest }: UiDrawerTitleProps
     <DialogTitle
       {...rest}
       component={Stack}
-      direction={'row'}
-      justifyContent={'space-between'}
-      width={'100%'}
+      direction='row'
+      justifyContent='space-between'
+      width='100%'
       borderBottom={1}
       borderColor={palette.divider}
       sx={{ ...rest.sx, p: 5 }}
     >
-      <Typography component={'p'} variant='h6'>
+      <Typography component='p' variant='h6'>
         {children}
       </Typography>
       <UiIconButton
@@ -47,7 +47,7 @@ export function UiDrawerTitle({ children, onClose, ...rest }: UiDrawerTitleProps
 }
 
 export function UiDrawerContent(props: BoxProps) {
-  return <Box p={5} flex={1} overflow={'hidden auto'} width={'100%'} {...props} />
+  return <Box p={5} flex={1} overflow='hidden auto' width='100%' {...props} />
 }
 
 export function UiDrawerActions(props: BoxProps) {

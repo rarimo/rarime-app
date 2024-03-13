@@ -39,7 +39,7 @@ export default function SignIn() {
     if (!isMetamaskInstalled) {
       return (
         <Button
-          component={'a'}
+          component='a'
           href={metamaskLink()}
           target='_blank'
           rel='noreferrer noopener'
@@ -62,9 +62,9 @@ export default function SignIn() {
     if (isImporting) {
       return (
         <Stack
-          component={'form'}
+          component='form'
           spacing={6}
-          textAlign={'left'}
+          textAlign='left'
           onSubmit={e => {
             e.preventDefault()
             createIdentity(privateKey)
@@ -111,7 +111,7 @@ export default function SignIn() {
   ])
 
   return (
-    <Stack spacing={4} alignItems={'center'} textAlign={'center'}>
+    <Stack spacing={4} alignItems='center' textAlign='center'>
       <UiIcon name={Icons.Rarime} size={12} />
       <Typography variant='h3'>Welcome</Typography>
       <Typography variant='body2' color={palette.text.secondary}>

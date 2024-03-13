@@ -12,18 +12,18 @@ export default function OrgRoot() {
   const { palette } = useTheme()
 
   return (
-    <Stack flex={1} spacing={6} position={'relative'}>
-      <Box display={'grid'} gridTemplateColumns={'1fr auto 1fr'} alignItems={'center'}>
+    <Stack flex={1} spacing={6} position='relative'>
+      <Box display='grid' gridTemplateColumns='1fr auto 1fr' alignItems='center'>
         <Stack
           component={NavLink}
           to={RoutePaths.Orgs}
-          direction={'row'}
-          alignItems={'center'}
+          direction='row'
+          alignItems='center'
           spacing={2}
           color={palette.text.secondary}
         >
-          <UiIcon componentName={'chevronLeft'} size={5} />
-          <Typography variant={'buttonSmall'} color={'inherit'}>
+          <UiIcon componentName='chevronLeft' size={5} />
+          <Typography variant='buttonSmall' color='inherit'>
             View all organizations
           </Typography>
         </Stack>

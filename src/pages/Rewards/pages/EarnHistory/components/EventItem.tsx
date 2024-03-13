@@ -14,8 +14,8 @@ export default function EventItem({ event }: Props) {
   const { palette } = useTheme()
 
   return (
-    <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
-      <Stack direction={'row'} spacing={4} alignItems='center'>
+    <Stack direction='row' alignItems='center' justifyContent='space-between'>
+      <Stack direction='row' spacing={4} alignItems='center'>
         <Stack
           p={2.5}
           bgcolor={palette.action.active}

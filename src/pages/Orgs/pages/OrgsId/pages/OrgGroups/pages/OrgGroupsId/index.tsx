@@ -136,7 +136,7 @@ export default function OrgGroupsId() {
   return (
     <Stack flex={1}>
       <PageTitles
-        title={`Employer in the area`}
+        title='Employer in the area'
         subtitle='a person, company, or organization that pays people to work for them: The Air Force is the largest employer in this area.'
       />
 

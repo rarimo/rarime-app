@@ -108,7 +108,7 @@ export default function List({ filter, ...rest }: Props) {
                   <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
                     <Typography>Member Details</Typography>
 
-                    <UiButton variant={`text`} onClick={() => setIsDrawerShown(false)}>
+                    <UiButton variant='text' onClick={() => setIsDrawerShown(false)}>
                       <UiIcon componentName='close' />
                     </UiButton>
                   </Stack>

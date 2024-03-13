@@ -9,7 +9,7 @@ export default function ProofValidityBadge({ valid }: Props) {
 
   return (
     <Typography
-      variant={'subtitle5'}
+      variant='subtitle5'
       px={3}
       py={1}
       bgcolor={valid ? palette.success.light : palette.error.light}

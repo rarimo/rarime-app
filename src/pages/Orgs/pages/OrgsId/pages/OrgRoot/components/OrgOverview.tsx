@@ -10,8 +10,8 @@ export default function OrgOverview() {
 
   return (
     <Stack
-      direction={'row'}
-      alignItems={'center'}
+      direction='row'
+      alignItems='center'
       spacing={4}
       bgcolor={palette.background.light}
       p={6}
@@ -31,30 +31,30 @@ export default function OrgOverview() {
       />
 
       <Stack spacing={2}>
-        <Stack direction={'row'} spacing={1} alignItems={'center'} mt={4}>
-          <Typography variant={'h6'} color={palette.text.primary}>
+        <Stack direction='row' spacing={1} alignItems='center' mt={4}>
+          <Typography variant='h6' color={palette.text.primary}>
             {org.metadata.name}
           </Typography>
 
           {org.status.value === OrgsStatuses.Verified && (
-            <UiIcon componentName={'verified'} size={4} sx={{ color: palette.success.main }} />
+            <UiIcon componentName='verified' size={4} sx={{ color: palette.success.main }} />
           )}
         </Stack>
 
-        <Typography variant={'body3'} color={palette.text.secondary}>
+        <Typography variant='body3' color={palette.text.secondary}>
           {org.metadata.description}
         </Typography>
 
-        <Stack direction={'row'} spacing={6} color={palette.text.secondary}>
-          <Stack direction={'row'} spacing={1} alignItems={'center'}>
-            <Typography variant={'body4'}>Associated people</Typography>
-            <Typography variant={'subtitle5'} color={palette.text.primary}>
+        <Stack direction='row' spacing={6} color={palette.text.secondary}>
+          <Stack direction='row' spacing={1} alignItems='center'>
+            <Typography variant='body4'>Associated people</Typography>
+            <Typography variant='subtitle5' color={palette.text.primary}>
               {org.members_count}
             </Typography>
           </Stack>
-          <Stack direction={'row'} spacing={1} alignItems={'center'}>
-            <Typography variant={'body4'}>Credentials</Typography>
-            <Typography variant={'subtitle5'} color={palette.text.primary}>
+          <Stack direction='row' spacing={1} alignItems='center'>
+            <Typography variant='body4'>Credentials</Typography>
+            <Typography variant='subtitle5' color={palette.text.primary}>
               {org.issued_claims_count}
             </Typography>
           </Stack>

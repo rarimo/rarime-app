@@ -14,14 +14,15 @@ export default function EventView({ event }: Props) {
 
   return (
     <Stack spacing={6}>
-      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+      <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Stack spacing={4}>
           <Typography variant='subtitle2'>{event.meta.static.title}</Typography>
-          <Stack direction={'row'} alignItems={'center'} spacing={4}>
+          <Stack direction='row' alignItems='center' spacing={4}>
             <RewardChip reward={event.meta.static.reward} />
             {event.meta.static.expires_at && (
               <Typography variant='caption2' color={palette.text.secondary}>
-                Exp: {formatDateTime(event.meta.static.expires_at)}
+                {'Exp: '}
+                {formatDateTime(event.meta.static.expires_at)}
               </Typography>
             )}
           </Stack>
@@ -42,13 +43,13 @@ export default function EventView({ event }: Props) {
       <MarkdownViewer>{event?.meta.static.description ?? ''}</MarkdownViewer>
       {event.meta.static.action_url && (
         <Button
-          component={'a'}
+          component='a'
           href={event.meta.static.action_url}
           target='_blank'
           rel='noreferrer noopener'
           sx={{ width: spacing(40) }}
         >
-          {"Let's Start"}
+          {`Let's Start`}
         </Button>
       )}
     </Stack>

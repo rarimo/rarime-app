@@ -33,14 +33,14 @@ export default function EventId() {
 
   return (
     <Stack spacing={6}>
-      <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+      <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <BackLink to={RoutePaths.Rewards} />
         {event && (
           <Button
             variant='text'
             color='secondary'
             size='small'
-            startIcon={<UiIcon componentName={'shareOutlined'} size={5} />}
+            startIcon={<UiIcon componentName='shareOutlined' size={5} />}
             sx={{ width: 'fit-content' }}
             onClick={() => copy(window.location.href)}
           >
@@ -52,7 +52,7 @@ export default function EventId() {
       <Paper>
         {isLoading ? (
           <Stack alignItems='center' p={20}>
-            <CircularProgress color={'secondary'} />
+            <CircularProgress color='secondary' />
           </Stack>
         ) : isLoadingError ? (
           <ErrorView
