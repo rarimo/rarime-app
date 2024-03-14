@@ -121,12 +121,13 @@ export default function CredentialsId() {
             </Stack>
 
             <Stack spacing={10} direction='row' justifyContent='center'>
-              <ActionButton iconProps={{ name: Icons.Plus }} disabled={isPending}>
+              {/* TODO: uncomment when actions are available */}
+              {/* <ActionButton iconProps={{ name: Icons.Plus }} disabled={isPending}>
                 Generate proof
               </ActionButton>
               <ActionButton iconProps={{ name: Icons.Info }} disabled={isPending}>
                 Get info
-              </ActionButton>
+              </ActionButton> */}
 
               <ActionButton
                 iconProps={{

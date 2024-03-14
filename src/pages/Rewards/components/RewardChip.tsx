@@ -19,8 +19,8 @@ export default function RewardChip({ reward, isFinished }: Props) {
       px={1.5}
       py={0.5}
       borderRadius={12}
-      bgcolor={isFinished ? palette.success.lighter : palette.warning.light}
-      color={isFinished ? palette.success.dark : palette.text.primary}
+      bgcolor={isFinished ? palette.action.active : palette.warning.light}
+      color={palette.text.primary}
     >
       <Typography variant='subtitle5'>{`+${reward}`}</Typography>
       <UiIcon name={Icons.Rarimo} size={4} />
