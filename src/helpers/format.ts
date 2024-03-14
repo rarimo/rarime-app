@@ -27,6 +27,10 @@ export function formatDateTime(date: TimeDate) {
   return time(date).format('DD MMM, YYYY, h:mm A')
 }
 
+export function formatDateDM(date: string) {
+  return time(date).format('D MMM')
+}
+
 // number
 const defaultBnFormatConfig: BnFormatConfig = {
   decimals: 2,

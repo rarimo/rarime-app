@@ -23,7 +23,6 @@ export const AppRoutes = () => {
   const VerifyProofAlias = lazy(() => import('@/pages/VerifyProofAlias'))
   const AcceptInvitation = lazy(() => import('@/pages/AcceptInvitation'))
   const Rewards = lazy(() => import('@/pages/Rewards'))
-
   const Wallet = lazy(() => import('@/pages/Wallet'))
 
   const { isAuthorized, logout } = useAuth()

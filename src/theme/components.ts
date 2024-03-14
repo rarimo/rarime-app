@@ -465,4 +465,30 @@ export const components: Components<Omit<Theme, 'components'>> = {
       }),
     },
   },
+  MuiChartsTooltip: {
+    styleOverrides: {
+      root: () => ({
+        '& .MuiChartsTooltip-root': {
+          backgroundColor: 'transparent',
+          border: 'none',
+        },
+      }),
+      table: ({ theme }) => ({
+        backgroundColor: theme.palette.additional.pureBlack,
+        padding: theme.spacing(2, 6),
+        borderRadius: theme.spacing(250),
+      }),
+      cell: ({ theme }) => ({
+        '&.MuiChartsTooltip-labelCell, &.MuiChartsTooltip-markCell': {
+          display: 'none',
+        },
+        '&.MuiChartsTooltip-valueCell': {
+          padding: '0 !important',
+          display: 'flex',
+          color: theme.palette.common.white,
+          '& .MuiTypography-root': typography.buttonSmall,
+        },
+      }),
+    },
+  },
 }
