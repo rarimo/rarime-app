@@ -5,13 +5,12 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  SelectProps,
   Stack,
 } from '@mui/material'
-import { forwardRef, ReactNode, useMemo } from 'react'
+import { ComponentProps, forwardRef, ReactNode, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-type Props = Omit<SelectProps<string>, 'error'> & {
+type Props = Omit<ComponentProps<typeof Select<string>>, 'error'> & {
   options: {
     value: string
     label: string

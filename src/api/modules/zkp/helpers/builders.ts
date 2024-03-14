@@ -1,4 +1,4 @@
-import { CreateProofRequestParams } from '@rarimo/rarime-connector/dist/types'
+import { CircuitId, type CreateProofRequestParams } from '@rarimo/rarime-connector'
 
 import { OrgUserRoles } from '@/api/modules/orgs'
 import { QueryOperators } from '@/api/modules/zkp'
@@ -11,7 +11,7 @@ export const buildAuthorizeRequest = ({
   isAdmin: boolean
 }): CreateProofRequestParams => {
   return {
-    circuitId: 'credentialAtomicQueryMTPV2',
+    circuitId: CircuitId.AtomicQueryMTPV2,
     accountAddress: providerAddress,
     issuerDid: 'config.issuerDid', // TODO: implement
 

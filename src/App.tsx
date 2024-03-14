@@ -3,7 +3,7 @@ import { FC, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState } f
 
 import { ToastsManager } from '@/contexts'
 import { ErrorHandler } from '@/helpers'
-import { useAuth, useViewportSizes, useWeb3Context } from '@/hooks'
+import { useAuth, useViewportSizes } from '@/hooks'
 import { AppRoutes } from '@/routes'
 import { credentialsStore, useUiState, web3Store } from '@/store'
 import { createTheme } from '@/theme'
@@ -11,7 +11,6 @@ import { createTheme } from '@/theme'
 const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
   const [isAppInitialized, setIsAppInitialized] = useState(false)
 
-  const { provider, isValidChain } = useWeb3Context()
   const { paletteMode } = useUiState()
   const { connectProviders } = useAuth()
 
@@ -44,7 +43,7 @@ const App: FC<HTMLAttributes<HTMLDivElement>> = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <ToastsManager>
-        <div className='App' key={provider?.isConnected ? Number(isValidChain) : 'app_main'}>
+        <div className='App' key='app_main'>
           {isAppInitialized ? (
             <AppRoutes />
           ) : (

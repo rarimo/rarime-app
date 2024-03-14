@@ -11,7 +11,7 @@ export class ErrorHandler {
 
   static process(error: unknown, message = ''): void {
     if (!ErrorHandler.isError(error)) return
-    bus.emit(BusEvents.error, { error, message })
+    bus.emit(BusEvents.error, { message })
     ErrorHandler.processWithoutFeedback(error)
   }
 

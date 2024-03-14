@@ -24,6 +24,8 @@ export const AppRoutes = () => {
   const AcceptInvitation = lazy(() => import('@/pages/AcceptInvitation'))
   const Rewards = lazy(() => import('@/pages/Rewards'))
 
+  const Wallet = lazy(() => import('@/pages/Wallet'))
+
   const { isAuthorized, logout } = useAuth()
 
   const signInGuard = useCallback(
@@ -88,6 +90,11 @@ export const AppRoutes = () => {
           path: createDeepPath(RoutePaths.Rewards),
           loader: authProtectedGuard,
           element: <Rewards />,
+        },
+        {
+          path: createDeepPath(RoutePaths.Wallet),
+          loader: authProtectedGuard,
+          element: <Wallet />,
         },
         {
           path: createDeepPath(RoutePaths.UiKit),

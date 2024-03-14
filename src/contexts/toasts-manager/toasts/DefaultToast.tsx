@@ -1,6 +1,6 @@
 import { Alert, AlertColor, AlertTitle, Typography } from '@mui/material'
 import { CustomContentProps, SnackbarContent, useSnackbar } from 'notistack'
-import { forwardRef, useMemo } from 'react'
+import { forwardRef, ReactNode, useMemo } from 'react'
 
 import { BusEvents, ICON_COMPONENTS, Icons } from '@/enums'
 import { UiIcon } from '@/ui'
@@ -9,7 +9,7 @@ interface Props extends CustomContentProps {
   messageType: BusEvents
 
   title: string
-  message: string
+  message: string | ReactNode
   icon: Icons | keyof typeof ICON_COMPONENTS
 }
 
@@ -46,7 +46,7 @@ const DefaultToast = forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
         onClose={() => closeSnackbar(id)}
       >
         <AlertTitle>{title}</AlertTitle>
-        <Typography variant='body4'>{message}</Typography>
+        {typeof message === 'string' ? <Typography variant='body4'>{message}</Typography> : message}
       </Alert>
     </SnackbarContent>
   )
