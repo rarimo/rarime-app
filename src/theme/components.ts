@@ -1,7 +1,5 @@
 import { AlertColor, alpha, Components, Theme } from '@mui/material'
 
-import { ICON_COMPONENTS } from '@/enums'
-
 import { Transitions } from './constants'
 import { vh } from './helpers'
 import { typography } from './typography'
@@ -219,9 +217,6 @@ export const components: Components<Omit<Theme, 'components'>> = {
           borderColor: theme.palette.action.hover,
         },
       }),
-    },
-    defaultProps: {
-      IconComponent: ICON_COMPONENTS.keyboardArrowDownOutlined,
     },
   },
   MuiIconButton: {

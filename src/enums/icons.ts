@@ -1,5 +1,4 @@
-import AllInclusiveOutlinedIcon from '@mui/icons-material/AllInclusiveOutlined'
-import FingerPrint from '@mui/icons-material/Fingerprint'
+import { SvgIcon } from '@mui/material'
 
 export enum Icons {
   ArrowCounterClockwise = 'arrow-counter-clockwise',
@@ -28,6 +27,7 @@ export enum Icons {
   DotsSixVertical = 'dots-six-vertical',
   DotsThreeOutline = 'dots-three-outline',
   Facebook = 'facebook',
+  Fingerprint = 'fingerprint',
   Flag = 'flag',
   GiftFill = 'gift-fill',
   Gift = 'gift',
@@ -39,6 +39,7 @@ export enum Icons {
   IdentificationCardFill = 'identification-card-fill',
   IdentificationCard = 'identification-card',
   Image = 'image',
+  Infinity = 'infinity',
   Info = 'info',
   Instagram = 'instagram',
   Key = 'key',
@@ -91,7 +92,4 @@ export enum Icons {
   XCircle = 'x-circle',
 }
 
-export const ICON_COMPONENTS = {
-  allInclusiveOutlinedIcon: AllInclusiveOutlinedIcon,
-  fingerprint: FingerPrint,
-}
+export const ICON_COMPONENTS: Record<string, typeof SvgIcon> = {}

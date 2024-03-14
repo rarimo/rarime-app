@@ -46,12 +46,12 @@ function ToastsManagerController({ children }: { children: ReactNode }) {
     [t],
   )
 
-  const defaultIcons = useMemo<Record<BusEvents, Icons | keyof typeof ICON_COMPONENTS>>(
+  const defaultIcons = useMemo<Record<BusEvents, Icons>>(
     () => ({
-      [BusEvents.success]: 'check',
-      [BusEvents.error]: 'errorOutline',
-      [BusEvents.warning]: 'warningAmber',
-      [BusEvents.info]: 'info',
+      [BusEvents.success]: Icons.Check,
+      [BusEvents.error]: Icons.Warning,
+      [BusEvents.warning]: Icons.Warning,
+      [BusEvents.info]: Icons.Info,
     }),
     [],
   )

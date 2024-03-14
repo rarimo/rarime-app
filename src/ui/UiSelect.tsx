@@ -11,6 +11,10 @@ import {
 import { forwardRef, ReactNode, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
+import { Icons } from '@/enums'
+
+import UiIcon from './UiIcon'
+
 type Props = Omit<SelectProps<string>, 'error'> & {
   options: {
     value: string
@@ -48,6 +52,7 @@ const UiSelect = forwardRef(
           id={id}
           labelId={labelId}
           value={rest.value || ''}
+          IconComponent={() => <UiIcon name={Icons.CarretDown} size={4} sx={{ mr: 4 }} />}
           onChange={handleChange}
         >
           {options.map(({ value, label, adornmentLeft, adornmentRight }, idx) => (

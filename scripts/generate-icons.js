@@ -12,11 +12,13 @@ const iconsDir = path.resolve(__dirname, '../src/assets/icons')
 const iconsEnumFile = path.resolve(__dirname, '../src/enums/icons.ts')
 
 const ICONS_ENUM_FILE_TEMPLATE =
-`export enum Icons {
+`import { SvgIcon } from '@mui/material'
+
+export enum Icons {
   %s
 }
 
-export const ICON_COMPONENTS = {}
+export const ICON_COMPONENTS: Record<string, typeof SvgIcon> = {}
 `
 
 function generateIconsEnum () {
