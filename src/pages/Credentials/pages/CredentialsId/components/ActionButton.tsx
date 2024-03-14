@@ -43,10 +43,11 @@ export default function ActionButton({
         >
           <UiIcon
             className='action-button__icon'
-            {...iconProps}
             size={5}
+            {...iconProps}
             sx={{
               transition: Transitions.Default,
+              ...iconProps.sx,
             }}
           />
         </Stack>

@@ -20,7 +20,7 @@ export default function LinkItem({ link }: Props) {
   const { palette } = useTheme()
 
   const iconProps = useMemo<ComponentProps<typeof UiIcon>>(() => {
-    const defaultProps: ComponentProps<typeof UiIcon> = { componentName: 'link' }
+    const defaultProps: ComponentProps<typeof UiIcon> = { name: Icons.Link }
 
     try {
       const host = new URL(link.url).host.replace(/^www\./, '')

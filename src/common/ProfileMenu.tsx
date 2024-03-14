@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 import { zkpSnap } from '@/api/clients'
 import { UserAvatar } from '@/common'
 import { config } from '@/config'
-import { BusEvents } from '@/enums'
+import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler, formatDid } from '@/helpers'
 import { useAuth, useCopyToClipboard } from '@/hooks'
 import { UiIcon, UiIconButton } from '@/ui'
@@ -96,7 +96,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
               {formatDid(userDid)}
             </Typography>
             <UiIconButton onClick={copyUserDid} color={isCopied ? 'success' : 'primary'}>
-              <UiIcon componentName={isCopied ? 'check' : 'contentCopy'} size={4} />
+              <UiIcon name={isCopied ? Icons.Check : Icons.CopySimple} size={4} />
             </UiIconButton>
           </Stack>
         </Stack>
@@ -104,7 +104,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
         {/*TODO: Add handler*/}
         <MenuItem onClick={exportIdentity} sx={menuItemSx} disabled={isExporting}>
           <ListItemIcon>
-            <UiIcon componentName='key' size={5} sx={{ color: palette.text.secondary }} />
+            <UiIcon name={Icons.Key} size={5} sx={{ color: palette.text.secondary }} />
           </ListItemIcon>
           <Typography variant='caption1'>
             {isExporting ? 'Exporting...' : 'Export Identity'}
@@ -118,13 +118,13 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
           sx={menuItemSx}
         >
           <ListItemIcon>
-            <UiIcon componentName='openInNew' size={5} sx={{ color: palette.text.secondary }} />
+            <UiIcon name={Icons.ArrowSquareOut} size={5} sx={{ color: palette.text.secondary }} />
           </ListItemIcon>
           <Typography variant='caption1'>Help Center</Typography>
         </MenuItem>
         <MenuItem onClick={logout} sx={menuItemSx}>
           <ListItemIcon>
-            <UiIcon componentName='logOut' size={5} sx={{ color: palette.error.main }} />
+            <UiIcon name={Icons.Logout} size={5} sx={{ color: palette.error.main }} />
           </ListItemIcon>
           <Typography variant='caption1' color={palette.error.main}>
             Disconnect

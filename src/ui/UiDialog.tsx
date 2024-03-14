@@ -9,6 +9,8 @@ import {
   useTheme,
 } from '@mui/material'
 
+import { Icons } from '@/enums'
+
 import UiIcon from './UiIcon'
 import UiIconButton from './UiIconButton'
 
@@ -38,7 +40,7 @@ export function UiDialogTitle({ children, onClose, ...rest }: UiDialogTitleProps
         aria-label='close'
         onClick={e => onClose?.(e, 'backdropClick')}
       >
-        <UiIcon componentName='close' size={5} />
+        <UiIcon name={Icons.Close} size={5} />
       </UiIconButton>
     </DialogTitle>
   )

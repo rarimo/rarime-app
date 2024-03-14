@@ -89,7 +89,7 @@ export default function Wallet() {
                 <Stack spacing={3} direction='row'>
                   <Button
                     color='secondary'
-                    startIcon={<UiIcon componentName='arrowDownward' />}
+                    startIcon={<UiIcon name={Icons.ArrowDown} />}
                     onClick={() => setIsReceiveModalShown(true)}
                   >
                     Receive
@@ -101,7 +101,7 @@ export default function Wallet() {
 
                   <Button
                     color='secondary'
-                    startIcon={<UiIcon componentName='arrowUpward' />}
+                    startIcon={<UiIcon name={Icons.ArrowUp} />}
                     onClick={() => setIsSendModalShown(true)}
                   >
                     Send
@@ -116,17 +116,7 @@ export default function Wallet() {
                 <Button
                   component={Link}
                   to=''
-                  startIcon={
-                    <UiIcon
-                      componentName='showChart'
-                      sx={{
-                        borderLeft: `2px solid`,
-                        borderBottom: `2px solid`,
-                        borderColor: palette.text.secondary,
-                      }}
-                      size={4}
-                    />
-                  }
+                  startIcon={<UiIcon name={Icons.ChartLine} size={4} />}
                   color='secondary'
                   variant='text'
                 >
@@ -155,7 +145,7 @@ export default function Wallet() {
               </Stack>
 
               <IconButton sx={{ background: palette.primary.main, p: 1, ml: 'auto' }}>
-                <UiIcon componentName='chevronRight' size={5} />
+                <UiIcon name={Icons.CaretRight} size={5} />
               </IconButton>
             </Stack>
           </Paper>
@@ -164,7 +154,7 @@ export default function Wallet() {
             <Stack spacing={2}>
               <Stack direction='row' alignItems='center' spacing={1}>
                 <Typography variant='subtitle3'>History</Typography>
-                <UiIcon componentName='chevronRight' />
+                <UiIcon name={Icons.CaretRight} />
               </Stack>
 
               <NoDataView />

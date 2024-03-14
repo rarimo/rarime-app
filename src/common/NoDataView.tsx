@@ -1,8 +1,6 @@
 import { Stack, StackProps, Typography, useTheme } from '@mui/material'
 import { ReactNode } from 'react'
 
-import { UiIcon } from '@/ui'
-
 interface Props extends StackProps {
   icon?: ReactNode
   title?: string
@@ -11,7 +9,7 @@ interface Props extends StackProps {
 }
 
 export default function NoDataView({
-  icon = <UiIcon componentName='folderOff' />,
+  icon = <Typography variant='subtitle1'>📁</Typography>,
   title = 'No data',
   description,
   action,

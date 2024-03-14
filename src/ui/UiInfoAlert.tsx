@@ -1,6 +1,7 @@
 import { Stack, StackProps, Typography, useTheme } from '@mui/material'
 import { ReactNode, useMemo } from 'react'
 
+import { Icons } from '@/enums'
 import { UiIcon } from '@/ui/index'
 
 type Props = StackProps & {
@@ -35,10 +36,10 @@ export default function UiInfoAlert({ icon, message, severity, ...rest }: Props)
     () =>
       icon ||
       {
-        error: <UiIcon componentName='infoOutlined' />,
-        info: <UiIcon componentName='infoOutlined' />,
-        success: <UiIcon componentName='infoOutlined' />,
-        warning: <UiIcon componentName='infoOutlined' />,
+        error: <UiIcon name={Icons.Info} />,
+        info: <UiIcon name={Icons.Info} />,
+        success: <UiIcon name={Icons.Info} />,
+        warning: <UiIcon name={Icons.Info} />,
       }[severity],
     [icon, severity],
   )

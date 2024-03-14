@@ -17,14 +17,7 @@ import { BusEvents } from '@/enums'
 import { bus, ErrorHandler, formatAmount } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useWalletState } from '@/store'
-import {
-  UiDialogActions,
-  UiDialogContent,
-  UiDialogTitle,
-  UiIcon,
-  UiInfoAlert,
-  UiTextField,
-} from '@/ui'
+import { UiDialogActions, UiDialogContent, UiDialogTitle, UiInfoAlert, UiTextField } from '@/ui'
 
 type Props = DialogProps & {
   onSend?: () => void
@@ -159,13 +152,6 @@ export default function SendModal({ onSend, ...rest }: Props) {
                   <FormControl>
                     <UiTextField
                       {...field}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position='end'>
-                            <UiIcon componentName='qrCode' sx={{ color: palette.text.secondary }} />
-                          </InputAdornment>
-                        ),
-                      }}
                       label={FieldNames.Address}
                       errorMessage={getErrorMessage(FieldNames.Address)}
                       disabled={isFormDisabled}

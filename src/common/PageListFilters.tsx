@@ -3,6 +3,7 @@ import debounce from 'lodash/debounce'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { Icons } from '@/enums'
 import { UiIcon, UiIconButton, UiNavTabs, UiSearchField } from '@/ui'
 
 interface Props extends StackProps {
@@ -32,7 +33,7 @@ export default function PageListFilters({ tabs, onSearchInput, actionBar, ...res
 
         {/* TODO: add filters here */}
         <UiIconButton>
-          <UiIcon componentName='tune' size={5} />
+          <UiIcon name={Icons.SlidersHorizontal} size={5} />
         </UiIconButton>
 
         {actionBar && (

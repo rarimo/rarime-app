@@ -54,11 +54,11 @@ const AppNavbar = () => {
       { route: RoutePaths.Dashboard, iconComponent: <UiIcon name={Icons.House} size={5} /> },
       {
         route: RoutePaths.Credentials,
-        iconComponent: <UiIcon componentName='layers' size={6} />,
+        iconComponent: <UiIcon name={Icons.IdentificationCard} size={5} />,
       },
       {
         route: RoutePaths.Wallet,
-        iconComponent: <UiIcon name={Icons.Wallet} size={6} />,
+        iconComponent: <UiIcon name={Icons.Wallet} size={5} />,
       },
       { route: RoutePaths.Rewards, iconComponent: <UiIcon name={Icons.Gift} size={5} /> },
     ],
@@ -94,10 +94,7 @@ const AppNavbar = () => {
 
       <Stack spacing={4}>
         <UiIconButton onClick={togglePaletteMode}>
-          <UiIcon
-            componentName={paletteMode === 'dark' ? 'darkModeOutlined' : 'lightModeOutlined'}
-            size={5}
-          />
+          <UiIcon name={paletteMode === 'dark' ? Icons.Moon : Icons.Sun} size={5} />
         </UiIconButton>
         <ProfileMenu userDid={userDid} />
       </Stack>
