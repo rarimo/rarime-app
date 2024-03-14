@@ -1,4 +1,4 @@
-import { BN, BnLike, time, TimeDate } from '@distributedlab/tools'
+import { BN, BnConfigLike, BnFormatConfig, BnLike, time, TimeDate } from '@distributedlab/tools'
 
 // DID
 const DID_PART_LENGTH = 8
@@ -27,19 +27,82 @@ export function formatDateTime(date: TimeDate) {
   return time(date).format('DD MMM, YYYY, h:mm A')
 }
 
-// Number
-export function formatNumber(value: number) {
-  return new Intl.NumberFormat().format(value)
+// number
+/**
+ * Format human amount without trailing zeros
+ * @param amount
+ */
+function removeTrailingZeros(amount: string) {
+  const [integer, fraction] = amount.split('.')
+
+  if (!fraction) return integer
+
+  let result = integer
+
+  for (let i = fraction.length - 1; i >= 0; i--) {
+    if (fraction[i] !== '0') {
+      result += `.${fraction.slice(0, i + 1)}`
+      break
+    }
+  }
+
+  return result
 }
 
-export function formatAmount(amount: BnLike, decimals: number) {
-  if (!Number(amount)) return '0'
+/**
+ * Format human amount with prefix
+ * @param value
+ */
+function convertNumberWithPrefix(value: string) {
+  const KK_PREFIX_AMOUNT = 10_000
+  const M_PREFIX_AMOUNT = 1_000_000
+  const B_PREFIX_AMOUNT = 1_000_000_000
+  const T_PREFIX_AMOUNT = 1_000_000_000_000
 
-  if (isNaN(Number(amount))) throw new TypeError('Amount is not a number')
+  const getPrefix = (value: number): 'KK' | 'M' | 'B' | 'T' | '' => {
+    if (value >= T_PREFIX_AMOUNT) return 'T'
+    if (value >= B_PREFIX_AMOUNT) return 'B'
+    if (value >= M_PREFIX_AMOUNT) return 'M'
+    if (value >= KK_PREFIX_AMOUNT) return 'KK'
 
-  return amountTrimZero(BN.fromBigInt(amount, decimals).toString())
+    return ''
+  }
+
+  const prefix = getPrefix(+value)
+
+  const divider = {
+    KK: KK_PREFIX_AMOUNT,
+    M: M_PREFIX_AMOUNT,
+    B: B_PREFIX_AMOUNT,
+    T: T_PREFIX_AMOUNT,
+    '': 1,
+  }[prefix]
+
+  const finalAmount = BN.fromRaw(Number(value) / divider, 3).format({
+    decimals: 3,
+    groupSeparator: '',
+    decimalSeparator: '.',
+  })
+
+  return `${removeTrailingZeros(finalAmount)}${prefix}`
 }
 
-export function amountTrimZero(amount: string) {
-  return amount.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.$/, '')
+export function formatNumber(value: number, config?: BnFormatConfig) {
+  return BN.fromRaw(value, 0).format(config)
+}
+
+export function formatAmount(
+  amount: BnLike,
+  decimalsOrConfig?: BnConfigLike,
+  formatConfig?: BnFormatConfig,
+) {
+  return removeTrailingZeros(BN.fromBigInt(amount, decimalsOrConfig).format(formatConfig))
+}
+
+export function formatBalance(
+  amount: BnLike,
+  decimalsOrConfig?: BnConfigLike,
+  formatConfig?: BnFormatConfig,
+) {
+  return convertNumberWithPrefix(formatAmount(amount, decimalsOrConfig, formatConfig))
 }
