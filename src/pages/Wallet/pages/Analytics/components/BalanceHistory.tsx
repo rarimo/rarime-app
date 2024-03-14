@@ -1,7 +1,7 @@
 import { Button, Paper, Stack, Typography, useTheme } from '@mui/material'
 import { useMemo, useState } from 'react'
 
-import { formatAmount, formatNumber } from '@/helpers'
+import { formatBalance, formatNumber } from '@/helpers'
 import { useWalletState } from '@/store'
 
 import { HistoryDurations } from '../enums/durations'
@@ -41,7 +41,7 @@ export default function BalanceHistory() {
             Total RMO
           </Typography>
           <Typography variant='h4'>
-            {formatAmount(mainBalance?.amount, mainBalance?.decimals)}
+            {formatBalance(mainBalance?.amount, mainBalance?.decimals)}
           </Typography>
           {/* TODO: replace with real data */}
           <Typography variant='caption2' color={palette.text.secondary}>
