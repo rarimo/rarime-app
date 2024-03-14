@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { BusEvents, Icons } from '@/enums'
 import { bus } from '@/helpers'
-import { UiBasicModal, UiButton, UiCopyField, UiDrawer, UiIcon, UiInfoChip, UiModal } from '@/ui'
+import { UiBasicModal, UiButton, UiCopyField, UiDrawer, UiIcon, UiInfoAlert, UiModal } from '@/ui'
 import UiPopup from '@/ui/UiPopup'
 
 export default function UiKitOther() {
@@ -39,15 +39,15 @@ export default function UiKitOther() {
           gap={theme => theme.spacing(2)}
           justifyContent={`flex-start`}
         >
-          <UiInfoChip
+          <UiInfoAlert
             message='success lorem ipsum dolor sit amet concestetur!'
             severity='success'
           />
-          <UiInfoChip
+          <UiInfoAlert
             message='warning lorem ipsum dolor sit amet concestetur!'
             severity='warning'
           />
-          <UiInfoChip message='error lorem ipsum dolor sit amet concestetur!' severity='error' />
+          <UiInfoAlert message='error lorem ipsum dolor sit amet concestetur!' severity='error' />
         </Stack>
       </Stack>
 

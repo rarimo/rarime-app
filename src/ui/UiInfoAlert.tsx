@@ -9,7 +9,7 @@ type Props = StackProps & {
   severity: 'error' | 'success' | 'warning'
 }
 
-export default function UiInfoChip({ icon, message, severity, ...rest }: Props) {
+export default function UiInfoAlert({ icon, message, severity, ...rest }: Props) {
   const { palette, spacing } = useTheme()
 
   const stackStyles = useMemo(
@@ -28,25 +28,17 @@ export default function UiInfoChip({ icon, message, severity, ...rest }: Props) 
           color: palette.warning.darker,
         },
       }[severity]),
-    [
-      palette.error.darker,
-      palette.error.lighter,
-      palette.success.darker,
-      palette.success.lighter,
-      palette.warning.darker,
-      palette.warning.lighter,
-      severity,
-    ],
+    [palette, severity],
   )
 
   const chipIcon = useMemo(
     () =>
       icon ||
       {
-        error: <UiIcon componentName='infoOutlined' sx={{ color: 'inherit' }} />,
-        info: <UiIcon componentName='infoOutlined' sx={{ color: 'inherit' }} />,
-        success: <UiIcon componentName='infoOutlined' sx={{ color: 'inherit' }} />,
-        warning: <UiIcon componentName='infoOutlined' sx={{ color: 'inherit' }} />,
+        error: <UiIcon componentName='infoOutlined' />,
+        info: <UiIcon componentName='infoOutlined' />,
+        success: <UiIcon componentName='infoOutlined' />,
+        warning: <UiIcon componentName='infoOutlined' />,
       }[severity],
     [icon, severity],
   )
@@ -58,13 +50,11 @@ export default function UiInfoChip({ icon, message, severity, ...rest }: Props) 
       direction='row'
       alignItems='center'
       spacing={2}
-      p={spacing(2)}
+      p={2}
       borderRadius={spacing(2)}
     >
       {chipIcon}
-      <Typography variant='body4' sx={{ color: 'inherit' }}>
-        {message}
-      </Typography>
+      <Typography variant='body4'>{message}</Typography>
     </Stack>
   )
 }

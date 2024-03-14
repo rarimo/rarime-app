@@ -8,7 +8,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import { useCallback, useMemo, useState } from 'react'
+import { ComponentProps, useCallback, useMemo } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { RARIMO_EXPLORER_URLS, rarimoClient } from '@/api/clients'
@@ -16,17 +16,17 @@ import { BusEvents } from '@/enums'
 import { bus, ErrorHandler, formatAmount } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useWalletState, walletStore } from '@/store'
-import { UiBasicModal, UiIcon, UiInfoChip, UiTextField } from '@/ui'
+import { UiBasicModal, UiIcon, UiInfoAlert, UiTextField } from '@/ui'
+
+type Props = ComponentProps<typeof UiBasicModal>
 
 enum FieldNames {
   Address = 'address',
   Amount = 'amount',
 }
 
-export default function SendModal() {
+export default function SendModal({ ...rest }: Props) {
   const { palette, spacing } = useTheme()
-
-  const [isModalShown, setIsModalShown] = useState(false)
 
   const { balances } = useWalletState()
 
@@ -119,45 +119,63 @@ export default function SendModal() {
 
       await walletStore.loadBalances()
 
-      setIsModalShown(false)
+      rest.onClose()
     } catch (error) {
       ErrorHandler.process(error)
     }
 
     enableForm()
-  }, [disableForm, enableForm, formState, mainBalance.denom, palette.primary.main])
+  }, [disableForm, enableForm, formState, mainBalance.denom, palette.primary.main, rest])
 
   return (
-    <>
-      <Button
-        color='secondary'
-        startIcon={<UiIcon componentName='arrowUpward' />}
-        onClick={() => setIsModalShown(true)}
-      >
-        Send
-      </Button>
-      <UiBasicModal open={isModalShown} onClose={() => setIsModalShown(false)}>
-        <Stack width={spacing(115)}>
-          <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
-            <Typography variant='h6'>Send {mainBalance?.denom}</Typography>
+    <UiBasicModal {...rest}>
+      <Stack width={spacing(115)}>
+        <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
+          <Typography variant='h6'>Send {mainBalance?.denom}</Typography>
 
-            <Button variant='text' onClick={() => setIsModalShown(false)}>
-              <UiIcon componentName='close' sx={{ color: palette.text.secondary }} />
-            </Button>
+          <Button variant='text' onClick={rest.onClose}>
+            <UiIcon componentName='close' sx={{ color: palette.text.secondary }} />
+          </Button>
+        </Stack>
+
+        <Divider />
+
+        <Stack spacing={5} pt={5}>
+          <Stack px={5}>
+            <UiInfoAlert severity='warning' message='Informational message' />
           </Stack>
 
-          <Divider />
+          <form onSubmit={handleSubmit(send)}>
+            <Stack spacing={5}>
+              <Stack spacing={5} px={5}>
+                <Controller
+                  name={FieldNames.Address}
+                  control={control}
+                  render={({ field }) => (
+                    <FormControl>
+                      <UiTextField
+                        {...field}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position='end'>
+                              <UiIcon
+                                componentName='qrCode'
+                                sx={{ color: palette.text.secondary }}
+                              />
+                            </InputAdornment>
+                          ),
+                        }}
+                        label={FieldNames.Address}
+                        errorMessage={getErrorMessage(FieldNames.Address)}
+                        disabled={isFormDisabled}
+                      />
+                    </FormControl>
+                  )}
+                />
 
-          <Stack spacing={5} pt={5}>
-            <Stack px={5}>
-              <UiInfoChip severity='warning' message='Informational message' />
-            </Stack>
-
-            <form onSubmit={handleSubmit(send)}>
-              <Stack spacing={5}>
-                <Stack spacing={5} px={5}>
+                <Stack spacing={2}>
                   <Controller
-                    name={FieldNames.Address}
+                    name={FieldNames.Amount}
                     control={control}
                     render={({ field }) => (
                       <FormControl>
@@ -166,107 +184,80 @@ export default function SendModal() {
                           InputProps={{
                             endAdornment: (
                               <InputAdornment position='end'>
-                                <UiIcon
-                                  componentName='qrCode'
-                                  sx={{ color: palette.text.secondary }}
-                                />
+                                <Stack
+                                  spacing={2}
+                                  direction='row'
+                                  alignItems='center'
+                                  borderLeft={`2px solid ${palette.action.active}`}
+                                  pl={4}
+                                >
+                                  <Button
+                                    variant='text'
+                                    sx={{ color: palette.text.secondary }}
+                                    onClick={() =>
+                                      field.onChange(
+                                        formatAmount(maxAmountBN, maxAmountBN.decimals),
+                                      )
+                                    }
+                                    disabled={isFormDisabled}
+                                  >
+                                    MAX
+                                  </Button>
+                                </Stack>
                               </InputAdornment>
                             ),
                           }}
-                          label={FieldNames.Address}
-                          errorMessage={getErrorMessage(FieldNames.Address)}
+                          label={FieldNames.Amount}
+                          errorMessage={getErrorMessage(FieldNames.Amount)}
                           disabled={isFormDisabled}
                         />
                       </FormControl>
                     )}
                   />
 
-                  <Stack spacing={2}>
-                    <Controller
-                      name={FieldNames.Amount}
-                      control={control}
-                      render={({ field }) => (
-                        <FormControl>
-                          <UiTextField
-                            {...field}
-                            InputProps={{
-                              endAdornment: (
-                                <InputAdornment position='end'>
-                                  <Stack
-                                    spacing={2}
-                                    direction='row'
-                                    alignItems='center'
-                                    borderLeft={`2px solid ${palette.action.active}`}
-                                    pl={4}
-                                  >
-                                    <Button
-                                      variant='text'
-                                      sx={{ color: palette.text.secondary }}
-                                      onClick={() =>
-                                        field.onChange(
-                                          formatAmount(maxAmountBN, maxAmountBN.decimals),
-                                        )
-                                      }
-                                      disabled={isFormDisabled}
-                                    >
-                                      MAX
-                                    </Button>
-                                  </Stack>
-                                </InputAdornment>
-                              ),
-                            }}
-                            label={FieldNames.Amount}
-                            errorMessage={getErrorMessage(FieldNames.Amount)}
-                            disabled={isFormDisabled}
-                          />
-                        </FormControl>
-                      )}
-                    />
+                  <Stack spacing={2} direction='row' justifyContent='space-between'>
+                    <Typography variant='body4' color={palette.text.secondary}>
+                      Available:
+                    </Typography>
+                    <Typography variant='body4'>
+                      {formatAmount(maxAmountBN, maxAmountBN.decimals)} {mainBalance?.denom}
+                    </Typography>
+                  </Stack>
+                </Stack>
+              </Stack>
 
-                    <Stack spacing={2} direction='row' justifyContent='space-between'>
-                      <Typography variant='body4' color={palette.text.secondary}>
-                        Available:
+              <Divider />
+
+              <Stack direction='row' spacing={4} justifyContent='space-between' p={5} pt={0}>
+                {totalAmountAfterFeeBN && (
+                  <Stack spacing={1}>
+                    <Typography variant='body4' color={palette.text.secondary}>
+                      Receive amount:
+                    </Typography>
+                    <Stack direction='row' alignItems='baseline' spacing={1}>
+                      <Typography variant='subtitle3'>
+                        {formatAmount(totalAmountAfterFeeBN, totalAmountAfterFeeBN?.decimals)}{' '}
+                        {mainBalance?.denom}
                       </Typography>
-                      <Typography variant='body4'>
-                        {formatAmount(maxAmountBN, maxAmountBN.decimals)} {mainBalance?.denom}
+                      <Typography variant='body4' color={palette.text.secondary}>
+                        Fee: 0.005 {mainBalance?.denom}
                       </Typography>
                     </Stack>
                   </Stack>
-                </Stack>
+                )}
 
-                <Divider />
-
-                <Stack direction='row' spacing={4} justifyContent='space-between' p={5} pt={0}>
-                  {totalAmountAfterFeeBN && (
-                    <Stack spacing={1}>
-                      <Typography variant='body4' color={palette.text.secondary}>
-                        Receive amount:
-                      </Typography>
-                      <Stack direction='row' alignItems='baseline' spacing={1}>
-                        <Typography variant='subtitle3'>
-                          {formatAmount(totalAmountAfterFeeBN, totalAmountAfterFeeBN?.decimals)}{' '}
-                          {mainBalance?.denom}
-                        </Typography>
-                        <Typography variant='body4' color={palette.text.secondary}>
-                          Fee: 0.005 {mainBalance?.denom}
-                        </Typography>
-                      </Stack>
-                    </Stack>
-                  )}
-
-                  <Button
-                    sx={{ width: spacing(42), ml: 'auto' }}
-                    type='submit'
-                    disabled={isFormDisabled}
-                  >
-                    Send
-                  </Button>
-                </Stack>
+                <Button
+                  sx={{ width: spacing(42), ml: 'auto' }}
+                  type='submit'
+                  disabled={isFormDisabled}
+                >
+                  Send
+                </Button>
               </Stack>
-            </form>
-          </Stack>
+            </Stack>
+          </form>
         </Stack>
-      </UiBasicModal>
-    </>
+      </Stack>
+    </UiBasicModal>
   )
 }

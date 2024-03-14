@@ -8,10 +8,10 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { NoDataView, PageTitles } from '@/common'
+import { ErrorView, NoDataView, PageTitles } from '@/common'
 import { Icons } from '@/enums'
 import { formatBalance } from '@/helpers'
 import { useLoading } from '@/hooks'
@@ -24,6 +24,9 @@ export default function Wallet() {
   const { spacing, palette } = useTheme()
 
   const { balances } = useWalletState()
+
+  const [isReceiveModalShown, setIsReceiveModalShown] = useState(false)
+  const [isSendModalShown, setIsSendModalShown] = useState(false)
 
   const mainBalance = useMemo(() => balances?.[0], [balances])
 
@@ -66,7 +69,7 @@ export default function Wallet() {
       <Stack spacing={4}>
         <PageTitles title='Wallet' />
 
-        <NoDataView title='Error loading wallet' />
+        <ErrorView title='Error loading wallet' />
       </Stack>
     )
 
@@ -89,9 +92,26 @@ export default function Wallet() {
 
           <Stack spacing={3} direction='row' alignItems='center' justifyContent='space-between'>
             <Stack spacing={3} direction='row'>
-              <ReceiveModal />
+              <Button
+                color='secondary'
+                startIcon={<UiIcon componentName='arrowDownward' />}
+                onClick={() => setIsReceiveModalShown(true)}
+              >
+                Receive
+              </Button>
+              <ReceiveModal
+                open={isReceiveModalShown}
+                onClose={() => setIsReceiveModalShown(false)}
+              />
 
-              <SendModal />
+              <Button
+                color='secondary'
+                startIcon={<UiIcon componentName='arrowUpward' />}
+                onClick={() => setIsSendModalShown(true)}
+              >
+                Send
+              </Button>
+              <SendModal open={isSendModalShown} onClose={() => setIsSendModalShown(false)} />
             </Stack>
 
             <Button
@@ -104,16 +124,14 @@ export default function Wallet() {
                     borderLeft: `2px solid`,
                     borderBottom: `2px solid`,
                     borderColor: palette.text.secondary,
-                    color: palette.text.secondary,
                   }}
                   size={4}
                 />
               }
+              color='secondary'
               variant='text'
             >
-              <Typography variant='buttonMedium' color={palette.text.secondary}>
-                Wallet Analytics
-              </Typography>
+              <Typography variant='buttonMedium'>Wallet Analytics</Typography>
             </Button>
           </Stack>
         </Stack>
@@ -129,7 +147,7 @@ export default function Wallet() {
             justifyContent='center'
             alignItems='center'
           >
-            <UiIcon name={Icons.Rarime} />
+            <UiIcon name={Icons.Rarimo} />
           </Stack>
 
           <Stack spacing={1}>
@@ -146,7 +164,7 @@ export default function Wallet() {
       <Paper>
         <Stack spacing={2}>
           <Stack direction='row' alignItems='center' spacing={1}>
-            <Typography>History</Typography>
+            <Typography variant='subtitle3'>History</Typography>
             <UiIcon componentName='chevronRight' />
           </Stack>
 

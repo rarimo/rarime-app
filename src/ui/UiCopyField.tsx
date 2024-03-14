@@ -20,7 +20,7 @@ export default function UiCopyField({ label, value }: Props) {
       <Paper sx={{ py: 3.5, px: 4, background: palette.action.disabled, border: 0 }}>
         <Stack direction='row' spacing={4}>
           <Typography>{value}</Typography>
-          <UiIconButton onClick={async () => copy(value)}>
+          <UiIconButton onClick={() => copy(value)}>
             <UiIcon
               componentName={isCopied ? 'check' : 'contentCopy'}
               sx={{ color: palette.text.secondary }}
