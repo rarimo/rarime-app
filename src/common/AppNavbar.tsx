@@ -1,5 +1,5 @@
 import { Divider, Stack, useTheme } from '@mui/material'
-import { ReactNode, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { ProfileMenu } from '@/common'
@@ -10,10 +10,11 @@ import { UiIcon, UiIconButton } from '@/ui'
 
 interface NavbarLinkProps {
   to: RoutePaths
-  children: ReactNode
+  icon: Icons
+  activeIcon: Icons
 }
 
-const NavbarLink = ({ children, to }: NavbarLinkProps) => {
+const NavbarLink = ({ to, icon, activeIcon }: NavbarLinkProps) => {
   const location = useLocation()
   const { palette, spacing } = useTheme()
 
@@ -38,7 +39,7 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
           },
         }}
       >
-        {children}
+        <UiIcon name={isRouteActive ? activeIcon : icon} size={5} />
       </Stack>
     </NavLink>
   )
@@ -51,16 +52,26 @@ const AppNavbar = () => {
 
   const navbarItems = useMemo(
     () => [
-      { route: RoutePaths.Dashboard, iconComponent: <UiIcon name={Icons.House} size={5} /> },
+      {
+        route: RoutePaths.Dashboard,
+        icon: Icons.HouseSimple,
+        activeIcon: Icons.HouseSimpleFill,
+      },
       {
         route: RoutePaths.Credentials,
-        iconComponent: <UiIcon name={Icons.IdentificationCard} size={5} />,
+        icon: Icons.IdentificationCard,
+        activeIcon: Icons.IdentificationCardFill,
       },
       {
         route: RoutePaths.Wallet,
-        iconComponent: <UiIcon name={Icons.Wallet} size={5} />,
+        icon: Icons.Wallet,
+        activeIcon: Icons.WalletFilled,
       },
-      { route: RoutePaths.Rewards, iconComponent: <UiIcon name={Icons.Gift} size={5} /> },
+      {
+        route: RoutePaths.Rewards,
+        icon: Icons.Gift,
+        activeIcon: Icons.GiftFill,
+      },
     ],
     [],
   )
@@ -84,10 +95,8 @@ const AppNavbar = () => {
         </Stack>
         <Divider />
         <Stack spacing={4} p={1}>
-          {navbarItems.map(({ route, iconComponent }, idx) => (
-            <NavbarLink to={route} key={idx}>
-              {iconComponent}
-            </NavbarLink>
+          {navbarItems.map(({ route, icon, activeIcon }, idx) => (
+            <NavbarLink key={idx} to={route} icon={icon} activeIcon={activeIcon} />
           ))}
         </Stack>
       </Stack>
