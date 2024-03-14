@@ -7,6 +7,7 @@ import {
   OrgGroupRequestFiltersMap,
   OrgGroupRequestStatuses,
 } from '@/api/modules/orgs'
+import { Icons } from '@/enums'
 import { useLoading } from '@/hooks'
 import { UiButton, UiDrawer, UiIcon } from '@/ui'
 
@@ -109,7 +110,7 @@ export default function List({ filter, ...rest }: Props) {
                     <Typography>Member Details</Typography>
 
                     <UiButton variant='text' onClick={() => setIsDrawerShown(false)}>
-                      <UiIcon componentName='close' />
+                      <UiIcon name={Icons.Close} />
                     </UiButton>
                   </Stack>
                   {drawerContent}

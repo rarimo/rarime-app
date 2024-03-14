@@ -14,7 +14,7 @@ import { RoutePaths } from '@/enums'
 import { useLoading, useNestedRoutes } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { useOrgGroupDetails } from '@/pages/Orgs/pages/OrgsId/pages/OrgGroups/hooks'
-import { UiButton, UiDrawer, UiIcon } from '@/ui'
+import { UiButton, UiDrawer } from '@/ui'
 
 import { InviteMemberForm, List } from './components'
 
@@ -155,7 +155,6 @@ export default function OrgGroupsId() {
             <UiButton
               variant='contained'
               color='primary'
-              startIcon={<UiIcon componentName='accountCircle' />}
               sx={{ ml: 'auto' }}
               onClick={() => setIsInviteDrawerShown(true)}
             >

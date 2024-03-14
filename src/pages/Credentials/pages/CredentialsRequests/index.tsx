@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 import { OrgGroupRequestStatuses, OrgGroupRequestWithClaims } from '@/api/modules/orgs'
 import { PageTitles } from '@/common'
-import { BusEvents, RoutePaths } from '@/enums'
+import { BusEvents, Icons, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
 import { UiButton, UiIcon } from '@/ui'
 
@@ -35,7 +35,7 @@ export default function CredentialsRequests({ ...rest }: Props) {
       <Stack direction='row' alignItems='center' spacing={4}>
         <NavLink to={RoutePaths.CredentialsList}>
           <Stack direction='row' alignItems='center' spacing={2} color='secondary'>
-            <UiIcon componentName='chevronLeft' size={5} />
+            <UiIcon name={Icons.CaretLeft} size={5} />
             <Typography variant='buttonSmall' color='inherit'>
               Back
             </Typography>

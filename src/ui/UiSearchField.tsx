@@ -1,6 +1,7 @@
 import { InputAdornment, useTheme } from '@mui/material'
 import { ComponentProps, forwardRef } from 'react'
 
+import { Icons } from '@/enums'
 import { Transitions } from '@/theme/constants'
 
 import UiIcon from './UiIcon'
@@ -22,7 +23,7 @@ const UiSearchField = forwardRef((props: ComponentProps<typeof UiTextField>, ref
         ...props.InputProps,
         startAdornment: (
           <InputAdornment position='start' sx={{ color: palette.text.placeholder }}>
-            <UiIcon componentName='search' size={5} />
+            <UiIcon name={Icons.MagnifyingGlass} size={5} />
           </InputAdornment>
         ),
         sx: {

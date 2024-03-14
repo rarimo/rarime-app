@@ -4,6 +4,7 @@ import { ComponentProps, useCallback } from 'react'
 import { zkpSnap } from '@/api/clients'
 import { OrgGroupRequestWithClaims } from '@/api/modules/orgs'
 import { getClaimOffer, getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
+import { Icons } from '@/enums'
 import { ErrorHandler } from '@/helpers'
 import { useLoading } from '@/hooks'
 import { useIdentityState } from '@/store'
@@ -74,7 +75,7 @@ export default function ClaimVCsModal({ orgGroupRequest, onClose, ...rest }: Pro
           {/*TODO: add loader for each processing schema*/}
           {field.key}
           {': '}
-          <UiIcon componentName='check' />
+          <UiIcon name={Icons.Check} />
         </Typography>
       ))}
 

@@ -28,8 +28,8 @@ export default function UiKitOther() {
           justifyContent='flex-start'
         >
           <UiIcon name={Icons.Metamask} />
-          <UiIcon componentName='delete' />
-          <UiIcon componentName='accountCircle' />
+          <UiIcon name={Icons.TrashSimple} />
+          <UiIcon name={Icons.Bell} />
         </Stack>
       </Stack>
 
@@ -39,13 +39,13 @@ export default function UiKitOther() {
         <UiPopup
           trigger={<UiButton>Popup</UiButton>}
           menuItems={[
-            <UiButton key={0} variant='text' startIcon={<UiIcon componentName='add' />}>
+            <UiButton key={0} variant='text' startIcon={<UiIcon name={Icons.Plus} />}>
               Item 1
             </UiButton>,
-            <UiButton key={1} variant='text' startIcon={<UiIcon componentName='add' />}>
+            <UiButton key={1} variant='text' startIcon={<UiIcon name={Icons.Plus} />}>
               Item 2
             </UiButton>,
-            <UiButton key={2} variant='text' startIcon={<UiIcon componentName='add' />}>
+            <UiButton key={2} variant='text' startIcon={<UiIcon name={Icons.Plus} />}>
               Item 3
             </UiButton>,
           ]}

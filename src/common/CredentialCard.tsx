@@ -3,6 +3,7 @@ import { W3CCredential } from '@rarimo/rarime-connector'
 import startCase from 'lodash/startCase'
 
 import { formatCredentialType, getCredentialViewProperty, IssuerDetails } from '@/api/modules/zkp'
+import { Icons } from '@/enums'
 import { formatDateMY } from '@/helpers'
 import { UiIcon } from '@/ui'
 
@@ -100,7 +101,7 @@ export default function CredentialCard({ vc, issuerDetails, ...rest }: Props) {
           <Stack direction='row' alignItems='center' spacing={2}>
             {vc.expirationDate ? (
               <>
-                <UiIcon componentName='calendarTodayOutlinedIcon' size={4} />
+                <UiIcon name={Icons.CalendarBlank} size={4} />
                 <Typography>{formatDateMY(vc.expirationDate)}</Typography>
               </>
             ) : (

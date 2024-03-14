@@ -5,7 +5,7 @@ import { generatePath, NavLink, useLocation, useParams } from 'react-router-dom'
 import { zkpSnap } from '@/api/clients'
 import { getClaimIdFromVC } from '@/api/modules/zkp'
 import { CredentialCard, NoDataView } from '@/common'
-import { RoutePaths } from '@/enums'
+import { Icons, RoutePaths } from '@/enums'
 import { ErrorHandler } from '@/helpers'
 import { useCredentialsState } from '@/store'
 import { UiIcon } from '@/ui'
@@ -93,7 +93,7 @@ export default function CredentialsId() {
         direction='row'
         alignItems='center'
       >
-        <UiIcon componentName='chevronLeft' sx={{ color: palette.text.secondary }} size={5} />
+        <UiIcon name={Icons.CaretLeft} sx={{ color: palette.text.secondary }} size={5} />
         <Typography variant='buttonSmall' color={palette.text.secondary}>
           Back
         </Typography>
@@ -108,11 +108,7 @@ export default function CredentialsId() {
                 to={prevVCPath}
                 visibility={isFirstVC ? 'hidden' : 'visible'}
               >
-                <UiIcon
-                  componentName='chevronLeft'
-                  size={5}
-                  sx={{ color: palette.text.secondary }}
-                />
+                <UiIcon name={Icons.CaretLeft} size={5} sx={{ color: palette.text.secondary }} />
               </Box>
 
               <Box width={spacing(100)}>
@@ -120,36 +116,22 @@ export default function CredentialsId() {
               </Box>
 
               <Box component={NavLink} to={nextVCPath} visibility={isLastVC ? 'hidden' : 'visible'}>
-                <UiIcon
-                  componentName='chevronRight'
-                  size={5}
-                  sx={{ color: palette.text.secondary }}
-                />
+                <UiIcon name={Icons.CaretRight} size={5} sx={{ color: palette.text.secondary }} />
               </Box>
             </Stack>
 
             <Stack spacing={10} direction='row' justifyContent='center'>
-              <ActionButton
-                iconProps={{
-                  componentName: 'add',
-                }}
-                disabled={isPending}
-              >
+              <ActionButton iconProps={{ name: Icons.Plus }} disabled={isPending}>
                 Generate proof
               </ActionButton>
-              <ActionButton
-                iconProps={{
-                  componentName: 'infoOutlined',
-                }}
-                disabled={isPending}
-              >
+              <ActionButton iconProps={{ name: Icons.Info }} disabled={isPending}>
                 Get info
               </ActionButton>
 
               <ActionButton
                 iconProps={{
-                  componentName: 'deleteOutlined',
-                  color: 'error',
+                  name: Icons.TrashSimple,
+                  sx: { color: palette.error.main },
                 }}
                 onClick={requestRemoveVC}
                 disabled={isPending}
