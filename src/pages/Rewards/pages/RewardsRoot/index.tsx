@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { PageTitles } from '@/common'
-import { RoutePaths } from '@/enums'
+import { Icons, RoutePaths } from '@/enums'
 import { useLoading } from '@/hooks'
 import { rewardsStore, useRewardsState } from '@/store'
 import { UiIcon } from '@/ui'
@@ -36,7 +36,7 @@ export default function RewardsRoot() {
             variant='text'
             size='small'
             color='secondary'
-            startIcon={<UiIcon componentName='history' size={4} />}
+            startIcon={<UiIcon name={Icons.History} size={4} />}
           >
             Earn History
           </Button>

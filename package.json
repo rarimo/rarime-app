@@ -28,7 +28,8 @@
     "lint": "yarn lint:scripts",
     "lint:scripts": "eslint \"{src,config}/**/*.{js,ts,jsx,tsx}\" --cache --fix --max-warnings=0",
     "preview": "vite preview",
-    "rsc": "node scripts/release-sanity-check.mjs"
+    "rsc": "node scripts/release-sanity-check.mjs",
+    "generate-icons": "node scripts/generate-icons.mjs"
   },
   "dependencies": {
     "@distributedlab/jac": "^1.0.0-rc.14",

@@ -4,7 +4,7 @@ import { useFieldArray } from 'react-hook-form'
 
 import { OrgMetadataLink, updateOrgMetadata } from '@/api/modules/orgs'
 import VerticalDraggableContext from '@/contexts/vertical-draggable'
-import { BusEvents } from '@/enums'
+import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
@@ -100,7 +100,7 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
             variant='text'
             color='secondary'
             size='medium'
-            startIcon={<UiIcon componentName='add' size={5} />}
+            startIcon={<UiIcon name={Icons.Plus} size={5} />}
             onClick={() => append({ title: '', url: '' })}
             sx={{ mt: fields.length ? 4 : 0 }}
           >

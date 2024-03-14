@@ -1,6 +1,7 @@
 import { Button, Stack, StackProps, Typography, useTheme } from '@mui/material'
 import { MouseEvent } from 'react'
 
+import { Icons } from '@/enums'
 import { UiIcon } from '@/ui'
 
 interface Props extends StackProps {
@@ -22,13 +23,13 @@ export default function ClaimWarning({ onAction, ...rest }: Props) {
       {...rest}
     >
       <Stack direction='row' spacing={2} alignItems='center'>
-        <UiIcon componentName='infoOutlined' size={5} />
+        <UiIcon name={Icons.Info} size={5} />
         <Typography variant='body4'>You have to reach Level 2 to claim</Typography>
       </Stack>
       <Button
         variant='text'
         size='small'
-        endIcon={<UiIcon componentName='arrowForward' size={4} />}
+        endIcon={<UiIcon name={Icons.ArrowRight} size={4} />}
         onClick={onAction}
       >
         Earn

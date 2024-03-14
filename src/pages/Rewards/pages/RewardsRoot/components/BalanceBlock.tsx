@@ -37,7 +37,7 @@ export default function BalanceBlock() {
               <Typography variant='subtitle4'>{balance?.rank ?? ''}</Typography>
             </Stack>
             <Typography variant='buttonMedium'>Leaderboard</Typography>
-            <UiIcon componentName='chevronRight' size={4} />
+            <UiIcon name={Icons.CaretRight} size={4} />
           </Stack>
         </Button>
       </Stack>

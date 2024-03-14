@@ -2,6 +2,7 @@ import { Grid, Stack, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 
 import { useLinkProofs } from '@/api/modules/link'
+import { Icons } from '@/enums'
 import { UiIcon, UiTooltip } from '@/ui'
 
 import ProofFieldForm from './ProofFieldForm'
@@ -30,7 +31,7 @@ export default function VerifyProofsBlock() {
               'Please use Verify to check whether the source officially represents Rarimo. Email address, phone number, Discord ID, Twitter account or Telegram ID.'
             }
           >
-            <UiIcon componentName='infoOutlined' size={4} sx={{ color: palette.text.secondary }} />
+            <UiIcon name={Icons.Info} size={4} sx={{ color: palette.text.secondary }} />
           </UiTooltip>
         </Stack>
         <Typography variant='body3' color={palette.text.secondary}>

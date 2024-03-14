@@ -2,7 +2,7 @@ import { Avatar, Card, CardProps, Grid, Stack, Typography, useTheme } from '@mui
 import { generatePath, NavLink } from 'react-router-dom'
 
 import { Organization, OrgsStatuses } from '@/api/modules/orgs'
-import { RoutePaths } from '@/enums'
+import { Icons, RoutePaths } from '@/enums'
 import { Transitions } from '@/theme/constants'
 import { UiIcon } from '@/ui'
 
@@ -37,7 +37,7 @@ export default function ListCard({ org, ...rest }: Props) {
             {org.metadata.name}
           </Typography>
           {org.status.value === OrgsStatuses.Verified && (
-            <UiIcon componentName='verified' sx={{ ml: 1, color: palette.success.main }} size={4} />
+            <UiIcon name={Icons.SealCheck} sx={{ ml: 1, color: palette.success.main }} size={4} />
           )}
         </Stack>
         <Typography color={palette.text.secondary} variant='body3' my={3}>

@@ -1,5 +1,6 @@
 import { Paper, Stack, Typography, useTheme } from '@mui/material'
 
+import { Icons } from '@/enums'
 import { useCopyToClipboard } from '@/hooks'
 import { UiIcon, UiIconButton } from '@/ui/index'
 
@@ -22,7 +23,7 @@ export default function UiCopyField({ label, value }: Props) {
           <Typography>{value}</Typography>
           <UiIconButton onClick={() => copy(value)}>
             <UiIcon
-              componentName={isCopied ? 'check' : 'contentCopy'}
+              name={isCopied ? Icons.Check : Icons.CopySimple}
               sx={{ color: palette.text.secondary }}
             />
           </UiIconButton>

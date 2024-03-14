@@ -2,6 +2,7 @@ import { Stack, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 
 import { NoDataView } from '@/common'
+import { Icons } from '@/enums'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiButton, UiIcon } from '@/ui'
 
@@ -30,7 +31,7 @@ export default function LinksBlock() {
             variant='text'
             size='medium'
             color='secondary'
-            startIcon={<UiIcon componentName='driveFileRenameOutlineOutlined' size={5} />}
+            startIcon={<UiIcon name={Icons.PencilSimpleLine} size={5} />}
             onClick={() => setIsLinkDrawerShown(true)}
           >
             Edit

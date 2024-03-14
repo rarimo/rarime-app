@@ -1,6 +1,7 @@
 import { Button, ButtonProps } from '@mui/material'
 import { NavLink, useLocation } from 'react-router-dom'
 
+import { Icons } from '@/enums'
 import { UiIcon } from '@/ui'
 
 interface Props extends ButtonProps {
@@ -17,7 +18,7 @@ export default function BackLink({ to, ...rest }: Props) {
       variant='text'
       color='secondary'
       size='small'
-      startIcon={<UiIcon componentName='chevronLeft' size={5} />}
+      startIcon={<UiIcon name={Icons.CaretLeft} size={5} />}
       {...rest}
       sx={{ width: 'fit-content', ...rest.sx }}
     >

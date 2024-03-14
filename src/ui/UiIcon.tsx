@@ -40,7 +40,7 @@ const UiIcon = forwardRef<SVGSVGElement, Props>(({ size = 6, ...props }, ref) =>
 
   return (
     <Box
-      {...rest}
+      {...(rest as BoxProps<'svg'>)}
       ref={ref}
       component='svg'
       sx={sx}

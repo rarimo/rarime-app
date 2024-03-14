@@ -1,6 +1,7 @@
 import { Stack, StackProps, Typography, useTheme } from '@mui/material'
 import { ReactNode } from 'react'
 
+import { Icons } from '@/enums'
 import { UiIcon } from '@/ui'
 
 interface Props extends StackProps {
@@ -11,7 +12,7 @@ interface Props extends StackProps {
 }
 
 export default function ErrorView({
-  icon = <UiIcon componentName='errorOutline' />,
+  icon = <UiIcon name={Icons.Warning} />,
   title = 'Error',
   description,
   action,

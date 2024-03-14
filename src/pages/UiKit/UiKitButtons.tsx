@@ -1,5 +1,6 @@
 import { Stack, Typography } from '@mui/material'
 
+import { Icons } from '@/enums'
 import { UiButton, UiIcon, UiIconButton } from '@/ui'
 
 export default function UiKitButtons() {
@@ -47,21 +48,21 @@ export default function UiKitButtons() {
         </UiButton>
 
         {/*ICONS*/}
-        <UiButton variant='text' startIcon={<UiIcon componentName='accountCircle' />}>
+        <UiButton variant='text' startIcon={<UiIcon name={Icons.Bell} />}>
           Text
         </UiButton>
-        <UiButton variant='text' endIcon={<UiIcon componentName='delete' />}>
+        <UiButton variant='text' endIcon={<UiIcon name={Icons.TrashSimple} />}>
           Text
         </UiButton>
         <UiButton
           variant='text'
-          startIcon={<UiIcon componentName='delete' />}
-          endIcon={<UiIcon componentName='delete' />}
+          startIcon={<UiIcon name={Icons.TrashSimple} />}
+          endIcon={<UiIcon name={Icons.TrashSimple} />}
         >
           Text
         </UiButton>
         <UiButton variant='text'>
-          <UiIcon componentName='delete' />
+          <UiIcon name={Icons.TrashSimple} />
         </UiButton>
       </Stack>
 
@@ -107,21 +108,21 @@ export default function UiKitButtons() {
         </UiButton>
 
         {/*ICONS*/}
-        <UiButton variant='contained' startIcon={<UiIcon componentName='delete' />}>
+        <UiButton variant='contained' startIcon={<UiIcon name={Icons.TrashSimple} />}>
           Text
         </UiButton>
-        <UiButton variant='contained' endIcon={<UiIcon componentName='delete' />}>
+        <UiButton variant='contained' endIcon={<UiIcon name={Icons.TrashSimple} />}>
           Text
         </UiButton>
         <UiButton
           variant='contained'
-          startIcon={<UiIcon componentName='delete' />}
-          endIcon={<UiIcon componentName='delete' />}
+          startIcon={<UiIcon name={Icons.TrashSimple} />}
+          endIcon={<UiIcon name={Icons.TrashSimple} />}
         >
           Text
         </UiButton>
         <UiButton variant='contained'>
-          <UiIcon componentName='delete' />
+          <UiIcon name={Icons.TrashSimple} />
         </UiButton>
       </Stack>
 
@@ -167,21 +168,21 @@ export default function UiKitButtons() {
         </UiButton>
 
         {/*ICONS*/}
-        <UiButton variant='outlined' startIcon={<UiIcon componentName='delete' />}>
+        <UiButton variant='outlined' startIcon={<UiIcon name={Icons.TrashSimple} />}>
           Text
         </UiButton>
-        <UiButton variant='outlined' endIcon={<UiIcon componentName='delete' />}>
+        <UiButton variant='outlined' endIcon={<UiIcon name={Icons.TrashSimple} />}>
           Text
         </UiButton>
         <UiButton
           variant='outlined'
-          startIcon={<UiIcon componentName='delete' />}
-          endIcon={<UiIcon componentName='delete' />}
+          startIcon={<UiIcon name={Icons.TrashSimple} />}
+          endIcon={<UiIcon name={Icons.TrashSimple} />}
         >
           Text
         </UiButton>
         <UiButton variant='outlined'>
-          <UiIcon componentName='delete' />
+          <UiIcon name={Icons.TrashSimple} />
         </UiButton>
       </Stack>
 
@@ -193,10 +194,10 @@ export default function UiKitButtons() {
         justifyContent='flex-start'
       >
         <UiIconButton>
-          <UiIcon componentName='delete' />
+          <UiIcon name={Icons.TrashSimple} />
         </UiIconButton>
         <UiIconButton disabled={true}>
-          <UiIcon componentName='delete' />
+          <UiIcon name={Icons.TrashSimple} />
         </UiIconButton>
       </Stack>
 
