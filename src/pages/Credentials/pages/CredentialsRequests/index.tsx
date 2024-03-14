@@ -1,13 +1,12 @@
 import { Card, CardActions, CardContent, Stack, StackProps, Typography } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { NavLink } from 'react-router-dom'
 
 import { OrgGroupRequestStatuses, OrgGroupRequestWithClaims } from '@/api/modules/orgs'
-import { PageTitles } from '@/common'
-import { BusEvents, Icons, RoutePaths } from '@/enums'
+import { BackLink, PageTitles } from '@/common'
+import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
-import { UiButton, UiIcon } from '@/ui'
+import { UiButton } from '@/ui'
 
 import { ClaimVCsModal, FillRequestFormDrawer } from './components'
 
@@ -35,15 +34,7 @@ export default function CredentialsRequests({ ...rest }: Props) {
   return (
     <Stack {...rest}>
       <Stack direction='row' alignItems='center' spacing={4}>
-        <NavLink to={RoutePaths.CredentialsList}>
-          <Stack direction='row' alignItems='center' spacing={2} color='secondary'>
-            <UiIcon name={Icons.CaretLeft} size={5} />
-            <Typography variant='buttonSmall' color='inherit'>
-              Back
-            </Typography>
-          </Stack>
-        </NavLink>
-
+        <BackLink to={RoutePaths.CredentialsList} />
         <PageTitles title={t('credentials-requests.title')} />
       </Stack>
 

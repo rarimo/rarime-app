@@ -22,7 +22,7 @@ export default function BackLink({ to, ...rest }: Props) {
       {...rest}
       sx={{ width: 'fit-content', ...rest.sx }}
     >
-      Go back
+      Back
     </Button>
   )
 }
