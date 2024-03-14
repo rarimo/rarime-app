@@ -54,16 +54,14 @@ function removeTrailingZeros(amount: string) {
  * @param value
  */
 function convertNumberWithPrefix(value: string) {
-  const KK_PREFIX_AMOUNT = 10_000
   const M_PREFIX_AMOUNT = 1_000_000
   const B_PREFIX_AMOUNT = 1_000_000_000
   const T_PREFIX_AMOUNT = 1_000_000_000_000
 
-  const getPrefix = (value: number): 'KK' | 'M' | 'B' | 'T' | '' => {
+  const getPrefix = (value: number): 'M' | 'B' | 'T' | '' => {
     if (value >= T_PREFIX_AMOUNT) return 'T'
     if (value >= B_PREFIX_AMOUNT) return 'B'
     if (value >= M_PREFIX_AMOUNT) return 'M'
-    if (value >= KK_PREFIX_AMOUNT) return 'KK'
 
     return ''
   }
@@ -71,7 +69,6 @@ function convertNumberWithPrefix(value: string) {
   const prefix = getPrefix(+value)
 
   const divider = {
-    KK: KK_PREFIX_AMOUNT,
     M: M_PREFIX_AMOUNT,
     B: B_PREFIX_AMOUNT,
     T: T_PREFIX_AMOUNT,
