@@ -1,11 +1,9 @@
-import { Button, Skeleton, Stack, useTheme } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { Skeleton, Stack, useTheme } from '@mui/material'
 
-import { PageTitles } from '@/common'
+import { BackLink, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useLoading } from '@/hooks'
 import { useWalletState, walletStore } from '@/store'
-import { UiIcon } from '@/ui'
 
 import BalanceHistory from './components/BalanceHistory'
 
@@ -18,17 +16,7 @@ export default function Analytics() {
 
   return (
     <Stack spacing={6}>
-      {/* TODO: Replace with BackLink when available */}
-      <Button
-        component={NavLink}
-        to={RoutePaths.Wallet}
-        variant='text'
-        color='secondary'
-        startIcon={<UiIcon componentName='chevronLeft' size={5} />}
-        sx={{ width: 'fit-content' }}
-      >
-        Go back
-      </Button>
+      <BackLink to={RoutePaths.Wallet} />
       <PageTitles title='Wallet Analytics' />
       {!balances.length && isLoading ? (
         <Skeleton variant='rounded' height={spacing(132)} sx={{ borderRadius: 4 }} />
