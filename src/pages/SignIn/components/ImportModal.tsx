@@ -3,7 +3,7 @@ import { FormEvent, useState } from 'react'
 
 import { ErrorHandler } from '@/helpers'
 import { identityStore } from '@/store'
-import { UiDrawerContent, UiDrawerTitle, UiTextField } from '@/ui'
+import { UiDialogContent, UiDialogTitle, UiTextField } from '@/ui'
 
 interface Props extends DialogProps {
   onImport?: () => void
@@ -36,8 +36,8 @@ export default function ImportModal({ onImport, ...rest }: Props) {
         sx: { width: spacing(110) },
       }}
     >
-      <UiDrawerTitle onClose={rest.onClose}>Import Identity</UiDrawerTitle>
-      <UiDrawerContent>
+      <UiDialogTitle onClose={rest.onClose}>Import Identity</UiDialogTitle>
+      <UiDialogContent>
         <Stack spacing={6}>
           <UiTextField
             value={privateKey}
@@ -51,7 +51,7 @@ export default function ImportModal({ onImport, ...rest }: Props) {
             {isPending ? 'Importing...' : 'Import'}
           </Button>
         </Stack>
-      </UiDrawerContent>
+      </UiDialogContent>
     </Dialog>
   )
 }

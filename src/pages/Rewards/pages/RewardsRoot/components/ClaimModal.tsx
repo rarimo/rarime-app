@@ -17,7 +17,7 @@ import { BusEvents } from '@/enums'
 import { bus, ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useIdentityState, useRewardsState } from '@/store'
-import { UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiTextField } from '@/ui'
+import { UiDialogActions, UiDialogContent, UiDialogTitle, UiTextField } from '@/ui'
 
 import ClaimBalances from './ClaimBalances'
 import ClaimWarning from './ClaimWarning'
@@ -86,8 +86,8 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
         sx: { width: spacing(110) },
       }}
     >
-      <UiDrawerTitle onClose={rest.onClose}>Claim RMO</UiDrawerTitle>
-      <UiDrawerContent>
+      <UiDialogTitle onClose={rest.onClose}>Claim RMO</UiDialogTitle>
+      <UiDialogContent>
         <Stack spacing={5}>
           {!isLevelReached && <ClaimWarning onAction={e => rest.onClose?.(e, 'escapeKeyDown')} />}
           <ClaimBalances />
@@ -122,8 +122,8 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
             )}
           />
         </Stack>
-      </UiDrawerContent>
-      <UiDrawerActions>
+      </UiDialogContent>
+      <UiDialogActions>
         <Stack spacing={2} alignItems='center' textAlign='center'>
           <Button type='submit' fullWidth disabled={!isLevelReached}>
             Claim
@@ -133,7 +133,7 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
             <Typography variant='subtitle5'>downgraded in Leaderboard</Typography>
           </Typography>
         </Stack>
-      </UiDrawerActions>
+      </UiDialogActions>
 
       {isFormDisabled && (
         <Stack

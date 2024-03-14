@@ -1,10 +1,8 @@
 import {
   Box,
   type BoxProps,
+  DialogProps,
   DialogTitle,
-  Drawer,
-  type DrawerProps,
-  ModalProps,
   Stack,
   type StackProps,
   Typography,
@@ -14,11 +12,11 @@ import {
 import UiIcon from './UiIcon'
 import UiIconButton from './UiIconButton'
 
-interface UiDrawerTitleProps extends StackProps {
-  onClose?: ModalProps['onClose']
+interface UiDialogTitleProps extends StackProps {
+  onClose?: DialogProps['onClose']
 }
 
-export function UiDrawerTitle({ children, onClose, ...rest }: UiDrawerTitleProps) {
+export function UiDialogTitle({ children, onClose, ...rest }: UiDialogTitleProps) {
   const { palette } = useTheme()
 
   return (
@@ -46,16 +44,12 @@ export function UiDrawerTitle({ children, onClose, ...rest }: UiDrawerTitleProps
   )
 }
 
-export function UiDrawerContent(props: BoxProps) {
+export function UiDialogContent(props: BoxProps) {
   return <Box p={5} flex={1} overflow='hidden auto' width='100%' {...props} />
 }
 
-export function UiDrawerActions(props: BoxProps) {
+export function UiDialogActions(props: BoxProps) {
   return (
     <Box px={5} py={4} borderTop={1} borderColor={theme => theme.palette.divider} {...props}></Box>
   )
-}
-
-export default function UiDrawer(props: DrawerProps) {
-  return <Drawer {...props} />
 }

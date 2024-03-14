@@ -1,9 +1,9 @@
-import { Stack, Typography } from '@mui/material'
+import { Drawer, Stack, Typography } from '@mui/material'
 import { useState } from 'react'
 
 import { BusEvents, Icons } from '@/enums'
 import { bus } from '@/helpers'
-import { UiBasicModal, UiButton, UiDrawer, UiIcon, UiModal } from '@/ui'
+import { UiBasicModal, UiButton, UiIcon, UiModal } from '@/ui'
 import UiPopup from '@/ui/UiPopup'
 
 export default function UiKitOther() {
@@ -61,7 +61,7 @@ export default function UiKitOther() {
           justifyContent='flex-start'
         >
           <UiButton onClick={() => setIsDrawerShown(prev => !prev)}>Toggle Drawer</UiButton>
-          <UiDrawer open={isDrawerShown} onClose={() => setIsDrawerShown(false)}>
+          <Drawer open={isDrawerShown} onClose={() => setIsDrawerShown(false)}>
             <Stack
               direction='row'
               flexWrap='wrap'
@@ -70,7 +70,7 @@ export default function UiKitOther() {
             >
               <Typography variant='h6'>This is a drawer</Typography>
             </Stack>
-          </UiDrawer>
+          </Drawer>
         </Stack>
       </Stack>
 

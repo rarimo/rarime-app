@@ -1,4 +1,4 @@
-import { CircularProgress, DrawerProps, Stack } from '@mui/material'
+import { CircularProgress, Drawer, DrawerProps, Stack } from '@mui/material'
 import { FormEvent, useCallback } from 'react'
 import { useFieldArray } from 'react-hook-form'
 
@@ -8,7 +8,7 @@ import { BusEvents } from '@/enums'
 import { bus, ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
-import { UiButton, UiDrawer, UiDrawerActions, UiDrawerContent, UiDrawerTitle, UiIcon } from '@/ui'
+import { UiButton, UiDialogActions, UiDialogContent, UiDialogTitle, UiIcon } from '@/ui'
 
 import LinkForm from './LinkForm'
 
@@ -67,7 +67,7 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
   )
 
   return (
-    <UiDrawer
+    <Drawer
       PaperProps={{
         component: 'form',
         onSubmit: (e: FormEvent<HTMLFormElement>) => {
@@ -77,10 +77,10 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
       }}
       {...rest}
     >
-      <UiDrawerTitle onClose={rest.onClose}>
+      <UiDialogTitle onClose={rest.onClose}>
         {links.length ? 'Edit links' : 'Add links'}
-      </UiDrawerTitle>
-      <UiDrawerContent>
+      </UiDialogTitle>
+      <UiDialogContent>
         <Stack spacing={4}>
           <VerticalDraggableContext items={fields} onItemsMove={move}>
             {fields.map((field, index) => (
@@ -107,12 +107,12 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
             Add link
           </UiButton>
         )}
-      </UiDrawerContent>
-      <UiDrawerActions>
+      </UiDialogContent>
+      <UiDialogActions>
         <UiButton type='submit' fullWidth>
           Save
         </UiButton>
-      </UiDrawerActions>
+      </UiDialogActions>
 
       {form.isFormDisabled && (
         <Stack
@@ -128,6 +128,6 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
           <CircularProgress color='inherit' />
         </Stack>
       )}
-    </UiDrawer>
+    </Drawer>
   )
 }
