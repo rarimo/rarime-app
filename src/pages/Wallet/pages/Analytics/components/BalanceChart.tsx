@@ -1,7 +1,7 @@
 import { time } from '@distributedlab/tools'
 import { CircularProgress, Stack, useTheme } from '@mui/material'
 
-import { LineChart } from '@/common'
+import { LineChart, NoDataView } from '@/common'
 import { formatDateDM, formatNumber, sleep } from '@/helpers'
 import { useLoading } from '@/hooks'
 
@@ -62,12 +62,14 @@ export default function BalanceChart({ duration }: Props) {
     <Stack height={spacing(90)} justifyContent='center' alignItems='center'>
       <CircularProgress color='secondary' />
     </Stack>
-  ) : (
+  ) : data.length ? (
     <LineChart
       data={data}
       height={spacing(90)}
       labelFormatter={formatDateDM}
       valueFormatter={value => `${formatNumber(value)} (RMO)`}
     />
+  ) : (
+    <NoDataView title='No analytics for this period' height={spacing(90)} />
   )
 }
