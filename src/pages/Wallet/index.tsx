@@ -52,18 +52,16 @@ export default function Wallet() {
         <PageTitles title='Wallet' />
 
         <Paper>
-          <Skeleton variant='rectangular' height={spacing(50)} />
+          <Skeleton variant='rectangular' height={spacing(37)} />
         </Paper>
         <Paper>
-          <Skeleton variant='rectangular' height={spacing(25)} />
+          <Skeleton variant='rectangular' height={spacing(12)} />
         </Paper>
         <Paper>
           <Stack spacing={2}>
-            <Skeleton variant='rectangular' height={spacing(25)} />
+            <Skeleton variant='rectangular' height={spacing(6)} width={spacing(15)} />
 
-            <Skeleton variant='rectangular' height={spacing(5)} />
-            <Skeleton variant='rectangular' height={spacing(5)} />
-            <Skeleton variant='rectangular' height={spacing(5)} />
+            <Skeleton variant='rectangular' height={spacing(37.5)} />
           </Stack>
         </Paper>
       </Stack>
