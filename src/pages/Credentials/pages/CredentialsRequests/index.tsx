@@ -25,7 +25,9 @@ export default function CredentialsRequests({ ...rest }: Props) {
   const [selectedOrgGroupRequest, setSelectedRequest] = useState<OrgGroupRequestWithClaims>()
 
   const handleRequestFilled = useCallback(() => {
-    bus.emit(BusEvents.success, 'Request successfully sent')
+    bus.emit(BusEvents.success, {
+      message: 'Request successfully sent',
+    })
 
     setIsFillFormDrawerShown(false)
   }, [])

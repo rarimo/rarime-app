@@ -36,7 +36,9 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
     try {
       await copy(userDid)
     } catch (e) {
-      bus.emit(BusEvents.error, 'Not copied, please try again')
+      bus.emit(BusEvents.error, {
+        message: 'Not copied, please try again',
+      })
     }
   }
 

@@ -39,7 +39,7 @@ export enum Icons {
   IdentificationCardFill = 'identification-card-fill',
   IdentificationCard = 'identification-card',
   Image = 'image',
-  Infinity = 'infinity',
+  Infinite = 'infinite',
   Info = 'info',
   Instagram = 'instagram',
   Key = 'key',

@@ -1,18 +1,15 @@
 import { useCallback, useMemo } from 'react'
 
-import { initZkpSnap, zkpSnap } from '@/api/clients'
+import { zkpSnap } from '@/api/clients'
 import { authorizeUser } from '@/api/modules/auth'
 import { OrgUserRoles } from '@/api/modules/orgs'
 import { buildAuthorizeRequest, getClaimOffer } from '@/api/modules/zkp'
-import { useWeb3Context } from '@/hooks/web3'
 import { identityStore, useIdentityState, useWeb3State, web3Store } from '@/store'
 
 // TODO: add jwt validations for specific org
 export const useAuth = () => {
-  const { provider } = useWeb3Context()
-
   const { userDid } = useIdentityState()
-  const { isSnapInstalled } = useWeb3State()
+  const { provider, isSnapInstalled } = useWeb3State()
 
   const isAuthorized = useMemo(
     () => Boolean(userDid && isSnapInstalled),
@@ -22,11 +19,11 @@ export const useAuth = () => {
   const logout = useCallback(async () => {
     await web3Store.checkSnapStatus()
 
-    web3Store.setProviderType(undefined)
-  }, [])
+    provider?.disconnect()
+  }, [provider])
 
   const connectProviders = useCallback(async () => {
-    await initZkpSnap()
+    await zkpSnap.enable()
 
     await web3Store.checkSnapStatus()
 

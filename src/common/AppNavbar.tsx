@@ -56,6 +56,10 @@ const AppNavbar = () => {
         route: RoutePaths.Credentials,
         iconComponent: <UiIcon name={Icons.IdentificationCard} size={6} />,
       },
+      {
+        route: RoutePaths.Wallet,
+        iconComponent: <UiIcon name={Icons.Wallet} size={6} />,
+      },
       { route: RoutePaths.Rewards, iconComponent: <UiIcon name={Icons.Gift} size={5} /> },
     ],
     [],

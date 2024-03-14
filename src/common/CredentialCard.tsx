@@ -71,7 +71,7 @@ export default function CredentialCard({ vc, issuerDetails, ...rest }: Props) {
         p={2}
       >
         {/*TODO: define map for credential types*/}
-        <UiIcon componentName='fingerprint' />
+        <UiIcon name={Icons.Fingerprint} />
       </Box>
 
       <Stack spacing={2}>
@@ -105,7 +105,7 @@ export default function CredentialCard({ vc, issuerDetails, ...rest }: Props) {
                 <Typography>{formatDateMY(vc.expirationDate)}</Typography>
               </>
             ) : (
-              <UiIcon componentName='allInclusiveOutlinedIcon' size={4} />
+              <UiIcon name={Icons.Infinite} size={4} />
             )}
           </Stack>
         </Typography>
