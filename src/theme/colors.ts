@@ -1,3 +1,4 @@
+import { alpha } from '@mui/material'
 import { PaletteOptions } from '@mui/material/styles'
 
 export const lightPalette: PaletteOptions = {
@@ -40,16 +41,19 @@ export const lightPalette: PaletteOptions = {
     contrastText: '#FFFFFF',
   },
   warning: {
+    // warning/warning-darker
     darker: '#A4541E',
     dark: '#CA6725',
     main: '#F17B2C',
     light: '#FCE5D5',
-    lighter: '#FEF6F0',
+    // warning/warning-lighter
+    lighter: alpha('#F17B2C', 0.05),
     contrastText: '#FFFFFF',
   },
   // DesignSystem: text & icons
   text: {
     primary: '#202020',
+    // DesignSystem: text & icons/secondary
     secondary: 'rgba(32, 32, 32, 0.56)',
     placeholder: 'rgba(32, 32, 32, 0.44)',
     disabled: 'rgba(32, 32, 32, 0.28)',
@@ -62,6 +66,7 @@ export const lightPalette: PaletteOptions = {
     // DesignSystem: background/component/pressed
     focus: 'rgba(32, 32, 32, 0.15)',
     selected: 'rgba(32, 32, 32, 0.05)',
+    // DesignSystem: background/component/disabled
     disabled: 'rgba(32, 32, 32, 0.05)',
   },
   // DesignSystem: background/bg
@@ -108,24 +113,24 @@ export const darkPalette: PaletteOptions = {
     darker: '#78D9B6',
     dark: '#58D0A4',
     main: '#38C793',
-    light: '#0D3023',
-    lighter: '#071812',
+    light: 'rgba(56, 199, 147, 0.10)',
+    lighter: 'rgba(56, 199, 147, 0.05)',
     contrastText: '#FFFFFF',
   },
   error: {
     darker: '#E9657E',
     dark: '#E4405F',
     main: '#DF1C41',
-    light: '#360710',
-    lighter: '#1B0308',
+    light: 'rgba(223, 28, 65, 0.10)',
+    lighter: 'rgba(223, 28, 65, 0.05)',
     contrastText: '#FFFFFF',
   },
   warning: {
     darker: '#F5A570',
     dark: '#F3904E',
     main: '#F17B2C',
-    light: '#3A1E0B',
-    lighter: '#2A2521',
+    light: 'rgba(241, 123, 44, 0.10)',
+    lighter: 'rgba(241, 123, 44, 0.05)',
     contrastText: '#FFFFFF',
   },
   // DesignSystem: text & icons

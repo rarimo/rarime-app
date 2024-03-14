@@ -65,7 +65,7 @@ export default function FillRequest() {
   )
 
   const handleRequestFilled = useCallback(() => {
-    bus.emit(BusEvents.success, 'Request successfully sent')
+    bus.emit(BusEvents.success, { message: 'Request successfully sent' })
 
     // TODO: change redirect to dashboard
     navigate(RoutePaths.Orgs)

@@ -12,8 +12,8 @@ import { RoutePaths } from '@/enums'
 import { useAuth } from '@/hooks'
 
 import { createDeepPath } from './helpers'
+import AuthLayout from './layouts/AuthLayout'
 import MainLayout from './layouts/MainLayout'
-import PublicLayout from './layouts/PublicLayout'
 
 export const AppRoutes = () => {
   const SignIn = lazy(() => import('@/pages/SignIn'))
@@ -22,9 +22,8 @@ export const AppRoutes = () => {
   const UiKit = lazy(() => import('@/pages/UiKit'))
   const VerifyProofAlias = lazy(() => import('@/pages/VerifyProofAlias'))
   const AcceptInvitation = lazy(() => import('@/pages/AcceptInvitation'))
-
-  // TODO: Replace with Wallet index page
-  const Wallet = lazy(() => import('@/pages/Wallet/temp.index'))
+  const Rewards = lazy(() => import('@/pages/Rewards'))
+  const Wallet = lazy(() => import('@/pages/Wallet'))
 
   const { isAuthorized, logout } = useAuth()
 
@@ -58,7 +57,7 @@ export const AppRoutes = () => {
   )
 
   const LayoutComponent = useMemo(() => {
-    return isAuthorized ? MainLayout : PublicLayout
+    return isAuthorized ? MainLayout : AuthLayout
   }, [isAuthorized])
 
   const router = createBrowserRouter([
@@ -85,6 +84,11 @@ export const AppRoutes = () => {
           path: createDeepPath(RoutePaths.Credentials),
           loader: authProtectedGuard,
           element: <Credentials />,
+        },
+        {
+          path: createDeepPath(RoutePaths.Rewards),
+          loader: authProtectedGuard,
+          element: <Rewards />,
         },
         {
           path: createDeepPath(RoutePaths.Wallet),

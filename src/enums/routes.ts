@@ -32,4 +32,10 @@ export enum RoutePaths {
 
   Wallet = '/wallet',
   WalletAnalytics = '/wallet/analytics',
+
+  Rewards = '/rewards',
+  RewardsEventId = '/rewards/events/:id',
+  RewardsEarnHistory = '/rewards/earn-history',
+  RewardsLeaderboard = '/rewards/leaderboard',
+  RewardsAbout = '/rewards/about',
 }

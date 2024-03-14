@@ -112,6 +112,13 @@ export const components: Components<Omit<Theme, 'components'>> = {
           backgroundColor: theme.palette.action.hover,
         },
       }),
+      containedWarning: ({ theme }) => ({
+        color: theme.palette.warning.darker,
+        backgroundColor: theme.palette.warning.lighter,
+        '&:hover': {
+          backgroundColor: theme.palette.warning.light,
+        },
+      }),
     },
   },
   MuiButtonBase: {
@@ -261,10 +268,12 @@ export const components: Components<Omit<Theme, 'components'>> = {
   MuiSkeleton: {
     defaultProps: {
       animation: 'wave',
+      variant: 'rectangular',
     },
     styleOverrides: {
       root: ({ theme }) => ({
         backgroundColor: theme.palette.divider,
+        borderRadius: theme.spacing(2),
       }),
     },
   },
@@ -400,8 +409,9 @@ export const components: Components<Omit<Theme, 'components'>> = {
       root: ({ theme }) => ({
         width: '100%',
         borderRadius: theme.spacing(4),
-        backgroundColor: theme.palette.additional.pureBlack,
-        color: alpha(theme.palette.common.white, 0.7),
+        backgroundColor: theme.palette.background.paper,
+        color: alpha(theme.palette.text.primary, 0.7),
+        boxShadow: '0px 8px 16px 0px rgba(0, 0, 0, 0.04)',
       }),
       icon: ({ ownerState, theme }) => {
         const severityToBgColor: Record<AlertColor, string> = {
@@ -430,7 +440,33 @@ export const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: ({ theme }) => ({
         ...typography.subtitle4,
-        color: theme.palette.common.white,
+        color: theme.palette.text.primary,
+      }),
+    },
+  },
+  MuiLinearProgress: {
+    defaultProps: {
+      variant: 'determinate',
+    },
+    styleOverrides: {
+      root: ({ theme }) => ({
+        borderRadius: 250,
+        height: theme.spacing(2),
+        backgroundColor: theme.palette.action.active,
+      }),
+      barColorPrimary: ({ theme }) => ({
+        borderRadius: 250,
+        backgroundColor: theme.palette.primary.dark,
+      }),
+    },
+  },
+  MuiDialog: {
+    styleOverrides: {
+      paper: ({ theme }) => ({
+        padding: 0,
+        borderRadius: theme.spacing(3),
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: `inset 0 0 0 1px ${theme.palette.action.active}`,
       }),
     },
   },

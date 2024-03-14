@@ -125,7 +125,7 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
               <FormControl>
                 <UiTextField
                   {...field}
-                  label={'Description'}
+                  label='Description'
                   multiline
                   rows={5}
                   placeholder='Write a small description'
@@ -140,9 +140,9 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
         <UiButton
           type='submit'
           size='large'
-          endIcon={<UiIcon componentName={'arrowForward'} size={4} />}
+          endIcon={<UiIcon componentName='arrowForward' size={4} />}
         >
-          {'Create'}
+          Create
         </UiButton>
       </form>
     </Stack>

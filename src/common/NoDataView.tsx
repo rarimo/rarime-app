@@ -10,7 +10,7 @@ interface Props extends StackProps {
   action?: ReactNode
 }
 
-export default function NoDataViewer({
+export default function NoDataView({
   icon = <UiIcon componentName='folderOff' />,
   title = 'No data',
   description,
@@ -22,9 +22,9 @@ export default function NoDataViewer({
   return (
     <Stack
       spacing={4}
-      alignItems={'center'}
-      width={'100%'}
-      justifyContent={'center'}
+      alignItems='center'
+      width='100%'
+      justifyContent='center'
       p={8}
       border={1}
       borderColor={palette.action.hover}
@@ -33,8 +33,8 @@ export default function NoDataViewer({
       {...rest}
     >
       <Stack
-        alignItems={'center'}
-        justifyContent={'center'}
+        alignItems='center'
+        justifyContent='center'
         bgcolor={palette.action.active}
         color={palette.text.secondary}
         borderRadius={250}
@@ -43,7 +43,7 @@ export default function NoDataViewer({
       >
         {icon}
       </Stack>
-      <Stack spacing={1} textAlign={'center'}>
+      <Stack spacing={1} textAlign='center'>
         <Typography variant='body3'>{title}</Typography>
         {description && (
           <Typography variant='body3' color={palette.text.secondary}>

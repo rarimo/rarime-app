@@ -1,4 +1,4 @@
-import { alpha, Paper, Stack, Typography, useTheme } from '@mui/material'
+import { Paper, Stack, Typography, useTheme } from '@mui/material'
 
 import { useCopyToClipboard } from '@/hooks'
 import { UiIcon, UiIconButton } from '@/ui/index'
@@ -17,10 +17,10 @@ export default function UiCopyField({ label, value }: Props) {
     <Stack spacing={2}>
       <Typography variant='subtitle4'>{label}</Typography>
 
-      <Paper sx={{ py: 3.5, px: 4, background: alpha(palette.common.black, 0.05), border: 0 }}>
+      <Paper sx={{ py: 3.5, px: 4, background: palette.action.disabled, border: 0 }}>
         <Stack direction='row' spacing={4}>
           <Typography>{value}</Typography>
-          <UiIconButton onClick={async () => copy(value)}>
+          <UiIconButton onClick={() => copy(value)}>
             <UiIcon
               componentName={isCopied ? 'check' : 'contentCopy'}
               sx={{ color: palette.text.secondary }}

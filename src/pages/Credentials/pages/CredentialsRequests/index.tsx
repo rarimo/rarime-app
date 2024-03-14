@@ -25,7 +25,9 @@ export default function CredentialsRequests({ ...rest }: Props) {
   const [selectedOrgGroupRequest, setSelectedRequest] = useState<OrgGroupRequestWithClaims>()
 
   const handleRequestFilled = useCallback(() => {
-    bus.emit(BusEvents.success, 'Request successfully sent')
+    bus.emit(BusEvents.success, {
+      message: 'Request successfully sent',
+    })
 
     setIsFillFormDrawerShown(false)
   }, [])
@@ -34,9 +36,9 @@ export default function CredentialsRequests({ ...rest }: Props) {
     <Stack {...rest}>
       <Stack direction='row' alignItems='center' spacing={4}>
         <NavLink to={RoutePaths.CredentialsList}>
-          <Stack direction={'row'} alignItems={'center'} spacing={2} color={'secondary'}>
-            <UiIcon componentName={'chevronLeft'} size={5} />
-            <Typography variant={'buttonSmall'} color={'inherit'}>
+          <Stack direction='row' alignItems='center' spacing={2} color='secondary'>
+            <UiIcon componentName='chevronLeft' size={5} />
+            <Typography variant='buttonSmall' color='inherit'>
               Back
             </Typography>
           </Stack>

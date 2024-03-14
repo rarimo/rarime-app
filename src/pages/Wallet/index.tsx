@@ -1,139 +1,24 @@
-import {
-  alpha,
-  Button,
-  Divider,
-  IconButton,
-  Paper,
-  Skeleton,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material'
-import { useMemo } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
-import { NoDataViewer, PageTitles } from '@/common'
-import { Icons, RoutePaths } from '@/enums'
-import { formatAmount } from '@/helpers'
-import { useLoading } from '@/hooks'
-import { useWalletState, walletStore } from '@/store'
-import { UiIcon } from '@/ui'
+import { RoutePaths } from '@/enums'
+import { useNestedRoutes } from '@/hooks'
 
-import { ReceiveModal, SendModal } from './components'
+import Analytics from './pages/Analytics'
+import WalletRoot from './pages/WalletRoot'
 
 export default function Wallet() {
-  const { spacing, palette } = useTheme()
-
-  const { balances } = useWalletState()
-
-  const mainBalance = useMemo(() => balances?.[0], [balances])
-
-  const { isLoading, isLoadingError } = useLoading(undefined, walletStore.connect, {
-    loadOnMount: true,
-  })
-
-  if (isLoading)
-    return (
-      <Stack>
-        <PageTitles title='Wallet' />
-
-        <Skeleton height={spacing(80)} />
-        <Skeleton height={spacing(50)} />
-        <Skeleton height={spacing(50)} />
-      </Stack>
-    )
-
-  if (isLoadingError)
-    return (
-      <Stack spacing={4}>
-        <PageTitles title='Wallet' />
-
-        <NoDataViewer title='Error loading wallet' />
-      </Stack>
-    )
-
-  return (
-    <Stack spacing={4}>
-      <PageTitles title='Wallet' />
-
-      <Paper sx={{ mt: spacing(8) }}>
-        <Stack spacing={4}>
-          <Stack spacing={2}>
-            <Typography color={alpha(palette.text.secondary, 0.6)}>
-              {`Available ${mainBalance?.denom}`}
-            </Typography>
-            <Typography variant='h4'>
-              {formatAmount(mainBalance?.amount, mainBalance?.decimals)}
-            </Typography>
-          </Stack>
-          <Divider />
-          <Stack spacing={3} direction='row' alignItems='center' justifyContent='space-between'>
-            <Stack spacing={3} direction='row'>
-              <Button color='secondary' startIcon={<UiIcon componentName='add' />}>
-                Buy
-              </Button>
-
-              <ReceiveModal />
-
-              <SendModal />
-            </Stack>
-            <Button
-              component={NavLink}
-              to={RoutePaths.WalletAnalytics}
-              startIcon={
-                <UiIcon
-                  componentName='showChart'
-                  sx={{
-                    borderLeft: `2px solid`,
-                    borderBottom: `2px solid`,
-                    borderColor: alpha(palette.text.secondary, 0.6),
-                    color: alpha(palette.text.secondary, 0.6),
-                  }}
-                  size={4}
-                />
-              }
-              variant='text'
-            >
-              <Typography variant='buttonMedium' sx={{ color: alpha(palette.text.secondary, 0.6) }}>
-                Wallet Analytics
-              </Typography>
-            </Button>
-          </Stack>
-        </Stack>
-      </Paper>
-
-      <Paper>
-        <Stack direction='row' spacing={4} alignItems='center'>
-          <Stack
-            width={spacing(12)}
-            height={spacing(12)}
-            bgcolor={palette.action.active}
-            borderRadius='50%'
-            justifyContent='center'
-            alignItems='center'
-          >
-            <UiIcon name={Icons.Rarime} />
-          </Stack>
-
-          <Stack spacing={1}>
-            <Typography variant='subtitle3'>Earn {mainBalance?.denom}</Typography>
-            <Typography color={alpha(palette.text.secondary, 0.6)}>Scan your passport</Typography>
-          </Stack>
-
-          <IconButton sx={{ background: palette.primary.main, p: 1, ml: 'auto' }}>
-            <UiIcon componentName='chevronRight' size={5} />
-          </IconButton>
-        </Stack>
-      </Paper>
-
-      <Paper>
-        <Stack spacing={2}>
-          <Stack direction='row' alignItems='center' spacing={1}>
-            <Typography>History</Typography>
-            <UiIcon componentName='chevronRight' />
-          </Stack>
-        </Stack>
-      </Paper>
-    </Stack>
-  )
+  return useNestedRoutes(RoutePaths.Wallet, [
+    {
+      index: true,
+      element: <WalletRoot />,
+    },
+    {
+      path: RoutePaths.WalletAnalytics,
+      element: <Analytics />,
+    },
+    {
+      path: '*',
+      element: <Navigate replace to={RoutePaths.Wallet} />,
+    },
+  ])
 }

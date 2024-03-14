@@ -1,4 +1,5 @@
-import { ComponentProps, useCallback, useMemo } from 'react'
+import { Drawer, DrawerProps } from '@mui/material'
+import { useCallback, useMemo } from 'react'
 
 import { OrgGroupRequest } from '@/api/modules/orgs'
 import {
@@ -8,9 +9,8 @@ import {
 } from '@/api/modules/zkp'
 import { FillRequestForm } from '@/common'
 import { useLoading } from '@/hooks'
-import { UiDrawer } from '@/ui'
 
-type Props = ComponentProps<typeof UiDrawer> & {
+type Props = DrawerProps & {
   orgGroupRequest: OrgGroupRequest | undefined
   onRequestFilled?: () => void
 }
@@ -58,8 +58,8 @@ export default function FillRequestFormDrawer({
   }, [isLoading, isLoadingError, onRequestFilled, orgGroupRequest, vcFields])
 
   return (
-    <UiDrawer {...rest} anchor='right'>
+    <Drawer {...rest} anchor='right'>
       {drawerContent}
-    </UiDrawer>
+    </Drawer>
   )
 }

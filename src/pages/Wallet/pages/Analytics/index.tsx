@@ -29,7 +29,7 @@ export default function Analytics() {
       >
         Go back
       </Button>
-      <PageTitles title={'Wallet Analytics'} />
+      <PageTitles title='Wallet Analytics' />
       {!balances.length && isLoading ? (
         <Skeleton variant='rounded' height={spacing(132)} sx={{ borderRadius: 4 }} />
       ) : (

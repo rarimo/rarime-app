@@ -23,7 +23,8 @@ export const [walletStore, useWalletState] = createStore(
       await initRarimoClient()
 
       state.address = rarimoClient.wallet.address
-
+    },
+    loadBalances: async () => {
       const coins = await rarimoClient.query.getAllBalances(rarimoClient.wallet.address)
 
       state.balances = coins.map(coin => {

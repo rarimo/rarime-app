@@ -36,7 +36,9 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
     try {
       await copy(userDid)
     } catch (e) {
-      bus.emit(BusEvents.error, 'Not copied, please try again')
+      bus.emit(BusEvents.error, {
+        message: 'Not copied, please try again',
+      })
     }
   }
 
@@ -53,7 +55,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
   return (
     <>
       <UiIconButton onClick={event => setAnchorEl(event.currentTarget)}>
-        <UserAvatar userDid={userDid} />
+        <UserAvatar userDid={userDid} size={8} />
       </UiIconButton>
       <Menu
         anchorEl={anchorEl}
@@ -62,6 +64,16 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
         onClose={() => setAnchorEl(null)}
         anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
         transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        slotProps={{
+          paper: {
+            sx: {
+              p: 0,
+              border: 0,
+              zIndex: 100,
+              bgcolor: palette.background.paper,
+            },
+          },
+        }}
         MenuListProps={{
           sx: {
             width: spacing(60),
@@ -72,14 +84,14 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
           },
         }}
       >
-        <Stack direction={'column'} p={4} alignItems={'center'}>
-          <UserAvatar sx={{ width: spacing(12), height: spacing(12) }} userDid={userDid} />
-          <Stack direction={'row'} mt={3} spacing={2}>
+        <Stack direction='column' p={4} alignItems='center'>
+          <UserAvatar userDid={userDid} size={12} />
+          <Stack direction='row' mt={3} spacing={2}>
             <Typography
-              variant={'subtitle4'}
-              overflow={'hidden'}
-              textOverflow={'ellipsis'}
-              maxWidth={spacing(30)}
+              variant='subtitle4'
+              overflow='hidden'
+              textOverflow='ellipsis'
+              maxWidth={spacing(40)}
             >
               {formatDid(userDid)}
             </Typography>
@@ -92,9 +104,9 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
         {/*TODO: Add handler*/}
         <MenuItem onClick={exportIdentity} sx={menuItemSx} disabled={isExporting}>
           <ListItemIcon>
-            <UiIcon componentName={'key'} size={5} sx={{ color: palette.text.secondary }} />
+            <UiIcon componentName='key' size={5} sx={{ color: palette.text.secondary }} />
           </ListItemIcon>
-          <Typography variant={'caption1'}>
+          <Typography variant='caption1'>
             {isExporting ? 'Exporting...' : 'Export Identity'}
           </Typography>
         </MenuItem>
@@ -106,15 +118,15 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
           sx={menuItemSx}
         >
           <ListItemIcon>
-            <UiIcon componentName={'openInNew'} size={5} sx={{ color: palette.text.secondary }} />
+            <UiIcon componentName='openInNew' size={5} sx={{ color: palette.text.secondary }} />
           </ListItemIcon>
-          <Typography variant={'caption1'}>Help Center</Typography>
+          <Typography variant='caption1'>Help Center</Typography>
         </MenuItem>
         <MenuItem onClick={logout} sx={menuItemSx}>
           <ListItemIcon>
-            <UiIcon componentName={'logOut'} size={5} sx={{ color: palette.error.main }} />
+            <UiIcon componentName='logOut' size={5} sx={{ color: palette.error.main }} />
           </ListItemIcon>
-          <Typography variant={'caption1'} color={palette.error.main}>
+          <Typography variant='caption1' color={palette.error.main}>
             Disconnect
           </Typography>
         </MenuItem>

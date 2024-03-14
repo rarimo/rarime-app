@@ -1,29 +1,136 @@
-import { BN, time } from '@distributedlab/tools'
+import { BN, BnConfigLike, BnFormatConfig, BnLike, time, TimeDate } from '@distributedlab/tools'
 
-const FORMATTED_DID_MAX_LENGTH = 12
+// DID
+const DID_PART_LENGTH = 8
+const DID_SHORT_PART_LENGTH = 12
 
-export function formatDid(did: string) {
-  return did.length > FORMATTED_DID_MAX_LENGTH ? did.slice(0, 8) + '...' + did.slice(-4) : did
+export function formatDid(did: string, partLength = DID_PART_LENGTH) {
+  return did.length > partLength * 2
+    ? did.slice(0, partLength) + '...' + did.slice(-partLength)
+    : did
 }
 
-export function formatDateMY(date: string) {
+export function formatDidShort(value: string) {
+  return formatDid(value.split(':').pop() ?? value, DID_SHORT_PART_LENGTH)
+}
+
+// Date
+export function formatDateMY(date: TimeDate) {
   return time(date).format('MM / YYYY')
+}
+
+export function formatDateDMY(date: TimeDate) {
+  return time(date).format('DD MMM, YYYY')
+}
+
+export function formatDateTime(date: TimeDate) {
+  return time(date).format('DD MMM, YYYY, h:mm A')
 }
 
 export function formatDateDM(date: string) {
   return time(date).format('D MMM')
 }
 
-export function formatAmount(amount: string, decimals: number) {
-  if (!Number(amount)) return '0'
-
-  if (isNaN(Number(amount))) throw new TypeError('Amount is not a number')
-
-  return BN.fromBigInt(amount, decimals).format({ groupSeparator: ',' })
+// number
+const defaultBnFormatConfig: BnFormatConfig = {
+  decimals: 2,
+  groupSeparator: ',',
+  decimalSeparator: '.',
 }
 
-export function formatNumber(number: number, fractionDigits: number = 2) {
-  return new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: fractionDigits,
-  }).format(number)
+/**
+ * Format human amount without trailing zeros
+ * @param amount
+ */
+function removeTrailingZeros(amount: string) {
+  const [integer, fraction] = amount.split('.')
+
+  if (!fraction) return integer
+
+  let result = integer
+
+  for (let i = fraction.length - 1; i >= 0; i--) {
+    if (fraction[i] !== '0') {
+      result += `.${fraction.slice(0, i + 1)}`
+      break
+    }
+  }
+
+  return result
+}
+
+/**
+ * Format human amount with prefix
+ * @param value
+ */
+function convertNumberWithPrefix(value: string) {
+  const M_PREFIX_AMOUNT = 1_000_000
+  const B_PREFIX_AMOUNT = 1_000_000_000
+  const T_PREFIX_AMOUNT = 1_000_000_000_000
+
+  const getPrefix = (value: number): 'M' | 'B' | 'T' | '' => {
+    if (value >= T_PREFIX_AMOUNT) return 'T'
+    if (value >= B_PREFIX_AMOUNT) return 'B'
+    if (value >= M_PREFIX_AMOUNT) return 'M'
+
+    return ''
+  }
+
+  const prefix = getPrefix(+value)
+
+  const divider = {
+    M: M_PREFIX_AMOUNT,
+    B: B_PREFIX_AMOUNT,
+    T: T_PREFIX_AMOUNT,
+    '': 1,
+  }[prefix]
+
+  const finalAmount = BN.fromRaw(Number(value) / divider, 3).format({
+    decimals: 3,
+    groupSeparator: '',
+    decimalSeparator: '.',
+  })
+
+  return `${removeTrailingZeros(finalAmount)}${prefix}`
+}
+
+export function formatNumber(value: number, formatConfig?: BnFormatConfig) {
+  const formatCfg = formatConfig || {
+    ...defaultBnFormatConfig,
+    decimals: 0,
+  }
+
+  return BN.fromRaw(value, 0).format(formatCfg)
+}
+
+export function formatAmount(
+  amount: BnLike,
+  decimalsOrConfig?: BnConfigLike,
+  formatConfig?: BnFormatConfig,
+) {
+  const decimals =
+    typeof decimalsOrConfig === 'number' ? decimalsOrConfig : decimalsOrConfig?.decimals
+
+  const formatCfg = formatConfig || {
+    ...defaultBnFormatConfig,
+    ...(decimals && { decimals }),
+  }
+
+  return removeTrailingZeros(BN.fromBigInt(amount, decimalsOrConfig).format(formatCfg))
+}
+
+export function formatBalance(
+  amount: BnLike,
+  decimalsOrConfig?: BnConfigLike,
+  formatConfig?: BnFormatConfig,
+) {
+  const decimals =
+    typeof decimalsOrConfig === 'number' ? decimalsOrConfig : decimalsOrConfig?.decimals
+
+  const formatCfg = formatConfig || {
+    ...defaultBnFormatConfig,
+    ...(decimals && { decimals }),
+  }
+
+  return convertNumberWithPrefix(formatAmount(amount, decimalsOrConfig, formatCfg))
 }

@@ -24,8 +24,8 @@ const NavbarLink = ({ children, to }: NavbarLinkProps) => {
   return (
     <NavLink to={to}>
       <Stack
-        alignItems={'center'}
-        justifyContent={'center'}
+        alignItems='center'
+        justifyContent='center'
         sx={{
           width: spacing(10),
           height: spacing(10),
@@ -54,12 +54,13 @@ const AppNavbar = () => {
       { route: RoutePaths.Dashboard, iconComponent: <UiIcon name={Icons.House} size={5} /> },
       {
         route: RoutePaths.Credentials,
-        iconComponent: <UiIcon componentName={'layers'} size={6} />,
+        iconComponent: <UiIcon componentName='layers' size={6} />,
       },
       {
         route: RoutePaths.Wallet,
         iconComponent: <UiIcon name={Icons.Wallet} size={6} />,
       },
+      { route: RoutePaths.Rewards, iconComponent: <UiIcon name={Icons.Gift} size={5} /> },
     ],
     [],
   )
@@ -70,15 +71,15 @@ const AppNavbar = () => {
 
   return (
     <Stack
-      justifyContent={'space-between'}
-      alignItems={'center'}
+      justifyContent='space-between'
+      alignItems='center'
       py={6}
       px={4}
       borderRight={1}
       borderColor={palette.divider}
     >
       <Stack spacing={4}>
-        <Stack component={NavLink} to={RoutePaths.Dashboard} alignItems={'center'}>
+        <Stack component={NavLink} to={RoutePaths.Dashboard} alignItems='center'>
           <UiIcon name={Icons.Rarime} size={10} sx={{ color: palette.text.primary }} />
         </Stack>
         <Divider />

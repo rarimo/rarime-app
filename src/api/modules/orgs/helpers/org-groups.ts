@@ -5,7 +5,7 @@ import {
   OrgGroupQueryParams,
   OrgGroupRequestStatuses,
 } from '@/api/modules/orgs'
-import { ApiServicePaths } from '@/enums/api'
+import { ApiServicePaths } from '@/enums'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DUMMY_ORG_GROUP: OrgGroup[] = [

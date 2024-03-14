@@ -28,7 +28,7 @@ function NavTab({
   return (
     <NavLink {...rest} to={to}>
       <Stack
-        alignItems={'center'}
+        alignItems='center'
         sx={{
           background: isRouteActive ? palette.background.paper : 'none',
           px: 4,
@@ -39,7 +39,7 @@ function NavTab({
         }}
       >
         <Typography
-          variant={'buttonSmall'}
+          variant='buttonSmall'
           color={isRouteActive ? palette.text.primary : palette.text.secondary}
         >
           {label}

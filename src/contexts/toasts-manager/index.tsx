@@ -1,5 +1,5 @@
 import { SnackbarProvider, useSnackbar } from 'notistack'
-import { ReactNode, useCallback, useEffect, useMemo } from 'react'
+import { PropsWithChildren, ReactElement, useCallback, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { BusEvents, ICON_COMPONENTS, Icons } from '@/enums'
@@ -7,13 +7,14 @@ import { bus } from '@/helpers'
 
 import { DefaultToast } from './toasts'
 
-const STATUS_MESSAGE_AUTO_HIDE_DURATION = 30 * 1000
+const STATUS_MESSAGE_AUTO_HIDE_DURATION = 5 * 1000
 
-type ToastPayload = {
-  title?: string
-  message?: string
-  icon?: Icons | keyof typeof ICON_COMPONENTS
+export type ToastPayload = {
   messageType?: BusEvents
+
+  title?: string
+  message?: string | ReactElement
+  icon?: Icons | keyof typeof ICON_COMPONENTS
 }
 
 declare module 'notistack' {
@@ -22,7 +23,7 @@ declare module 'notistack' {
   }
 }
 
-function ToastsManagerController({ children }: { children: ReactNode }) {
+function ToastsManagerController({ children }: PropsWithChildren) {
   const { t } = useTranslation()
   const { enqueueSnackbar } = useSnackbar()
 
@@ -67,6 +68,7 @@ function ToastsManagerController({ children }: { children: ReactNode }) {
 
         messageType,
         title,
+        message,
         icon,
       })
     },
@@ -108,7 +110,7 @@ function ToastsManagerController({ children }: { children: ReactNode }) {
   return children
 }
 
-export default function ToastsManager({ children }: { children: ReactNode }) {
+export default function ToastsManager({ children }: { children: ReactElement }) {
   return (
     <SnackbarProvider
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}

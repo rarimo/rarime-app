@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { generatePath, NavLink } from 'react-router-dom'
 
 import { getClaimIdFromVC } from '@/api/modules/zkp'
-import { CredentialCard, NoDataViewer, PageTitles } from '@/common'
+import { CredentialCard, NoDataView, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useLoading } from '@/hooks'
 import { credentialsStore, useCredentialsState } from '@/store'
@@ -43,8 +43,8 @@ export default function CredentialsList({ ...rest }: Props) {
         ) : isLoadingError ? (
           <Alert severity='error'>{`There's an error occurred, please, reload page`}</Alert>
         ) : !vcs.length || isEmpty(issuersDetails) ? (
-          <NoDataViewer
-            title={'No Credentials'}
+          <NoDataView
+            title='No Credentials'
             action={<UiButton onClick={reload}>Load Credentials</UiButton>}
           />
         ) : (

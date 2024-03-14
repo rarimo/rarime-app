@@ -70,9 +70,11 @@ export default function ClaimVCsModal({ orgGroupRequest, onClose, ...rest }: Pro
       }}
     >
       {vcFields.map((field, idx) => (
-        <Typography key={idx} variant={'body1'}>
+        <Typography key={idx} variant='body1'>
           {/*TODO: add loader for each processing schema*/}
-          {field.key}: <UiIcon componentName='check' />
+          {field.key}
+          {': '}
+          <UiIcon componentName='check' />
         </Typography>
       ))}
 

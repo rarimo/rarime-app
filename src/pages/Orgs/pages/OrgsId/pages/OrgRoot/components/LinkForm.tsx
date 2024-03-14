@@ -55,10 +55,13 @@ export default function LinkForm({ field, index, form, onRemove }: Props) {
         zIndex: isDragging ? 1000 : 0,
       }}
     >
-      <Stack direction='row' justifyContent={'space-between'}>
-        <Typography variant='subtitle4'>Link {index + 1}</Typography>
+      <Stack direction='row' justifyContent='space-between'>
+        <Typography variant='subtitle4'>
+          {'Link '}
+          {index + 1}
+        </Typography>
         {hasManyLinks && (
-          <Stack direction={'row'} spacing={4}>
+          <Stack direction='row' spacing={4}>
             <UiIconButton color='secondary' sx={{ cursor: 'grab' }} {...attributes} {...listeners}>
               <UiIcon componentName='dragIndicator' size={5} />
             </UiIconButton>
