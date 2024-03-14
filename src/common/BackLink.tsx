@@ -18,11 +18,11 @@ export default function BackLink({ to, ...rest }: Props) {
       variant='text'
       color='secondary'
       size='small'
-      startIcon={<UiIcon name={Icons.CaretLeft} size={5} />}
+      startIcon={<UiIcon name={Icons.CaretLeft} size={4} />}
       {...rest}
       sx={{ width: 'fit-content', ...rest.sx }}
     >
-      Go back
+      Back
     </Button>
   )
 }

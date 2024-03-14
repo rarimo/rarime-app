@@ -1,10 +1,10 @@
-import { Box, Button, Divider, Paper, Stack, Typography, useTheme } from '@mui/material'
+import { Box, Button, Divider, Paper, Stack, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
-import { generatePath, NavLink, useLocation, useParams } from 'react-router-dom'
+import { generatePath, NavLink, useParams } from 'react-router-dom'
 
 import { zkpSnap } from '@/api/clients'
 import { getClaimIdFromVC } from '@/api/modules/zkp'
-import { CredentialCard, NoDataView } from '@/common'
+import { BackLink, CredentialCard, NoDataView } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
 import { ErrorHandler } from '@/helpers'
 import { useCredentialsState } from '@/store'
@@ -13,8 +13,6 @@ import { UiIcon } from '@/ui'
 import { ActionButton } from './components'
 
 export default function CredentialsId() {
-  const location = useLocation()
-
   const [isPending, setIsPending] = useState(false)
 
   const { palette, spacing } = useTheme()
@@ -85,20 +83,7 @@ export default function CredentialsId() {
 
   return (
     <Stack spacing={6}>
-      <Stack
-        component={NavLink}
-        to={location.state?.from ?? RoutePaths.CredentialsList}
-        mb={8}
-        spacing={2}
-        direction='row'
-        alignItems='center'
-      >
-        <UiIcon name={Icons.CaretLeft} sx={{ color: palette.text.secondary }} size={5} />
-        <Typography variant='buttonSmall' color={palette.text.secondary}>
-          Back
-        </Typography>
-      </Stack>
-
+      <BackLink to={RoutePaths.CredentialsList} />
       <Paper>
         {vc && issuerDetails ? (
           <Stack spacing={6}>
@@ -121,12 +106,13 @@ export default function CredentialsId() {
             </Stack>
 
             <Stack spacing={10} direction='row' justifyContent='center'>
-              <ActionButton iconProps={{ name: Icons.Plus }} disabled={isPending}>
+              {/* TODO: uncomment when actions are available */}
+              {/* <ActionButton iconProps={{ name: Icons.Plus }} disabled={isPending}>
                 Generate proof
               </ActionButton>
               <ActionButton iconProps={{ name: Icons.Info }} disabled={isPending}>
                 Get info
-              </ActionButton>
+              </ActionButton> */}
 
               <ActionButton
                 iconProps={{

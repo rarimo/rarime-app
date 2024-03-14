@@ -2,7 +2,8 @@ import { Button, CircularProgress, Stack, useTheme } from '@mui/material'
 import { PropsWithChildren, ReactNode } from 'react'
 
 import { ErrorView, NoDataView } from '@/common'
-import { LoadingStates } from '@/enums'
+import { Icons, LoadingStates } from '@/enums'
+import { UiIcon } from '@/ui'
 
 import IntersectionAnchor from './IntersectionAnchor'
 
@@ -53,7 +54,11 @@ export default function InfiniteList<D>({
     <ErrorView
       title={errorTitle}
       action={
-        <Button size='medium' onClick={onRetry}>
+        <Button
+          size='medium'
+          startIcon={<UiIcon name={Icons.ArrowCounterClockwise} size={4} />}
+          onClick={onRetry}
+        >
           Retry
         </Button>
       }
