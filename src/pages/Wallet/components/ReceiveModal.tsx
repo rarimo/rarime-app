@@ -1,12 +1,11 @@
-import { Button, Divider, Stack, Typography, useTheme } from '@mui/material'
-import { ComponentProps } from 'react'
+import { Dialog, DialogProps, Divider, Stack, useTheme } from '@mui/material'
 import { QRCode } from 'react-qrcode-logo'
 
 import { useWalletState } from '@/store'
 import { toRem } from '@/theme/helpers'
-import { UiBasicModal, UiCopyField, UiIcon, UiInfoAlert } from '@/ui'
+import { UiCopyField, UiDialogContent, UiDialogTitle, UiInfoAlert } from '@/ui'
 
-type Props = ComponentProps<typeof UiBasicModal>
+type Props = DialogProps
 
 export default function ReceiveModal({ ...rest }: Props) {
   const { palette } = useTheme()
@@ -14,20 +13,12 @@ export default function ReceiveModal({ ...rest }: Props) {
   const { address } = useWalletState()
 
   return (
-    <UiBasicModal {...rest}>
-      <Stack>
-        <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
-          <Typography variant='h6'>Receive</Typography>
-
-          <Button variant='text' onClick={rest.onClose}>
-            <UiIcon componentName='close' sx={{ color: palette.text.secondary }} />
-          </Button>
-        </Stack>
-
-        <Divider />
-
-        <Stack p={5} spacing={5}>
-          <UiInfoAlert severity='success' message='Informational message' />
+    <Dialog {...rest}>
+      <UiDialogTitle onClose={rest.onClose}>Receive</UiDialogTitle>
+      <Divider />
+      <UiDialogContent>
+        <Stack spacing={5}>
+          <UiInfoAlert severity='warning' message='Informational message' />
 
           <Stack alignSelf='center' border={`${toRem(4)} solid ${palette.common.black}`}>
             <QRCode
@@ -41,7 +32,7 @@ export default function ReceiveModal({ ...rest }: Props) {
 
           <UiCopyField label='Deposit Address' value={address} />
         </Stack>
-      </Stack>
-    </UiBasicModal>
+      </UiDialogContent>
+    </Dialog>
   )
 }

@@ -8,7 +8,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { ErrorView, NoDataView, PageTitles } from '@/common'
@@ -30,7 +30,7 @@ export default function Wallet() {
 
   const mainBalance = useMemo(() => balances?.[0], [balances])
 
-  const { isLoading, isLoadingError } = useLoading(
+  const { isLoading, isLoadingError, reload } = useLoading(
     undefined,
     async () => {
       await walletStore.connect()
@@ -40,6 +40,11 @@ export default function Wallet() {
       loadOnMount: true,
     },
   )
+
+  const handleSend = useCallback(async () => {
+    setIsSendModalShown(false)
+    await reload()
+  }, [reload])
 
   if (isLoading)
     return (
@@ -111,7 +116,11 @@ export default function Wallet() {
               >
                 Send
               </Button>
-              <SendModal open={isSendModalShown} onClose={() => setIsSendModalShown(false)} />
+              <SendModal
+                open={isSendModalShown}
+                onClose={() => setIsSendModalShown(false)}
+                onSend={handleSend}
+              />
             </Stack>
 
             <Button
