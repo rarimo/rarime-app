@@ -93,10 +93,9 @@ function convertNumberWithPrefix(value: string) {
 export function formatNumber(value: number, formatConfig?: BnFormatConfig) {
   const formatCfg = formatConfig || {
     ...defaultBnFormatConfig,
-    decimals: 0,
   }
 
-  return BN.fromRaw(value, 0).format(formatCfg)
+  return removeTrailingZeros(BN.fromRaw(value).format(formatCfg))
 }
 
 export function formatAmount(
