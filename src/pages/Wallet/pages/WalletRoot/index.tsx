@@ -48,7 +48,7 @@ export default function WalletRoot() {
 
   return (
     <Stack spacing={4}>
-      <PageTitles title='Wallet' />
+      <PageTitles title='Wallet' mb={4} />
 
       {isLoading ? (
         <>
@@ -72,7 +72,7 @@ export default function WalletRoot() {
         </Paper>
       ) : (
         <>
-          <Paper sx={{ mt: spacing(8) }}>
+          <Paper>
             <Stack spacing={4}>
               <Stack spacing={2}>
                 <Typography color={palette.text.secondary}>

@@ -14,12 +14,12 @@ import { useMemo } from 'react'
 import { generatePath, NavLink, useLocation } from 'react-router-dom'
 
 import { getClaimIdFromVC } from '@/api/modules/zkp'
-import { CredentialCard, NoDataView, PageTitles } from '@/common'
-import { RoutePaths } from '@/enums'
+import { CredentialCard, ErrorView, NoDataView, PageTitles } from '@/common'
+import { Icons, RoutePaths } from '@/enums'
 import { useLoading } from '@/hooks'
 import { credentialsStore, useCredentialsState } from '@/store'
 import { hiddenScrollbar } from '@/theme/constants'
-import { UiButton } from '@/ui'
+import { UiButton, UiIcon } from '@/ui'
 
 const containerProps: StackProps = {
   direction: 'row',
@@ -42,7 +42,6 @@ export default function Dashboard() {
     () => credentialsStore.load(),
     {
       loadOnMount: !vcs.length,
-      loadArgs: [vcs],
     },
   )
 
@@ -89,12 +88,26 @@ export default function Dashboard() {
             ))}
           </Stack>
         ) : isLoadingError ? (
-          // TODO: create ErrorMessage component
-          <Typography>{`There's an error occurred, please, reload page`}</Typography>
+          <ErrorView
+            title='Cannot load credentials'
+            action={
+              <UiButton
+                size='medium'
+                startIcon={<UiIcon name={Icons.ArrowCounterClockwise} size={4} />}
+                onClick={reload}
+              >
+                Retry
+              </UiButton>
+            }
+          />
         ) : !lastVCsDesc.length || isEmpty(issuersDetails) ? (
           <NoDataView
             title='No Credentials'
-            action={<UiButton onClick={reload}>Load Credentials</UiButton>}
+            action={
+              <UiButton size='medium' onClick={reload}>
+                Load Credentials
+              </UiButton>
+            }
           />
         ) : (
           <Stack {...containerProps}>

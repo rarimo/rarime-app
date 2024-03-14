@@ -38,6 +38,7 @@ const [credentialsStore, useCredentialsState] = createStore(
       }
     },
   }),
+  { isPersist: false },
 )
 
 export { credentialsStore, useCredentialsState }
