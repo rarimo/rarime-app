@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { Controller, FieldArrayWithId, FieldPath } from 'react-hook-form'
 
 import { OrgMetadataLink } from '@/api/modules/orgs'
+import { Icons } from '@/enums'
 import { Form } from '@/hooks'
 import { UiIcon, UiIconButton, UiTextField } from '@/ui'
 
@@ -63,10 +64,10 @@ export default function LinkForm({ field, index, form, onRemove }: Props) {
         {hasManyLinks && (
           <Stack direction='row' spacing={4}>
             <UiIconButton color='secondary' sx={{ cursor: 'grab' }} {...attributes} {...listeners}>
-              <UiIcon componentName='dragIndicator' size={5} />
+              <UiIcon name={Icons.DotsSixVertical} size={5} />
             </UiIconButton>
             <UiIconButton color='error' onClick={onRemove}>
-              <UiIcon componentName='deleteOutlined' size={5} />
+              <UiIcon name={Icons.TrashSimple} size={5} />
             </UiIconButton>
           </Stack>
         )}

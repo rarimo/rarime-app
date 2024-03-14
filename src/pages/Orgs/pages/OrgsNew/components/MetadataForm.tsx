@@ -3,6 +3,7 @@ import { HTMLAttributes, useCallback } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { createOrg, Organization } from '@/api/modules/orgs'
+import { Icons } from '@/enums'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useIdentityState } from '@/store'
@@ -137,11 +138,7 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
           />
         </Stack>
 
-        <UiButton
-          type='submit'
-          size='large'
-          endIcon={<UiIcon componentName='arrowForward' size={4} />}
-        >
+        <UiButton type='submit' size='large' endIcon={<UiIcon name={Icons.ArrowRight} size={4} />}>
           Create
         </UiButton>
       </form>

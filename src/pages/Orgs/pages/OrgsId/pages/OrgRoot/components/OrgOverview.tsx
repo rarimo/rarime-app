@@ -1,6 +1,7 @@
 import { Avatar, Stack, Typography, useTheme } from '@mui/material'
 
 import { OrgsStatuses } from '@/api/modules/orgs'
+import { Icons } from '@/enums'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiIcon } from '@/ui'
 
@@ -37,7 +38,7 @@ export default function OrgOverview() {
           </Typography>
 
           {org.status.value === OrgsStatuses.Verified && (
-            <UiIcon componentName='verified' size={4} sx={{ color: palette.success.main }} />
+            <UiIcon name={Icons.SealCheck} size={4} sx={{ color: palette.success.main }} />
           )}
         </Stack>
 

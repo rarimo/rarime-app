@@ -1,7 +1,7 @@
 import { Box, Stack, Typography, useTheme } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
-import { RoutePaths } from '@/enums'
+import { Icons, RoutePaths } from '@/enums'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { UiIcon } from '@/ui'
 
@@ -22,7 +22,7 @@ export default function OrgRoot() {
           spacing={2}
           color={palette.text.secondary}
         >
-          <UiIcon componentName='chevronLeft' size={5} />
+          <UiIcon name={Icons.CaretLeft} size={5} />
           <Typography variant='buttonSmall' color='inherit'>
             View all organizations
           </Typography>

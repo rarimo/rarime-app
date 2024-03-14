@@ -4,7 +4,7 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom'
 
 import { getEventById } from '@/api/modules/points'
 import { BackLink, ErrorView, NoDataView } from '@/common'
-import { RoutePaths } from '@/enums'
+import { Icons, RoutePaths } from '@/enums'
 import { useCopyToClipboard, useLoading } from '@/hooks'
 import { UiIcon } from '@/ui'
 
@@ -40,7 +40,7 @@ export default function EventId() {
             variant='text'
             color='secondary'
             size='small'
-            startIcon={<UiIcon componentName='shareOutlined' size={5} />}
+            startIcon={<UiIcon name={Icons.Share} size={5} />}
             sx={{ width: 'fit-content' }}
             onClick={() => copy(window.location.href)}
           >
