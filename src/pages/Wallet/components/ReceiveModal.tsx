@@ -1,4 +1,4 @@
-import { Dialog, DialogProps, Divider, Stack, useTheme } from '@mui/material'
+import { Dialog, DialogProps, Stack, useTheme } from '@mui/material'
 import { QRCode } from 'react-qrcode-logo'
 
 import { useWalletState } from '@/store'
@@ -15,7 +15,7 @@ export default function ReceiveModal({ ...rest }: Props) {
   return (
     <Dialog {...rest}>
       <UiDialogTitle onClose={rest.onClose}>Receive</UiDialogTitle>
-      <Divider />
+
       <UiDialogContent>
         <Stack spacing={5}>
           <UiInfoAlert severity='warning' message='Informational message' />

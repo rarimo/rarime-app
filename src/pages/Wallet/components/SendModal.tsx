@@ -3,7 +3,6 @@ import {
   Button,
   Dialog,
   DialogProps,
-  Divider,
   FormControl,
   InputAdornment,
   Stack,
@@ -17,7 +16,7 @@ import { RARIMO_EXPLORER_URLS, rarimoClient } from '@/api/clients'
 import { BusEvents } from '@/enums'
 import { bus, ErrorHandler, formatAmount } from '@/helpers'
 import { useForm } from '@/hooks'
-import { useWalletState, walletStore } from '@/store'
+import { useWalletState } from '@/store'
 import {
   UiDialogActions,
   UiDialogContent,
@@ -146,7 +145,7 @@ export default function SendModal({ onSend, ...rest }: Props) {
       }}
     >
       <UiDialogTitle onClose={rest.onClose}>Send {mainBalance?.denom}</UiDialogTitle>
-      <Divider />
+
       <UiDialogContent>
         <Stack spacing={5}>
           <UiInfoAlert severity='warning' message='Informational message' />
@@ -228,7 +227,7 @@ export default function SendModal({ onSend, ...rest }: Props) {
           </Stack>
         </Stack>
       </UiDialogContent>
-      <Divider />
+
       <UiDialogActions>
         <Stack direction='row' spacing={4} justifyContent='space-between'>
           {totalAmountAfterFeeBN && (
