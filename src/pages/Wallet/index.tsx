@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom'
 
 import { NoDataView, PageTitles } from '@/common'
 import { Icons } from '@/enums'
-import { formatAmount } from '@/helpers'
+import { formatBalance } from '@/helpers'
 import { useLoading } from '@/hooks'
 import { useWalletState, walletStore } from '@/store'
 import { UiIcon } from '@/ui'
@@ -81,7 +81,7 @@ export default function Wallet() {
               {`Available ${mainBalance?.denom}`}
             </Typography>
             <Typography variant='h4'>
-              {formatAmount(mainBalance?.amount, mainBalance?.decimals)}
+              {formatBalance(mainBalance?.amount, mainBalance?.decimals)}
             </Typography>
           </Stack>
 

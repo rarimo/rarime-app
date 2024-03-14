@@ -67,15 +67,15 @@ export default function SendModal() {
       }),
   )
 
-  const totalAmountAfterFee = useMemo(() => {
+  const totalAmountAfterFeeBN = useMemo(() => {
     try {
       const amountBN = BN.fromRaw(formState[FieldNames.Amount], mainBalance?.decimals)
 
       const feeBN = BN.fromRaw(rarimoClient.config.gasPrice.amount, mainBalance?.decimals)
 
-      return amountBN.sub(feeBN).value
+      return amountBN.sub(feeBN)
     } catch (error) {
-      return '0'
+      return undefined
     }
   }, [formState, mainBalance?.decimals])
 
@@ -237,22 +237,28 @@ export default function SendModal() {
                 <Divider />
 
                 <Stack direction='row' spacing={4} justifyContent='space-between' p={5} pt={0}>
-                  <Stack spacing={1}>
-                    <Typography variant='body4' color={palette.text.secondary}>
-                      Receive amount:
-                    </Typography>
-                    <Stack direction='row' alignItems='baseline' spacing={1}>
-                      <Typography variant='subtitle3'>
-                        {formatAmount(totalAmountAfterFee, mainBalance?.decimals)}{' '}
-                        {mainBalance?.denom}
-                      </Typography>
+                  {totalAmountAfterFeeBN && (
+                    <Stack spacing={1}>
                       <Typography variant='body4' color={palette.text.secondary}>
-                        Fee: 0.005 {mainBalance?.denom}
+                        Receive amount:
                       </Typography>
+                      <Stack direction='row' alignItems='baseline' spacing={1}>
+                        <Typography variant='subtitle3'>
+                          {formatAmount(totalAmountAfterFeeBN, totalAmountAfterFeeBN?.decimals)}{' '}
+                          {mainBalance?.denom}
+                        </Typography>
+                        <Typography variant='body4' color={palette.text.secondary}>
+                          Fee: 0.005 {mainBalance?.denom}
+                        </Typography>
+                      </Stack>
                     </Stack>
-                  </Stack>
+                  )}
 
-                  <Button sx={{ width: spacing(42) }} type='submit' disabled={isFormDisabled}>
+                  <Button
+                    sx={{ width: spacing(42), ml: 'auto' }}
+                    type='submit'
+                    disabled={isFormDisabled}
+                  >
                     Send
                   </Button>
                 </Stack>

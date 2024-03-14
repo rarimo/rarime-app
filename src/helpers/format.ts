@@ -28,6 +28,12 @@ export function formatDateTime(date: TimeDate) {
 }
 
 // number
+const defaultBnFormatConfig: BnFormatConfig = {
+  decimals: 2,
+  groupSeparator: ',',
+  decimalSeparator: '.',
+}
+
 /**
  * Format human amount without trailing zeros
  * @param amount
@@ -84,8 +90,13 @@ function convertNumberWithPrefix(value: string) {
   return `${removeTrailingZeros(finalAmount)}${prefix}`
 }
 
-export function formatNumber(value: number, config?: BnFormatConfig) {
-  return BN.fromRaw(value, 0).format(config)
+export function formatNumber(value: number, formatConfig?: BnFormatConfig) {
+  const formatCfg = formatConfig || {
+    ...defaultBnFormatConfig,
+    decimals: 0,
+  }
+
+  return BN.fromRaw(value, 0).format(formatCfg)
 }
 
 export function formatAmount(
@@ -93,7 +104,15 @@ export function formatAmount(
   decimalsOrConfig?: BnConfigLike,
   formatConfig?: BnFormatConfig,
 ) {
-  return removeTrailingZeros(BN.fromBigInt(amount, decimalsOrConfig).format(formatConfig))
+  const decimals =
+    typeof decimalsOrConfig === 'number' ? decimalsOrConfig : decimalsOrConfig?.decimals
+
+  const formatCfg = formatConfig || {
+    ...defaultBnFormatConfig,
+    ...(decimals && { decimals }),
+  }
+
+  return removeTrailingZeros(BN.fromBigInt(amount, decimalsOrConfig).format(formatCfg))
 }
 
 export function formatBalance(
@@ -101,5 +120,13 @@ export function formatBalance(
   decimalsOrConfig?: BnConfigLike,
   formatConfig?: BnFormatConfig,
 ) {
-  return convertNumberWithPrefix(formatAmount(amount, decimalsOrConfig, formatConfig))
+  const decimals =
+    typeof decimalsOrConfig === 'number' ? decimalsOrConfig : decimalsOrConfig?.decimals
+
+  const formatCfg = formatConfig || {
+    ...defaultBnFormatConfig,
+    ...(decimals && { decimals }),
+  }
+
+  return convertNumberWithPrefix(formatAmount(amount, decimalsOrConfig, formatCfg))
 }
