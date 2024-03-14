@@ -11,14 +11,19 @@ export const api = new JsonApiClient({
 
 export const zkpSnap = new ZkpSnap()
 
-export const rarimeWallet = new RarimeWallet('rarimo_42-1')
-
-const chainInfo = CHAINS[rarimeWallet.chainId]
+enum RarimoChains {
+  Testnet = 'rarimo_42-1',
+  Mainnet = 'rarimo_201411-1',
+}
 
 export const RARIMO_EXPLORER_URLS: Record<keyof typeof CHAINS, string> = {
-  'rarimo_42-1': 'https://scan.mainnet-beta.rarimo.com',
-  'rarimo_201411-1': 'https://scan.rarimo.com',
+  [RarimoChains.Testnet]: 'https://scan.mainnet-beta.rarimo.com',
+  [RarimoChains.Mainnet]: 'https://scan.rarimo.com',
 }
+
+export const rarimeWallet = new RarimeWallet(RarimoChains.Testnet)
+
+const chainInfo = CHAINS[rarimeWallet.chainId]
 
 export const rarimoClient = makeRarimoClient({
   rpcUrl: chainInfo.rpc!,
