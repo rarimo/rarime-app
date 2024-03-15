@@ -102,7 +102,7 @@ export function formatNumber(value: number, formatConfig?: BnFormatConfig) {
 
     return removeTrailingZeros(BN.fromRaw(value).format(formatCfg))
   } catch (error) {
-    return ''
+    return '0'
   }
 }
 
@@ -122,7 +122,7 @@ export function formatAmount(
 
     return removeTrailingZeros(BN.fromBigInt(amount, decimalsOrConfig).format(formatCfg))
   } catch (error) {
-    return ''
+    return '0'
   }
 }
 
@@ -142,6 +142,6 @@ export function formatBalance(
 
     return convertNumberWithPrefix(formatAmount(amount, decimalsOrConfig, formatCfg))
   } catch (error) {
-    return ''
+    return '0'
   }
 }
