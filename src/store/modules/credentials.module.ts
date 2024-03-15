@@ -23,11 +23,14 @@ const [credentialsStore, useCredentialsState] = createStore(
 
       const issuersDetails = (
         await Promise.all([...issuerDids].map(issuerDid => getIssuerDetails(issuerDid)))
-      ).reduce((acc, issuerDetails) => {
-        acc[issuerDetails.did] = issuerDetails
+      ).reduce(
+        (acc, issuerDetails) => {
+          acc[issuerDetails.did] = issuerDetails
 
-        return acc
-      }, {} as Record<string, IssuerDetails>)
+          return acc
+        },
+        {} as Record<string, IssuerDetails>,
+      )
 
       state.vcs = vcs
       state.issuersDetails = issuersDetails

@@ -28,7 +28,7 @@ export default function UiInfoAlert({ icon, message, severity, ...rest }: Props)
           background: palette.warning.lighter,
           color: palette.warning.darker,
         },
-      }[severity]),
+      })[severity],
     [palette, severity],
   )
 

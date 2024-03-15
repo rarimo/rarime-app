@@ -10,6 +10,6 @@ type DeepKeys<T, S extends string> = T extends object
       ? `${I1}.${DeepKeys<T[I1], I2>}`
       : keyof T & string
     : S extends keyof T
-    ? `${S}`
-    : keyof T & string
+      ? `${S}`
+      : keyof T & string
   : ''
