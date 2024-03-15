@@ -95,11 +95,15 @@ function convertNumberWithPrefix(value: string) {
 }
 
 export function formatNumber(value: number, formatConfig?: BnFormatConfig) {
-  const formatCfg = formatConfig || {
-    ...defaultBnFormatConfig,
-  }
+  try {
+    const formatCfg = formatConfig || {
+      ...defaultBnFormatConfig,
+    }
 
-  return removeTrailingZeros(BN.fromRaw(value).format(formatCfg))
+    return removeTrailingZeros(BN.fromRaw(value).format(formatCfg))
+  } catch (error) {
+    return '0'
+  }
 }
 
 export function formatAmount(
@@ -107,15 +111,19 @@ export function formatAmount(
   decimalsOrConfig?: BnConfigLike,
   formatConfig?: BnFormatConfig,
 ) {
-  const decimals =
-    typeof decimalsOrConfig === 'number' ? decimalsOrConfig : decimalsOrConfig?.decimals
+  try {
+    const decimals =
+      typeof decimalsOrConfig === 'number' ? decimalsOrConfig : decimalsOrConfig?.decimals
 
-  const formatCfg = formatConfig || {
-    ...defaultBnFormatConfig,
-    ...(decimals && { decimals }),
+    const formatCfg = formatConfig || {
+      ...defaultBnFormatConfig,
+      ...(decimals && { decimals }),
+    }
+
+    return removeTrailingZeros(BN.fromBigInt(amount, decimalsOrConfig).format(formatCfg))
+  } catch (error) {
+    return '0'
   }
-
-  return removeTrailingZeros(BN.fromBigInt(amount, decimalsOrConfig).format(formatCfg))
 }
 
 export function formatBalance(
@@ -123,13 +131,17 @@ export function formatBalance(
   decimalsOrConfig?: BnConfigLike,
   formatConfig?: BnFormatConfig,
 ) {
-  const decimals =
-    typeof decimalsOrConfig === 'number' ? decimalsOrConfig : decimalsOrConfig?.decimals
+  try {
+    const decimals =
+      typeof decimalsOrConfig === 'number' ? decimalsOrConfig : decimalsOrConfig?.decimals
 
-  const formatCfg = formatConfig || {
-    ...defaultBnFormatConfig,
-    ...(decimals && { decimals }),
+    const formatCfg = formatConfig || {
+      ...defaultBnFormatConfig,
+      ...(decimals && { decimals }),
+    }
+
+    return convertNumberWithPrefix(formatAmount(amount, decimalsOrConfig, formatCfg))
+  } catch (error) {
+    return '0'
   }
-
-  return convertNumberWithPrefix(formatAmount(amount, decimalsOrConfig, formatCfg))
 }
