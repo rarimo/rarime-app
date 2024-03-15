@@ -36,10 +36,13 @@ export default function FillRequestForm({
     control,
     getErrorMessage,
   } = useForm(
-    credentialFields?.reduce((acc, field) => {
-      acc[field.key] = field.value || ''
-      return acc
-    }, {} as Record<string, string>),
+    credentialFields?.reduce(
+      (acc, field) => {
+        acc[field.key] = field.value || ''
+        return acc
+      },
+      {} as Record<string, string>,
+    ),
     yup =>
       yup.object().shape({
         ...orgGroupRequest.group?.rules?.reduce((acc, rule) => {
