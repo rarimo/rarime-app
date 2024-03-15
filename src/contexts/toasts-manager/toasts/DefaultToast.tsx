@@ -1,4 +1,4 @@
-import { Alert, AlertColor, AlertTitle, Typography } from '@mui/material'
+import { Alert, AlertColor, AlertTitle, Typography, useTheme } from '@mui/material'
 import { CustomContentProps, SnackbarContent, useSnackbar } from 'notistack'
 import { forwardRef, ReactNode, useMemo } from 'react'
 
@@ -15,6 +15,7 @@ interface Props extends CustomContentProps {
 
 const DefaultToast = forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   const { message, icon, title, id } = props
+  const { spacing } = useTheme()
 
   const { closeSnackbar } = useSnackbar()
 
@@ -43,6 +44,7 @@ const DefaultToast = forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
       <Alert
         icon={iconComponent}
         severity={severityMap[props.messageType]}
+        sx={{ maxWidth: spacing(100) }}
         onClose={() => closeSnackbar(id)}
       >
         <AlertTitle>{title}</AlertTitle>

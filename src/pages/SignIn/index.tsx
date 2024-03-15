@@ -26,10 +26,10 @@ export default function SignIn() {
     }
   }, [connectProviders])
 
-  const createIdentity = useCallback(async (privateKeyHex?: string) => {
+  const createIdentity = useCallback(async () => {
     setIsPending(true)
     try {
-      await identityStore.createIdentity({ privateKeyHex })
+      await identityStore.createIdentity({})
     } catch (error) {
       ErrorHandler.process(error)
     }
