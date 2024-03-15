@@ -93,7 +93,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
       textSecondary: ({ theme }) => ({
         color: theme.palette.text.secondary,
         '&:hover': {
-          color: theme.palette.secondary.main,
+          color: theme.palette.text.primary,
         },
       }),
       containedPrimary: ({ theme }) => ({
@@ -462,6 +462,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
         borderRadius: theme.spacing(3),
         backgroundColor: theme.palette.background.paper,
         boxShadow: `inset 0 0 0 1px ${theme.palette.action.active}`,
+        border: 0,
       }),
     },
   },

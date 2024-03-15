@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Paper, Stack, useTheme } from '@mui/material'
+import { Box, Button, Paper, Stack, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { generatePath, NavLink, useParams } from 'react-router-dom'
 
@@ -11,15 +11,15 @@ import { useCredentialsState } from '@/store'
 import { UiIcon } from '@/ui'
 
 import { ActionButton } from './components'
+import VcInfoModal from './components/VcInfoModal'
 
 export default function CredentialsId() {
-  const [isPending, setIsPending] = useState(false)
-
   const { palette, spacing } = useTheme()
-
   const { claimId = '' } = useParams<{ claimId: string }>()
-
   const { vcs, issuersDetails } = useCredentialsState()
+
+  const [isPending, setIsPending] = useState(false)
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
 
   const vc = useMemo(() => {
     return vcs.find(vc => getClaimIdFromVC(vc) === claimId)
@@ -109,10 +109,14 @@ export default function CredentialsId() {
               {/* TODO: uncomment when actions are available */}
               {/* <ActionButton iconProps={{ name: Icons.Plus }} disabled={isPending}>
                 Generate proof
-              </ActionButton>
-              <ActionButton iconProps={{ name: Icons.Info }} disabled={isPending}>
-                Get info
               </ActionButton> */}
+              <ActionButton
+                iconProps={{ name: Icons.Info }}
+                disabled={isPending}
+                onClick={() => setIsInfoModalOpen(true)}
+              >
+                Get info
+              </ActionButton>
 
               <ActionButton
                 iconProps={{
@@ -124,9 +128,13 @@ export default function CredentialsId() {
               >
                 Remove Credential
               </ActionButton>
-            </Stack>
 
-            <Divider />
+              <VcInfoModal
+                open={isInfoModalOpen}
+                vc={vc}
+                onClose={() => setIsInfoModalOpen(false)}
+              />
+            </Stack>
           </Stack>
         ) : (
           <NoDataView
