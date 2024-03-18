@@ -28,3 +28,10 @@ export enum EventMetadataFrequencies {
   Unlimited = 'unlimited',
   Custom = 'custom',
 }
+
+export enum EventNames {
+  FreeWeekly = 'free_weekly',
+  GetPoh = 'get_poh',
+  RefferalCommon = 'referral_common',
+  BeReferred = 'be_referred',
+}
