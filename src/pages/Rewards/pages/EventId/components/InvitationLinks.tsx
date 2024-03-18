@@ -37,7 +37,7 @@ export default function InvitationLinks({ event }: Props) {
               index={index}
               reward={event.meta.static.reward}
               // TODO: Implement the actual isUsed
-              isUsed={index > 1}
+              isUsed={index % 2 === 1}
             />
           ))}
         </Stack>

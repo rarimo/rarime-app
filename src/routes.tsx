@@ -24,6 +24,7 @@ export const AppRoutes = () => {
   const AcceptInvitation = lazy(() => import('@/pages/AcceptInvitation'))
   const Rewards = lazy(() => import('@/pages/Rewards'))
   const Wallet = lazy(() => import('@/pages/Wallet'))
+  const RewardsInvitationAlias = lazy(() => import('@/pages/RewardsInvitationAlias'))
 
   const { isAuthorized, logout } = useAuth()
 
@@ -108,6 +109,10 @@ export const AppRoutes = () => {
         {
           path: RoutePaths.VerifyProofAlias,
           element: <VerifyProofAlias />,
+        },
+        {
+          path: RoutePaths.RewardsInvitationAlias,
+          element: <RewardsInvitationAlias />,
         },
         {
           path: createDeepPath(RoutePaths.AcceptInvitation),
