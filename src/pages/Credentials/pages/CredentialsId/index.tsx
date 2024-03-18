@@ -7,7 +7,7 @@ import { getClaimIdFromVC } from '@/api/modules/zkp'
 import { BackLink, CredentialCard, NoDataView } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
 import { ErrorHandler } from '@/helpers'
-import ProofGenModal from '@/pages/Credentials/pages/CredentialsId/components/ProofGenModal'
+import ProofGenerationModal from '@/pages/Credentials/pages/CredentialsId/components/ProofGenerationModal'
 import { useCredentialsState } from '@/store'
 import { UiIcon } from '@/ui'
 
@@ -141,7 +141,7 @@ export default function CredentialsId() {
                 onClose={() => setIsInfoModalOpen(false)}
               />
 
-              <ProofGenModal
+              <ProofGenerationModal
                 vc={vc}
                 open={isProofGenModalOpen}
                 onClose={() => setIsProofGenModalOpen(false)}

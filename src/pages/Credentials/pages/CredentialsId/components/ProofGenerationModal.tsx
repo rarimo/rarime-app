@@ -13,7 +13,7 @@ interface Props extends DialogProps {
   vc: W3CCredential
 }
 
-export default function ProofGenModal({ vc, ...rest }: Props) {
+export default function ProofGenerationModal({ vc, ...rest }: Props) {
   const { isCopied, copy } = useCopyToClipboard()
 
   const [isPending, setIsPending] = useState(false)
@@ -58,7 +58,7 @@ export default function ProofGenModal({ vc, ...rest }: Props) {
     setIsPending(false)
   }, [createProofRequest])
 
-  const vcDetails = useMemo(() => {
+  const generationDetails = useMemo(() => {
     return [
       {
         text: 'Query',
@@ -112,7 +112,7 @@ export default function ProofGenModal({ vc, ...rest }: Props) {
       <UiDialogTitle onClose={rest.onClose}>Credential Info</UiDialogTitle>
       <UiDialogContent>
         <Stack spacing={2}>
-          {vcDetails.map(({ text, value }, index) => (
+          {generationDetails.map(({ text, value }, index) => (
             <Stack key={index} spacing={2}>
               <Stack spacing={1}>
                 <Typography variant='body4' color={palette.text.secondary}>
@@ -120,7 +120,7 @@ export default function ProofGenModal({ vc, ...rest }: Props) {
                 </Typography>
                 {value}
               </Stack>
-              {index < vcDetails.length - 1 && <Divider />}
+              {index < generationDetails.length - 1 && <Divider />}
             </Stack>
           ))}
         </Stack>
