@@ -54,7 +54,7 @@ export default function BalanceBlock() {
         </Button>
         <Typography variant='caption2' color={palette.text.secondary}>
           {/* TODO: update claim end date */}
-          Please claim before 14 Dec 2023, Or you lose this RMO
+          STUB: Please claim before 14 Dec 2023, Or you lose this RMO
         </Typography>
       </Stack>
 

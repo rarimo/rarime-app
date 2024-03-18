@@ -24,7 +24,7 @@ export default function ClaimWarning({ onAction, ...rest }: Props) {
     >
       <Stack direction='row' spacing={2} alignItems='center'>
         <UiIcon name={Icons.Info} size={5} />
-        <Typography variant='body4'>You have to reach Level 2 to claim</Typography>
+        <Typography variant='body4'>STUB: You have to reach Level 2 to claim</Typography>
       </Stack>
       <Button
         variant='text'

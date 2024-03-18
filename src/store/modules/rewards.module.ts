@@ -1,7 +1,7 @@
 import { NotFoundError, UnauthorizedError } from '@distributedlab/jac'
 
 import { authorizeUser } from '@/api/modules/auth'
-import { Balance, getPointsBalance } from '@/api/modules/points'
+import { Balance, createPointsBalance, getPointsBalance } from '@/api/modules/points'
 import { createStore } from '@/helpers'
 
 import { identityStore } from './identity.module'
@@ -41,6 +41,10 @@ const [rewardsStore, useRewardsState] = createStore(
     authorize: async () => {
       await authorizeUser({ userDid: identityStore.userDid })
       state.isAuthorized = true
+    },
+    createBalance: async (referredBy: string) => {
+      const { data } = await createPointsBalance(identityStore.userDid, referredBy)
+      state.balance = data
     },
   }),
   { isPersist: false },

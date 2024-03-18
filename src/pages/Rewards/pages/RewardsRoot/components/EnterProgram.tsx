@@ -2,7 +2,9 @@ import { Box, Button, Divider, Paper, Stack, Typography, useTheme } from '@mui/m
 import { NavLink } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
-import { UiIcon, UiTextField } from '@/ui'
+import { UiIcon } from '@/ui'
+
+import InvitationForm from './InvitationForm'
 
 export default function EnterProgram() {
   const { palette, spacing } = useTheme()
@@ -52,8 +54,7 @@ export default function EnterProgram() {
             Claim airdrops & earn RMO
           </Typography>
         </Stack>
-        <UiTextField placeholder='Enter invitation code' />
-        <Button fullWidth>Activate</Button>
+        <InvitationForm />
         <Button component={NavLink} to={RoutePaths.RewardsAbout} variant='text' color='secondary'>
           Learn more about this program
         </Button>
