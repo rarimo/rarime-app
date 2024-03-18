@@ -109,7 +109,7 @@ export default function ProofGenerationModal({ vc, ...rest }: Props) {
 
   return (
     <Dialog {...rest} PaperProps={{ sx: { maxWidth: spacing(160) } }}>
-      <UiDialogTitle onClose={rest.onClose}>Credential Info</UiDialogTitle>
+      <UiDialogTitle onClose={rest.onClose}>Generate Proof</UiDialogTitle>
       <UiDialogContent>
         <Stack spacing={2}>
           {generationDetails.map(({ text, value }, index) => (
