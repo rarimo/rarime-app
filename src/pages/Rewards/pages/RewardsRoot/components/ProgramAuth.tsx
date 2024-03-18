@@ -1,10 +1,23 @@
-import { Button, Divider, Paper, Stack, Typography, useTheme } from '@mui/material'
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  Paper,
+  Stack,
+  Typography,
+  useTheme,
+} from '@mui/material'
 
 import { Icons } from '@/enums'
+import { useLoading } from '@/hooks'
+import { rewardsStore } from '@/store'
 import { UiIcon } from '@/ui'
 
-export default function ProgramDetails() {
+export default function ProgramAuth() {
   const { palette, spacing } = useTheme()
+  const { isLoading, reload } = useLoading(undefined, rewardsStore.authorize, {
+    loadOnMount: false,
+  })
 
   return (
     <Paper>
@@ -13,19 +26,20 @@ export default function ProgramDetails() {
           <UiIcon name={Icons.Rarimo} size={10} />
         </Stack>
         <Typography variant='h6' maxWidth={spacing(50)}>
-          Rarime rewards program
+          Enter into rewards program
         </Typography>
         <Typography variant='body2' color={palette.text.secondary}>
-          Get invited to the Rarime rewards program and earn RMO
+          Claim airdrops & earn RMO
         </Typography>
         <Divider flexItem />
         <Button
-          component='a'
-          href='https://discord.com/invite/Bzjm5MDXrU'
-          target='_blank'
           fullWidth
+          size='large'
+          startIcon={isLoading && <CircularProgress size={spacing(5)} color='secondary' />}
+          disabled={isLoading}
+          onClick={reload}
         >
-          Get Invitation
+          {isLoading ? 'Authorizing...' : 'Enter Program'}
         </Button>
       </Stack>
     </Paper>

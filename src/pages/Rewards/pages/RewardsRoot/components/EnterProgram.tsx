@@ -1,46 +1,96 @@
-import {
-  Button,
-  CircularProgress,
-  Divider,
-  Paper,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Box, Button, Divider, Paper, Stack, Typography, useTheme } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 
-import { Icons } from '@/enums'
-import { useLoading } from '@/hooks'
-import { rewardsStore } from '@/store'
-import { UiIcon } from '@/ui'
+import { Icons, RoutePaths } from '@/enums'
+import { UiIcon, UiTextField } from '@/ui'
 
 export default function EnterProgram() {
   const { palette, spacing } = useTheme()
-  const { isLoading, reload } = useLoading(undefined, rewardsStore.authorize, {
-    loadOnMount: false,
-  })
+
+  const socials = [
+    {
+      name: 'Discord',
+      icon: Icons.Discord,
+      link: 'https://discord.com/invite/Bzjm5MDXrU',
+    },
+    {
+      name: 'Twitter',
+      icon: Icons.TwitterX,
+      link: 'https://twitter.com/Rarimo_protocol',
+    },
+    {
+      name: 'Telegram',
+      icon: Icons.Telegram,
+      link: 'https://t.me/rarimoprotocol',
+    },
+  ]
 
   return (
-    <Paper>
-      <Stack spacing={5} alignItems='center' maxWidth={spacing(120)} mx='auto' textAlign='center'>
-        <Stack p={3} borderRadius={250} bgcolor={palette.action.active}>
-          <UiIcon name={Icons.Rarimo} size={10} />
+    <Paper component={Stack} spacing={8} position='relative'>
+      <Box
+        component='img'
+        src='/imgs/rewards-bg.png'
+        alt='Rewards'
+        width='100%'
+        position='absolute'
+        top={0}
+        left={0}
+        sx={{ pointerEvents: 'none' }}
+      />
+      <Stack spacing={5} maxWidth={spacing(120)} width='100%' mx='auto' textAlign='center'>
+        <Box
+          component='img'
+          src='/imgs/gift-box.png'
+          alt='Gift box'
+          height={spacing(16)}
+          width='auto'
+          sx={{ objectFit: 'contain' }}
+        />
+        <Stack spacing={2}>
+          <Typography variant='h6'>Enter into rewards program</Typography>
+          <Typography variant='body2' color={palette.text.secondary}>
+            Claim airdrops & earn RMO
+          </Typography>
         </Stack>
-        <Typography variant='h6' maxWidth={spacing(50)}>
-          Enter into rewards program
-        </Typography>
-        <Typography variant='body2' color={palette.text.secondary}>
-          Claim airdrops & earn RMO
-        </Typography>
-        <Divider flexItem />
-        <Button
-          fullWidth
-          size='large'
-          startIcon={isLoading && <CircularProgress size={spacing(5)} color='secondary' />}
-          disabled={isLoading}
-          onClick={reload}
-        >
-          {isLoading ? 'Authorizing...' : 'Enter Program'}
+        <UiTextField placeholder='Enter invitation code' />
+        <Button fullWidth>Activate</Button>
+        <Button component={NavLink} to={RoutePaths.RewardsAbout} variant='text' color='secondary'>
+          Learn more about this program
         </Button>
+      </Stack>
+      <Divider flexItem />
+      <Stack spacing={3}>
+        <Typography variant='overline2' color={palette.text.secondary}>
+          How can I get this code?
+        </Typography>
+        <Typography variant='body3'>
+          You must be invited by someone or receive a code that we post on our social channels
+        </Typography>
+      </Stack>
+      <Stack direction='row' spacing={4}>
+        {socials.map((social, index) => (
+          <Button
+            key={index}
+            component='a'
+            href={social.link}
+            target='_blank'
+            color='secondary'
+            size='small'
+            startIcon={<UiIcon name={social.icon} size={6} />}
+            fullWidth
+            sx={{
+              height: spacing(14),
+              borderRadius: 2,
+              gap: 1,
+              color: palette.text.secondary,
+              '&:hover': {
+                color: palette.text.primary,
+              },
+            }}
+          >
+            {social.name}
+          </Button>
+        ))}
       </Stack>
     </Paper>
   )
