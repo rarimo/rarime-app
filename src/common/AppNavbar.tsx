@@ -88,6 +88,7 @@ const AppNavbar = () => {
       px={4}
       borderRight={1}
       borderColor={palette.divider}
+      sx={{ display: { xs: 'none', md: 'flex' } }}
     >
       <Stack spacing={4}>
         <Stack component={NavLink} to={RoutePaths.Dashboard} alignItems='center'>

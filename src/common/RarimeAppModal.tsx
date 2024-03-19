@@ -1,6 +1,7 @@
 import { Dialog, DialogProps, Divider, Stack, Typography, useTheme } from '@mui/material'
 import { QRCode } from 'react-qrcode-logo'
 
+import { config } from '@/config'
 import { RoutePaths } from '@/enums'
 import { UiDialogContent, UiDialogTitle } from '@/ui'
 
@@ -31,9 +32,15 @@ export default function RarimeAppModal(props: DialogProps) {
               border={1}
               borderColor={palette.divider}
             >
-              <QRCode value={`https://app.rarime.com` + RoutePaths.DownloadApp} size={140} />
+              <QRCode value={config.APP_HOST_URL + RoutePaths.DownloadApp} size={140} />
             </Stack>
-            <Typography variant='body3' color={palette.text.secondary}>
+            <Typography
+              variant='body3'
+              color={palette.text.secondary}
+              maxWidth={spacing(60)}
+              mx='auto'
+              textAlign='center'
+            >
               Scan this code with your phone to download Rarime app
             </Typography>
           </Stack>
