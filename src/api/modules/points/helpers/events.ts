@@ -5,9 +5,9 @@ import { ApiServicePaths } from '@/enums'
 import { identityStore } from '@/store'
 
 import { EventMetadataFrequencies, EventsRequestFilters, EventStatuses } from '../enums'
-import { Event, EventsMeta, EventsRequestQueryParams } from '../types/events'
+import { EventsMeta, EventsRequestQueryParams, PointsEvent } from '../types/events'
 
-export const EVENTS_MOCK: Event[] = [
+export const EVENTS_MOCK: PointsEvent[] = [
   {
     id: '1',
     type: 'event',
@@ -218,7 +218,7 @@ export const EVENTS_MOCK: Event[] = [
 
 export const getEvents = async (query: EventsRequestQueryParams) => {
   const statuses = query.filter?.[EventsRequestFilters.Status]
-  return api.get<Event[], EventsMeta>(`${ApiServicePaths.Points}/v1/public/events`, {
+  return api.get<PointsEvent[], EventsMeta>(`${ApiServicePaths.Points}/v1/public/events`, {
     query: {
       ...query,
       filter: {
@@ -240,11 +240,11 @@ export const getEventById = async (id: string) => {
   return {
     ...res,
     data: res.data.find(event => event.id === id),
-  } as JsonApiResponse<Event>
+  } as JsonApiResponse<PointsEvent>
 }
 
 export const claimEvent = async (id: string) => {
-  return api.patch<Event>(`${ApiServicePaths.Points}/v1/public/events/${id}`, {
+  return api.patch<PointsEvent>(`${ApiServicePaths.Points}/v1/public/events/${id}`, {
     body: {
       data: {
         id,

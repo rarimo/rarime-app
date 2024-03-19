@@ -1,14 +1,14 @@
 import { CircularProgress, Stack, Typography, useTheme } from '@mui/material'
 import { useEffect, useMemo } from 'react'
 
-import { Event } from '@/api/modules/points'
+import { PointsEvent } from '@/api/modules/points'
 import { NoDataView } from '@/common'
 import { rewardsStore, useRewardsState } from '@/store'
 
 import ReferralLink from './ReferralLink'
 
 interface Props {
-  event: Event
+  event: PointsEvent
 }
 
 const MAX_REFERRAL_CODES = 5

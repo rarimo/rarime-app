@@ -2,7 +2,7 @@ import { Button, ButtonProps, useTheme } from '@mui/material'
 import { useMemo, useRef } from 'react'
 import { generatePath, NavLink } from 'react-router-dom'
 
-import { claimEvent, Event, EventStatuses } from '@/api/modules/points'
+import { claimEvent, EventStatuses, PointsEvent } from '@/api/modules/points'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
 import { useLoading } from '@/hooks'
@@ -11,7 +11,7 @@ import { rewardsStore } from '@/store'
 import { useConfetti } from '../hooks/useConfetti'
 
 interface Props {
-  event: Event
+  event: PointsEvent
   onClaim: () => Promise<void>
 }
 

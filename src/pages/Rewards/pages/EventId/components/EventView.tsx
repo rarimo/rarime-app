@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Stack, Typography, useTheme } from '@mui/material'
 
-import { Event, EventNames } from '@/api/modules/points'
+import { EventNames, PointsEvent } from '@/api/modules/points'
 import { MarkdownViewer } from '@/common'
 import { Icons } from '@/enums'
 import { formatDateTime } from '@/helpers'
@@ -10,7 +10,7 @@ import { UiIcon } from '@/ui'
 import InvitationLinks from './InvitationLinks'
 
 interface Props {
-  event: Event
+  event: PointsEvent
 }
 
 export default function EventView({ event }: Props) {
