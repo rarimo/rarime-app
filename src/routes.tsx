@@ -11,7 +11,7 @@ import {
 import { RoutePaths } from '@/enums'
 import { useAuth } from '@/hooks'
 
-import { createDeepPath } from './helpers'
+import { createDeepPath, isMobile } from './helpers'
 import AuthLayout from './layouts/AuthLayout'
 import MainLayout from './layouts/MainLayout'
 
@@ -25,8 +25,13 @@ export const AppRoutes = () => {
   const Rewards = lazy(() => import('@/pages/Rewards'))
   const Wallet = lazy(() => import('@/pages/Wallet'))
   const RewardsInvitationAlias = lazy(() => import('@/pages/RewardsInvitationAlias'))
+  const DownloadApp = lazy(() => import('@/pages/DownloadApp'))
 
   const { isAuthorized, logout } = useAuth()
+
+  const mobileGuard = useCallback(() => {
+    return isMobile() ? redirect(RoutePaths.DownloadApp) : null
+  }, [])
 
   const signInGuard = useCallback(
     ({ request }: LoaderFunctionArgs) => {
@@ -34,9 +39,11 @@ export const AppRoutes = () => {
 
       const from = requestUrl.searchParams.get('from')
 
-      return isAuthorized ? redirect(from ? `${from}${requestUrl.search}` : RoutePaths.Root) : null
+      return isAuthorized
+        ? redirect(from ? `${from}${requestUrl.search}` : RoutePaths.Root)
+        : mobileGuard()
     },
-    [isAuthorized],
+    [isAuthorized, mobileGuard],
   )
   const authProtectedGuard = useCallback(
     ({ request }: LoaderFunctionArgs) => {
@@ -52,9 +59,9 @@ export const AppRoutes = () => {
         return redirect(`${RoutePaths.SignIn}${requestUrl.search}`)
       }
 
-      return null
+      return mobileGuard()
     },
-    [isAuthorized, logout],
+    [isAuthorized, logout, mobileGuard],
   )
 
   const LayoutComponent = useMemo(() => {
@@ -101,7 +108,6 @@ export const AppRoutes = () => {
           element: <UiKit />,
         },
         {
-          index: true,
           path: createDeepPath(RoutePaths.SignIn),
           loader: signInGuard,
           element: <SignIn />,
@@ -113,6 +119,10 @@ export const AppRoutes = () => {
         {
           path: RoutePaths.RewardsInvitationAlias,
           element: <RewardsInvitationAlias />,
+        },
+        {
+          path: RoutePaths.DownloadApp,
+          element: <DownloadApp />,
         },
         {
           path: createDeepPath(RoutePaths.AcceptInvitation),

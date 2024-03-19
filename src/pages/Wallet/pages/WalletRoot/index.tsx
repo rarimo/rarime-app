@@ -1,17 +1,8 @@
-import {
-  Button,
-  Divider,
-  IconButton,
-  Paper,
-  Skeleton,
-  Stack,
-  Typography,
-  useTheme,
-} from '@mui/material'
+import { Button, Divider, Paper, Skeleton, Stack, Typography, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { ErrorView, NoDataView, PageTitles } from '@/common'
+import { ErrorView, NoDataView, PageTitles, RarimeAppModal } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
 import { formatBalance } from '@/helpers'
 import { useLoading } from '@/hooks'
@@ -27,6 +18,7 @@ export default function WalletRoot() {
 
   const [isReceiveModalShown, setIsReceiveModalShown] = useState(false)
   const [isSendModalShown, setIsSendModalShown] = useState(false)
+  const [isAppModalShown, setIsAppModalShown] = useState(false)
 
   const mainBalance = useMemo(() => balances?.[0], [balances])
 
@@ -144,9 +136,15 @@ export default function WalletRoot() {
                 <Typography color={palette.text.secondary}>Scan your passport</Typography>
               </Stack>
 
-              <IconButton sx={{ background: palette.primary.main, p: 1, ml: 'auto' }}>
+              <Button
+                color='primary'
+                sx={{ p: 1, ml: 'auto', minWidth: 'auto', height: 'auto' }}
+                onClick={() => setIsAppModalShown(true)}
+              >
                 <UiIcon name={Icons.CaretRight} size={5} />
-              </IconButton>
+              </Button>
+
+              <RarimeAppModal open={isAppModalShown} onClose={() => setIsAppModalShown(false)} />
             </Stack>
           </Paper>
 

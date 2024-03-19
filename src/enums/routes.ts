@@ -40,4 +40,5 @@ export enum RoutePaths {
   RewardsAbout = '/rewards/about',
 
   RewardsInvitationAlias = '/r/:code',
+  DownloadApp = '/download-app',
 }
