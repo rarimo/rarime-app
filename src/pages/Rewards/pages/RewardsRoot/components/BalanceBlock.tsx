@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
+import { formatNumber } from '@/helpers'
 import { useRewardsState } from '@/store'
 import { UiIcon } from '@/ui'
 
@@ -21,7 +22,7 @@ export default function BalanceBlock() {
           <Typography variant='body3' color={palette.text.secondary}>
             Reserved RMO
           </Typography>
-          <Typography variant='h4'>{balance?.amount ?? '–'}</Typography>
+          <Typography variant='h4'>{formatNumber(balance?.amount ?? 0)}</Typography>
         </Stack>
 
         <Button

@@ -1,5 +1,5 @@
 import { CircularProgress, Stack, Typography, useTheme } from '@mui/material'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { Event } from '@/api/modules/points'
 import { NoDataView } from '@/common'
@@ -17,31 +17,33 @@ export default function InvitationLinks({ event }: Props) {
   const { balance } = useRewardsState()
   const { palette } = useTheme()
 
+  const referralCodes = useMemo(() => {
+    return balance?.referral_codes ?? []
+  }, [balance])
+
   useEffect(() => {
     rewardsStore.loadBalance()
   }, [])
 
   return balance ? (
-    balance.referral_codes ? (
+    referralCodes.length ? (
       <Stack spacing={5}>
         <Stack spacing={2}>
-          {/* TODO: Implement the actual invited count */}
           <Typography variant='subtitle3'>
-            Invited {MAX_REFERRAL_CODES - balance.referral_codes.length}/{MAX_REFERRAL_CODES}
+            Invited {MAX_REFERRAL_CODES - referralCodes.length}/{MAX_REFERRAL_CODES}
           </Typography>
           <Typography variant='body3' color={palette.text.secondary}>
             STUB: Invite friends and earn RMO
           </Typography>
         </Stack>
         <Stack spacing={2}>
-          {balance.referral_codes.map((code, index) => (
+          {new Array(MAX_REFERRAL_CODES).fill(null).map((_, index) => (
             <ReferralLink
-              key={code}
-              code={code}
+              key={index}
               index={index}
-              reward={event.meta.static.reward}
-              // TODO: Implement the actual isUsed
-              // isUsed={index % 2 === 1}
+              reward={Math.floor(event.meta.static.reward / MAX_REFERRAL_CODES)}
+              code={referralCodes[index]}
+              isUsed={index >= referralCodes.length}
             />
           ))}
         </Stack>

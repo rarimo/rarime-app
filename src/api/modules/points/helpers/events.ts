@@ -1,5 +1,8 @@
+import { JsonApiResponse } from '@distributedlab/jac'
+
 import { api } from '@/api/clients'
 import { ApiServicePaths } from '@/enums'
+import { identityStore } from '@/store'
 
 import { EventMetadataFrequencies, EventsRequestFilters, EventStatuses } from '../enums'
 import { Event, EventsMeta, EventsRequestQueryParams } from '../types/events'
@@ -229,7 +232,15 @@ export const getEvents = async (query: EventsRequestQueryParams) => {
 }
 
 export const getEventById = async (id: string) => {
-  return api.get<Event>(`${ApiServicePaths.Points}/v1/public/events/${id}`)
+  // TODO: Uncomment when the endpoint is ready
+  // return api.get<Event>(`${ApiServicePaths.Points}/v1/public/events/${id}`)
+  const res = await getEvents({
+    filter: { [EventsRequestFilters.Did]: identityStore.userDid },
+  })
+  return {
+    ...res,
+    data: res.data.find(event => event.id === id),
+  } as JsonApiResponse<Event>
 }
 
 export const claimEvent = async (id: string) => {

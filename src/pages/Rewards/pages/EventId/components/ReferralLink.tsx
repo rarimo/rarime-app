@@ -8,9 +8,9 @@ import RewardChip from '@/pages/Rewards/components/RewardChip'
 import { UiIcon } from '@/ui'
 
 interface Props {
-  code: string
   index: number
   reward: number
+  code?: string
   isUsed?: boolean
 }
 
