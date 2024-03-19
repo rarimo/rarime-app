@@ -9,9 +9,21 @@ const PublicLayout = ({ children }: PropsWithChildren) => {
 
   return (
     <Stack direction='row' height={vh(100)}>
-      <Stack pl={14} pr={8} py={8} flex={1}>
+      <Stack
+        py={8}
+        flex={1}
+        sx={{
+          pl: { xs: 4, md: 14 },
+          pr: { xs: 4, md: 8 },
+        }}
+      >
         <Box flex={1} position='relative'>
-          <Stack direction='row' justifyContent='space-between' alignItems='center'>
+          <Stack
+            direction='row'
+            justifyContent='space-between'
+            alignItems='center'
+            sx={{ display: { xs: 'none', md: 'flex' } }}
+          >
             <Box component='img' src='/branding/logo-sign-in.svg' alt={config.APP_NAME} />
             <Button
               component='a'
@@ -38,7 +50,15 @@ const PublicLayout = ({ children }: PropsWithChildren) => {
         </Box>
       </Stack>
 
-      <Stack justifyContent='center' alignItems='end' pl={8} bgcolor={palette.additional.pureBlack}>
+      <Stack
+        justifyContent='center'
+        alignItems='end'
+        pl={8}
+        bgcolor={palette.additional.pureBlack}
+        sx={{
+          display: { xs: 'none', md: 'flex' },
+        }}
+      >
         <Box
           component='img'
           src='/imgs/dashboard.png'
