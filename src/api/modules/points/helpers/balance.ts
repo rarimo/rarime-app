@@ -115,7 +115,12 @@ export const getLeaderboard = async () => {
 }
 
 export const getPointsBalance = async (did: string) => {
-  return api.get<Balance>(`${ApiServicePaths.Points}/v1/public/balances/${did}?rank=true`)
+  return api.get<Balance>(`${ApiServicePaths.Points}/v1/public/balances/${did}`, {
+    query: {
+      rank: true,
+      referral_codes: true,
+    },
+  })
 }
 
 // Withdrawals

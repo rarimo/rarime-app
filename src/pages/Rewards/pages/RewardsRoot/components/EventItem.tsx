@@ -1,7 +1,7 @@
 import { Stack, Typography, useTheme } from '@mui/material'
 import { generatePath, NavLink } from 'react-router-dom'
 
-import { Event } from '@/api/modules/points'
+import { PointsEvent } from '@/api/modules/points'
 import { Icons, RoutePaths } from '@/enums'
 import RewardChip from '@/pages/Rewards/components/RewardChip'
 import { lineClamp } from '@/theme/helpers'
@@ -10,7 +10,7 @@ import { UiIcon } from '@/ui'
 import EventActions from './EventActions'
 
 interface Props {
-  event: Event
+  event: PointsEvent
   onClaim: () => Promise<void>
 }
 

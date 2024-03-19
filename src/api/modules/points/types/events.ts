@@ -39,7 +39,8 @@ export type EventMetadata = {
   dynamic?: Record<string, unknown>
 }
 
-export type Event = {
+// We use `PointsEvent` instead of `Event` to avoid name conflict with global `Event` type
+export type PointsEvent = {
   id: string
   type: 'event'
   status: EventStatuses

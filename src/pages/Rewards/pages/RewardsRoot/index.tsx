@@ -12,7 +12,7 @@ import ActiveEventsList from './components/ActiveEventsList'
 import BalanceBlock from './components/BalanceBlock'
 import EnterProgram from './components/EnterProgram'
 import LimitedEvents from './components/LimitedEvents'
-import ProgramDetails from './components/ProgramDetails'
+import ProgramAuth from './components/ProgramAuth'
 
 export default function RewardsRoot() {
   const { spacing } = useTheme()
@@ -56,9 +56,9 @@ export default function RewardsRoot() {
             <Skeleton height={spacing(50)} sx={{ borderRadius: 4 }} />
           </>
         ) : isAuthorized ? (
-          <ProgramDetails />
-        ) : (
           <EnterProgram />
+        ) : (
+          <ProgramAuth />
         )}
       </Stack>
     </Stack>

@@ -1,13 +1,13 @@
 import { Stack, Typography, useTheme } from '@mui/material'
 
-import { Event } from '@/api/modules/points'
+import { PointsEvent } from '@/api/modules/points'
 import { Icons } from '@/enums'
 import { formatDateDMY } from '@/helpers'
 import RewardChip from '@/pages/Rewards/components/RewardChip'
 import { UiIcon } from '@/ui'
 
 interface Props {
-  event: Event
+  event: PointsEvent
 }
 
 export default function EventItem({ event }: Props) {
