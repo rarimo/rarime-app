@@ -7,6 +7,7 @@ export type Balance = {
   is_disabled?: boolean
   is_verified?: boolean
   rank: number
+  referral_codes?: string[]
 }
 
 export type Withdrawal = {

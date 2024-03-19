@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
+import { formatNumber } from '@/helpers'
 import { useRewardsState } from '@/store'
 import { UiIcon } from '@/ui'
 
@@ -21,7 +22,7 @@ export default function BalanceBlock() {
           <Typography variant='body3' color={palette.text.secondary}>
             Reserved RMO
           </Typography>
-          <Typography variant='h4'>{balance?.amount ?? '–'}</Typography>
+          <Typography variant='h4'>{formatNumber(balance?.amount ?? 0)}</Typography>
         </Stack>
 
         <Button
@@ -54,7 +55,7 @@ export default function BalanceBlock() {
         </Button>
         <Typography variant='caption2' color={palette.text.secondary}>
           {/* TODO: update claim end date */}
-          Please claim before 14 Dec 2023, Or you lose this RMO
+          STUB: Please claim before 14 Dec 2023, Or you lose this RMO
         </Typography>
       </Stack>
 

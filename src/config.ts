@@ -10,6 +10,7 @@ const SUPPORTED_CHAINS_DETAILS: SupportedChainsDetails = {
 
 export type Config = {
   APP_NAME: string
+  APP_HOST_URL: string
   API_URL: string
   BUILD_VERSION: string
   SUPPORTED_CHAINS_DETAILS: SupportedChainsDetails
@@ -22,6 +23,7 @@ const FALLBACK_DEFAULT_CHAIN = Object.entries(FALLBACK_SUPPORTED_CHAINS)[0][0]
 
 export const config: Config = {
   APP_NAME: import.meta.env.VITE_APP_NAME,
+  APP_HOST_URL: import.meta.env.VITE_APP_HOST_URL,
   API_URL: import.meta.env.VITE_API_URL,
   BUILD_VERSION: packageJson.version || import.meta.env.VITE_APP_BUILD_VERSION,
   SUPPORTED_CHAINS_DETAILS,
