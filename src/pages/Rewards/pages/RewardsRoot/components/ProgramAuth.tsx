@@ -12,6 +12,7 @@ import {
 import { useLoading } from '@/hooks'
 import { rewardsStore } from '@/store'
 
+// TODO: Update UI when design is ready
 export default function ProgramAuth() {
   const { palette, spacing } = useTheme()
   const { isLoading, reload } = useLoading(undefined, rewardsStore.authorize, {
@@ -33,9 +34,9 @@ export default function ProgramAuth() {
       <Stack spacing={5} maxWidth={spacing(120)} width='100%' mx='auto' textAlign='center'>
         <Box
           component='img'
-          src='/imgs/gift-box.png'
-          alt='Gift box'
-          height={spacing(16)}
+          src='/imgs/rarimo-rewards.png'
+          alt='Rarimo rewards'
+          height={spacing(28)}
           width='auto'
           sx={{ objectFit: 'contain' }}
         />
