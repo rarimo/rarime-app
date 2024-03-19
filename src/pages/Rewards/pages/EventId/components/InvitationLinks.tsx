@@ -47,7 +47,7 @@ export default function InvitationLinks({ event }: Props) {
         </Stack>
       </Stack>
     ) : (
-      <NoDataView title='No Referral Codes' />
+      <NoDataView title='No invitation links' />
     )
   ) : (
     <Stack alignItems='center' p={20}>

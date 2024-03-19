@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   CircularProgress,
   Divider,
@@ -8,10 +9,8 @@ import {
   useTheme,
 } from '@mui/material'
 
-import { Icons } from '@/enums'
 import { useLoading } from '@/hooks'
 import { rewardsStore } from '@/store'
-import { UiIcon } from '@/ui'
 
 export default function ProgramAuth() {
   const { palette, spacing } = useTheme()
@@ -20,18 +19,33 @@ export default function ProgramAuth() {
   })
 
   return (
-    <Paper>
-      <Stack spacing={5} alignItems='center' maxWidth={spacing(120)} mx='auto' textAlign='center'>
-        <Stack p={3} borderRadius={250} bgcolor={palette.action.active}>
-          <UiIcon name={Icons.Rarimo} size={10} />
+    <Paper component={Stack} spacing={8} position='relative'>
+      <Box
+        component='img'
+        src='/imgs/rewards-bg.png'
+        alt='Rewards'
+        width='100%'
+        position='absolute'
+        top={0}
+        left={0}
+        sx={{ pointerEvents: 'none' }}
+      />
+      <Stack spacing={5} maxWidth={spacing(120)} width='100%' mx='auto' textAlign='center'>
+        <Box
+          component='img'
+          src='/imgs/gift-box.png'
+          alt='Gift box'
+          height={spacing(16)}
+          width='auto'
+          sx={{ objectFit: 'contain' }}
+        />
+        <Stack spacing={2}>
+          <Typography variant='h6'>Sign in to rewards program</Typography>
+          <Typography variant='body2' color={palette.text.secondary}>
+            Claim airdrops & earn RMO
+          </Typography>
         </Stack>
-        <Typography variant='h6' maxWidth={spacing(50)}>
-          Enter into rewards program
-        </Typography>
-        <Typography variant='body2' color={palette.text.secondary}>
-          Claim airdrops & earn RMO
-        </Typography>
-        <Divider flexItem />
+        <Divider />
         <Button
           fullWidth
           size='large'
@@ -39,7 +53,7 @@ export default function ProgramAuth() {
           disabled={isLoading}
           onClick={reload}
         >
-          {isLoading ? 'Authorizing...' : 'Enter Program'}
+          {isLoading ? 'Signing In...' : 'Sign In'}
         </Button>
       </Stack>
     </Paper>
