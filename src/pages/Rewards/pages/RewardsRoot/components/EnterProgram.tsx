@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Paper, Stack, Typography, useTheme } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
 import { UiIcon } from '@/ui'
@@ -7,6 +7,7 @@ import { UiIcon } from '@/ui'
 import InvitationForm from './InvitationForm'
 
 export default function EnterProgram() {
+  const location = useLocation()
   const { palette, spacing } = useTheme()
 
   const socials = [
@@ -55,7 +56,13 @@ export default function EnterProgram() {
           </Typography>
         </Stack>
         <InvitationForm />
-        <Button component={NavLink} to={RoutePaths.RewardsAbout} variant='text' color='secondary'>
+        <Button
+          component={NavLink}
+          to={RoutePaths.RewardsAbout}
+          state={{ from: location.pathname + location.search }}
+          variant='text'
+          color='secondary'
+        >
           Learn more about this program
         </Button>
       </Stack>

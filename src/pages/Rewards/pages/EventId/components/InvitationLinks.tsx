@@ -11,6 +11,8 @@ interface Props {
   event: Event
 }
 
+const MAX_REFERRAL_CODES = 5
+
 export default function InvitationLinks({ event }: Props) {
   const { balance } = useRewardsState()
   const { palette } = useTheme()
@@ -24,7 +26,9 @@ export default function InvitationLinks({ event }: Props) {
       <Stack spacing={5}>
         <Stack spacing={2}>
           {/* TODO: Implement the actual invited count */}
-          <Typography variant='subtitle3'>Invited 0/{balance.referral_codes.length}</Typography>
+          <Typography variant='subtitle3'>
+            Invited {MAX_REFERRAL_CODES - balance.referral_codes.length}/{MAX_REFERRAL_CODES}
+          </Typography>
           <Typography variant='body3' color={palette.text.secondary}>
             STUB: Invite friends and earn RMO
           </Typography>
@@ -37,7 +41,7 @@ export default function InvitationLinks({ event }: Props) {
               index={index}
               reward={event.meta.static.reward}
               // TODO: Implement the actual isUsed
-              isUsed={index % 2 === 1}
+              // isUsed={index % 2 === 1}
             />
           ))}
         </Stack>
