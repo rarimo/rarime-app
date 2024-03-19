@@ -7,6 +7,7 @@ import { getClaimIdFromVC } from '@/api/modules/zkp'
 import { BackLink, CredentialCard, NoDataView } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
 import { ErrorHandler } from '@/helpers'
+import ProofGenerationModal from '@/pages/Credentials/pages/CredentialsId/components/ProofGenerationModal'
 import { useCredentialsState } from '@/store'
 import { UiIcon } from '@/ui'
 
@@ -20,6 +21,7 @@ export default function CredentialsId() {
 
   const [isPending, setIsPending] = useState(false)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
+  const [isProofGenModalOpen, setIsProofGenModalOpen] = useState(false)
 
   const vc = useMemo(() => {
     return vcs.find(vc => getClaimIdFromVC(vc) === claimId)
@@ -107,9 +109,13 @@ export default function CredentialsId() {
 
             <Stack spacing={10} direction='row' justifyContent='center'>
               {/* TODO: uncomment when actions are available */}
-              {/* <ActionButton iconProps={{ name: Icons.Plus }} disabled={isPending}>
+              <ActionButton
+                iconProps={{ name: Icons.Plus }}
+                onClick={() => setIsProofGenModalOpen(true)}
+              >
                 Generate proof
-              </ActionButton> */}
+              </ActionButton>
+
               <ActionButton
                 iconProps={{ name: Icons.Info }}
                 disabled={isPending}
@@ -133,6 +139,12 @@ export default function CredentialsId() {
                 open={isInfoModalOpen}
                 vc={vc}
                 onClose={() => setIsInfoModalOpen(false)}
+              />
+
+              <ProofGenerationModal
+                vc={vc}
+                open={isProofGenModalOpen}
+                onClose={() => setIsProofGenModalOpen(false)}
               />
             </Stack>
           </Stack>
