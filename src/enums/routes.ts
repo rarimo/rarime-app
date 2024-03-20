@@ -26,7 +26,6 @@ export enum RoutePaths {
   AcceptInvitationFillRequest = '/i/fill-request',
 
   Credentials = '/credentials',
-  CredentialsList = '/credentials/list',
   CredentialsId = '/credentials/:claimId',
   CredentialsRequests = '/credentials/requests',
 

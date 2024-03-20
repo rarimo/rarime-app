@@ -85,7 +85,7 @@ export default function CredentialsId() {
 
   return (
     <Stack spacing={6}>
-      <BackLink to={RoutePaths.CredentialsList} />
+      <BackLink to={RoutePaths.Credentials} />
       <Paper>
         {vc && issuerDetails ? (
           <Stack spacing={6}>
@@ -152,7 +152,7 @@ export default function CredentialsId() {
           <NoDataView
             title='Credential not found'
             action={
-              <Button component={NavLink} to={RoutePaths.CredentialsList} size='medium'>
+              <Button component={NavLink} to={RoutePaths.Credentials} size='medium'>
                 View all credentials
               </Button>
             }

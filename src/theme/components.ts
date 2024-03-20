@@ -354,6 +354,20 @@ export const components: Components<Omit<Theme, 'components'>> = {
       paper: ({ theme }) => ({
         borderRadius: theme.spacing(2),
         boxShadow: '0px 8px 16px 0px rgba(0, 0, 0, 0.04)',
+        padding: 0,
+        zIndex: 100,
+        backgroundColor: theme.palette.background.paper,
+        border: `1px solid ${theme.palette.divider}`,
+        overflow: 'hidden',
+      }),
+    },
+  },
+  MuiMenuItem: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        '&:hover': {
+          backgroundColor: theme.palette.action.active,
+        },
       }),
     },
   },
