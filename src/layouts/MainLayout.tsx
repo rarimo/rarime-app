@@ -10,7 +10,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
   return (
     <Stack direction='row' spacing={4} height={vh(100)} width='100%'>
       <AppNavbar />
-      <Stack py={8} flex={1} overflow='hidden auto'>
+      <Stack py={8} flex={1} overflow='hidden auto' sx={{ px: { sm: 4, md: 0 } }}>
         <Stack mx='auto' maxWidth={spacing(220)} width='100%'>
           {children}
         </Stack>

@@ -47,7 +47,7 @@ export const [walletStore, useWalletState] = createStore(
       if (!state.balances.length) {
         state.balances = [
           {
-            amount: '',
+            amount: '0',
             denom: CHAINS[rarimoClient.wallet.chainId].currencies[0].coinDenom,
             decimals: CHAINS[rarimoClient.wallet.chainId].currencies[0].coinDecimals,
           },
