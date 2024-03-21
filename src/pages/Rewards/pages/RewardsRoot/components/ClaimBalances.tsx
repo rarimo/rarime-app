@@ -1,16 +1,35 @@
 import { Divider, Stack, Typography, useTheme } from '@mui/material'
+import { useMemo } from 'react'
 
-import { useRewardsState } from '@/store'
+import { formatBalance, formatNumber } from '@/helpers'
+import { useLoading } from '@/hooks'
+import { useRewardsState, useWalletState, walletStore } from '@/store'
 
 export default function ClaimBalances() {
   const { palette, spacing } = useTheme()
   const { balance } = useRewardsState()
-  // TODO: replace with real wallet balance
-  const walletBalance = 0
+  const { balances: walletBalances } = useWalletState()
+
+  const mainBalance = useMemo(() => walletBalances?.[0], [walletBalances])
+
+  useLoading(undefined, async () => {
+    await walletStore.connect()
+    await walletStore.loadBalances()
+  })
 
   const balances = [
-    { label: 'From', title: 'Reserved', value: balance?.amount ?? 0 },
-    { label: 'To', title: 'Balance', value: walletBalance },
+    {
+      label: 'From',
+      title: 'Reserved',
+      value: `${formatNumber(balance?.amount ?? 0)} RMO`,
+    },
+    {
+      label: 'To',
+      title: 'Balance',
+      value: mainBalance
+        ? `${formatBalance(mainBalance.amount, mainBalance.decimals)} ${mainBalance.denom}`
+        : '...',
+    },
   ]
 
   return (
@@ -25,10 +44,7 @@ export default function ClaimBalances() {
               <Divider orientation='vertical' flexItem />
               <Typography variant='body3'>{balance.title}</Typography>
             </Stack>
-            <Typography variant='subtitle5'>
-              {balance.value}
-              {' RMO'}
-            </Typography>
+            <Typography variant='subtitle5'>{balance.value}</Typography>
           </Stack>
           {index !== balances.length - 1 && <Divider sx={{ width: spacing(63), mx: 'auto' }} />}
         </Stack>
