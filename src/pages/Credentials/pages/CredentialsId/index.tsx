@@ -108,7 +108,6 @@ export default function CredentialsId() {
             </Stack>
 
             <Stack spacing={10} direction='row' justifyContent='center'>
-              {/* TODO: uncomment when actions are available */}
               <ActionButton
                 appearance='primary'
                 icon={Icons.Plus}

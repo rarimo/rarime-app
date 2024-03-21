@@ -84,7 +84,6 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
           </Stack>
         </Stack>
         <Divider sx={{ mb: 2 }} />
-        {/*TODO: Add handler*/}
         <MenuItem onClick={exportIdentity} sx={menuItemSx} disabled={isExporting}>
           <ListItemIcon>
             <UiIcon name={Icons.Key} size={5} sx={{ color: palette.text.secondary }} />

@@ -79,7 +79,7 @@ export type OrgVerificationCode = {
   code: string
 }
 
-//Todo: change other api methods response to this for consistency
+// TODO: change other api methods response to this for consistency
 export type OrgListMeta = {
   count: number
 }
