@@ -152,8 +152,8 @@ export default function SendModal({ onSend, ...rest }: Props) {
                   <FormControl>
                     <UiTextField
                       {...field}
-                      label='Address'
-                      placeholder='rarimo...'
+                      label='Recipient Address'
+                      placeholder='Starts with rarimo1...'
                       errorMessage={getErrorMessage(FieldNames.Address)}
                       disabled={isFormDisabled}
                     />
@@ -194,6 +194,7 @@ export default function SendModal({ onSend, ...rest }: Props) {
                           ),
                         }}
                         label='Amount'
+                        placeholder={`Enter amount in ${mainBalance?.denom}`}
                         errorMessage={getErrorMessage(FieldNames.Amount)}
                         disabled={isFormDisabled}
                       />
@@ -217,22 +218,20 @@ export default function SendModal({ onSend, ...rest }: Props) {
 
       <UiDialogActions>
         <Stack direction='row' spacing={4} justifyContent='space-between'>
-          {totalAmountAfterFeeBN && (
-            <Stack spacing={1}>
-              <Typography variant='body4' color={palette.text.secondary}>
-                Receive amount:
+          <Stack spacing={1}>
+            <Typography variant='body4' color={palette.text.secondary}>
+              Receive amount:
+            </Typography>
+            <Stack direction='row' alignItems='baseline' spacing={1}>
+              <Typography variant='subtitle3'>
+                {formatAmount(totalAmountAfterFeeBN ?? '0', totalAmountAfterFeeBN?.decimals)}{' '}
+                {mainBalance?.denom}
               </Typography>
-              <Stack direction='row' alignItems='baseline' spacing={1}>
-                <Typography variant='subtitle3'>
-                  {formatAmount(totalAmountAfterFeeBN, totalAmountAfterFeeBN?.decimals)}{' '}
-                  {mainBalance?.denom}
-                </Typography>
-                <Typography variant='body4' color={palette.text.secondary}>
-                  Fee: 0.005 {mainBalance?.denom}
-                </Typography>
-              </Stack>
+              <Typography variant='body4' color={palette.text.secondary}>
+                Fee: 0.005 {mainBalance?.denom}
+              </Typography>
             </Stack>
-          )}
+          </Stack>
 
           <Button sx={{ width: spacing(42), ml: 'auto' }} type='submit' disabled={isFormDisabled}>
             Send
