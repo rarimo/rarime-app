@@ -17,37 +17,35 @@ export default function ActionButton({ appearance = 'default', children, icon, .
     switch (appearance) {
       case 'primary':
         return {
-          bgcolor: palette.additional.pureBlack,
-          color: palette.primary.main,
+          default: {
+            bgcolor: palette.additional.pureBlack,
+            color: palette.primary.main,
+          },
+          hover: {
+            bgcolor: palette.primary.main,
+            color: palette.common.black,
+          },
         }
       case 'danger':
         return {
-          bgcolor: palette.error.lighter,
-          color: palette.error.main,
+          default: {
+            bgcolor: palette.error.lighter,
+            color: palette.error.main,
+          },
+          hover: {
+            bgcolor: palette.error.main,
+            color: palette.common.white,
+          },
         }
       default:
         return {
-          bgcolor: palette.action.active,
-          color: palette.text.primary,
-        }
-    }
-  }, [appearance, palette])
-
-  const iconWrapperHoverSx = useMemo(() => {
-    switch (appearance) {
-      case 'primary':
-        return {
-          bgcolor: palette.primary.main,
-          color: palette.common.black,
-        }
-      case 'danger':
-        return {
-          bgcolor: palette.error.main,
-          color: palette.common.white,
-        }
-      default:
-        return {
-          bgcolor: palette.action.focus,
+          default: {
+            bgcolor: palette.action.active,
+            color: palette.text.primary,
+          },
+          hover: {
+            bgcolor: palette.action.focus,
+          },
         }
     }
   }, [appearance, palette])
@@ -64,7 +62,7 @@ export default function ActionButton({ appearance = 'default', children, icon, .
       sx={{
         textAlign: 'center',
         width: 'min-content',
-        '&:hover > .MuiStack-root': iconWrapperHoverSx,
+        '&:hover > .MuiStack-root': iconWrapperSx.hover,
       }}
     >
       <Stack
@@ -74,7 +72,7 @@ export default function ActionButton({ appearance = 'default', children, icon, .
         alignItems='center'
         borderRadius='50%'
         sx={{
-          ...iconWrapperSx,
+          ...iconWrapperSx.default,
           transition: Transitions.Default,
         }}
       >
