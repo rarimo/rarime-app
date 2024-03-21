@@ -1,4 +1,4 @@
-import { Divider, Stack, useTheme } from '@mui/material'
+import { Divider, IconButton, Stack, useTheme } from '@mui/material'
 import { useCallback, useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
@@ -6,7 +6,7 @@ import { ProfileMenu } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
 import { uiStore, useIdentityState, useUiState } from '@/store'
 import { Transitions } from '@/theme/constants'
-import { UiIcon, UiIconButton } from '@/ui'
+import { UiIcon } from '@/ui'
 
 interface NavbarLinkProps {
   to: RoutePaths
@@ -103,9 +103,9 @@ const AppNavbar = () => {
       </Stack>
 
       <Stack spacing={4}>
-        <UiIconButton onClick={togglePaletteMode}>
+        <IconButton onClick={togglePaletteMode}>
           <UiIcon name={paletteMode === 'dark' ? Icons.Moon : Icons.Sun} size={5} />
-        </UiIconButton>
+        </IconButton>
         <ProfileMenu userDid={userDid} />
       </Stack>
     </Stack>

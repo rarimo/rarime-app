@@ -1,13 +1,13 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { FormControl, Stack, Typography } from '@mui/material'
+import { FormControl, IconButton, Stack, Typography } from '@mui/material'
 import { useMemo } from 'react'
 import { Controller, FieldArrayWithId, FieldPath } from 'react-hook-form'
 
 import { OrgMetadataLink } from '@/api/modules/orgs'
 import { Icons } from '@/enums'
 import { Form } from '@/hooks'
-import { UiIcon, UiIconButton, UiTextField } from '@/ui'
+import { UiIcon, UiTextField } from '@/ui'
 
 interface Props {
   field: FieldArrayWithId<OrgMetadataLink>
@@ -63,12 +63,12 @@ export default function LinkForm({ field, index, form, onRemove }: Props) {
         </Typography>
         {hasManyLinks && (
           <Stack direction='row' spacing={4}>
-            <UiIconButton color='secondary' sx={{ cursor: 'grab' }} {...attributes} {...listeners}>
+            <IconButton color='secondary' sx={{ cursor: 'grab' }} {...attributes} {...listeners}>
               <UiIcon name={Icons.DotsSixVertical} size={5} />
-            </UiIconButton>
-            <UiIconButton color='error' onClick={onRemove}>
+            </IconButton>
+            <IconButton color='error' onClick={onRemove}>
               <UiIcon name={Icons.TrashSimple} size={5} />
-            </UiIconButton>
+            </IconButton>
           </Stack>
         )}
       </Stack>

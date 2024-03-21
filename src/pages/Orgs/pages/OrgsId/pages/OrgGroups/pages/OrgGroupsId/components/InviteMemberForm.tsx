@@ -1,4 +1,4 @@
-import { FormControl, Stack, StackProps } from '@mui/material'
+import { Button, FormControl, Stack, StackProps } from '@mui/material'
 import { HTMLAttributes, useCallback } from 'react'
 import { Controller, useFieldArray } from 'react-hook-form'
 
@@ -12,7 +12,7 @@ import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { useOrgGroupDetails } from '@/pages/Orgs/pages/OrgsId/pages/OrgGroups/hooks'
-import { UiButton, UiTextField } from '@/ui'
+import { UiTextField } from '@/ui'
 
 interface Props extends StackProps {
   formProps?: HTMLAttributes<HTMLFormElement>
@@ -106,7 +106,7 @@ export default function InviteMemberForm({ formProps, onMemberInvitationCreated,
           </FormControl>
         ))}
 
-        <UiButton type='submit'>Invite</UiButton>
+        <Button type='submit'>Invite</Button>
       </form>
     </Stack>
   )

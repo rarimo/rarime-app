@@ -1,4 +1,12 @@
-import { Card, CardActions, CardContent, Stack, StackProps, Typography } from '@mui/material'
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Stack,
+  StackProps,
+  Typography,
+} from '@mui/material'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -6,7 +14,6 @@ import { OrgGroupRequestStatuses, OrgGroupRequestWithClaims } from '@/api/module
 import { BackLink, PageTitles } from '@/common'
 import { BusEvents, RoutePaths } from '@/enums'
 import { bus } from '@/helpers'
-import { UiButton } from '@/ui'
 
 import { ClaimVCsModal, FillRequestFormDrawer } from './components'
 
@@ -45,23 +52,23 @@ export default function CredentialsRequests({ ...rest }: Props) {
 
             <CardActions>
               {orgGroupRequest.status.value === OrgGroupRequestStatuses.Created ? (
-                <UiButton
+                <Button
                   onClick={() => {
                     setIsFillFormDrawerShown(true)
                     setSelectedRequest(orgGroupRequest)
                   }}
                 >
                   Fill form
-                </UiButton>
+                </Button>
               ) : orgGroupRequest.status.value === OrgGroupRequestStatuses.Submitted ? (
-                <UiButton
+                <Button
                   onClick={() => {
                     setIsClaimModalShown(true)
                     setSelectedRequest(orgGroupRequest)
                   }}
                 >
                   Claim VCs
-                </UiButton>
+                </Button>
               ) : orgGroupRequest.status.value === OrgGroupRequestStatuses.Filled ? (
                 <Typography>Wait for approval</Typography>
               ) : (

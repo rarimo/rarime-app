@@ -1,4 +1,4 @@
-import { Drawer, Stack } from '@mui/material'
+import { Button, Drawer, Stack } from '@mui/material'
 import trimEnd from 'lodash/trimEnd'
 import { useCallback, useMemo, useState } from 'react'
 import { generatePath, Navigate } from 'react-router-dom'
@@ -14,7 +14,6 @@ import { RoutePaths } from '@/enums'
 import { useLoading, useNestedRoutes } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
 import { useOrgGroupDetails } from '@/pages/Orgs/pages/OrgsId/pages/OrgGroups/hooks'
-import { UiButton } from '@/ui'
 
 import { InviteMemberForm, List } from './components'
 
@@ -152,14 +151,14 @@ export default function OrgGroupsId() {
         }
         actionBar={
           <Stack direction='row' spacing={4} justifyContent='space-between'>
-            <UiButton
+            <Button
               variant='contained'
               color='primary'
               sx={{ ml: 'auto' }}
               onClick={() => setIsInviteDrawerShown(true)}
             >
               Invite Member
-            </UiButton>
+            </Button>
           </Stack>
         }
       />

@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material'
-import { ComponentProps, useCallback } from 'react'
+import { Button, Dialog, DialogProps, Typography } from '@mui/material'
+import { useCallback } from 'react'
 
 import { zkpSnap } from '@/api/clients'
 import { OrgGroupRequestWithClaims } from '@/api/modules/orgs'
@@ -8,9 +8,9 @@ import { Icons } from '@/enums'
 import { ErrorHandler } from '@/helpers'
 import { useLoading } from '@/hooks'
 import { useIdentityState } from '@/store'
-import { UiBasicModal, UiButton, UiIcon } from '@/ui'
+import { UiIcon } from '@/ui'
 
-type Props = ComponentProps<typeof UiBasicModal> & {
+type Props = DialogProps & {
   orgGroupRequest: OrgGroupRequestWithClaims | undefined
 }
 
@@ -64,7 +64,7 @@ export default function ClaimVCsModal({ orgGroupRequest, onClose, ...rest }: Pro
   }, [claimOffers])
 
   return (
-    <UiBasicModal
+    <Dialog
       {...rest}
       onClose={() => {
         /* empty */
@@ -79,8 +79,8 @@ export default function ClaimVCsModal({ orgGroupRequest, onClose, ...rest }: Pro
         </Typography>
       ))}
 
-      <UiButton onClick={saveAllVerifiableCredentials}>Claim</UiButton>
-      <UiButton onClick={onClose}>Cancel</UiButton>
-    </UiBasicModal>
+      <Button onClick={saveAllVerifiableCredentials}>Claim</Button>
+      <Button onClick={e => onClose?.(e, 'escapeKeyDown')}>Cancel</Button>
+    </Dialog>
   )
 }

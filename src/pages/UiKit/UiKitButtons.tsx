@@ -1,7 +1,7 @@
-import { Stack, Typography } from '@mui/material'
+import { Button, IconButton, Stack, Typography } from '@mui/material'
 
 import { Icons } from '@/enums'
-import { UiButton, UiIcon, UiIconButton } from '@/ui'
+import { UiIcon } from '@/ui'
 
 export default function UiKitButtons() {
   return (
@@ -13,57 +13,57 @@ export default function UiKitButtons() {
         gap={theme => theme.spacing(2)}
         justifyContent='flex-start'
       >
-        <UiButton variant='text'>Text</UiButton>
-        <UiButton variant='text' disabled={true}>
+        <Button variant='text'>Text</Button>
+        <Button variant='text' disabled={true}>
           Disabled
-        </UiButton>
-        <UiButton variant='text' href='#'>
+        </Button>
+        <Button variant='text' href='#'>
           Link
-        </UiButton>
+        </Button>
 
-        <UiButton variant='text' size='small'>
+        <Button variant='text' size='small'>
           Small
-        </UiButton>
-        <UiButton variant='text' size='medium'>
+        </Button>
+        <Button variant='text' size='medium'>
           Medium
-        </UiButton>
-        <UiButton variant='text' size='large'>
+        </Button>
+        <Button variant='text' size='large'>
           Large
-        </UiButton>
+        </Button>
 
-        <UiButton variant='text' color='secondary'>
+        <Button variant='text' color='secondary'>
           Secondary
-        </UiButton>
-        <UiButton variant='text' color='success'>
+        </Button>
+        <Button variant='text' color='success'>
           Success
-        </UiButton>
-        <UiButton variant='text' color='error'>
+        </Button>
+        <Button variant='text' color='error'>
           Error
-        </UiButton>
-        <UiButton variant='text' color='info'>
+        </Button>
+        <Button variant='text' color='info'>
           Info
-        </UiButton>
-        <UiButton variant='text' color='warning'>
+        </Button>
+        <Button variant='text' color='warning'>
           Warning
-        </UiButton>
+        </Button>
 
         {/*ICONS*/}
-        <UiButton variant='text' startIcon={<UiIcon name={Icons.Bell} />}>
+        <Button variant='text' startIcon={<UiIcon name={Icons.Bell} />}>
           Text
-        </UiButton>
-        <UiButton variant='text' endIcon={<UiIcon name={Icons.TrashSimple} />}>
+        </Button>
+        <Button variant='text' endIcon={<UiIcon name={Icons.TrashSimple} />}>
           Text
-        </UiButton>
-        <UiButton
+        </Button>
+        <Button
           variant='text'
           startIcon={<UiIcon name={Icons.TrashSimple} />}
           endIcon={<UiIcon name={Icons.TrashSimple} />}
         >
           Text
-        </UiButton>
-        <UiButton variant='text'>
+        </Button>
+        <Button variant='text'>
           <UiIcon name={Icons.TrashSimple} />
-        </UiButton>
+        </Button>
       </Stack>
 
       <Typography variant='h6'>Contained</Typography>
@@ -73,57 +73,57 @@ export default function UiKitButtons() {
         gap={theme => theme.spacing(2)}
         justifyContent='flex-start'
       >
-        <UiButton variant='contained'>Contained</UiButton>
-        <UiButton variant='contained' disabled={true}>
+        <Button variant='contained'>Contained</Button>
+        <Button variant='contained' disabled={true}>
           Disabled
-        </UiButton>
-        <UiButton variant='contained' href='#'>
+        </Button>
+        <Button variant='contained' href='#'>
           Link
-        </UiButton>
+        </Button>
 
-        <UiButton variant='contained' size='small'>
+        <Button variant='contained' size='small'>
           Small
-        </UiButton>
-        <UiButton variant='contained' size='medium'>
+        </Button>
+        <Button variant='contained' size='medium'>
           Medium
-        </UiButton>
-        <UiButton variant='contained' size='large'>
+        </Button>
+        <Button variant='contained' size='large'>
           Large
-        </UiButton>
+        </Button>
 
-        <UiButton variant='contained' color='secondary'>
+        <Button variant='contained' color='secondary'>
           Secondary
-        </UiButton>
-        <UiButton variant='contained' color='success'>
+        </Button>
+        <Button variant='contained' color='success'>
           Success
-        </UiButton>
-        <UiButton variant='contained' color='error'>
+        </Button>
+        <Button variant='contained' color='error'>
           Error
-        </UiButton>
-        <UiButton variant='contained' color='info'>
+        </Button>
+        <Button variant='contained' color='info'>
           Info
-        </UiButton>
-        <UiButton variant='contained' color='warning'>
+        </Button>
+        <Button variant='contained' color='warning'>
           Warning
-        </UiButton>
+        </Button>
 
         {/*ICONS*/}
-        <UiButton variant='contained' startIcon={<UiIcon name={Icons.TrashSimple} />}>
+        <Button variant='contained' startIcon={<UiIcon name={Icons.TrashSimple} />}>
           Text
-        </UiButton>
-        <UiButton variant='contained' endIcon={<UiIcon name={Icons.TrashSimple} />}>
+        </Button>
+        <Button variant='contained' endIcon={<UiIcon name={Icons.TrashSimple} />}>
           Text
-        </UiButton>
-        <UiButton
+        </Button>
+        <Button
           variant='contained'
           startIcon={<UiIcon name={Icons.TrashSimple} />}
           endIcon={<UiIcon name={Icons.TrashSimple} />}
         >
           Text
-        </UiButton>
-        <UiButton variant='contained'>
+        </Button>
+        <Button variant='contained'>
           <UiIcon name={Icons.TrashSimple} />
-        </UiButton>
+        </Button>
       </Stack>
 
       <Typography variant='h6'>Outlined</Typography>
@@ -133,57 +133,57 @@ export default function UiKitButtons() {
         gap={theme => theme.spacing(2)}
         justifyContent='flex-start'
       >
-        <UiButton variant='outlined'>Outlined</UiButton>
-        <UiButton variant='outlined' disabled={true}>
+        <Button variant='outlined'>Outlined</Button>
+        <Button variant='outlined' disabled={true}>
           Disabled
-        </UiButton>
-        <UiButton variant='outlined' href='#'>
+        </Button>
+        <Button variant='outlined' href='#'>
           Link
-        </UiButton>
+        </Button>
 
-        <UiButton variant='outlined' size='small'>
+        <Button variant='outlined' size='small'>
           Small
-        </UiButton>
-        <UiButton variant='outlined' size='medium'>
+        </Button>
+        <Button variant='outlined' size='medium'>
           Medium
-        </UiButton>
-        <UiButton variant='outlined' size='large'>
+        </Button>
+        <Button variant='outlined' size='large'>
           Large
-        </UiButton>
+        </Button>
 
-        <UiButton variant='outlined' color='secondary'>
+        <Button variant='outlined' color='secondary'>
           Secondary
-        </UiButton>
-        <UiButton variant='outlined' color='success'>
+        </Button>
+        <Button variant='outlined' color='success'>
           Success
-        </UiButton>
-        <UiButton variant='outlined' color='error'>
+        </Button>
+        <Button variant='outlined' color='error'>
           Error
-        </UiButton>
-        <UiButton variant='outlined' color='info'>
+        </Button>
+        <Button variant='outlined' color='info'>
           Info
-        </UiButton>
-        <UiButton variant='outlined' color='warning'>
+        </Button>
+        <Button variant='outlined' color='warning'>
           Warning
-        </UiButton>
+        </Button>
 
         {/*ICONS*/}
-        <UiButton variant='outlined' startIcon={<UiIcon name={Icons.TrashSimple} />}>
+        <Button variant='outlined' startIcon={<UiIcon name={Icons.TrashSimple} />}>
           Text
-        </UiButton>
-        <UiButton variant='outlined' endIcon={<UiIcon name={Icons.TrashSimple} />}>
+        </Button>
+        <Button variant='outlined' endIcon={<UiIcon name={Icons.TrashSimple} />}>
           Text
-        </UiButton>
-        <UiButton
+        </Button>
+        <Button
           variant='outlined'
           startIcon={<UiIcon name={Icons.TrashSimple} />}
           endIcon={<UiIcon name={Icons.TrashSimple} />}
         >
           Text
-        </UiButton>
-        <UiButton variant='outlined'>
+        </Button>
+        <Button variant='outlined'>
           <UiIcon name={Icons.TrashSimple} />
-        </UiButton>
+        </Button>
       </Stack>
 
       <Typography variant='h6'>Icon Button</Typography>
@@ -193,12 +193,12 @@ export default function UiKitButtons() {
         gap={theme => theme.spacing(2)}
         justifyContent='flex-start'
       >
-        <UiIconButton>
+        <IconButton>
           <UiIcon name={Icons.TrashSimple} />
-        </UiIconButton>
-        <UiIconButton disabled={true}>
+        </IconButton>
+        <IconButton disabled={true}>
           <UiIcon name={Icons.TrashSimple} />
-        </UiIconButton>
+        </IconButton>
       </Stack>
 
       {/*SIZES*/}
@@ -209,10 +209,10 @@ export default function UiKitButtons() {
         gap={theme => theme.spacing(2)}
         justifyContent='flex-start'
       >
-        <UiButton size='small'>Small button</UiButton>
-        <UiButton size='medium'>Medium button</UiButton>
-        <UiButton size='large'>Large button</UiButton>
-        <UiButton>Default button</UiButton>
+        <Button size='small'>Small button</Button>
+        <Button size='medium'>Medium button</Button>
+        <Button size='large'>Large button</Button>
+        <Button>Default button</Button>
       </Stack>
     </Stack>
   )

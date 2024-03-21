@@ -236,6 +236,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: {
         padding: 0,
+        borderRadius: '1000px',
         transition: Transitions.Default,
         '&:hover': {
           backgroundColor: 'transparent',

@@ -1,4 +1,4 @@
-import { FormControl, Stack, StackProps, useTheme } from '@mui/material'
+import { Button, FormControl, Stack, StackProps, useTheme } from '@mui/material'
 import { HTMLAttributes, useCallback } from 'react'
 import { Controller } from 'react-hook-form'
 
@@ -7,7 +7,7 @@ import { Icons } from '@/enums'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useIdentityState } from '@/store'
-import { UiButton, UiIcon, UiImageUploader, UiTextField } from '@/ui'
+import { UiIcon, UiImageUploader, UiTextField } from '@/ui'
 
 interface Props extends StackProps {
   formProps?: HTMLAttributes<HTMLFormElement>
@@ -138,9 +138,9 @@ export default function MetadataForm({ formProps, onOrgCreated, ...rest }: Props
           />
         </Stack>
 
-        <UiButton type='submit' size='large' endIcon={<UiIcon name={Icons.ArrowRight} size={4} />}>
+        <Button type='submit' size='large' endIcon={<UiIcon name={Icons.ArrowRight} size={4} />}>
           Create
-        </UiButton>
+        </Button>
       </form>
     </Stack>
   )

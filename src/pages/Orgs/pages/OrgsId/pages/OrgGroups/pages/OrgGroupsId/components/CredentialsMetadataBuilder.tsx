@@ -1,5 +1,5 @@
 import { time } from '@distributedlab/tools'
-import { FormControl, Stack, StackProps } from '@mui/material'
+import { Button, FormControl, Stack, StackProps } from '@mui/material'
 import { useCallback, useMemo } from 'react'
 import { Controller } from 'react-hook-form'
 
@@ -13,7 +13,7 @@ import { VCGroupOverviewCard } from '@/common'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
-import { UiButton, UiDatePicker, UiImageUploader, UiSelect, UiTextField } from '@/ui'
+import { UiDatePicker, UiImageUploader, UiSelect, UiTextField } from '@/ui'
 
 interface Props extends StackProps {
   orgGroupRequest: OrgGroupRequest
@@ -214,9 +214,9 @@ export default function CredentialsMetadataBuilder({
             )}
           />
 
-          <UiButton type='submit' disabled={isFormDisabled}>
+          <Button type='submit' disabled={isFormDisabled}>
             Submit
-          </UiButton>
+          </Button>
         </Stack>
       </form>
       <VCGroupOverviewCard

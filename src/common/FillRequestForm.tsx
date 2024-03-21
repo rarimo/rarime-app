@@ -1,4 +1,4 @@
-import { FormControl, Stack, StackProps } from '@mui/material'
+import { Button, FormControl, Stack, StackProps } from '@mui/material'
 import startCase from 'lodash/startCase'
 import { HTMLAttributes, useCallback } from 'react'
 import { Controller } from 'react-hook-form'
@@ -9,7 +9,7 @@ import { ParsedCredentialSchemaProperty } from '@/api/modules/zkp'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useIdentityState } from '@/store'
-import { UiButton, UiTextField } from '@/ui'
+import { UiTextField } from '@/ui'
 
 type Props = StackProps & {
   formProps?: HTMLAttributes<HTMLFormElement>
@@ -120,7 +120,7 @@ export default function FillRequestForm({
           )
         })}
 
-        <UiButton type='submit'>Fill</UiButton>
+        <Button type='submit'>Fill</Button>
       </form>
     </Stack>
   )

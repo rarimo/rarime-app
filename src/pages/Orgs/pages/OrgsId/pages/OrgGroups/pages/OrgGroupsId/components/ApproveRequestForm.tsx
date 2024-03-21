@@ -1,9 +1,8 @@
-import { Stack, StackProps } from '@mui/material'
+import { Button, Dialog, Stack, StackProps } from '@mui/material'
 import { useCallback, useState } from 'react'
 
 import { OrgGroupRequest, rejectOrgGroupRequest } from '@/api/modules/orgs'
 import { ErrorHandler } from '@/helpers'
-import { UiBasicModal, UiButton } from '@/ui'
 
 import CredentialsMetadataBuilder from './CredentialsMetadataBuilder'
 
@@ -38,17 +37,17 @@ export default function ApproveRequestForm({
 
   return (
     <Stack {...rest} flex={1} p={5}>
-      <UiButton onClick={() => setIsModalShown(true)}>Create Credential</UiButton>
-      <UiButton onClick={rejectRequest} color='error'>
+      <Button onClick={() => setIsModalShown(true)}>Create Credential</Button>
+      <Button onClick={rejectRequest} color='error'>
         Reject
-      </UiButton>
+      </Button>
 
-      <UiBasicModal open={isModalShown} onClose={() => setIsModalShown(false)}>
+      <Dialog open={isModalShown} onClose={() => setIsModalShown(false)}>
         <CredentialsMetadataBuilder
           orgGroupRequest={orgGroupRequest}
           onRequestApproved={onRequestApproved}
         />
-      </UiBasicModal>
+      </Dialog>
     </Stack>
   )
 }

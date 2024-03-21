@@ -1,10 +1,10 @@
-import { Divider, Stack, StackProps } from '@mui/material'
+import { Divider, IconButton, Stack, StackProps } from '@mui/material'
 import debounce from 'lodash/debounce'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Icons } from '@/enums'
-import { UiIcon, UiIconButton, UiNavTabs, UiSearchField } from '@/ui'
+import { UiIcon, UiNavTabs, UiSearchField } from '@/ui'
 
 interface Props extends StackProps {
   tabs?: {
@@ -32,9 +32,9 @@ export default function PageListFilters({ tabs, onSearchInput, actionBar, ...res
         />
 
         {/* TODO: add filters here */}
-        <UiIconButton>
+        <IconButton>
           <UiIcon name={Icons.SlidersHorizontal} size={5} />
-        </UiIconButton>
+        </IconButton>
 
         {actionBar && (
           <>

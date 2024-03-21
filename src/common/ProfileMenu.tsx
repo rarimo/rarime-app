@@ -1,5 +1,6 @@
 import {
   Divider,
+  IconButton,
   ListItemIcon,
   Menu,
   MenuItem,
@@ -17,7 +18,7 @@ import { config } from '@/config'
 import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler, formatDid } from '@/helpers'
 import { useAuth, useCopyToClipboard } from '@/hooks'
-import { UiIcon, UiIconButton } from '@/ui'
+import { UiIcon } from '@/ui'
 
 interface ProfileMenuProps {
   userDid: string
@@ -54,9 +55,9 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
 
   return (
     <>
-      <UiIconButton onClick={event => setAnchorEl(event.currentTarget)}>
+      <IconButton onClick={event => setAnchorEl(event.currentTarget)}>
         <UserAvatar userDid={userDid} size={8} />
-      </UiIconButton>
+      </IconButton>
       <Menu
         anchorEl={anchorEl}
         id='profile-menu'
@@ -95,9 +96,9 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
             >
               {formatDid(userDid)}
             </Typography>
-            <UiIconButton onClick={copyUserDid} color={isCopied ? 'success' : 'primary'}>
+            <IconButton onClick={copyUserDid} color={isCopied ? 'success' : 'primary'}>
               <UiIcon name={isCopied ? Icons.Check : Icons.CopySimple} size={4} />
-            </UiIconButton>
+            </IconButton>
           </Stack>
         </Stack>
         <Divider sx={{ mb: 2 }} />

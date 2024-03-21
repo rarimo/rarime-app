@@ -1,4 +1,4 @@
-import { Divider, FormControl, Stack, StackProps, Typography } from '@mui/material'
+import { Button, Divider, FormControl, Stack, StackProps, Typography } from '@mui/material'
 import { HTMLAttributes, useCallback } from 'react'
 import { Controller, useFieldArray } from 'react-hook-form'
 
@@ -6,7 +6,7 @@ import { createOrgGroup, OrgGroup, OrgGroupRule } from '@/api/modules/orgs'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
-import { UiButton, UiCheckbox, UiSwitch, UiTextField } from '@/ui'
+import { UiCheckbox, UiSwitch, UiTextField } from '@/ui'
 
 interface Props extends StackProps {
   formProps?: HTMLAttributes<HTMLFormElement>
@@ -162,7 +162,7 @@ export default function CreateGroupForm({ formProps, onGroupCreated, ...rest }: 
           </FormControl>
         ))}
 
-        <UiButton type='submit'>Create</UiButton>
+        <Button type='submit'>Create</Button>
       </form>
     </Stack>
   )

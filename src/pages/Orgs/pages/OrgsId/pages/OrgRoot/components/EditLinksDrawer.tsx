@@ -1,4 +1,4 @@
-import { CircularProgress, Drawer, DrawerProps, Stack } from '@mui/material'
+import { Button, CircularProgress, Drawer, DrawerProps, Stack } from '@mui/material'
 import { FormEvent, useCallback } from 'react'
 import { useFieldArray } from 'react-hook-form'
 
@@ -8,7 +8,7 @@ import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
-import { UiButton, UiDialogActions, UiDialogContent, UiDialogTitle, UiIcon } from '@/ui'
+import { UiDialogActions, UiDialogContent, UiDialogTitle, UiIcon } from '@/ui'
 
 import LinkForm from './LinkForm'
 
@@ -96,7 +96,7 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
         </Stack>
 
         {fields.length < MAX_LINKS_COUNT && (
-          <UiButton
+          <Button
             variant='text'
             color='secondary'
             size='medium'
@@ -105,13 +105,13 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
             sx={{ mt: fields.length ? 4 : 0 }}
           >
             Add link
-          </UiButton>
+          </Button>
         )}
       </UiDialogContent>
       <UiDialogActions>
-        <UiButton type='submit' fullWidth>
+        <Button type='submit' fullWidth>
           Save
-        </UiButton>
+        </Button>
       </UiDialogActions>
 
       {form.isFormDisabled && (
