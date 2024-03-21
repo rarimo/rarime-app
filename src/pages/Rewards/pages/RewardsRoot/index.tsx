@@ -51,9 +51,9 @@ export default function RewardsRoot() {
           </>
         ) : isLoading ? (
           <>
-            <Skeleton height={spacing(52)} sx={{ borderRadius: 4 }} />
-            <Skeleton height={spacing(45)} sx={{ borderRadius: 4 }} />
-            <Skeleton height={spacing(50)} sx={{ borderRadius: 4 }} />
+            <Skeleton height={spacing(52)} />
+            <Skeleton height={spacing(45)} />
+            <Skeleton height={spacing(50)} />
           </>
         ) : isAuthorized ? (
           <EnterProgram />

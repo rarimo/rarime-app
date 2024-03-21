@@ -18,7 +18,7 @@ export default function ReceiveModal({ ...rest }: Props) {
 
       <UiDialogContent>
         <Stack spacing={5}>
-          <UiInfoAlert severity='warning' message='Informational message' />
+          <UiInfoAlert severity='warning' message='STUB: Informational message' />
 
           <Stack alignSelf='center' border={`${toRem(4)} solid ${palette.common.black}`}>
             <QRCode

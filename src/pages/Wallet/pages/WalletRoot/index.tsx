@@ -42,21 +42,11 @@ export default function WalletRoot() {
     <Stack spacing={4}>
       <PageTitles title='Wallet' mb={4} />
 
-      {isLoading ? (
+      {isLoading && !mainBalance ? (
         <>
-          <Paper>
-            <Skeleton variant='rectangular' height={spacing(37)} />
-          </Paper>
-          <Paper>
-            <Skeleton variant='rectangular' height={spacing(12)} />
-          </Paper>
-          <Paper>
-            <Stack spacing={2}>
-              <Skeleton variant='rectangular' height={spacing(6)} width={spacing(15)} />
-
-              <Skeleton variant='rectangular' height={spacing(37.5)} />
-            </Stack>
-          </Paper>
+          <Skeleton height={spacing(50)} />
+          <Skeleton height={spacing(24)} />
+          <Skeleton height={spacing(60)} />
         </>
       ) : isLoadingError ? (
         <Paper>
@@ -81,27 +71,29 @@ export default function WalletRoot() {
                 <Stack spacing={3} direction='row'>
                   <Button
                     color='secondary'
-                    startIcon={<UiIcon name={Icons.ArrowDown} />}
-                    onClick={() => setIsReceiveModalShown(true)}
-                  >
-                    Receive
-                  </Button>
-                  <ReceiveModal
-                    open={isReceiveModalShown}
-                    onClose={() => setIsReceiveModalShown(false)}
-                  />
-
-                  <Button
-                    color='secondary'
-                    startIcon={<UiIcon name={Icons.ArrowDown} />}
+                    startIcon={<UiIcon name={Icons.ArrowUp} />}
+                    sx={{ width: spacing(30) }}
                     onClick={() => setIsSendModalShown(true)}
                   >
                     Send
                   </Button>
+                  <Button
+                    color='secondary'
+                    startIcon={<UiIcon name={Icons.ArrowDown} />}
+                    sx={{ width: spacing(30) }}
+                    onClick={() => setIsReceiveModalShown(true)}
+                  >
+                    Receive
+                  </Button>
+
                   <SendModal
                     open={isSendModalShown}
                     onClose={() => setIsSendModalShown(false)}
                     onSend={handleSend}
+                  />
+                  <ReceiveModal
+                    open={isReceiveModalShown}
+                    onClose={() => setIsReceiveModalShown(false)}
                   />
                 </Stack>
 
@@ -118,7 +110,7 @@ export default function WalletRoot() {
             </Stack>
           </Paper>
 
-          <Paper>
+          <Paper sx={{ py: 5 }}>
             <Stack direction='row' spacing={4} alignItems='center'>
               <Stack
                 width={spacing(12)}
@@ -128,7 +120,7 @@ export default function WalletRoot() {
                 justifyContent='center'
                 alignItems='center'
               >
-                <UiIcon name={Icons.Rarimo} />
+                <UiIcon name={Icons.Rarimo} size={8} />
               </Stack>
 
               <Stack spacing={1}>
@@ -149,13 +141,11 @@ export default function WalletRoot() {
           </Paper>
 
           <Paper>
-            <Stack spacing={2}>
+            <Stack spacing={6}>
               <Stack direction='row' alignItems='center' spacing={1}>
                 <Typography variant='subtitle3'>History</Typography>
-                <UiIcon name={Icons.CaretRight} />
               </Stack>
-
-              <NoDataView />
+              <NoDataView title='Not available yet' />
             </Stack>
           </Paper>
         </>

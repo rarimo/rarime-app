@@ -26,11 +26,7 @@ export default function Analytics() {
       <BackLink to={RoutePaths.Wallet} />
       {/* TODO: Remove test data when real data is available */}
       <PageTitles title='Wallet Analytics (test data)' />
-      {!balances.length && isLoading ? (
-        <Skeleton variant='rounded' height={spacing(132)} sx={{ borderRadius: 4 }} />
-      ) : (
-        <BalanceHistory />
-      )}
+      {!balances.length && isLoading ? <Skeleton height={spacing(132)} /> : <BalanceHistory />}
     </Stack>
   )
 }

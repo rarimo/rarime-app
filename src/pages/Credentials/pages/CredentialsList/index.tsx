@@ -33,7 +33,7 @@ export default function CredentialsList() {
           <Grid container spacing={4}>
             {[...Array(2)].map((_, idx) => (
               <Box key={idx} component={Grid} item xs={6}>
-                <Skeleton height={spacing(49)} sx={{ borderRadius: spacing(4) }} />
+                <Skeleton height={spacing(49)} />
               </Box>
             ))}
           </Grid>

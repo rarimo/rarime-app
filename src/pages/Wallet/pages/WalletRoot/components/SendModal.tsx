@@ -141,7 +141,7 @@ export default function SendModal({ onSend, ...rest }: Props) {
 
       <UiDialogContent>
         <Stack spacing={5}>
-          <UiInfoAlert severity='warning' message='Informational message' />
+          <UiInfoAlert severity='warning' message='STUB: Informational message' />
 
           <Stack spacing={5}>
             <Stack spacing={5}>
@@ -152,7 +152,8 @@ export default function SendModal({ onSend, ...rest }: Props) {
                   <FormControl>
                     <UiTextField
                       {...field}
-                      label={FieldNames.Address}
+                      label='Address'
+                      placeholder='rarimo...'
                       errorMessage={getErrorMessage(FieldNames.Address)}
                       disabled={isFormDisabled}
                     />
@@ -192,7 +193,7 @@ export default function SendModal({ onSend, ...rest }: Props) {
                             </InputAdornment>
                           ),
                         }}
-                        label={FieldNames.Amount}
+                        label='Amount'
                         errorMessage={getErrorMessage(FieldNames.Amount)}
                         disabled={isFormDisabled}
                       />
