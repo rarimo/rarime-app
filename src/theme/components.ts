@@ -96,8 +96,18 @@ export const components: Components<Omit<Theme, 'components'>> = {
           color: theme.palette.text.primary,
         },
       }),
+      textError: ({ theme }) => ({
+        color: theme.palette.error.main,
+        '&:hover': {
+          color: theme.palette.error.dark,
+        },
+        '&.Mui-disabled, &.Mui-disabled:hover': {
+          color: theme.palette.error.main,
+          opacity: 0.5,
+        },
+      }),
       containedPrimary: ({ theme }) => ({
-        '&:disabled': {
+        '&.Mui-disabled': {
           backgroundColor: theme.palette.primary.main,
           color: theme.palette.text.primary,
           opacity: 0.5,
@@ -268,7 +278,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: ({ theme }) => ({
         backgroundColor: theme.palette.divider,
-        borderRadius: theme.spacing(2),
+        borderRadius: theme.spacing(4),
       }),
     },
   },

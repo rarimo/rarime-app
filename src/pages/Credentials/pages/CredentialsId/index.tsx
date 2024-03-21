@@ -110,25 +110,21 @@ export default function CredentialsId() {
             <Stack spacing={10} direction='row' justifyContent='center'>
               {/* TODO: uncomment when actions are available */}
               <ActionButton
-                iconProps={{ name: Icons.Plus }}
+                appearance='primary'
+                icon={Icons.Plus}
                 onClick={() => setIsProofGenModalOpen(true)}
               >
-                Generate proof
+                Generate Proof
+              </ActionButton>
+
+              <ActionButton icon={Icons.Info} onClick={() => setIsInfoModalOpen(true)}>
+                Get Info
               </ActionButton>
 
               <ActionButton
-                iconProps={{ name: Icons.Info }}
-                disabled={isPending}
-                onClick={() => setIsInfoModalOpen(true)}
-              >
-                Get info
-              </ActionButton>
-
-              <ActionButton
-                iconProps={{
-                  name: Icons.TrashSimple,
-                  sx: { color: palette.error.main },
-                }}
+                appearance='danger'
+                color='error'
+                icon={Icons.TrashSimple}
                 onClick={requestRemoveVC}
                 disabled={isPending}
               >
