@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { generatePath, NavLink } from 'react-router-dom'
 
 import { getClaimIdFromVC } from '@/api/modules/zkp'
-import { CredentialCard, ErrorView, NoDataView, PageTitles } from '@/common'
+import { CreateCredentialMenu, CredentialCard, ErrorView, NoDataView, PageTitles } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
 import { useLoading } from '@/hooks'
 import { credentialsStore, useCredentialsState } from '@/store'
@@ -51,14 +51,7 @@ export default function CredentialsList() {
             }
           />
         ) : !vcs.length || isEmpty(issuersDetails) ? (
-          <NoDataView
-            title='No Credentials'
-            action={
-              <Button size='medium' onClick={reload}>
-                Load Credentials
-              </Button>
-            }
-          />
+          <NoDataView title='No Credentials' action={<CreateCredentialMenu />} />
         ) : (
           <Grid container spacing={4}>
             {vcs.map((vc, idx) => (

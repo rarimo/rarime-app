@@ -9,10 +9,6 @@ export default function Credentials() {
   return useNestedRoutes(RoutePaths.Credentials, [
     {
       index: true,
-      element: <Navigate replace to={RoutePaths.CredentialsList} />,
-    },
-    {
-      path: RoutePaths.CredentialsList,
       element: <CredentialsList />,
     },
     {
@@ -25,7 +21,7 @@ export default function Credentials() {
     },
     {
       path: '*',
-      element: <Navigate replace to={RoutePaths.CredentialsList} />,
+      element: <Navigate replace to={RoutePaths.Credentials} />,
     },
   ])
 }

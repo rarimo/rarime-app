@@ -65,25 +65,7 @@ export default function ProfileMenu({ userDid }: ProfileMenuProps) {
         onClose={() => setAnchorEl(null)}
         anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
         transformOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        slotProps={{
-          paper: {
-            sx: {
-              p: 0,
-              border: 0,
-              zIndex: 100,
-              bgcolor: palette.background.paper,
-            },
-          },
-        }}
-        MenuListProps={{
-          sx: {
-            width: spacing(60),
-            border: 1,
-            borderColor: palette.action.hover,
-            borderRadius: 2,
-            pt: 0,
-          },
-        }}
+        MenuListProps={{ sx: { width: spacing(60) } }}
       >
         <Stack direction='column' p={4} alignItems='center'>
           <UserAvatar userDid={userDid} size={12} />
