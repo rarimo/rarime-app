@@ -1,4 +1,4 @@
-import { Button, IconButton, Paper, Stack, Typography, useTheme } from '@mui/material'
+import { Button, Paper, Stack, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 
 import { Icons, RoutePaths } from '@/enums'
@@ -7,21 +7,22 @@ import { useRewardsState } from '@/store'
 import { UiIcon } from '@/ui'
 
 export default function RewardsBalance() {
-  const { palette } = useTheme()
   const { balance } = useRewardsState()
 
   return (
     <Paper component={Stack} spacing={6}>
       <Stack direction='row' justifyContent='space-between' alignItems='center' spacing={4}>
         <Stack spacing={2}>
-          <Stack direction='row' spacing={1}>
-            <Typography variant='body3' color={palette.text.secondary}>
-              Reserved RMO
-            </Typography>
-            <IconButton size='small' color='secondary' component={NavLink} to={RoutePaths.Rewards}>
-              <UiIcon name={Icons.CaretRight} size={4} />
-            </IconButton>
-          </Stack>
+          <Button
+            component={NavLink}
+            to={RoutePaths.Rewards}
+            variant='text'
+            color='secondary'
+            sx={{ gap: 1 }}
+          >
+            <Typography variant='body3'>Reserved RMO</Typography>
+            <UiIcon name={Icons.CaretRight} size={4} />
+          </Button>
           <Typography variant='h4'>{formatNumber(balance?.amount ?? 0)}</Typography>
         </Stack>
 
