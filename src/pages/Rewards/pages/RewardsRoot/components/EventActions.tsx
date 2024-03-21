@@ -1,9 +1,8 @@
-import { Button, ButtonProps, useTheme } from '@mui/material'
-import { useMemo, useRef } from 'react'
-import { generatePath, NavLink } from 'react-router-dom'
+import { Button, useTheme } from '@mui/material'
+import { useRef } from 'react'
 
 import { claimEvent, EventStatuses, PointsEvent } from '@/api/modules/points'
-import { BusEvents, RoutePaths } from '@/enums'
+import { BusEvents } from '@/enums'
 import { bus } from '@/helpers'
 import { useLoading } from '@/hooks'
 import { rewardsStore } from '@/store'
@@ -20,15 +19,6 @@ export default function EventActions({ event, onClaim }: Props) {
   const { fireConfetti } = useConfetti()
 
   const claimRef = useRef<HTMLButtonElement>(null)
-  const commonButtonProps: ButtonProps = useMemo(() => {
-    return {
-      size: 'medium',
-      sx: {
-        width: spacing(19),
-        height: spacing(8),
-      },
-    }
-  }, [spacing])
 
   const handleClaim = async () => {
     await claimEvent(event.id)
@@ -45,18 +35,20 @@ export default function EventActions({ event, onClaim }: Props) {
     loadOnMount: false,
   })
 
-  return event.status === EventStatuses.Fulfilled ? (
-    <Button ref={claimRef} disabled={isLoading} onClick={reload} {...commonButtonProps}>
-      Claim
-    </Button>
-  ) : (
-    <Button
-      component={NavLink}
-      to={generatePath(RoutePaths.RewardsEventId, { id: event.id })}
-      color='secondary'
-      {...commonButtonProps}
-    >
-      View
-    </Button>
+  return (
+    event.status === EventStatuses.Fulfilled && (
+      <Button
+        ref={claimRef}
+        disabled={isLoading}
+        onClick={reload}
+        size='medium'
+        sx={{
+          width: spacing(19),
+          height: spacing(8),
+        }}
+      >
+        Claim
+      </Button>
+    )
   )
 }

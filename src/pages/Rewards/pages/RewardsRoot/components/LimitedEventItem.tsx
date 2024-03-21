@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useTheme } from '@mui/material'
+import { Box, IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { generatePath, NavLink } from 'react-router-dom'
 
 import { PointsEvent } from '@/api/modules/points'
@@ -69,7 +69,16 @@ export default function LimitedEventItem({ event, onClaim }: Props) {
           </Stack>
         </Stack>
       </Stack>
-      <EventActions event={event} onClaim={onClaim} />
+      <Stack direction='row' spacing={2}>
+        <EventActions event={event} onClaim={onClaim} />
+        <IconButton
+          component={NavLink}
+          to={generatePath(RoutePaths.RewardsEventId, { id: event.id })}
+          color='secondary'
+        >
+          <UiIcon name={Icons.CaretRight} size={5} />
+        </IconButton>
+      </Stack>
     </Stack>
   )
 }

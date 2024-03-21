@@ -1,4 +1,4 @@
-import { Stack, Typography, useTheme } from '@mui/material'
+import { IconButton, Stack, Typography, useTheme } from '@mui/material'
 import { generatePath, NavLink } from 'react-router-dom'
 
 import { PointsEvent } from '@/api/modules/points'
@@ -42,9 +42,16 @@ export default function EventItem({ event, onClaim }: Props) {
           </Typography>
         </Stack>
       </Stack>
-      <Stack direction='row' alignItems='center' spacing={4}>
-        <RewardChip reward={event.meta.static.reward} />
+      <Stack direction='row' alignItems='center' spacing={2}>
         <EventActions event={event} onClaim={onClaim} />
+        <RewardChip reward={event.meta.static.reward} />
+        <IconButton
+          component={NavLink}
+          to={generatePath(RoutePaths.RewardsEventId, { id: event.id })}
+          color='secondary'
+        >
+          <UiIcon name={Icons.CaretRight} size={4} />
+        </IconButton>
       </Stack>
     </Stack>
   )

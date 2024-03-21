@@ -11,7 +11,6 @@ import { UiIcon } from '@/ui'
 import ActiveEventsList from './components/ActiveEventsList'
 import BalanceBlock from './components/BalanceBlock'
 import EnterProgram from './components/EnterProgram'
-import LimitedEvents from './components/LimitedEvents'
 import ProgramAuth from './components/ProgramAuth'
 
 export default function RewardsRoot() {
@@ -46,7 +45,6 @@ export default function RewardsRoot() {
         {isBalanceActive ? (
           <>
             <BalanceBlock />
-            <LimitedEvents />
             <ActiveEventsList />
           </>
         ) : isLoading ? (
