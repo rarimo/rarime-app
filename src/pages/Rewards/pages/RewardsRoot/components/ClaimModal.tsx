@@ -1,6 +1,5 @@
 import {
   Button,
-  CircularProgress,
   Dialog,
   DialogProps,
   Divider,
@@ -13,6 +12,7 @@ import { useCallback, useEffect } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { withdrawPoints } from '@/api/modules/points'
+import { OverlaySpinner } from '@/common'
 import { BusEvents } from '@/enums'
 import { bus, ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
@@ -135,20 +135,7 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
         </Stack>
       </UiDialogActions>
 
-      {isFormDisabled && (
-        <Stack
-          justifyContent='center'
-          alignItems='center'
-          position='absolute'
-          top={0}
-          left={0}
-          bottom={0}
-          right={0}
-          bgcolor={theme => theme.palette.background.light}
-        >
-          <CircularProgress color='inherit' />
-        </Stack>
-      )}
+      {isFormDisabled && <OverlaySpinner />}
     </Dialog>
   )
 }

@@ -13,6 +13,7 @@ import { useCallback, useMemo } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { RARIMO_EXPLORER_URLS, rarimoClient } from '@/api/clients'
+import { OverlaySpinner } from '@/common'
 import { BusEvents } from '@/enums'
 import { bus, ErrorHandler, formatAmount } from '@/helpers'
 import { useForm } from '@/hooks'
@@ -108,11 +109,12 @@ export default function SendModal({ onSend, ...rest }: Props) {
             <Typography>Tokens sent. See tx on</Typography>
             <Typography
               component='a'
-              color={palette.primary.main}
-              fontWeight='bold'
               href={explorerLink}
               target='_blank'
               rel='noreferrer'
+              variant='subtitle4'
+              color={palette.text.primary}
+              sx={{ '&:hover': { textDecoration: 'underline' } }}
             >
               explorer
             </Typography>
@@ -126,7 +128,7 @@ export default function SendModal({ onSend, ...rest }: Props) {
     }
 
     enableForm()
-  }, [disableForm, enableForm, formState, mainBalance.denom, onSend, palette.primary.main])
+  }, [disableForm, enableForm, formState, mainBalance.denom, onSend, palette])
 
   return (
     <Dialog
@@ -238,6 +240,8 @@ export default function SendModal({ onSend, ...rest }: Props) {
           </Button>
         </Stack>
       </UiDialogActions>
+
+      {isFormDisabled && <OverlaySpinner />}
     </Dialog>
   )
 }
