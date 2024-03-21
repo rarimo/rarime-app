@@ -14,7 +14,7 @@ import { useMemo } from 'react'
 import { generatePath, NavLink, useLocation } from 'react-router-dom'
 
 import { getClaimIdFromVC } from '@/api/modules/zkp'
-import { CredentialCard, ErrorView, NoDataView } from '@/common'
+import { CreateCredentialMenu, CredentialCard, ErrorView, NoDataView } from '@/common'
 import { Icons, RoutePaths } from '@/enums'
 import { useLoading } from '@/hooks'
 import { credentialsStore, useCredentialsState } from '@/store'
@@ -55,10 +55,10 @@ export default function LatestCredentials() {
 
   return (
     <Paper component={Stack} spacing={6}>
-      <Stack direction='row' justifyContent='space-between' alignItems='center'>
-        <Typography variant='subtitle3'>Latest Credentials</Typography>
+      {vcs.length > 0 && (
+        <Stack direction='row' justifyContent='space-between' alignItems='center'>
+          <Typography variant='subtitle3'>Latest Credentials</Typography>
 
-        {vcs.length > 0 && (
           <Button
             variant='text'
             size='medium'
@@ -69,8 +69,8 @@ export default function LatestCredentials() {
           >
             View All
           </Button>
-        )}
-      </Stack>
+        </Stack>
+      )}
 
       {isLoading ? (
         <Stack {...containerProps}>
@@ -100,14 +100,7 @@ export default function LatestCredentials() {
           }
         />
       ) : !lastVCsDesc.length || isEmpty(issuersDetails) ? (
-        <NoDataView
-          title='No Credentials'
-          action={
-            <UiButton size='medium' onClick={reload}>
-              Load Credentials
-            </UiButton>
-          }
-        />
+        <NoDataView title='No Credentials' action={<CreateCredentialMenu />} />
       ) : (
         <Stack {...containerProps}>
           {lastVCsDesc.map((vc, idx) => (

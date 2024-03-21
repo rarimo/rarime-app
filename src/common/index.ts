@@ -1,5 +1,6 @@
 export { default as AppNavbar } from './AppNavbar'
 export { default as BackLink } from './BackLink'
+export { default as CreateCredentialMenu } from './CreateCredentialMenu'
 export { default as CredentialCard } from './CredentialCard'
 export { default as ErrorView } from './ErrorView'
 export { default as FillRequestForm } from './FillRequestForm'

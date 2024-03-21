@@ -34,7 +34,7 @@ export default function CredentialsRequests({ ...rest }: Props) {
   return (
     <Stack {...rest}>
       <Stack direction='row' alignItems='center' spacing={4}>
-        <BackLink to={RoutePaths.CredentialsList} />
+        <BackLink to={RoutePaths.Credentials} />
         <PageTitles title={t('credentials-requests.title')} />
       </Stack>
 
