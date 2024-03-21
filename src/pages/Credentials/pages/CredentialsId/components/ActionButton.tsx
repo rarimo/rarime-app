@@ -1,68 +1,84 @@
-import { Stack, Typography, useTheme } from '@mui/material'
-import { ComponentProps } from 'react'
+import { Button, ButtonProps, Stack, useTheme } from '@mui/material'
+import { useMemo } from 'react'
 
+import { Icons } from '@/enums'
 import { Transitions } from '@/theme/constants'
-import { UiButton, UiIcon } from '@/ui'
+import { UiIcon } from '@/ui'
 
-export default function ActionButton({
-  children,
-  iconProps,
-  ...rest
-}: ComponentProps<typeof UiButton> & {
-  iconProps: ComponentProps<typeof UiIcon>
-}) {
+interface Props extends ButtonProps {
+  appearance?: 'default' | 'primary' | 'danger'
+  icon: Icons
+}
+
+export default function ActionButton({ appearance = 'default', children, icon, ...rest }: Props) {
   const { palette, spacing } = useTheme()
 
-  return (
-    <UiButton {...rest} variant='text'>
-      <Stack
-        alignItems='center'
-        spacing={2}
-        sx={{
-          '&:hover': {
-            '& .action-button__icon-wrp': {
-              bgcolor: palette.additional.pureBlack,
-            },
-            '& .action-button__icon': {
-              color: palette.primary.main,
-            },
+  const iconWrapperSx = useMemo(() => {
+    switch (appearance) {
+      case 'primary':
+        return {
+          default: {
+            bgcolor: palette.additional.pureBlack,
+            color: palette.primary.main,
           },
+          hover: {
+            bgcolor: palette.primary.main,
+            color: palette.common.black,
+          },
+        }
+      case 'danger':
+        return {
+          default: {
+            bgcolor: palette.error.lighter,
+            color: palette.error.main,
+          },
+          hover: {
+            bgcolor: palette.error.main,
+            color: palette.common.white,
+          },
+        }
+      default:
+        return {
+          default: {
+            bgcolor: palette.action.active,
+            color: palette.text.primary,
+          },
+          hover: {
+            bgcolor: palette.action.focus,
+          },
+        }
+    }
+  }, [appearance, palette])
+
+  return (
+    <Button
+      variant='text'
+      size='small'
+      component={Stack}
+      alignItems='center'
+      justifyContent='center'
+      spacing={2}
+      {...rest}
+      sx={{
+        textAlign: 'center',
+        width: 'min-content',
+        '&:hover > .MuiStack-root': iconWrapperSx.hover,
+      }}
+    >
+      <Stack
+        width={spacing(12)}
+        height={spacing(12)}
+        justifyContent='center'
+        alignItems='center'
+        borderRadius='50%'
+        sx={{
+          ...iconWrapperSx.default,
+          transition: Transitions.Default,
         }}
       >
-        <Stack
-          className='action-button__icon-wrp'
-          width={spacing(10)}
-          height={spacing(10)}
-          justifyContent='center'
-          alignItems='center'
-          bgcolor={palette.background.paper}
-          borderRadius='50%'
-          sx={{
-            transition: Transitions.Default,
-          }}
-        >
-          <UiIcon
-            className='action-button__icon'
-            size={5}
-            {...iconProps}
-            sx={{
-              transition: Transitions.Default,
-              ...iconProps.sx,
-            }}
-          />
-        </Stack>
-        <Typography
-          className='action-button__text'
-          variant='buttonSmall'
-          textAlign='center'
-          width='min-content'
-          sx={{
-            transition: Transitions.Default,
-          }}
-        >
-          {children}
-        </Typography>
+        <UiIcon size={5} name={icon} />
       </Stack>
-    </UiButton>
+      {children}
+    </Button>
   )
 }

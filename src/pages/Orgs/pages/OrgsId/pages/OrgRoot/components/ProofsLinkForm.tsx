@@ -1,8 +1,8 @@
-import { InputAdornment } from '@mui/material'
+import { Button, InputAdornment } from '@mui/material'
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { UiButton, UiSearchField } from '@/ui'
+import { UiSearchField } from '@/ui'
 
 interface Props {
   isLoading: boolean
@@ -52,7 +52,7 @@ export default function ProofsLinkForm({ isLoading, onLinkIdChange }: Props) {
         InputProps={{
           endAdornment: (
             <InputAdornment position='end'>
-              <UiButton
+              <Button
                 type='submit'
                 variant='text'
                 color='secondary'
@@ -61,7 +61,7 @@ export default function ProofsLinkForm({ isLoading, onLinkIdChange }: Props) {
                 sx={{ minWidth: 'auto' }}
               >
                 {isLoading ? 'Verifying...' : 'Verify'}
-              </UiButton>
+              </Button>
             </InputAdornment>
           ),
         }}

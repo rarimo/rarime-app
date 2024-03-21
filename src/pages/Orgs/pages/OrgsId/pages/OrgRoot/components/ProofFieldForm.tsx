@@ -1,4 +1,4 @@
-import { InputAdornment, useTheme } from '@mui/material'
+import { Button, InputAdornment, useTheme } from '@mui/material'
 import startCase from 'lodash/startCase'
 import { useCallback, useMemo, useState } from 'react'
 
@@ -6,7 +6,7 @@ import { Proof } from '@/api/modules/link'
 import { getTargetProperty, loadAndParseCredentialSchema } from '@/api/modules/zkp'
 import { sleep } from '@/helpers'
 import { useLoading } from '@/hooks'
-import { UiButton, UiTextField } from '@/ui'
+import { UiTextField } from '@/ui'
 
 import ProofValidationResult from './ProofValidationResult'
 
@@ -90,7 +90,7 @@ export default function ProofFieldForm({ proof }: Props) {
           sx: inputSx,
           endAdornment: (
             <InputAdornment position='end'>
-              <UiButton
+              <Button
                 type='submit'
                 variant='text'
                 color='secondary'
@@ -98,7 +98,7 @@ export default function ProofFieldForm({ proof }: Props) {
                 disabled={!value || isLoading}
               >
                 {isLoading ? 'Veryfying...' : 'Verify'}
-              </UiButton>
+              </Button>
             </InputAdornment>
           ),
         }}

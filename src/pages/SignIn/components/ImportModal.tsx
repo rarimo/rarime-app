@@ -1,8 +1,9 @@
 import { FormControl } from '@mui/base'
-import { Button, CircularProgress, Dialog, DialogProps, Stack, useTheme } from '@mui/material'
+import { Button, Dialog, DialogProps, Stack, useTheme } from '@mui/material'
 import { useCallback, useEffect, useRef } from 'react'
 import { Controller } from 'react-hook-form'
 
+import { OverlaySpinner } from '@/common'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { identityStore } from '@/store'
@@ -94,20 +95,7 @@ export default function ImportModal({ onImport, ...rest }: Props) {
         </Stack>
       </UiDialogContent>
 
-      {isFormDisabled && (
-        <Stack
-          justifyContent='center'
-          alignItems='center'
-          position='absolute'
-          top={0}
-          left={0}
-          bottom={0}
-          right={0}
-          bgcolor={theme => theme.palette.background.light}
-        >
-          <CircularProgress color='inherit' />
-        </Stack>
-      )}
+      {isFormDisabled && <OverlaySpinner />}
     </Dialog>
   )
 }

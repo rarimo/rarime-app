@@ -1,10 +1,10 @@
-import { Stack, Typography, useTheme } from '@mui/material'
+import { Button, Stack, Typography, useTheme } from '@mui/material'
 import { useState } from 'react'
 
 import { NoDataView } from '@/common'
 import { Icons } from '@/enums'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
-import { UiButton, UiIcon } from '@/ui'
+import { UiIcon } from '@/ui'
 
 import EditLinksDrawer from './EditLinksDrawer'
 import LinkItem from './LinkItem'
@@ -27,7 +27,7 @@ export default function LinksBlock() {
       <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Typography variant='subtitle3'>Links</Typography>
         {!!links.length && isOrgOwner && (
-          <UiButton
+          <Button
             variant='text'
             size='medium'
             color='secondary'
@@ -35,7 +35,7 @@ export default function LinksBlock() {
             onClick={() => setIsLinkDrawerShown(true)}
           >
             Edit
-          </UiButton>
+          </Button>
         )}
       </Stack>
       <Stack direction='row' spacing={4} flexWrap='wrap'>
@@ -46,9 +46,9 @@ export default function LinksBlock() {
             title='No Links'
             action={
               isOrgOwner && (
-                <UiButton size='medium' onClick={() => setIsLinkDrawerShown(true)}>
+                <Button size='medium' onClick={() => setIsLinkDrawerShown(true)}>
                   Add
-                </UiButton>
+                </Button>
               )
             }
           />

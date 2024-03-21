@@ -1,4 +1,4 @@
-import { Drawer, Stack, StackProps, Typography } from '@mui/material'
+import { Button, Drawer, Stack, StackProps, Typography } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 
 import {
@@ -9,7 +9,7 @@ import {
 } from '@/api/modules/orgs'
 import { Icons } from '@/enums'
 import { useLoading } from '@/hooks'
-import { UiButton, UiIcon } from '@/ui'
+import { UiIcon } from '@/ui'
 
 import ApprovedCard from './ApprovedCard'
 import ApproveRequestForm from './ApproveRequestForm'
@@ -109,9 +109,9 @@ export default function List({ filter, ...rest }: Props) {
                   <Stack direction='row' alignItems='center' justifyContent='space-between' p={5}>
                     <Typography>Member Details</Typography>
 
-                    <UiButton variant='text' onClick={() => setIsDrawerShown(false)}>
+                    <Button variant='text' onClick={() => setIsDrawerShown(false)}>
                       <UiIcon name={Icons.Close} />
-                    </UiButton>
+                    </Button>
                   </Stack>
                   {drawerContent}
                 </Stack>

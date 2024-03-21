@@ -1,6 +1,5 @@
 import {
   Button,
-  CircularProgress,
   Dialog,
   DialogProps,
   Divider,
@@ -9,14 +8,15 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { Controller } from 'react-hook-form'
 
 import { withdrawPoints } from '@/api/modules/points'
+import { OverlaySpinner } from '@/common'
 import { BusEvents } from '@/enums'
 import { bus, ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
-import { useIdentityState, useRewardsState } from '@/store'
+import { useIdentityState, useRewardsState, useWalletState, walletStore } from '@/store'
 import { UiDialogActions, UiDialogContent, UiDialogTitle, UiTextField } from '@/ui'
 
 import ClaimBalances from './ClaimBalances'
@@ -38,6 +38,7 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
   const { palette, spacing } = useTheme()
   const { userDid } = useIdentityState()
   const { balance } = useRewardsState()
+  const { address } = useWalletState()
 
   // TODO: Replace with real level check
   const isLevelReached = false
@@ -58,12 +59,7 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
       disableForm()
 
       try {
-        await withdrawPoints(
-          userDid,
-          Number(formData[FieldNames.Amount]),
-          // TODO: Replace with real Rarimo address
-          'rarimo',
-        )
+        await withdrawPoints(userDid, Number(formData[FieldNames.Amount]), address)
         bus.emit(BusEvents.success, {
           message: `${formData[FieldNames.Amount]} RMO claimed`,
         })
@@ -74,8 +70,12 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
 
       enableForm()
     },
-    [disableForm, enableForm, onClaim, userDid],
+    [disableForm, enableForm, onClaim, userDid, address],
   )
+
+  useEffect(() => {
+    walletStore.connect()
+  }, [])
 
   return (
     <Dialog
@@ -135,20 +135,7 @@ export default function ClaimModal({ onClaim, ...rest }: Props) {
         </Stack>
       </UiDialogActions>
 
-      {isFormDisabled && (
-        <Stack
-          justifyContent='center'
-          alignItems='center'
-          position='absolute'
-          top={0}
-          left={0}
-          bottom={0}
-          right={0}
-          bgcolor={theme => theme.palette.background.light}
-        >
-          <CircularProgress color='inherit' />
-        </Stack>
-      )}
+      {isFormDisabled && <OverlaySpinner />}
     </Dialog>
   )
 }

@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, Skeleton, Stack, useTheme } from '@mui/material'
+import { Box, Button, Grid, Paper, Skeleton, Stack, useTheme } from '@mui/material'
 import isEmpty from 'lodash/isEmpty'
 import { useTranslation } from 'react-i18next'
 import { generatePath, NavLink } from 'react-router-dom'
@@ -8,7 +8,7 @@ import { CreateCredentialMenu, CredentialCard, ErrorView, NoDataView, PageTitles
 import { Icons, RoutePaths } from '@/enums'
 import { useLoading } from '@/hooks'
 import { credentialsStore, useCredentialsState } from '@/store'
-import { UiButton, UiIcon } from '@/ui'
+import { UiIcon } from '@/ui'
 
 export default function CredentialsList() {
   const { t } = useTranslation()
@@ -33,7 +33,7 @@ export default function CredentialsList() {
           <Grid container spacing={4}>
             {[...Array(2)].map((_, idx) => (
               <Box key={idx} component={Grid} item xs={6}>
-                <Skeleton height={spacing(49)} sx={{ borderRadius: spacing(4) }} />
+                <Skeleton height={spacing(49)} />
               </Box>
             ))}
           </Grid>
@@ -41,13 +41,13 @@ export default function CredentialsList() {
           <ErrorView
             title='Cannot load credentials'
             action={
-              <UiButton
+              <Button
                 size='medium'
                 startIcon={<UiIcon name={Icons.ArrowCounterClockwise} size={4} />}
                 onClick={reload}
               >
                 Retry
-              </UiButton>
+              </Button>
             }
           />
         ) : !vcs.length || isEmpty(issuersDetails) ? (

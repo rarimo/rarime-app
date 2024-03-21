@@ -20,8 +20,9 @@ export const [walletStore, useWalletState] = createStore(
   } as WalletStore,
   state => ({
     connect: async () => {
-      await initRarimoClient()
+      if (state.address) return
 
+      await initRarimoClient()
       state.address = rarimoClient.wallet.address
     },
     loadBalances: async () => {

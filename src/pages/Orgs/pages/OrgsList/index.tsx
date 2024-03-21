@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material'
+import { Button, Stack } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Navigate, NavLink } from 'react-router-dom'
@@ -8,7 +8,6 @@ import { PageListFilters, PageTitles } from '@/common'
 import { RoutePaths } from '@/enums'
 import { useLoading, useNestedRoutes } from '@/hooks'
 import { useIdentityState } from '@/store'
-import { UiButton } from '@/ui'
 
 import { List } from './components'
 
@@ -78,9 +77,9 @@ export default function OrgsList() {
         }
         actionBar={
           <NavLink to={RoutePaths.OrgsNew}>
-            <UiButton variant='contained' color='primary' size='medium'>
+            <Button variant='contained' color='primary' size='medium'>
               Create
-            </UiButton>
+            </Button>
           </NavLink>
         }
       />

@@ -1,10 +1,9 @@
-import { Stack, StackProps, Typography } from '@mui/material'
+import { Button, Stack, StackProps, Typography } from '@mui/material'
 import { HTMLAttributes, useCallback } from 'react'
 
 import { getOrgVerificationCode, Organization, verifyOrg } from '@/api/modules/orgs'
 import { ErrorHandler } from '@/helpers'
 import { useLoading } from '@/hooks'
-import { UiButton } from '@/ui'
 
 interface Props extends StackProps {
   org: Organization
@@ -73,7 +72,7 @@ export default function VerifyForm({ org, formProps, onOrgVerified, ...rest }: P
           laudantium nostrum nulla perspiciatis provident quibusdam sequi.
         </Typography>
 
-        <UiButton type='submit'>Verify</UiButton>
+        <Button type='submit'>Verify</Button>
       </form>
     </Stack>
   )

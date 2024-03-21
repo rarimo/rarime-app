@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Stack, useTheme } from '@mui/material'
+import { Box, Button, IconButton, Paper, Stack, useTheme } from '@mui/material'
 import { useCallback, useMemo, useState } from 'react'
 import { generatePath, NavLink, useParams } from 'react-router-dom'
 
@@ -15,7 +15,7 @@ import { ActionButton } from './components'
 import VcInfoModal from './components/VcInfoModal'
 
 export default function CredentialsId() {
-  const { palette, spacing } = useTheme()
+  const { spacing } = useTheme()
   const { claimId = '' } = useParams<{ claimId: string }>()
   const { vcs, issuersDetails } = useCredentialsState()
 
@@ -90,45 +90,46 @@ export default function CredentialsId() {
         {vc && issuerDetails ? (
           <Stack spacing={6}>
             <Stack spacing={6} direction='row' alignItems='center' alignSelf='center'>
-              <Box
+              <IconButton
                 component={NavLink}
                 to={prevVCPath}
-                visibility={isFirstVC ? 'hidden' : 'visible'}
+                color='secondary'
+                sx={{ visibility: isFirstVC ? 'hidden' : 'visible', transitionProperty: 'color' }}
               >
-                <UiIcon name={Icons.CaretLeft} size={5} sx={{ color: palette.text.secondary }} />
-              </Box>
+                <UiIcon name={Icons.CaretLeft} size={5} />
+              </IconButton>
 
               <Box width={spacing(100)}>
                 <CredentialCard vc={vc} issuerDetails={issuerDetails} />
               </Box>
 
-              <Box component={NavLink} to={nextVCPath} visibility={isLastVC ? 'hidden' : 'visible'}>
-                <UiIcon name={Icons.CaretRight} size={5} sx={{ color: palette.text.secondary }} />
-              </Box>
+              <IconButton
+                component={NavLink}
+                to={nextVCPath}
+                color='secondary'
+                sx={{ visibility: isLastVC ? 'hidden' : 'visible', transitionProperty: 'color' }}
+              >
+                <UiIcon name={Icons.CaretRight} size={5} />
+              </IconButton>
             </Stack>
 
             <Stack spacing={10} direction='row' justifyContent='center'>
-              {/* TODO: uncomment when actions are available */}
               <ActionButton
-                iconProps={{ name: Icons.Plus }}
+                appearance='primary'
+                icon={Icons.Plus}
                 onClick={() => setIsProofGenModalOpen(true)}
               >
-                Generate proof
+                Generate Proof
+              </ActionButton>
+
+              <ActionButton icon={Icons.Info} onClick={() => setIsInfoModalOpen(true)}>
+                Get Info
               </ActionButton>
 
               <ActionButton
-                iconProps={{ name: Icons.Info }}
-                disabled={isPending}
-                onClick={() => setIsInfoModalOpen(true)}
-              >
-                Get info
-              </ActionButton>
-
-              <ActionButton
-                iconProps={{
-                  name: Icons.TrashSimple,
-                  sx: { color: palette.error.main },
-                }}
+                appearance='danger'
+                color='error'
+                icon={Icons.TrashSimple}
                 onClick={requestRemoveVC}
                 disabled={isPending}
               >

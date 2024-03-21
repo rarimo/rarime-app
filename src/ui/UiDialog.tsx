@@ -3,6 +3,7 @@ import {
   type BoxProps,
   DialogProps,
   DialogTitle,
+  IconButton,
   Stack,
   type StackProps,
   Typography,
@@ -12,7 +13,6 @@ import {
 import { Icons } from '@/enums'
 
 import UiIcon from './UiIcon'
-import UiIconButton from './UiIconButton'
 
 interface UiDialogTitleProps extends StackProps {
   onClose?: DialogProps['onClose']
@@ -35,13 +35,9 @@ export function UiDialogTitle({ children, onClose, ...rest }: UiDialogTitleProps
       <Typography component='p' variant='h6'>
         {children}
       </Typography>
-      <UiIconButton
-        color='secondary'
-        aria-label='close'
-        onClick={e => onClose?.(e, 'backdropClick')}
-      >
+      <IconButton color='secondary' aria-label='close' onClick={e => onClose?.(e, 'backdropClick')}>
         <UiIcon name={Icons.Close} size={5} />
-      </UiIconButton>
+      </IconButton>
     </DialogTitle>
   )
 }

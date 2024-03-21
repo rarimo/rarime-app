@@ -1,8 +1,8 @@
-import { Paper, Stack, Typography, useTheme } from '@mui/material'
+import { IconButton, Paper, Stack, Typography, useTheme } from '@mui/material'
 
 import { Icons } from '@/enums'
 import { useCopyToClipboard } from '@/hooks'
-import { UiIcon, UiIconButton } from '@/ui/index'
+import { UiIcon } from '@/ui/index'
 
 type Props = {
   label: string
@@ -21,12 +21,12 @@ export default function UiCopyField({ label, value }: Props) {
       <Paper sx={{ py: 3.5, px: 4, background: palette.action.disabled, border: 0 }}>
         <Stack direction='row' spacing={4}>
           <Typography>{value}</Typography>
-          <UiIconButton onClick={() => copy(value)}>
+          <IconButton onClick={() => copy(value)}>
             <UiIcon
               name={isCopied ? Icons.Check : Icons.CopySimple}
               sx={{ color: palette.text.secondary }}
             />
-          </UiIconButton>
+          </IconButton>
         </Stack>
       </Paper>
     </Stack>

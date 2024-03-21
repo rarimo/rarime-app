@@ -38,7 +38,7 @@ export default function BalanceHistory() {
       <Stack direction='row' justifyContent='space-between' alignItems='center'>
         <Stack spacing={2}>
           <Typography variant='body3' color={palette.text.secondary}>
-            Total RMO
+            Total {mainBalance?.denom}
           </Typography>
           <Typography variant='h4'>
             {formatBalance(mainBalance?.amount, mainBalance?.decimals)}

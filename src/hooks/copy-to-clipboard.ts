@@ -5,7 +5,7 @@ import { sleep } from '@/helpers'
 
 export const useCopyToClipboard = () => {
   const [isCopied, setIsCopied] = useState(false)
-  //Todo: migrate to navigator Api
+  // TODO: migrate to navigator Api
   const copy = useCallback(async (value: string) => {
     if (_copy(value)) {
       setIsCopied(true)

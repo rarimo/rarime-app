@@ -19,7 +19,7 @@ import { Icons, RoutePaths } from '@/enums'
 import { useLoading } from '@/hooks'
 import { credentialsStore, useCredentialsState } from '@/store'
 import { hiddenScrollbar } from '@/theme/constants'
-import { UiButton, UiIcon } from '@/ui'
+import { UiIcon } from '@/ui'
 
 const containerProps: StackProps = {
   direction: 'row',
@@ -90,13 +90,13 @@ export default function LatestCredentials() {
         <ErrorView
           title='Cannot load credentials'
           action={
-            <UiButton
+            <Button
               size='medium'
               startIcon={<UiIcon name={Icons.ArrowCounterClockwise} size={4} />}
               onClick={reload}
             >
               Retry
-            </UiButton>
+            </Button>
           }
         />
       ) : !lastVCsDesc.length || isEmpty(issuersDetails) ? (

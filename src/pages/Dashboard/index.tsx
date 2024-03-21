@@ -27,7 +27,7 @@ export default function Dashboard() {
         {isBalanceActive ? (
           <RewardsBalance />
         ) : isLoading ? (
-          <Skeleton height={spacing(30)} sx={{ borderRadius: 4 }} />
+          <Skeleton height={spacing(30)} />
         ) : (
           <RewardsIntro />
         )}

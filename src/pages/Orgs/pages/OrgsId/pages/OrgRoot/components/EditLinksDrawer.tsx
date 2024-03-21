@@ -1,14 +1,15 @@
-import { CircularProgress, Drawer, DrawerProps, Stack } from '@mui/material'
+import { Button, Drawer, DrawerProps, Stack } from '@mui/material'
 import { FormEvent, useCallback } from 'react'
 import { useFieldArray } from 'react-hook-form'
 
 import { OrgMetadataLink, updateOrgMetadata } from '@/api/modules/orgs'
+import { OverlaySpinner } from '@/common'
 import VerticalDraggableContext from '@/contexts/vertical-draggable'
 import { BusEvents, Icons } from '@/enums'
 import { bus, ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
 import { useOrgDetails } from '@/pages/Orgs/pages/OrgsId/hooks'
-import { UiButton, UiDialogActions, UiDialogContent, UiDialogTitle, UiIcon } from '@/ui'
+import { UiDialogActions, UiDialogContent, UiDialogTitle, UiIcon } from '@/ui'
 
 import LinkForm from './LinkForm'
 
@@ -96,7 +97,7 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
         </Stack>
 
         {fields.length < MAX_LINKS_COUNT && (
-          <UiButton
+          <Button
             variant='text'
             color='secondary'
             size='medium'
@@ -105,29 +106,16 @@ export default function EditLinksDrawer({ links, onLinksUpdate, ...rest }: Props
             sx={{ mt: fields.length ? 4 : 0 }}
           >
             Add link
-          </UiButton>
+          </Button>
         )}
       </UiDialogContent>
       <UiDialogActions>
-        <UiButton type='submit' fullWidth>
+        <Button type='submit' fullWidth>
           Save
-        </UiButton>
+        </Button>
       </UiDialogActions>
 
-      {form.isFormDisabled && (
-        <Stack
-          justifyContent='center'
-          alignItems='center'
-          position='absolute'
-          top={0}
-          left={0}
-          bottom={0}
-          right={0}
-          bgcolor={theme => theme.palette.background.light}
-        >
-          <CircularProgress color='inherit' />
-        </Stack>
-      )}
+      {form.isFormDisabled && <OverlaySpinner />}
     </Drawer>
   )
 }
