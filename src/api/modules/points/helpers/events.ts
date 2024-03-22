@@ -1,8 +1,5 @@
-import { JsonApiResponse } from '@distributedlab/jac'
-
 import { api } from '@/api/clients'
 import { ApiServicePaths } from '@/enums'
-import { identityStore } from '@/store'
 
 import { EventMetadataFrequencies, EventsRequestFilters, EventStatuses } from '../enums'
 import { EventsMeta, EventsRequestQueryParams, PointsEvent } from '../types/events'
@@ -22,10 +19,9 @@ export const EVENTS_MOCK: PointsEvent[] = [
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
-        image_url: '',
+        logo: '',
         frequency: EventMetadataFrequencies.Weekly,
         expires_at: '2024-03-12T00:00:00Z',
-        no_auto_open: false,
       },
       dynamic: {},
     },
@@ -48,9 +44,8 @@ export const EVENTS_MOCK: PointsEvent[] = [
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
-        image_url: '',
+        logo: '',
         frequency: EventMetadataFrequencies.Weekly,
-        no_auto_open: false,
       },
       dynamic: {},
     },
@@ -73,9 +68,8 @@ export const EVENTS_MOCK: PointsEvent[] = [
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
-        image_url: '',
+        logo: '',
         frequency: EventMetadataFrequencies.Weekly,
-        no_auto_open: false,
       },
       dynamic: {},
     },
@@ -100,9 +94,9 @@ export const EVENTS_MOCK: PointsEvent[] = [
         expires_at: '2024-03-12T00:00:00Z',
         short_description:
           'This is a weekly event where users can earn free points. Users are eligible to participate once every week. Upon participation, users will receive 100 points. These points can be used for various features in the application. Participate every week and maximize your rewards!',
-        image_url: 'https://placekitten.com/g/150/150',
+        logo: 'https://placekitten.com/g/150/150',
         frequency: EventMetadataFrequencies.Weekly,
-        no_auto_open: false,
+
         action_url: 'https://rarime.com',
       },
       dynamic: {},
@@ -126,9 +120,8 @@ export const EVENTS_MOCK: PointsEvent[] = [
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
-        image_url: '',
+        logo: '',
         frequency: EventMetadataFrequencies.Weekly,
-        no_auto_open: false,
       },
       dynamic: {},
     },
@@ -151,9 +144,8 @@ export const EVENTS_MOCK: PointsEvent[] = [
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
-        image_url: '',
+        logo: '',
         frequency: EventMetadataFrequencies.Weekly,
-        no_auto_open: false,
       },
       dynamic: {},
     },
@@ -177,9 +169,8 @@ export const EVENTS_MOCK: PointsEvent[] = [
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
-        image_url: '',
+        logo: '',
         frequency: EventMetadataFrequencies.Weekly,
-        no_auto_open: false,
       },
       dynamic: {},
     },
@@ -203,9 +194,8 @@ export const EVENTS_MOCK: PointsEvent[] = [
         description:
           '## Free Weekly Points\n\nThis is a weekly event where users can earn free points.\n\n### How it works\n\n- Users are eligible to participate once every week.\n- Upon participation, users will receive 100 points.\n- These points can be used for various features in the application.\n\nParticipate every week and maximize your rewards!\n',
         short_description: '',
-        image_url: '',
+        logo: '',
         frequency: EventMetadataFrequencies.Weekly,
-        no_auto_open: false,
       },
       dynamic: {},
     },
@@ -232,15 +222,7 @@ export const getEvents = async (query: EventsRequestQueryParams) => {
 }
 
 export const getEventById = async (id: string) => {
-  // TODO: Uncomment when the endpoint is ready
-  // return api.get<Event>(`${ApiServicePaths.Points}/v1/public/events/${id}`)
-  const res = await getEvents({
-    filter: { [EventsRequestFilters.Did]: identityStore.userDid },
-  })
-  return {
-    ...res,
-    data: res.data.find(event => event.id === id),
-  } as JsonApiResponse<PointsEvent>
+  return api.get<PointsEvent>(`${ApiServicePaths.Points}/v1/public/events/${id}`)
 }
 
 export const claimEvent = async (id: string) => {

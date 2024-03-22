@@ -25,16 +25,15 @@ export type EventsRequestQueryParams = {
 
 export type EventMetadata = {
   static: {
+    action_url?: string
+    description: string
+    expires_at?: string
+    frequency: EventMetadataFrequencies
+    logo: string
     name: string
     reward: number
-    title: string
-    description: string
     short_description: string
-    image_url: string
-    frequency: EventMetadataFrequencies
-    no_auto_open: boolean
-    expires_at?: string
-    action_url?: string
+    title: string
   }
   dynamic?: Record<string, unknown>
 }

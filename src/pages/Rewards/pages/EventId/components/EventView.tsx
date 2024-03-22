@@ -31,10 +31,10 @@ export default function EventView({ event }: Props) {
             )}
           </Stack>
         </Stack>
-        {event.meta.static.image_url ? (
+        {event.meta.static.logo ? (
           <Box
             component='img'
-            src={event.meta.static.image_url}
+            src={event.meta.static.logo}
             sx={{
               bgcolor: palette.action.active,
               borderRadius: 2,

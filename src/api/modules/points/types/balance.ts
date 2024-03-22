@@ -6,8 +6,10 @@ export type Balance = {
   updated_at: number
   is_disabled?: boolean
   is_verified?: boolean
+  is_withdrawal_allowed?: boolean
   rank: number
-  referral_codes?: string[]
+  active_referral_codes?: string[]
+  consumed_referral_codes?: string[]
 }
 
 export type Withdrawal = {

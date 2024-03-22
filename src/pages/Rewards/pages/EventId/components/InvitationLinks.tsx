@@ -11,15 +11,19 @@ interface Props {
   event: PointsEvent
 }
 
-const MAX_REFERRAL_CODES = 5
-
 export default function InvitationLinks({ event }: Props) {
   const { balance } = useRewardsState()
   const { palette } = useTheme()
 
-  const referralCodes = useMemo(() => {
-    return balance?.referral_codes ?? []
-  }, [balance])
+  const activeReferralCodes = useMemo(() => balance?.active_referral_codes ?? [], [balance])
+  const consumedReferralCodes = useMemo(() => balance?.consumed_referral_codes ?? [], [balance])
+
+  const referralCodes = useMemo<{ code: string; isConsumed: boolean }[]>(() => {
+    return [
+      ...activeReferralCodes.map(code => ({ code, isConsumed: false })),
+      ...consumedReferralCodes.map(code => ({ code, isConsumed: true })),
+    ]
+  }, [activeReferralCodes, consumedReferralCodes])
 
   useEffect(() => {
     rewardsStore.loadBalance()
@@ -30,20 +34,20 @@ export default function InvitationLinks({ event }: Props) {
       <Stack spacing={5}>
         <Stack spacing={2}>
           <Typography variant='subtitle3'>
-            Invited {MAX_REFERRAL_CODES - referralCodes.length}/{MAX_REFERRAL_CODES}
+            Invited {consumedReferralCodes.length}/{referralCodes.length}
           </Typography>
           <Typography variant='body3' color={palette.text.secondary}>
             STUB: Invite friends and earn RMO
           </Typography>
         </Stack>
         <Stack spacing={2}>
-          {new Array(MAX_REFERRAL_CODES).fill(null).map((_, index) => (
+          {referralCodes.map(({ code, isConsumed }, index) => (
             <ReferralLink
               key={index}
               index={index}
-              reward={Math.floor(event.meta.static.reward / MAX_REFERRAL_CODES)}
-              code={referralCodes[index]}
-              isUsed={index >= referralCodes.length}
+              reward={Math.floor(event.meta.static.reward / referralCodes.length)}
+              code={code}
+              isUsed={isConsumed}
             />
           ))}
         </Stack>
