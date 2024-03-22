@@ -47,7 +47,7 @@ export default function InvitationLinks({ event }: Props) {
               index={index}
               reward={Math.floor(event.meta.static.reward / referralCodes.length)}
               code={code}
-              isUsed={isConsumed}
+              isConsumed={isConsumed}
             />
           ))}
         </Stack>
