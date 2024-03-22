@@ -22,10 +22,10 @@ export default function LimitedEventItem({ event, onClaim }: Props) {
     <Stack direction='row' justifyContent='space-between' alignItems='center' spacing={4}>
       <Stack direction='row' spacing={4} alignItems='center'>
         <Box component={NavLink} to={generatePath(RoutePaths.RewardsEventId, { id: event.id })}>
-          {event.meta.static.image_url ? (
+          {event.meta.static.logo ? (
             <Box
               component='img'
-              src={event.meta.static.image_url}
+              src={event.meta.static.logo}
               sx={{
                 bgcolor: palette.action.active,
                 borderRadius: 2,

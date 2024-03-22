@@ -11,10 +11,10 @@ interface Props {
   index: number
   reward: number
   code?: string
-  isUsed?: boolean
+  isConsumed?: boolean
 }
 
-export default function ReferralLink({ code, index, reward, isUsed }: Props) {
+export default function ReferralLink({ code, index, reward, isConsumed }: Props) {
   const { palette, spacing } = useTheme()
   const { copy, isCopied } = useCopyToClipboard()
 
@@ -30,7 +30,7 @@ export default function ReferralLink({ code, index, reward, isUsed }: Props) {
       justifyContent='space-between'
       alignItems='center'
       spacing={4}
-      bgcolor={isUsed ? 'transparent' : palette.action.active}
+      bgcolor={isConsumed ? 'transparent' : palette.action.active}
       px={4}
       py={3}
       border={1}
@@ -40,16 +40,19 @@ export default function ReferralLink({ code, index, reward, isUsed }: Props) {
       <Stack spacing={1}>
         <Typography
           variant='subtitle4'
-          color={isUsed ? palette.text.secondary : palette.text.primary}
-          sx={{ textDecoration: isUsed ? 'line-through' : 'none' }}
+          color={isConsumed ? palette.text.secondary : palette.text.primary}
+          sx={{ textDecoration: isConsumed ? 'line-through' : 'none' }}
         >
           {'Link ' + (index + 1)}
         </Typography>
-        <Typography variant='body4' color={isUsed ? palette.text.secondary : palette.success.dark}>
-          {isUsed ? 'Already Used' : 'Active'}
+        <Typography
+          variant='body4'
+          color={isConsumed ? palette.text.secondary : palette.success.dark}
+        >
+          {isConsumed ? 'Already Used' : 'Active'}
         </Typography>
       </Stack>
-      {isUsed ? (
+      {isConsumed ? (
         <RewardChip reward={reward} isFinished />
       ) : (
         <Stack
