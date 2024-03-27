@@ -110,6 +110,20 @@ export const createPointsBalance = async (did: string, referredBy: string) => {
   })
 }
 
+export const activatePointsBalance = async (did: string, referredBy: string) => {
+  return api.patch<Balance>(`${ApiServicePaths.Points}/v1/public/balances/${did}`, {
+    body: {
+      data: {
+        id: did,
+        type: 'update_balance',
+        attributes: {
+          referred_by: referredBy,
+        },
+      },
+    },
+  })
+}
+
 export const getLeaderboard = async () => {
   return api.get<Balance[]>(`${ApiServicePaths.Points}/v1/public/balances`)
 }
