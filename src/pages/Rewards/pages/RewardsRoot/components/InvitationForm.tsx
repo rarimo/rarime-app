@@ -36,7 +36,7 @@ export default function InvitationForm() {
       disableForm()
 
       try {
-        await rewardsStore.createBalance(formData[FieldNames.Code])
+        await rewardsStore.activateBalance(formData[FieldNames.Code])
       } catch (error) {
         if (error instanceof NotFoundError) {
           setError(FieldNames.Code, {
