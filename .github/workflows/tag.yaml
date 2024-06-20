@@ -34,4 +34,18 @@ jobs:
           . $(werf ci-env github --as-file)
           werf export --dev web --tag ghcr.io/$GITHUB_REPOSITORY:$GITHUB_REF_NAME
 
-  
+  deploy:
+    name: Deploy
+    needs: converge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: ConfigCreate
+        run: |
+          mkdir ~/.kube/
+          echo "${{ secrets.K8SCONFIG_MAIN }}" | base64 -d > config
+          mv config ~/.kube/
+          kubectl set image deployment webclient template=ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA -n rarime
