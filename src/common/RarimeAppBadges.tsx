@@ -2,6 +2,7 @@ import { Box, Stack, StackProps, useTheme } from '@mui/material'
 import { useMemo } from 'react'
 
 import { config } from '@/config'
+import { isAndroid, isIos } from '@/helpers'
 
 type AppBadgeType = 'app-store' | 'google-play'
 interface AppBadgeProps {
@@ -45,10 +46,14 @@ function AppBadge({ type, link }: AppBadgeProps) {
 }
 
 export default function RarimeAppBadges(props: StackProps) {
+  const isPhoneSupported = isAndroid() || isIos()
+  const isAppStoreShown = isIos() || !isPhoneSupported
+  const isGooglePlayShown = isAndroid() || !isPhoneSupported
+
   return (
     <Stack direction='row' spacing={6} {...props}>
-      <AppBadge type='app-store' link={config.APP_STORE_APP_LINK} />
-      <AppBadge type='google-play' link={config.GOOGLE_PLAY_APP_LINK} />
+      {isAppStoreShown && <AppBadge type='app-store' link={config.APP_STORE_APP_LINK} />}
+      {isGooglePlayShown && <AppBadge type='google-play' link={config.GOOGLE_PLAY_APP_LINK} />}
     </Stack>
   )
 }

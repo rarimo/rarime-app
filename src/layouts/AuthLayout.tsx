@@ -5,7 +5,7 @@ import { config } from '@/config'
 import { vh } from '@/theme/helpers'
 
 const PublicLayout = ({ children }: PropsWithChildren) => {
-  const { palette, spacing } = useTheme()
+  const { spacing } = useTheme()
 
   return (
     <Stack direction='row' height={vh(100)}>
@@ -48,24 +48,6 @@ const PublicLayout = ({ children }: PropsWithChildren) => {
             {children}
           </Stack>
         </Box>
-      </Stack>
-
-      <Stack
-        justifyContent='center'
-        alignItems='end'
-        pl={8}
-        bgcolor={palette.additional.pureBlack}
-        sx={{
-          display: { xs: 'none', md: 'flex' },
-        }}
-      >
-        <Box
-          component='img'
-          src='/imgs/dashboard.png'
-          alt='Dashboard image'
-          height={vh(90)}
-          sx={{ objectFit: 'contain' }}
-        />
       </Stack>
     </Stack>
   )

@@ -10,7 +10,7 @@ export default function RewardsInvitationAlias() {
     const searchParams = new URLSearchParams()
     searchParams.append('code', code)
 
-    return `${generatePath(RoutePaths.Rewards)}?${searchParams.toString()}`
+    return `${generatePath(RoutePaths.DownloadApp)}?${searchParams.toString()}`
   }, [code])
 
   return <Navigate to={redirectPath} replace />
