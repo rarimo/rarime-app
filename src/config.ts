@@ -32,6 +32,6 @@ export const config: Config = {
   DEFAULT_CHAIN: import.meta.env.VITE_DEFAULT_CHAIN || FALLBACK_DEFAULT_CHAIN,
   ROBOTORNOT_LINK: 'https://robotornot.mainnet-beta.rarimo.com/',
   SUPPORT_LINK: 'https://rarime.com',
-  APP_STORE_APP_LINK: 'https://apps.apple.com',
-  GOOGLE_PLAY_APP_LINK: 'https://play.google.com',
+  APP_STORE_APP_LINK: 'https://apps.apple.com/app/rarime/id6503300598',
+  GOOGLE_PLAY_APP_LINK: 'https://play.google.com/store/apps/details?id=com.rarilabs.rarime',
 }
