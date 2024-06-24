@@ -1,0 +1,6 @@
+version: '3'
+services:
+  web:
+    image: ghcr.io/rarimo/rarime-app:v0.1.5
+    ports:
+      - 80:80
