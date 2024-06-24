@@ -58,7 +58,7 @@ export default defineConfig(({ mode }) => {
         entry: '/src/main.tsx',
         inject: {
           data: {
-            host: env.VITE_APP_DOMAIN,
+            host: env.VITE_APP_HOST_URL,
           },
         },
       }),
