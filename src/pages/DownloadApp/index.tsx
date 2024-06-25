@@ -8,12 +8,16 @@ import { isMobile } from '@/helpers'
 import { useCopyToClipboard } from '@/hooks'
 import { UiIcon } from '@/ui'
 
-export default function DownloadApp() {
+type Props = {
+  extCode?: string
+}
+
+export default function DownloadApp({ extCode }: Props) {
   const { palette } = useTheme()
   const [searchParams] = useSearchParams()
   const { isCopied, copy } = useCopyToClipboard()
 
-  const code = searchParams.get('code')
+  const code = extCode || searchParams.get('code')
 
   return (
     <Paper
