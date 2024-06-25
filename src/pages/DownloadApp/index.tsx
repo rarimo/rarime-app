@@ -1,4 +1,4 @@
-import { IconButton, Paper, Stack, Typography, useTheme } from '@mui/material'
+import { IconButton, Link, Paper, Stack, Typography, useTheme } from '@mui/material'
 import { QRCode } from 'react-qrcode-logo'
 import { useSearchParams } from 'react-router-dom'
 
@@ -47,28 +47,34 @@ export default function DownloadApp({ extCode }: Props) {
         )}
       </Stack>
       {code && (
-        <Stack
-          width='100%'
-          direction='row'
-          gap={2}
-          justifyContent='center'
-          p={3}
-          bgcolor={palette.action.active}
-          border={2}
-          borderColor={palette.divider}
-          borderRadius={2}
-        >
-          <Typography
-            variant='subtitle2'
-            color={palette.text.primary}
-            letterSpacing={3}
-            textAlign='center'
+        <Stack spacing={2} alignItems='center'>
+          <Stack
+            width='100%'
+            direction='row'
+            gap={2}
+            justifyContent='center'
+            p={3}
+            bgcolor={palette.action.active}
+            border={2}
+            borderColor={palette.divider}
+            borderRadius={2}
           >
-            {code}
-          </Typography>
-          <IconButton color={isCopied ? 'success' : 'primary'} onClick={() => copy(code)}>
-            <UiIcon name={isCopied ? Icons.Check : Icons.CopySimple} size={5} />
-          </IconButton>
+            <Typography
+              variant='subtitle2'
+              color={palette.text.primary}
+              letterSpacing={3}
+              textAlign='center'
+            >
+              {code}
+            </Typography>
+            <IconButton color={isCopied ? 'success' : 'primary'} onClick={() => copy(code)}>
+              <UiIcon name={isCopied ? Icons.Check : Icons.CopySimple} size={5} />
+            </IconButton>
+          </Stack>
+
+          <Link href={`${window.origin}/r/${code}`} variant='body3' color={palette.text.primary}>
+            Open app
+          </Link>
         </Stack>
       )}
     </Paper>
