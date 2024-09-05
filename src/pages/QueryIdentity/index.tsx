@@ -42,7 +42,7 @@ export default function QueryIdentity() {
     const requestPayload = JSON.stringify({
       id: data.id,
       type: 'QueryProofGen',
-      callbackUrl: data.callback_url,
+      // callbackUrl: data.callback_url,
       dataUrl: data.get_proof_params,
     })
 
