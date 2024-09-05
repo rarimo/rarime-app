@@ -28,9 +28,10 @@ export default function QueryIdentity() {
           id: `${uuid()}@gmail.com`,
           type: 'user',
           attributes: {
-            // age_lower_bound: 18,
+            age_lower_bound: 18,
             uniqueness: true,
-            // nationality: 'UKR',
+            nationality: 'UKR',
+            event_id: '12345678900987654321',
           },
         },
       },
@@ -51,7 +52,7 @@ export default function QueryIdentity() {
   }, [])
 
   const fetchResponse = useCallback(async () => {
-    const { data } = await apiClient.get(`/integrations/verification-svc/private/proof/${id}`)
+    const { data } = await apiClient.get(`/integrations/verificator-svc/private/proof/${id}`)
 
     // eslint-disable-next-line no-console
     console.log(data)
