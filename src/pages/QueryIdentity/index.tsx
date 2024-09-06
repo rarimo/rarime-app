@@ -48,7 +48,9 @@ export default function QueryIdentity() {
 
     setQrCode(requestPayload)
 
-    setDeepLink('https://app.stage.rarime.com' + Buffer.from(requestPayload).toString('base64'))
+    setDeepLink(
+      'https://app.stage.rarime.com/external/' + Buffer.from(requestPayload).toString('base64'),
+    )
   }, [])
 
   const fetchResponse = useCallback(async () => {
