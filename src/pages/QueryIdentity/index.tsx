@@ -1,6 +1,5 @@
 import { JsonApiClient } from '@distributedlab/jac'
-import { Accordion, AccordionDetails, AccordionSummary, Button, Stack } from '@mui/material'
-import { Buffer } from 'buffer'
+import { Accordion, AccordionDetails, AccordionSummary, Button, Link, Stack } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { QRCode } from 'react-qrcode-logo'
 import { v4 as uuid } from 'uuid'
@@ -48,9 +47,14 @@ export default function QueryIdentity() {
 
     setQrCode(requestPayload)
 
-    setDeepLink(
-      'https://app.stage.rarime.com/external/' + Buffer.from(requestPayload).toString('base64'),
-    )
+    const newUrl = new URL('rarime://external')
+    newUrl.searchParams.append('type', 'QueryProofGen')
+    newUrl.searchParams.append('id', data.id)
+    newUrl.searchParams.append('data_url', data.get_proof_params)
+
+    const deepLink = newUrl.href
+
+    setDeepLink(deepLink)
   }, [])
 
   const fetchResponse = useCallback(async () => {
@@ -87,6 +91,16 @@ export default function QueryIdentity() {
             <AccordionDetails>
               <Stack p={15} width='100%' justifyContent='center' alignItems='center'>
                 <QRCode size={400} value={deepLink} />
+
+                <Link
+                  href={deepLink}
+                  target='_blank'
+                  sx={{
+                    color: '#000',
+                  }}
+                >
+                  {deepLink}
+                </Link>
               </Stack>
             </AccordionDetails>
           </Accordion>
