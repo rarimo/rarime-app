@@ -11,7 +11,6 @@ const apiClient = new JsonApiClient({
 })
 
 export default function QueryIdentity() {
-  const [qrCode, setQrCode] = useState('')
   const [id, setId] = useState('')
   const [deepLink, setDeepLink] = useState('')
 
@@ -38,19 +37,10 @@ export default function QueryIdentity() {
 
     setId(data.id)
 
-    const requestPayload = JSON.stringify({
-      id: data.id,
-      type: 'QueryProofGen',
-      // callbackUrl: data.callback_url,
-      dataUrl: data.get_proof_params,
-    })
-
-    setQrCode(requestPayload)
-
     const newUrl = new URL('rarime://external')
-    newUrl.searchParams.append('type', 'QueryProofGen')
+    newUrl.searchParams.append('type', 'proof-request')
     newUrl.searchParams.append('id', data.id)
-    newUrl.searchParams.append('data_url', data.get_proof_params)
+    newUrl.searchParams.append('proof_params_url', data.get_proof_params)
 
     const deepLink = newUrl.href
 
@@ -69,19 +59,6 @@ export default function QueryIdentity() {
       <Stack gap={4}>
         <Button onClick={genQrCode}>Generate QR code</Button>
         <Button onClick={fetchResponse}>Fetch response</Button>
-
-        {qrCode && (
-          <Accordion>
-            <AccordionSummary aria-controls='panel1-content' id='panel1-header'>
-              QR-code flow
-            </AccordionSummary>
-            <AccordionDetails>
-              <Stack p={15} width='100%' justifyContent='center' alignItems='center'>
-                <QRCode size={400} value={qrCode} />
-              </Stack>
-            </AccordionDetails>
-          </Accordion>
-        )}
 
         {deepLink && (
           <Accordion>
