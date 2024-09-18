@@ -10,7 +10,7 @@ import MainLayout from './layouts/MainLayout'
 export const AppRoutes = () => {
   const RewardsInvitationAlias = lazy(() => import('@/pages/RewardsInvitationAlias'))
   const DownloadApp = lazy(() => import('@/pages/DownloadApp'))
-  const QueryIdentity = lazy(() => import('@/pages/QueryIdentity'))
+  const ProofRequestsDemo = lazy(() => import('@/pages/ProofRequestsDemo'))
 
   const { isAuthorized } = useAuth()
 
@@ -38,8 +38,8 @@ export const AppRoutes = () => {
           element: <DownloadApp />,
         },
         {
-          path: 'query-identity',
-          element: <QueryIdentity />,
+          path: RoutePaths.ProofRequestsDemo,
+          element: <ProofRequestsDemo />,
         },
         {
           path: RoutePaths.Root,
