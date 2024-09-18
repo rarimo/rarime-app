@@ -12,6 +12,7 @@ export type Config = {
   APP_NAME: string
   APP_HOST_URL: string
   API_URL: string
+  VERIFICATOR_API_URL: string
   BUILD_VERSION: string
   SUPPORTED_CHAINS_DETAILS: SupportedChainsDetails
   DEFAULT_CHAIN: SupportedChains
@@ -27,6 +28,7 @@ export const config: Config = {
   APP_NAME: import.meta.env.VITE_APP_NAME,
   APP_HOST_URL: import.meta.env.VITE_APP_HOST_URL,
   API_URL: import.meta.env.VITE_API_URL,
+  VERIFICATOR_API_URL: import.meta.env.VITE_VERIFICATOR_API_URL,
   BUILD_VERSION: packageJson.version || import.meta.env.VITE_APP_BUILD_VERSION,
   SUPPORTED_CHAINS_DETAILS,
   DEFAULT_CHAIN: import.meta.env.VITE_DEFAULT_CHAIN || FALLBACK_DEFAULT_CHAIN,
