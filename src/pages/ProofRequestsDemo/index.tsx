@@ -18,7 +18,7 @@ import { v4 as uuid } from 'uuid'
 import { config } from '@/config'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
-import { UiSwitch, UiTextField } from '@/ui'
+import { UiCheckbox, UiSwitch, UiTextField } from '@/ui'
 
 const apiClient = new JsonApiClient({
   baseUrl: config.VERIFICATOR_API_URL,
@@ -39,7 +39,7 @@ enum VerificationStatuses {
 }
 
 export default function ProofRequestsDemo() {
-  const [id, setId] = useState('')
+  const [verificationCheckEndpoint, setVerificationCheckEndpoint] = useState('')
   const [deepLink, setDeepLink] = useState('')
   const [step, setStep] = useState<DemoSteps>(DemoSteps.Intro)
   const [intervalId, setIntervalId] = useState<number>(-1)
@@ -64,7 +64,7 @@ export default function ProofRequestsDemo() {
         id: string
         type: string
         status: VerificationStatuses
-      }>(`/integrations/verificator-svc/private/verification-status/${id}`)
+      }>(verificationCheckEndpoint)
 
       if (data.status !== VerificationStatuses.NotVerified) {
         setVerificationStatus(data.status)
@@ -81,8 +81,8 @@ export default function ProofRequestsDemo() {
     case DemoSteps.ProofAttributes:
       return (
         <ProofAttributesStep
-          onSubmit={(id, deepLink) => {
-            setId(id)
+          onSubmit={(verificationCheckEndpoint, deepLink) => {
+            setVerificationCheckEndpoint(verificationCheckEndpoint)
             setDeepLink(deepLink)
             setStep(DemoSteps.QrCode)
           }}
@@ -96,7 +96,7 @@ export default function ProofRequestsDemo() {
           status={verificationStatus}
           onRetry={() => {
             setVerificationStatus(VerificationStatuses.NotVerified)
-            setId('')
+            setVerificationCheckEndpoint('')
             setDeepLink('')
             setStep(DemoSteps.Intro)
           }}
@@ -176,6 +176,7 @@ enum FieldNames {
   MinimumAge = 'minimumAge',
   Nationality = 'nationality',
   EventId = 'eventId',
+  isLightVerificationEnabled = 'isLightVerificationEnabled',
 }
 
 const DEFAULT_VALUES = {
@@ -183,9 +184,14 @@ const DEFAULT_VALUES = {
   [FieldNames.MinimumAge]: '18',
   [FieldNames.Nationality]: 'UKR',
   [FieldNames.EventId]: '12345678900987654321',
+  [FieldNames.isLightVerificationEnabled]: false,
 }
 
-function ProofAttributesStep({ onSubmit }: { onSubmit: (id: string, deepLink: string) => void }) {
+function ProofAttributesStep({
+  onSubmit,
+}: {
+  onSubmit: (verificationCheckEndpoint: string, deepLink: string) => void
+}) {
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
       yup.object().shape({
@@ -196,6 +202,81 @@ function ProofAttributesStep({ onSubmit }: { onSubmit: (id: string, deepLink: st
       }),
     )
 
+  const handleVerification = useCallback(
+    async (attrs: {
+      age_lower_bound?: number
+      uniqueness?: boolean
+      nationality?: string
+      event_id?: string
+    }) => {
+      const { data } = await apiClient.post<{
+        id: string
+        type: string
+        callback_url: string
+        get_proof_params: string
+      }>('/integrations/verificator-svc/private/verification-link', {
+        body: {
+          data: {
+            id: `${uuid()}@gmail.com`,
+            type: 'user',
+            attributes: {
+              age_lower_bound: attrs.age_lower_bound,
+              uniqueness: attrs.uniqueness,
+              nationality: attrs.nationality,
+              event_id: attrs.event_id,
+            },
+          },
+        },
+      })
+
+      const newUrl = new URL('rarime://external')
+      newUrl.searchParams.append('type', 'proof-request')
+      newUrl.searchParams.append('proof_params_url', data.get_proof_params)
+
+      onSubmit(`/integrations/verificator-svc/private/verification-status/${data.id}`, newUrl.href)
+    },
+    [onSubmit],
+  )
+
+  const handleVerificationLight = useCallback(
+    async (attrs: {
+      age_lower_bound?: number
+      uniqueness?: boolean
+      nationality?: string
+      event_id?: string
+    }) => {
+      const { data } = await apiClient.post<{
+        id: string
+        type: string
+        callback_url: string
+        get_proof_params: string
+      }>('/integrations/verificator-svc/light/private/verification-link', {
+        body: {
+          data: {
+            id: `${uuid()}@gmail.com`,
+            type: 'user',
+            attributes: {
+              age_lower_bound: attrs.age_lower_bound,
+              uniqueness: attrs.uniqueness,
+              nationality: attrs.nationality,
+              event_id: attrs.event_id,
+            },
+          },
+        },
+      })
+
+      const newUrl = new URL('rarime://external')
+      newUrl.searchParams.append('type', 'light-verification')
+      newUrl.searchParams.append('proof_params_url', data.get_proof_params)
+
+      onSubmit(
+        `/integrations/verificator-svc/light/private/verification-status/${data.id}`,
+        newUrl.href,
+      )
+    },
+    [onSubmit],
+  )
+
   const submit = useCallback(
     async (formData: typeof DEFAULT_VALUES) => {
       disableForm()
@@ -204,38 +285,32 @@ function ProofAttributesStep({ onSubmit }: { onSubmit: (id: string, deepLink: st
         const minimumAge = Number(formData[FieldNames.MinimumAge])
         const nationality = formData[FieldNames.Nationality]
 
-        const { data } = await apiClient.post<{
-          id: string
-          type: string
-          callback_url: string
-          get_proof_params: string
-        }>('/integrations/verificator-svc/private/verification-link', {
-          body: {
-            data: {
-              id: `${uuid()}@gmail.com`,
-              type: 'user',
-              attributes: {
-                age_lower_bound: minimumAge ? minimumAge : undefined,
-                uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-                nationality: nationality ? nationality : undefined,
-                event_id: formData[FieldNames.EventId],
-              },
-            },
-          },
+        const isLightVerificationEnabled = formData[FieldNames.isLightVerificationEnabled]
+
+        if (isLightVerificationEnabled) {
+          await handleVerificationLight({
+            age_lower_bound: minimumAge ? minimumAge : undefined,
+            uniqueness: Boolean(formData[FieldNames.Uniqueness]),
+            nationality: nationality ? nationality : undefined,
+            event_id: formData[FieldNames.EventId],
+          })
+
+          return
+        }
+
+        await handleVerification({
+          age_lower_bound: minimumAge ? minimumAge : undefined,
+          uniqueness: Boolean(formData[FieldNames.Uniqueness]),
+          nationality: nationality ? nationality : undefined,
+          event_id: formData[FieldNames.EventId],
         })
-
-        const newUrl = new URL('rarime://external')
-        newUrl.searchParams.append('type', 'proof-request')
-        newUrl.searchParams.append('proof_params_url', data.get_proof_params)
-
-        onSubmit(data.id, newUrl.href)
       } catch (error) {
         ErrorHandler.process(error)
       }
 
       enableForm()
     },
-    [disableForm, enableForm, onSubmit],
+    [disableForm, enableForm, handleVerification, handleVerificationLight],
   )
 
   return (
@@ -301,6 +376,13 @@ function ProofAttributesStep({ onSubmit }: { onSubmit: (id: string, deepLink: st
                 disabled={isFormDisabled}
               />
             </FormControl>
+          )}
+        />
+        <Controller
+          name={FieldNames.isLightVerificationEnabled}
+          control={control}
+          render={({ field }) => (
+            <UiCheckbox {...field} label='light verification' disabled={isFormDisabled} />
           )}
         />
         <Button disabled={isFormDisabled} type='submit'>
