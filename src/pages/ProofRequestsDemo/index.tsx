@@ -18,7 +18,8 @@ import { v4 as uuid } from 'uuid'
 import { config } from '@/config'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
-import { UiCheckbox, UiSwitch, UiTextField } from '@/ui'
+import { Transitions } from '@/theme/constants'
+import { UiSwitch, UiTextField } from '@/ui'
 
 const apiClient = new JsonApiClient({
   baseUrl: config.VERIFICATOR_API_URL,
@@ -176,7 +177,6 @@ enum FieldNames {
   MinimumAge = 'minimumAge',
   Nationality = 'nationality',
   EventId = 'eventId',
-  isLightVerificationEnabled = 'isLightVerificationEnabled',
 }
 
 const DEFAULT_VALUES = {
@@ -184,7 +184,6 @@ const DEFAULT_VALUES = {
   [FieldNames.MinimumAge]: '18',
   [FieldNames.Nationality]: 'UKR',
   [FieldNames.EventId]: '12345678900987654321',
-  [FieldNames.isLightVerificationEnabled]: false,
 }
 
 function ProofAttributesStep({
@@ -192,6 +191,7 @@ function ProofAttributesStep({
 }: {
   onSubmit: (verificationCheckEndpoint: string, deepLink: string) => void
 }) {
+  const [isLightVerification, setIsLightVerification] = useState(true)
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
       yup.object().shape({
@@ -285,9 +285,7 @@ function ProofAttributesStep({
         const minimumAge = Number(formData[FieldNames.MinimumAge])
         const nationality = formData[FieldNames.Nationality]
 
-        const isLightVerificationEnabled = formData[FieldNames.isLightVerificationEnabled]
-
-        if (isLightVerificationEnabled) {
+        if (isLightVerification) {
           await handleVerificationLight({
             age_lower_bound: minimumAge ? minimumAge : undefined,
             uniqueness: Boolean(formData[FieldNames.Uniqueness]),
@@ -310,12 +308,33 @@ function ProofAttributesStep({
 
       enableForm()
     },
-    [disableForm, enableForm, handleVerification, handleVerificationLight],
+    [disableForm, enableForm, handleVerification, handleVerificationLight, isLightVerification],
   )
 
   return (
     <StepView title='Step 1/3' subtitle='Create verification request for the proof'>
       <Stack component='form' spacing={4} onSubmit={handleSubmit(submit)}>
+        <Stack
+          direction='row'
+          alignItems='center'
+          sx={theme => ({
+            p: 0.5,
+            background: theme.palette.action.active,
+            borderRadius: 25,
+            overflow: 'hidden',
+          })}
+        >
+          <TabButton
+            text='Light Verification'
+            isActive={isLightVerification}
+            onClick={() => setIsLightVerification(true)}
+          />
+          <TabButton
+            text='Identity Proof'
+            isActive={!isLightVerification}
+            onClick={() => setIsLightVerification(false)}
+          />
+        </Stack>
         <Controller
           name={FieldNames.Uniqueness}
           control={control}
@@ -376,13 +395,6 @@ function ProofAttributesStep({
                 disabled={isFormDisabled}
               />
             </FormControl>
-          )}
-        />
-        <Controller
-          name={FieldNames.isLightVerificationEnabled}
-          control={control}
-          render={({ field }) => (
-            <UiCheckbox {...field} label='light verification' disabled={isFormDisabled} />
           )}
         />
         <Button disabled={isFormDisabled} type='submit'>
@@ -482,5 +494,42 @@ function VerificationStatusStep({
         </Button>
       </Stack>
     </StepView>
+  )
+}
+
+function TabButton({
+  text,
+  isActive,
+  onClick,
+}: {
+  text: string
+  isActive: boolean
+  onClick: () => void
+}) {
+  const { palette, spacing } = useTheme()
+
+  return (
+    <Stack
+      component='a'
+      alignItems='center'
+      width='100%'
+      onClick={onClick}
+      sx={{
+        background: isActive ? palette.background.paper : 'none',
+        px: 4,
+        py: 2,
+        minWidth: spacing(30),
+        borderRadius: 25,
+        transition: Transitions.Default,
+        cursor: 'pointer',
+      }}
+    >
+      <Typography
+        variant='buttonSmall'
+        color={isActive ? palette.text.primary : palette.text.secondary}
+      >
+        {text}
+      </Typography>
+    </Stack>
   )
 }
