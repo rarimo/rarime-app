@@ -176,6 +176,7 @@ enum FieldNames {
   Uniqueness = 'uniqueness',
   MinimumAge = 'minimumAge',
   Nationality = 'nationality',
+  NationalityCheck = 'nationalityCheck',
   EventId = 'eventId',
 }
 
@@ -183,6 +184,7 @@ const DEFAULT_VALUES = {
   [FieldNames.Uniqueness]: true,
   [FieldNames.MinimumAge]: '18',
   [FieldNames.Nationality]: 'UKR',
+  [FieldNames.NationalityCheck]: false,
   [FieldNames.EventId]: '12345678900987654321',
 }
 
@@ -208,6 +210,7 @@ function ProofAttributesStep({
       uniqueness?: boolean
       nationality?: string
       event_id?: string
+      nationality_check?: boolean
     }) => {
       const { data } = await apiClient.post<{
         id: string
@@ -224,6 +227,7 @@ function ProofAttributesStep({
               uniqueness: attrs.uniqueness,
               nationality: attrs.nationality,
               event_id: attrs.event_id,
+              ...(attrs.nationality_check && { nationality_check: true }),
             },
           },
         },
@@ -301,6 +305,7 @@ function ProofAttributesStep({
           uniqueness: Boolean(formData[FieldNames.Uniqueness]),
           nationality: nationality ? nationality : undefined,
           event_id: formData[FieldNames.EventId],
+          nationality_check: formData[FieldNames.NationalityCheck],
         })
       } catch (error) {
         ErrorHandler.process(error)
@@ -349,6 +354,22 @@ function ProofAttributesStep({
             </FormControl>
           )}
         />
+        {!isLightVerification && (
+          <Controller
+            name={FieldNames.NationalityCheck}
+            control={control}
+            render={({ field }) => (
+              <FormControl>
+                <UiSwitch
+                  {...field}
+                  checked={field.value}
+                  label='Nationality Check'
+                  disabled={isFormDisabled}
+                />
+              </FormControl>
+            )}
+          />
+        )}
 
         <Stack direction='row' spacing={4}>
           <Controller
