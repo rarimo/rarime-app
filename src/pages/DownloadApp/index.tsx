@@ -1,4 +1,4 @@
-import { IconButton, Link, Paper, Stack, Typography, useTheme } from '@mui/material'
+import { IconButton, Paper, Stack, Typography, useTheme } from '@mui/material'
 import { QRCode } from 'react-qrcode-logo'
 import { useSearchParams } from 'react-router-dom'
 
@@ -71,10 +71,6 @@ export default function DownloadApp({ extCode }: Props) {
               <UiIcon name={isCopied ? Icons.Check : Icons.CopySimple} size={5} />
             </IconButton>
           </Stack>
-
-          <Link href={`${window.origin}/r/${code}`} variant='body3' color={palette.text.primary}>
-            Open app
-          </Link>
         </Stack>
       )}
     </Paper>
