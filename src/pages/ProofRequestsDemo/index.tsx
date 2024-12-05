@@ -25,6 +25,10 @@ const apiClient = new JsonApiClient({
   baseUrl: config.VERIFICATOR_API_URL,
 })
 
+const apiClientMint = new JsonApiClient({
+  baseUrl: config.VERIFICATOR_API_MINT_URL,
+})
+
 enum DemoSteps {
   Intro,
   ProofAttributes,
@@ -188,12 +192,18 @@ const DEFAULT_VALUES = {
   [FieldNames.EventId]: '12345678900987654321',
 }
 
+enum TabStatus {
+  LightVerification,
+  IdentityProof,
+  IdentityProofMint,
+}
+
 function ProofAttributesStep({
   onSubmit,
 }: {
   onSubmit: (verificationCheckEndpoint: string, deepLink: string) => void
 }) {
-  const [isLightVerification, setIsLightVerification] = useState(true)
+  const [tabStatus, setTabStatus] = useState(TabStatus.LightVerification)
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
       yup.object().shape({
@@ -213,6 +223,44 @@ function ProofAttributesStep({
       nationality_check?: boolean
     }) => {
       const { data } = await apiClient.post<{
+        id: string
+        type: string
+        callback_url: string
+        get_proof_params: string
+      }>('/integrations/verificator-svc/private/verification-link', {
+        body: {
+          data: {
+            id: `${uuid()}@gmail.com`,
+            type: 'user',
+            attributes: {
+              age_lower_bound: attrs.age_lower_bound,
+              uniqueness: attrs.uniqueness,
+              nationality: attrs.nationality,
+              event_id: attrs.event_id,
+              ...(attrs.nationality_check && { nationality_check: true }),
+            },
+          },
+        },
+      })
+
+      const newUrl = new URL('rarime://external')
+      newUrl.searchParams.append('type', 'proof-request')
+      newUrl.searchParams.append('proof_params_url', data.get_proof_params)
+
+      onSubmit(`/integrations/verificator-svc/private/verification-status/${data.id}`, newUrl.href)
+    },
+    [onSubmit],
+  )
+
+  const handleVerificationMint = useCallback(
+    async (attrs: {
+      age_lower_bound?: number
+      uniqueness?: boolean
+      nationality?: string
+      event_id?: string
+      nationality_check?: boolean
+    }) => {
+      const { data } = await apiClientMint.post<{
         id: string
         type: string
         callback_url: string
@@ -289,31 +337,49 @@ function ProofAttributesStep({
         const minimumAge = Number(formData[FieldNames.MinimumAge])
         const nationality = formData[FieldNames.Nationality]
 
-        if (isLightVerification) {
-          await handleVerificationLight({
-            age_lower_bound: minimumAge ? minimumAge : undefined,
-            uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-            nationality: nationality ? nationality : undefined,
-            event_id: formData[FieldNames.EventId],
-          })
+        switch (tabStatus) {
+          case TabStatus.LightVerification:
+            await handleVerificationLight({
+              age_lower_bound: minimumAge ? minimumAge : undefined,
+              uniqueness: Boolean(formData[FieldNames.Uniqueness]),
+              nationality: nationality ? nationality : undefined,
+              event_id: formData[FieldNames.EventId],
+            })
 
-          return
+            return
+          case TabStatus.IdentityProof:
+            await handleVerification({
+              age_lower_bound: minimumAge ? minimumAge : undefined,
+              uniqueness: Boolean(formData[FieldNames.Uniqueness]),
+              nationality: nationality ? nationality : undefined,
+              event_id: formData[FieldNames.EventId],
+              nationality_check: formData[FieldNames.NationalityCheck],
+            })
+            return
+          case TabStatus.IdentityProofMint:
+            await handleVerificationMint({
+              age_lower_bound: minimumAge ? minimumAge : undefined,
+              uniqueness: Boolean(formData[FieldNames.Uniqueness]),
+              nationality: nationality ? nationality : undefined,
+              event_id: formData[FieldNames.EventId],
+              nationality_check: formData[FieldNames.NationalityCheck],
+            })
+            return
         }
-
-        await handleVerification({
-          age_lower_bound: minimumAge ? minimumAge : undefined,
-          uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-          nationality: nationality ? nationality : undefined,
-          event_id: formData[FieldNames.EventId],
-          nationality_check: formData[FieldNames.NationalityCheck],
-        })
       } catch (error) {
         ErrorHandler.process(error)
       }
 
       enableForm()
     },
-    [disableForm, enableForm, handleVerification, handleVerificationLight, isLightVerification],
+    [
+      disableForm,
+      enableForm,
+      handleVerification,
+      handleVerificationLight,
+      tabStatus,
+      handleVerificationMint,
+    ],
   )
 
   return (
@@ -331,13 +397,18 @@ function ProofAttributesStep({
         >
           <TabButton
             text='Light Verification'
-            isActive={isLightVerification}
-            onClick={() => setIsLightVerification(true)}
+            isActive={tabStatus == TabStatus.LightVerification}
+            onClick={() => setTabStatus(TabStatus.LightVerification)}
           />
           <TabButton
             text='Identity Proof'
-            isActive={!isLightVerification}
-            onClick={() => setIsLightVerification(false)}
+            isActive={tabStatus == TabStatus.IdentityProof}
+            onClick={() => setTabStatus(TabStatus.IdentityProof)}
+          />
+          <TabButton
+            text='Identity Proof (Mint NFT)'
+            isActive={tabStatus == TabStatus.IdentityProofMint}
+            onClick={() => setTabStatus(TabStatus.IdentityProofMint)}
           />
         </Stack>
         <Controller
@@ -354,7 +425,7 @@ function ProofAttributesStep({
             </FormControl>
           )}
         />
-        {!isLightVerification && (
+        {tabStatus != TabStatus.LightVerification && (
           <Controller
             name={FieldNames.NationalityCheck}
             control={control}

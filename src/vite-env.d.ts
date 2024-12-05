@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   VITE_MODE: BuildMode
   VITE_API_URL: string
   VITE_VERIFICATOR_API_URL: string
+  VITE_VERIFICATOR_API_MINT_URL: string
   VITE_PORT: string
   VITE_APP_NAME: string
   VITE_APP_BUILD_VERSION: string
