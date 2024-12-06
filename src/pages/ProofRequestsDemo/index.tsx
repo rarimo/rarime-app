@@ -25,10 +25,6 @@ const apiClient = new JsonApiClient({
   baseUrl: config.VERIFICATOR_API_URL,
 })
 
-const apiClientMint = new JsonApiClient({
-  baseUrl: config.VERIFICATOR_API_MINT_URL,
-})
-
 enum DemoSteps {
   Intro,
   ProofAttributes,
@@ -182,6 +178,7 @@ enum FieldNames {
   Nationality = 'nationality',
   NationalityCheck = 'nationalityCheck',
   EventId = 'eventId',
+  Address = 'address',
 }
 
 const DEFAULT_VALUES = {
@@ -190,9 +187,10 @@ const DEFAULT_VALUES = {
   [FieldNames.Nationality]: 'UKR',
   [FieldNames.NationalityCheck]: false,
   [FieldNames.EventId]: '12345678900987654321',
+  [FieldNames.Address]: '0x',
 }
 
-enum TabStatus {
+enum VerificationTypes {
   LightVerification,
   IdentityProof,
   IdentityProofMint,
@@ -203,7 +201,7 @@ function ProofAttributesStep({
 }: {
   onSubmit: (verificationCheckEndpoint: string, deepLink: string) => void
 }) {
-  const [tabStatus, setTabStatus] = useState(TabStatus.LightVerification)
+  const [tabStatus, setTabStatus] = useState(VerificationTypes.LightVerification)
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
       yup.object().shape({
@@ -211,6 +209,12 @@ function ProofAttributesStep({
         [FieldNames.MinimumAge]: yup.string(),
         [FieldNames.Nationality]: yup.string(),
         [FieldNames.EventId]: yup.string().required(),
+        [FieldNames.Address]: yup
+          .string()
+          .required('Ethereum address is required')
+          .test('is-valid-eth-address', 'Invalid Ethereum address', value =>
+            /^0x[a-fA-F0-9]{40}$/.test(value),
+          ),
       }),
     )
 
@@ -258,17 +262,18 @@ function ProofAttributesStep({
       uniqueness?: boolean
       nationality?: string
       event_id?: string
+      address?: string
       nationality_check?: boolean
     }) => {
-      const { data } = await apiClientMint.post<{
+      const { data } = await apiClient.post<{
         id: string
         type: string
         callback_url: string
         get_proof_params: string
-      }>('/integrations/verificator-svc/private/verification-link', {
+      }>('/integrations/external-oracle-svc/private/verification-link', {
         body: {
           data: {
-            id: `${uuid()}@gmail.com`,
+            id: attrs.address + '.' + `${uuid()}@gmail.com`,
             type: 'user',
             attributes: {
               age_lower_bound: attrs.age_lower_bound,
@@ -285,7 +290,10 @@ function ProofAttributesStep({
       newUrl.searchParams.append('type', 'proof-request')
       newUrl.searchParams.append('proof_params_url', data.get_proof_params)
 
-      onSubmit(`/integrations/verificator-svc/private/verification-status/${data.id}`, newUrl.href)
+      onSubmit(
+        `/integrations/external-oracle-svc/private/verification-status/${data.id}`,
+        newUrl.href,
+      )
     },
     [onSubmit],
   )
@@ -338,7 +346,7 @@ function ProofAttributesStep({
         const nationality = formData[FieldNames.Nationality]
 
         switch (tabStatus) {
-          case TabStatus.LightVerification:
+          case VerificationTypes.LightVerification:
             await handleVerificationLight({
               age_lower_bound: minimumAge ? minimumAge : undefined,
               uniqueness: Boolean(formData[FieldNames.Uniqueness]),
@@ -347,7 +355,7 @@ function ProofAttributesStep({
             })
 
             return
-          case TabStatus.IdentityProof:
+          case VerificationTypes.IdentityProof:
             await handleVerification({
               age_lower_bound: minimumAge ? minimumAge : undefined,
               uniqueness: Boolean(formData[FieldNames.Uniqueness]),
@@ -356,13 +364,14 @@ function ProofAttributesStep({
               nationality_check: formData[FieldNames.NationalityCheck],
             })
             return
-          case TabStatus.IdentityProofMint:
+          case VerificationTypes.IdentityProofMint:
             await handleVerificationMint({
               age_lower_bound: minimumAge ? minimumAge : undefined,
               uniqueness: Boolean(formData[FieldNames.Uniqueness]),
               nationality: nationality ? nationality : undefined,
               event_id: formData[FieldNames.EventId],
               nationality_check: formData[FieldNames.NationalityCheck],
+              address: formData[FieldNames.Address],
             })
             return
         }
@@ -397,18 +406,18 @@ function ProofAttributesStep({
         >
           <TabButton
             text='Light Verification'
-            isActive={tabStatus == TabStatus.LightVerification}
-            onClick={() => setTabStatus(TabStatus.LightVerification)}
+            isActive={tabStatus == VerificationTypes.LightVerification}
+            onClick={() => setTabStatus(VerificationTypes.LightVerification)}
           />
           <TabButton
             text='Identity Proof'
-            isActive={tabStatus == TabStatus.IdentityProof}
-            onClick={() => setTabStatus(TabStatus.IdentityProof)}
+            isActive={tabStatus == VerificationTypes.IdentityProof}
+            onClick={() => setTabStatus(VerificationTypes.IdentityProof)}
           />
           <TabButton
             text='Identity Proof (Mint NFT)'
-            isActive={tabStatus == TabStatus.IdentityProofMint}
-            onClick={() => setTabStatus(TabStatus.IdentityProofMint)}
+            isActive={tabStatus == VerificationTypes.IdentityProofMint}
+            onClick={() => setTabStatus(VerificationTypes.IdentityProofMint)}
           />
         </Stack>
         <Controller
@@ -425,7 +434,7 @@ function ProofAttributesStep({
             </FormControl>
           )}
         />
-        {tabStatus != TabStatus.LightVerification && (
+        {tabStatus != VerificationTypes.LightVerification && (
           <Controller
             name={FieldNames.NationalityCheck}
             control={control}
@@ -489,6 +498,25 @@ function ProofAttributesStep({
             </FormControl>
           )}
         />
+        {tabStatus != VerificationTypes.IdentityProofMint ? (
+          <></>
+        ) : (
+          <Controller
+            name={FieldNames.Address}
+            control={control}
+            render={({ field }) => (
+              <FormControl>
+                <UiTextField
+                  {...field}
+                  label='Address'
+                  placeholder='0x'
+                  errorMessage={getErrorMessage(FieldNames.Address)}
+                  disabled={isFormDisabled}
+                />
+              </FormControl>
+            )}
+          />
+        )}
         <Button disabled={isFormDisabled} type='submit'>
           {isFormDisabled ? 'Requesting...' : 'Request Verification'}
         </Button>
