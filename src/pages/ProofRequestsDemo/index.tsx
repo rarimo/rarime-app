@@ -178,6 +178,7 @@ enum FieldNames {
   Nationality = 'nationality',
   NationalityCheck = 'nationalityCheck',
   EventId = 'eventId',
+  Address = 'address',
 }
 
 const DEFAULT_VALUES = {
@@ -186,6 +187,13 @@ const DEFAULT_VALUES = {
   [FieldNames.Nationality]: 'UKR',
   [FieldNames.NationalityCheck]: false,
   [FieldNames.EventId]: '12345678900987654321',
+  [FieldNames.Address]: '0x',
+}
+
+enum VerificationTypes {
+  LightVerification,
+  IdentityProof,
+  IdentityProofMint,
 }
 
 function ProofAttributesStep({
@@ -193,7 +201,7 @@ function ProofAttributesStep({
 }: {
   onSubmit: (verificationCheckEndpoint: string, deepLink: string) => void
 }) {
-  const [isLightVerification, setIsLightVerification] = useState(true)
+  const [tabStatus, setTabStatus] = useState(VerificationTypes.LightVerification)
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
       yup.object().shape({
@@ -201,6 +209,12 @@ function ProofAttributesStep({
         [FieldNames.MinimumAge]: yup.string(),
         [FieldNames.Nationality]: yup.string(),
         [FieldNames.EventId]: yup.string().required(),
+        [FieldNames.Address]: yup
+          .string()
+          .required('Ethereum address is required')
+          .test('is-valid-eth-address', 'Invalid Ethereum address', value =>
+            /^0x[a-fA-F0-9]{40}$/.test(value),
+          ),
       }),
     )
 
@@ -238,6 +252,48 @@ function ProofAttributesStep({
       newUrl.searchParams.append('proof_params_url', data.get_proof_params)
 
       onSubmit(`/integrations/verificator-svc/private/verification-status/${data.id}`, newUrl.href)
+    },
+    [onSubmit],
+  )
+
+  const handleVerificationMint = useCallback(
+    async (attrs: {
+      age_lower_bound?: number
+      uniqueness?: boolean
+      nationality?: string
+      event_id?: string
+      address?: string
+      nationality_check?: boolean
+    }) => {
+      const { data } = await apiClient.post<{
+        id: string
+        type: string
+        callback_url: string
+        get_proof_params: string
+      }>('/integrations/external-oracle-svc/private/verification-link', {
+        body: {
+          data: {
+            id: attrs.address + '.' + `${uuid()}@gmail.com`,
+            type: 'user',
+            attributes: {
+              age_lower_bound: attrs.age_lower_bound,
+              uniqueness: attrs.uniqueness,
+              nationality: attrs.nationality,
+              event_id: attrs.event_id,
+              ...(attrs.nationality_check && { nationality_check: true }),
+            },
+          },
+        },
+      })
+
+      const newUrl = new URL('rarime://external')
+      newUrl.searchParams.append('type', 'proof-request')
+      newUrl.searchParams.append('proof_params_url', data.get_proof_params)
+
+      onSubmit(
+        `/integrations/external-oracle-svc/private/verification-status/${data.id}`,
+        newUrl.href,
+      )
     },
     [onSubmit],
   )
@@ -289,31 +345,50 @@ function ProofAttributesStep({
         const minimumAge = Number(formData[FieldNames.MinimumAge])
         const nationality = formData[FieldNames.Nationality]
 
-        if (isLightVerification) {
-          await handleVerificationLight({
-            age_lower_bound: minimumAge ? minimumAge : undefined,
-            uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-            nationality: nationality ? nationality : undefined,
-            event_id: formData[FieldNames.EventId],
-          })
+        switch (tabStatus) {
+          case VerificationTypes.LightVerification:
+            await handleVerificationLight({
+              age_lower_bound: minimumAge ? minimumAge : undefined,
+              uniqueness: Boolean(formData[FieldNames.Uniqueness]),
+              nationality: nationality ? nationality : undefined,
+              event_id: formData[FieldNames.EventId],
+            })
 
-          return
+            return
+          case VerificationTypes.IdentityProof:
+            await handleVerification({
+              age_lower_bound: minimumAge ? minimumAge : undefined,
+              uniqueness: Boolean(formData[FieldNames.Uniqueness]),
+              nationality: nationality ? nationality : undefined,
+              event_id: formData[FieldNames.EventId],
+              nationality_check: formData[FieldNames.NationalityCheck],
+            })
+            return
+          case VerificationTypes.IdentityProofMint:
+            await handleVerificationMint({
+              age_lower_bound: minimumAge ? minimumAge : undefined,
+              uniqueness: Boolean(formData[FieldNames.Uniqueness]),
+              nationality: nationality ? nationality : undefined,
+              event_id: formData[FieldNames.EventId],
+              nationality_check: formData[FieldNames.NationalityCheck],
+              address: formData[FieldNames.Address],
+            })
+            return
         }
-
-        await handleVerification({
-          age_lower_bound: minimumAge ? minimumAge : undefined,
-          uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-          nationality: nationality ? nationality : undefined,
-          event_id: formData[FieldNames.EventId],
-          nationality_check: formData[FieldNames.NationalityCheck],
-        })
       } catch (error) {
         ErrorHandler.process(error)
       }
 
       enableForm()
     },
-    [disableForm, enableForm, handleVerification, handleVerificationLight, isLightVerification],
+    [
+      disableForm,
+      enableForm,
+      handleVerification,
+      handleVerificationLight,
+      tabStatus,
+      handleVerificationMint,
+    ],
   )
 
   return (
@@ -331,13 +406,18 @@ function ProofAttributesStep({
         >
           <TabButton
             text='Light Verification'
-            isActive={isLightVerification}
-            onClick={() => setIsLightVerification(true)}
+            isActive={tabStatus == VerificationTypes.LightVerification}
+            onClick={() => setTabStatus(VerificationTypes.LightVerification)}
           />
           <TabButton
             text='Identity Proof'
-            isActive={!isLightVerification}
-            onClick={() => setIsLightVerification(false)}
+            isActive={tabStatus == VerificationTypes.IdentityProof}
+            onClick={() => setTabStatus(VerificationTypes.IdentityProof)}
+          />
+          <TabButton
+            text='Identity Proof (Mint NFT)'
+            isActive={tabStatus == VerificationTypes.IdentityProofMint}
+            onClick={() => setTabStatus(VerificationTypes.IdentityProofMint)}
           />
         </Stack>
         <Controller
@@ -354,7 +434,7 @@ function ProofAttributesStep({
             </FormControl>
           )}
         />
-        {!isLightVerification && (
+        {tabStatus != VerificationTypes.LightVerification && (
           <Controller
             name={FieldNames.NationalityCheck}
             control={control}
@@ -418,6 +498,25 @@ function ProofAttributesStep({
             </FormControl>
           )}
         />
+        {tabStatus != VerificationTypes.IdentityProofMint ? (
+          <></>
+        ) : (
+          <Controller
+            name={FieldNames.Address}
+            control={control}
+            render={({ field }) => (
+              <FormControl>
+                <UiTextField
+                  {...field}
+                  label='Address'
+                  placeholder='0x'
+                  errorMessage={getErrorMessage(FieldNames.Address)}
+                  disabled={isFormDisabled}
+                />
+              </FormControl>
+            )}
+          />
+        )}
         <Button disabled={isFormDisabled} type='submit'>
           {isFormDisabled ? 'Requesting...' : 'Request Verification'}
         </Button>
