@@ -179,6 +179,7 @@ enum FieldNames {
   NationalityCheck = 'nationalityCheck',
   EventId = 'eventId',
   Address = 'address',
+  Destination = 'destination',
 }
 
 const DEFAULT_VALUES = {
@@ -188,6 +189,7 @@ const DEFAULT_VALUES = {
   [FieldNames.NationalityCheck]: false,
   [FieldNames.EventId]: '12345678900987654321',
   [FieldNames.Address]: '0x',
+  [FieldNames.Destination]: '',
 }
 
 enum VerificationTypes {
@@ -209,12 +211,16 @@ function ProofAttributesStep({
         [FieldNames.MinimumAge]: yup.string(),
         [FieldNames.Nationality]: yup.string(),
         [FieldNames.EventId]: yup.string().required(),
-        [FieldNames.Address]: yup
-          .string()
-          .required('Ethereum address is required')
-          .test('is-valid-eth-address', 'Invalid Ethereum address', value =>
-            /^0x[a-fA-F0-9]{40}$/.test(value),
-          ),
+        [FieldNames.Address]: yup.string().when([], {
+          is: () => tabStatus === VerificationTypes.IdentityProofMint,
+          then: schema =>
+            schema
+              .required('Ethereum address is required')
+              .test('is-valid-eth-address', 'Invalid Ethereum address', value =>
+                /^0x[a-fA-F0-9]{40}$/.test(value),
+              ),
+          otherwise: schema => schema.notRequired(),
+        }),
       }),
     )
 
@@ -225,6 +231,7 @@ function ProofAttributesStep({
       nationality?: string
       event_id?: string
       nationality_check?: boolean
+      destination?: string
     }) => {
       const { data } = await apiClient.post<{
         id: string
@@ -250,7 +257,9 @@ function ProofAttributesStep({
       const newUrl = new URL('rarime://external')
       newUrl.searchParams.append('type', 'proof-request')
       newUrl.searchParams.append('proof_params_url', data.get_proof_params)
-
+      if (attrs.destination) {
+        newUrl.searchParams.append('destination', attrs.destination)
+      }
       onSubmit(`/integrations/verificator-svc/private/verification-status/${data.id}`, newUrl.href)
     },
     [onSubmit],
@@ -264,6 +273,7 @@ function ProofAttributesStep({
       event_id?: string
       address?: string
       nationality_check?: boolean
+      destination?: string
     }) => {
       const { data } = await apiClient.post<{
         id: string
@@ -289,7 +299,9 @@ function ProofAttributesStep({
       const newUrl = new URL('rarime://external')
       newUrl.searchParams.append('type', 'proof-request')
       newUrl.searchParams.append('proof_params_url', data.get_proof_params)
-
+      if (attrs.destination) {
+        newUrl.searchParams.append('destination', attrs.destination)
+      }
       onSubmit(
         `/integrations/external-oracle-svc/private/verification-status/${data.id}`,
         newUrl.href,
@@ -304,6 +316,7 @@ function ProofAttributesStep({
       uniqueness?: boolean
       nationality?: string
       event_id?: string
+      destination?: string
     }) => {
       const { data } = await apiClient.post<{
         id: string
@@ -326,8 +339,11 @@ function ProofAttributesStep({
       })
 
       const newUrl = new URL('rarime://external')
-      newUrl.searchParams.append('type', 'light-verification')
+      newUrl.searchParams.append('type', 'proof-request')
       newUrl.searchParams.append('proof_params_url', data.get_proof_params)
+      if (attrs.destination) {
+        newUrl.searchParams.append('destination', attrs.destination)
+      }
 
       onSubmit(
         `/integrations/verificator-svc/light/private/verification-status/${data.id}`,
@@ -352,6 +368,7 @@ function ProofAttributesStep({
               uniqueness: Boolean(formData[FieldNames.Uniqueness]),
               nationality: nationality ? nationality : undefined,
               event_id: formData[FieldNames.EventId],
+              destination: formData[FieldNames.Destination],
             })
 
             return
@@ -362,6 +379,7 @@ function ProofAttributesStep({
               nationality: nationality ? nationality : undefined,
               event_id: formData[FieldNames.EventId],
               nationality_check: formData[FieldNames.NationalityCheck],
+              destination: formData[FieldNames.Destination],
             })
             return
           case VerificationTypes.IdentityProofMint:
@@ -372,6 +390,7 @@ function ProofAttributesStep({
               event_id: formData[FieldNames.EventId],
               nationality_check: formData[FieldNames.NationalityCheck],
               address: formData[FieldNames.Address],
+              destination: formData[FieldNames.Destination],
             })
             return
         }
@@ -517,6 +536,21 @@ function ProofAttributesStep({
             )}
           />
         )}
+        <Controller
+          name={FieldNames.Destination}
+          control={control}
+          render={({ field }) => (
+            <FormControl>
+              <UiTextField
+                {...field}
+                label='Destination'
+                placeholder=''
+                errorMessage={getErrorMessage(FieldNames.Destination)}
+                disabled={isFormDisabled}
+              />
+            </FormControl>
+          )}
+        />
         <Button disabled={isFormDisabled} type='submit'>
           {isFormDisabled ? 'Requesting...' : 'Request Verification'}
         </Button>
@@ -531,7 +565,7 @@ function QrCodeStep({ deepLink }: { deepLink: string }) {
   return (
     <StepView title='Step 2/3' subtitle='Scan QR code with RariMe app and generate proof'>
       <Stack spacing={4} alignItems='center'>
-        <QRCode size={240} value={deepLink} />
+        <QRCode size={240} value={deepLink} ecLevel='L' />
         <Stack direction='row' spacing={2} alignItems='center' width='100%'>
           <Divider sx={{ flex: 1 }} />
           <Typography variant='body3' color={palette.text.secondary}>
