@@ -179,7 +179,7 @@ enum FieldNames {
   NationalityCheck = 'nationalityCheck',
   EventId = 'eventId',
   Address = 'address',
-  Destination = 'destination',
+  RedirectURL = 'redirectURL',
 }
 
 const DEFAULT_VALUES = {
@@ -189,7 +189,7 @@ const DEFAULT_VALUES = {
   [FieldNames.NationalityCheck]: false,
   [FieldNames.EventId]: '12345678900987654321',
   [FieldNames.Address]: '0x',
-  [FieldNames.Destination]: '',
+  [FieldNames.RedirectURL]: '',
 }
 
 enum VerificationTypes {
@@ -231,7 +231,7 @@ function ProofAttributesStep({
       nationality?: string
       event_id?: string
       nationality_check?: boolean
-      destination?: string
+      redirectURL?: string
     }) => {
       const { data } = await apiClient.post<{
         id: string
@@ -257,8 +257,8 @@ function ProofAttributesStep({
       const newUrl = new URL('rarime://external')
       newUrl.searchParams.append('type', 'proof-request')
       newUrl.searchParams.append('proof_params_url', data.get_proof_params)
-      if (attrs.destination) {
-        newUrl.searchParams.append('destination', attrs.destination)
+      if (attrs.redirectURL) {
+        newUrl.searchParams.append('redirect_uri', attrs.redirectURL)
       }
       onSubmit(`/integrations/verificator-svc/private/verification-status/${data.id}`, newUrl.href)
     },
@@ -273,7 +273,7 @@ function ProofAttributesStep({
       event_id?: string
       address?: string
       nationality_check?: boolean
-      destination?: string
+      redirectURL?: string
     }) => {
       const { data } = await apiClient.post<{
         id: string
@@ -299,8 +299,8 @@ function ProofAttributesStep({
       const newUrl = new URL('rarime://external')
       newUrl.searchParams.append('type', 'proof-request')
       newUrl.searchParams.append('proof_params_url', data.get_proof_params)
-      if (attrs.destination) {
-        newUrl.searchParams.append('destination', attrs.destination)
+      if (attrs.redirectURL) {
+        newUrl.searchParams.append('redirect_uri', attrs.redirectURL)
       }
       onSubmit(
         `/integrations/external-oracle-svc/private/verification-status/${data.id}`,
@@ -316,7 +316,7 @@ function ProofAttributesStep({
       uniqueness?: boolean
       nationality?: string
       event_id?: string
-      destination?: string
+      redirectURL?: string
     }) => {
       const { data } = await apiClient.post<{
         id: string
@@ -341,8 +341,8 @@ function ProofAttributesStep({
       const newUrl = new URL('rarime://external')
       newUrl.searchParams.append('type', 'proof-request')
       newUrl.searchParams.append('proof_params_url', data.get_proof_params)
-      if (attrs.destination) {
-        newUrl.searchParams.append('destination', attrs.destination)
+      if (attrs.redirectURL) {
+        newUrl.searchParams.append('redirect_uri', attrs.redirectURL)
       }
 
       onSubmit(
@@ -368,7 +368,7 @@ function ProofAttributesStep({
               uniqueness: Boolean(formData[FieldNames.Uniqueness]),
               nationality: nationality ? nationality : undefined,
               event_id: formData[FieldNames.EventId],
-              destination: formData[FieldNames.Destination],
+              redirectURL: formData[FieldNames.RedirectURL],
             })
 
             return
@@ -379,7 +379,7 @@ function ProofAttributesStep({
               nationality: nationality ? nationality : undefined,
               event_id: formData[FieldNames.EventId],
               nationality_check: formData[FieldNames.NationalityCheck],
-              destination: formData[FieldNames.Destination],
+              redirectURL: formData[FieldNames.RedirectURL],
             })
             return
           case VerificationTypes.IdentityProofMint:
@@ -390,7 +390,7 @@ function ProofAttributesStep({
               event_id: formData[FieldNames.EventId],
               nationality_check: formData[FieldNames.NationalityCheck],
               address: formData[FieldNames.Address],
-              destination: formData[FieldNames.Destination],
+              redirectURL: formData[FieldNames.RedirectURL],
             })
             return
         }
@@ -537,7 +537,7 @@ function ProofAttributesStep({
           />
         )}
         <Controller
-          name={FieldNames.Destination}
+          name={FieldNames.RedirectURL}
           control={control}
           render={({ field }) => (
             <FormControl>
@@ -545,7 +545,7 @@ function ProofAttributesStep({
                 {...field}
                 label='Destination'
                 placeholder=''
-                errorMessage={getErrorMessage(FieldNames.Destination)}
+                errorMessage={getErrorMessage(FieldNames.RedirectURL)}
                 disabled={isFormDisabled}
               />
             </FormControl>
