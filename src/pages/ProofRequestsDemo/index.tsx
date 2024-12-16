@@ -339,7 +339,7 @@ function ProofAttributesStep({
       })
 
       const newUrl = new URL('rarime://external')
-      newUrl.searchParams.append('type', 'proof-request')
+      newUrl.searchParams.append('type', 'light-verification')
       newUrl.searchParams.append('proof_params_url', data.get_proof_params)
       if (attrs.redirectURL) {
         newUrl.searchParams.append('redirect_uri', attrs.redirectURL)
