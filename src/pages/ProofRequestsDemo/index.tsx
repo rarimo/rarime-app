@@ -18,7 +18,6 @@ import { v4 as uuid } from 'uuid'
 import { config } from '@/config'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
-import { Transitions } from '@/theme/constants'
 import { UiSwitch, UiTextField } from '@/ui'
 
 const apiClient = new JsonApiClient({
@@ -193,7 +192,6 @@ function ProofAttributesStep({
 }: {
   onSubmit: (verificationCheckEndpoint: string, deepLink: string) => void
 }) {
-  const [isLightVerification, setIsLightVerification] = useState(true)
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
       yup.object().shape({
@@ -242,45 +240,6 @@ function ProofAttributesStep({
     [onSubmit],
   )
 
-  const handleVerificationLight = useCallback(
-    async (attrs: {
-      age_lower_bound?: number
-      uniqueness?: boolean
-      nationality?: string
-      event_id?: string
-    }) => {
-      const { data } = await apiClient.post<{
-        id: string
-        type: string
-        callback_url: string
-        get_proof_params: string
-      }>('/integrations/verificator-svc/light/private/verification-link', {
-        body: {
-          data: {
-            id: `${uuid()}@gmail.com`,
-            type: 'user',
-            attributes: {
-              age_lower_bound: attrs.age_lower_bound,
-              uniqueness: attrs.uniqueness,
-              nationality: attrs.nationality,
-              event_id: attrs.event_id,
-            },
-          },
-        },
-      })
-
-      const newUrl = new URL('rarime://external')
-      newUrl.searchParams.append('type', 'light-verification')
-      newUrl.searchParams.append('proof_params_url', data.get_proof_params)
-
-      onSubmit(
-        `/integrations/verificator-svc/light/private/verification-status/${data.id}`,
-        newUrl.href,
-      )
-    },
-    [onSubmit],
-  )
-
   const submit = useCallback(
     async (formData: typeof DEFAULT_VALUES) => {
       disableForm()
@@ -288,17 +247,6 @@ function ProofAttributesStep({
       try {
         const minimumAge = Number(formData[FieldNames.MinimumAge])
         const nationality = formData[FieldNames.Nationality]
-
-        if (isLightVerification) {
-          await handleVerificationLight({
-            age_lower_bound: minimumAge ? minimumAge : undefined,
-            uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-            nationality: nationality ? nationality : undefined,
-            event_id: formData[FieldNames.EventId],
-          })
-
-          return
-        }
 
         await handleVerification({
           age_lower_bound: minimumAge ? minimumAge : undefined,
@@ -313,33 +261,12 @@ function ProofAttributesStep({
 
       enableForm()
     },
-    [disableForm, enableForm, handleVerification, handleVerificationLight, isLightVerification],
+    [disableForm, enableForm, handleVerification],
   )
 
   return (
     <StepView title='Step 1/3' subtitle='Create verification request for the proof'>
       <Stack component='form' spacing={4} onSubmit={handleSubmit(submit)}>
-        <Stack
-          direction='row'
-          alignItems='center'
-          sx={theme => ({
-            p: 0.5,
-            background: theme.palette.action.active,
-            borderRadius: 25,
-            overflow: 'hidden',
-          })}
-        >
-          <TabButton
-            text='Light Verification'
-            isActive={isLightVerification}
-            onClick={() => setIsLightVerification(true)}
-          />
-          <TabButton
-            text='Identity Proof'
-            isActive={!isLightVerification}
-            onClick={() => setIsLightVerification(false)}
-          />
-        </Stack>
         <Controller
           name={FieldNames.Uniqueness}
           control={control}
@@ -354,22 +281,20 @@ function ProofAttributesStep({
             </FormControl>
           )}
         />
-        {!isLightVerification && (
-          <Controller
-            name={FieldNames.NationalityCheck}
-            control={control}
-            render={({ field }) => (
-              <FormControl>
-                <UiSwitch
-                  {...field}
-                  checked={field.value}
-                  label='Nationality Check'
-                  disabled={isFormDisabled}
-                />
-              </FormControl>
-            )}
-          />
-        )}
+        <Controller
+          name={FieldNames.NationalityCheck}
+          control={control}
+          render={({ field }) => (
+            <FormControl>
+              <UiSwitch
+                {...field}
+                checked={field.value}
+                label='Nationality Check'
+                disabled={isFormDisabled}
+              />
+            </FormControl>
+          )}
+        />
 
         <Stack direction='row' spacing={4}>
           <Controller
@@ -515,42 +440,5 @@ function VerificationStatusStep({
         </Button>
       </Stack>
     </StepView>
-  )
-}
-
-function TabButton({
-  text,
-  isActive,
-  onClick,
-}: {
-  text: string
-  isActive: boolean
-  onClick: () => void
-}) {
-  const { palette, spacing } = useTheme()
-
-  return (
-    <Stack
-      component='a'
-      alignItems='center'
-      width='100%'
-      onClick={onClick}
-      sx={{
-        background: isActive ? palette.background.paper : 'none',
-        px: 4,
-        py: 2,
-        minWidth: spacing(30),
-        borderRadius: 25,
-        transition: Transitions.Default,
-        cursor: 'pointer',
-      }}
-    >
-      <Typography
-        variant='buttonSmall'
-        color={isActive ? palette.text.primary : palette.text.secondary}
-      >
-        {text}
-      </Typography>
-    </Stack>
   )
 }
