@@ -181,7 +181,7 @@ enum FieldNames {
 }
 
 const DEFAULT_VALUES = {
-  [FieldNames.Uniqueness]: true,
+  [FieldNames.Uniqueness]: false,
   [FieldNames.MinimumAge]: '18',
   [FieldNames.Nationality]: 'UKR',
   [FieldNames.NationalityCheck]: false,
