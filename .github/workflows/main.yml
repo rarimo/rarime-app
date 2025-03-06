@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - 'main'
+      - 'l2-demo'
 
 jobs:
   converge:
@@ -33,18 +33,18 @@ jobs:
           . $(werf ci-env github --as-file)
           werf export --dev web --tag ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA
   
-  deploy:
-      name: Deploy
-      needs: converge
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-          with:
-            fetch-depth: 0
-        - name: ConfigCreate
-          run: |
-            mkdir ~/.kube/
-            echo "${{ secrets.K8SCONFIG_DEV }}" | base64 -d > config
-            mv config ~/.kube/
-            kubectl set image deployment rarime-web template=ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA -n orgs
+  # deploy:
+  #     name: Deploy
+  #     needs: converge
+  #     runs-on: ubuntu-latest
+  #     steps:
+  #       - name: Checkout code
+  #         uses: actions/checkout@v3
+  #         with:
+  #           fetch-depth: 0
+  #       - name: ConfigCreate
+  #         run: |
+  #           mkdir ~/.kube/
+  #           echo "${{ secrets.K8SCONFIG_DEV }}" | base64 -d > config
+  #           mv config ~/.kube/
+  #           kubectl set image deployment rarime-web template=ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA -n orgs
