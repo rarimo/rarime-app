@@ -20,6 +20,7 @@ export type Config = {
   SUPPORT_LINK: string
   APP_STORE_APP_LINK: string
   GOOGLE_PLAY_APP_LINK: string
+  DEFERRED_DEEP_LINK: string
 }
 
 const FALLBACK_DEFAULT_CHAIN = Object.entries(FALLBACK_SUPPORTED_CHAINS)[0][0]
@@ -36,4 +37,5 @@ export const config: Config = {
   SUPPORT_LINK: 'https://rarime.com',
   APP_STORE_APP_LINK: 'https://apps.apple.com/app/rarime/id6503300598',
   GOOGLE_PLAY_APP_LINK: 'https://play.google.com/store/apps/details?id=com.rarilabs.rarime',
+  DEFERRED_DEEP_LINK: 'https://rarime.onelink.me/Hwry/ref',
 }

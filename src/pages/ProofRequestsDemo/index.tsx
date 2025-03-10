@@ -18,7 +18,6 @@ import { v4 as uuid } from 'uuid'
 import { config } from '@/config'
 import { ErrorHandler } from '@/helpers'
 import { useForm } from '@/hooks'
-import { Transitions } from '@/theme/constants'
 import { UiSwitch, UiTextField } from '@/ui'
 
 const apiClient = new JsonApiClient({
@@ -178,8 +177,6 @@ enum FieldNames {
   Nationality = 'nationality',
   NationalityCheck = 'nationalityCheck',
   EventId = 'eventId',
-  Address = 'address',
-  RedirectURL = 'redirectURL',
 }
 
 const DEFAULT_VALUES = {
@@ -188,14 +185,6 @@ const DEFAULT_VALUES = {
   [FieldNames.Nationality]: 'UKR',
   [FieldNames.NationalityCheck]: false,
   [FieldNames.EventId]: '12345678900987654321',
-  [FieldNames.Address]: '0x',
-  [FieldNames.RedirectURL]: '',
-}
-
-enum VerificationTypes {
-  LightVerification,
-  IdentityProof,
-  IdentityProofMint,
 }
 
 function ProofAttributesStep({
@@ -203,7 +192,6 @@ function ProofAttributesStep({
 }: {
   onSubmit: (verificationCheckEndpoint: string, deepLink: string) => void
 }) {
-  const [tabStatus, setTabStatus] = useState(VerificationTypes.LightVerification)
   const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
     useForm(DEFAULT_VALUES, yup =>
       yup.object().shape({
@@ -211,16 +199,6 @@ function ProofAttributesStep({
         [FieldNames.MinimumAge]: yup.string(),
         [FieldNames.Nationality]: yup.string(),
         [FieldNames.EventId]: yup.string().required(),
-        [FieldNames.Address]: yup.string().when([], {
-          is: () => tabStatus === VerificationTypes.IdentityProofMint,
-          then: schema =>
-            schema
-              .required('Ethereum address is required')
-              .test('is-valid-eth-address', 'Invalid Ethereum address', value =>
-                /^0x[a-fA-F0-9]{40}$/.test(value),
-              ),
-          otherwise: schema => schema.notRequired(),
-        }),
       }),
     )
 
@@ -231,7 +209,6 @@ function ProofAttributesStep({
       nationality?: string
       event_id?: string
       nationality_check?: boolean
-      redirectURL?: string
     }) => {
       const { data } = await apiClient.post<{
         id: string
@@ -257,98 +234,8 @@ function ProofAttributesStep({
       const newUrl = new URL('rarime://external')
       newUrl.searchParams.append('type', 'proof-request')
       newUrl.searchParams.append('proof_params_url', data.get_proof_params)
-      if (attrs.redirectURL) {
-        newUrl.searchParams.append('redirect_uri', attrs.redirectURL)
-      }
+
       onSubmit(`/integrations/verificator-svc/private/verification-status/${data.id}`, newUrl.href)
-    },
-    [onSubmit],
-  )
-
-  const handleVerificationMint = useCallback(
-    async (attrs: {
-      age_lower_bound?: number
-      uniqueness?: boolean
-      nationality?: string
-      event_id?: string
-      address?: string
-      nationality_check?: boolean
-      redirectURL?: string
-    }) => {
-      const { data } = await apiClient.post<{
-        id: string
-        type: string
-        callback_url: string
-        get_proof_params: string
-      }>('/integrations/external-oracle-svc/private/verification-link', {
-        body: {
-          data: {
-            id: attrs.address + '.' + `${uuid()}@gmail.com`,
-            type: 'user',
-            attributes: {
-              age_lower_bound: attrs.age_lower_bound,
-              uniqueness: attrs.uniqueness,
-              nationality: attrs.nationality,
-              event_id: attrs.event_id,
-              ...(attrs.nationality_check && { nationality_check: true }),
-            },
-          },
-        },
-      })
-
-      const newUrl = new URL('rarime://external')
-      newUrl.searchParams.append('type', 'proof-request')
-      newUrl.searchParams.append('proof_params_url', data.get_proof_params)
-      if (attrs.redirectURL) {
-        newUrl.searchParams.append('redirect_uri', attrs.redirectURL)
-      }
-      onSubmit(
-        `/integrations/external-oracle-svc/private/verification-status/${data.id}`,
-        newUrl.href,
-      )
-    },
-    [onSubmit],
-  )
-
-  const handleVerificationLight = useCallback(
-    async (attrs: {
-      age_lower_bound?: number
-      uniqueness?: boolean
-      nationality?: string
-      event_id?: string
-      redirectURL?: string
-    }) => {
-      const { data } = await apiClient.post<{
-        id: string
-        type: string
-        callback_url: string
-        get_proof_params: string
-      }>('/integrations/verificator-svc/light/private/verification-link', {
-        body: {
-          data: {
-            id: `${uuid()}@gmail.com`,
-            type: 'user',
-            attributes: {
-              age_lower_bound: attrs.age_lower_bound,
-              uniqueness: attrs.uniqueness,
-              nationality: attrs.nationality,
-              event_id: attrs.event_id,
-            },
-          },
-        },
-      })
-
-      const newUrl = new URL('rarime://external')
-      newUrl.searchParams.append('type', 'light-verification')
-      newUrl.searchParams.append('proof_params_url', data.get_proof_params)
-      if (attrs.redirectURL) {
-        newUrl.searchParams.append('redirect_uri', attrs.redirectURL)
-      }
-
-      onSubmit(
-        `/integrations/verificator-svc/light/private/verification-status/${data.id}`,
-        newUrl.href,
-      )
     },
     [onSubmit],
   )
@@ -361,84 +248,25 @@ function ProofAttributesStep({
         const minimumAge = Number(formData[FieldNames.MinimumAge])
         const nationality = formData[FieldNames.Nationality]
 
-        switch (tabStatus) {
-          case VerificationTypes.LightVerification:
-            await handleVerificationLight({
-              age_lower_bound: minimumAge ? minimumAge : undefined,
-              uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-              nationality: nationality ? nationality : undefined,
-              event_id: formData[FieldNames.EventId],
-              redirectURL: formData[FieldNames.RedirectURL],
-            })
-
-            return
-          case VerificationTypes.IdentityProof:
-            await handleVerification({
-              age_lower_bound: minimumAge ? minimumAge : undefined,
-              uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-              nationality: nationality ? nationality : undefined,
-              event_id: formData[FieldNames.EventId],
-              nationality_check: formData[FieldNames.NationalityCheck],
-              redirectURL: formData[FieldNames.RedirectURL],
-            })
-            return
-          case VerificationTypes.IdentityProofMint:
-            await handleVerificationMint({
-              age_lower_bound: minimumAge ? minimumAge : undefined,
-              uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-              nationality: nationality ? nationality : undefined,
-              event_id: formData[FieldNames.EventId],
-              nationality_check: formData[FieldNames.NationalityCheck],
-              address: formData[FieldNames.Address],
-              redirectURL: formData[FieldNames.RedirectURL],
-            })
-            return
-        }
+        await handleVerification({
+          age_lower_bound: minimumAge ? minimumAge : undefined,
+          uniqueness: Boolean(formData[FieldNames.Uniqueness]),
+          nationality: nationality ? nationality : undefined,
+          event_id: formData[FieldNames.EventId],
+          nationality_check: formData[FieldNames.NationalityCheck],
+        })
       } catch (error) {
         ErrorHandler.process(error)
       }
 
       enableForm()
     },
-    [
-      disableForm,
-      enableForm,
-      handleVerification,
-      handleVerificationLight,
-      tabStatus,
-      handleVerificationMint,
-    ],
+    [disableForm, enableForm, handleVerification],
   )
 
   return (
     <StepView title='Step 1/3' subtitle='Create verification request for the proof'>
       <Stack component='form' spacing={4} onSubmit={handleSubmit(submit)}>
-        <Stack
-          direction='row'
-          alignItems='center'
-          sx={theme => ({
-            p: 0.5,
-            background: theme.palette.action.active,
-            borderRadius: 25,
-            overflow: 'hidden',
-          })}
-        >
-          <TabButton
-            text='Light Verification'
-            isActive={tabStatus == VerificationTypes.LightVerification}
-            onClick={() => setTabStatus(VerificationTypes.LightVerification)}
-          />
-          <TabButton
-            text='Identity Proof'
-            isActive={tabStatus == VerificationTypes.IdentityProof}
-            onClick={() => setTabStatus(VerificationTypes.IdentityProof)}
-          />
-          <TabButton
-            text='Identity Proof (Mint NFT)'
-            isActive={tabStatus == VerificationTypes.IdentityProofMint}
-            onClick={() => setTabStatus(VerificationTypes.IdentityProofMint)}
-          />
-        </Stack>
         <Controller
           name={FieldNames.Uniqueness}
           control={control}
@@ -453,22 +281,20 @@ function ProofAttributesStep({
             </FormControl>
           )}
         />
-        {tabStatus != VerificationTypes.LightVerification && (
-          <Controller
-            name={FieldNames.NationalityCheck}
-            control={control}
-            render={({ field }) => (
-              <FormControl>
-                <UiSwitch
-                  {...field}
-                  checked={field.value}
-                  label='Nationality Check'
-                  disabled={isFormDisabled}
-                />
-              </FormControl>
-            )}
-          />
-        )}
+        <Controller
+          name={FieldNames.NationalityCheck}
+          control={control}
+          render={({ field }) => (
+            <FormControl>
+              <UiSwitch
+                {...field}
+                checked={field.value}
+                label='Nationality Check'
+                disabled={isFormDisabled}
+              />
+            </FormControl>
+          )}
+        />
 
         <Stack direction='row' spacing={4}>
           <Controller
@@ -517,40 +343,6 @@ function ProofAttributesStep({
             </FormControl>
           )}
         />
-        {tabStatus != VerificationTypes.IdentityProofMint ? (
-          <></>
-        ) : (
-          <Controller
-            name={FieldNames.Address}
-            control={control}
-            render={({ field }) => (
-              <FormControl>
-                <UiTextField
-                  {...field}
-                  label='Address'
-                  placeholder='0x'
-                  errorMessage={getErrorMessage(FieldNames.Address)}
-                  disabled={isFormDisabled}
-                />
-              </FormControl>
-            )}
-          />
-        )}
-        <Controller
-          name={FieldNames.RedirectURL}
-          control={control}
-          render={({ field }) => (
-            <FormControl>
-              <UiTextField
-                {...field}
-                label='Destination'
-                placeholder=''
-                errorMessage={getErrorMessage(FieldNames.RedirectURL)}
-                disabled={isFormDisabled}
-              />
-            </FormControl>
-          )}
-        />
         <Button disabled={isFormDisabled} type='submit'>
           {isFormDisabled ? 'Requesting...' : 'Request Verification'}
         </Button>
@@ -565,7 +357,7 @@ function QrCodeStep({ deepLink }: { deepLink: string }) {
   return (
     <StepView title='Step 2/3' subtitle='Scan QR code with RariMe app and generate proof'>
       <Stack spacing={4} alignItems='center'>
-        <QRCode size={240} value={deepLink} ecLevel='L' />
+        <QRCode size={240} value={deepLink} />
         <Stack direction='row' spacing={2} alignItems='center' width='100%'>
           <Divider sx={{ flex: 1 }} />
           <Typography variant='body3' color={palette.text.secondary}>
@@ -648,42 +440,5 @@ function VerificationStatusStep({
         </Button>
       </Stack>
     </StepView>
-  )
-}
-
-function TabButton({
-  text,
-  isActive,
-  onClick,
-}: {
-  text: string
-  isActive: boolean
-  onClick: () => void
-}) {
-  const { palette, spacing } = useTheme()
-
-  return (
-    <Stack
-      component='a'
-      alignItems='center'
-      width='100%'
-      onClick={onClick}
-      sx={{
-        background: isActive ? palette.background.paper : 'none',
-        px: 4,
-        py: 2,
-        minWidth: spacing(30),
-        borderRadius: 25,
-        transition: Transitions.Default,
-        cursor: 'pointer',
-      }}
-    >
-      <Typography
-        variant='buttonSmall'
-        color={isActive ? palette.text.primary : palette.text.secondary}
-      >
-        {text}
-      </Typography>
-    </Stack>
   )
 }

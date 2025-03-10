@@ -1,25 +1,37 @@
-import { IconButton, Paper, Stack, Typography, useTheme } from '@mui/material'
+import { CircularProgress, Paper, Stack, Typography } from '@mui/material'
+import { useEffect, useState } from 'react'
 import { QRCode } from 'react-qrcode-logo'
 import { useSearchParams } from 'react-router-dom'
 
 import { RarimeAppBadges } from '@/common'
-import { Icons } from '@/enums'
+import { config } from '@/config'
 import { isMobile } from '@/helpers'
-import { useCopyToClipboard } from '@/hooks'
-import { UiIcon } from '@/ui'
 
 type Props = {
   extCode?: string
 }
 
 export default function DownloadApp({ extCode }: Props) {
-  const { palette } = useTheme()
   const [searchParams] = useSearchParams()
-  const { isCopied, copy } = useCopyToClipboard()
+  const [loading, setLoading] = useState(true)
 
-  const code = extCode || searchParams.get('code')
+  const code = extCode || searchParams.get('code') || searchParams.get('deep_link_value')
 
-  return (
+  useEffect(() => {
+    if (code) {
+      window.location.href = `${config.DEFERRED_DEEP_LINK}?deep_link_value=${code}`
+    }
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+  }, [code])
+
+  return loading && code ? (
+    <Stack alignItems='center' justifyContent='center' flex={1}>
+      <CircularProgress color='secondary' />
+    </Stack>
+  ) : (
     <Paper
       component={Stack}
       justifyContent='center'
@@ -42,37 +54,7 @@ export default function DownloadApp({ extCode }: Props) {
       <Stack gap={2}>
         <Typography variant='body3'>1. Download RariMe app on your phone</Typography>
         <Typography variant='body3'>2. Open the app and create your account</Typography>
-        {code && (
-          <Typography variant='body3'>3. Join rewards program by entering the code</Typography>
-        )}
       </Stack>
-      {code && (
-        <Stack spacing={2} alignItems='center'>
-          <Stack
-            width='100%'
-            direction='row'
-            gap={2}
-            justifyContent='center'
-            p={3}
-            bgcolor={palette.action.active}
-            border={2}
-            borderColor={palette.divider}
-            borderRadius={2}
-          >
-            <Typography
-              variant='subtitle2'
-              color={palette.text.primary}
-              letterSpacing={3}
-              textAlign='center'
-            >
-              {code}
-            </Typography>
-            <IconButton color={isCopied ? 'success' : 'primary'} onClick={() => copy(code)}>
-              <UiIcon name={isCopied ? Icons.Check : Icons.CopySimple} size={5} />
-            </IconButton>
-          </Stack>
-        </Stack>
-      )}
     </Paper>
   )
 }
