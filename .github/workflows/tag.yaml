@@ -48,4 +48,4 @@ jobs:
           mkdir ~/.kube/
           echo "${{ secrets.K8SCONFIG_MAIN }}" | base64 -d > config
           mv config ~/.kube/
-          kubectl set image deployment webclient template=ghcr.io/$GITHUB_REPOSITORY:$GITHUB_REF_NAME -n rarime
+          kubectl set image deployment rarime-webclient webclient=ghcr.io/$GITHUB_REPOSITORY:$GITHUB_REF_NAME -n rarime
