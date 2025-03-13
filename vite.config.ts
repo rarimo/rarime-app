@@ -32,7 +32,6 @@ export default defineConfig(({ mode }) => {
           },
         }
       : {}),
-    publicDir: 'static',
     plugins: [
       react(),
       tsconfigPaths(),
@@ -76,7 +75,6 @@ export default defineConfig(({ mode }) => {
       alias: {
         '@': `${root}/`,
         '@config': `${root}/config.ts`,
-        '@static': `${root}/../static`,
       },
     },
     optimizeDeps: {

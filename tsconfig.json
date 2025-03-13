@@ -20,8 +20,7 @@
     ],
     "paths": {
       "@/*": ["src/*"],
-      "@config": ["src/config.ts"],
-      "@static": ["static"]
+      "@config": ["src/config.ts"]
     },
     "lib": [
       "ESNext",

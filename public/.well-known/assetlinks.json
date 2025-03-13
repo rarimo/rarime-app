@@ -1,0 +1,11 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.rarilabs.rarime",
+    "sha256_cert_fingerprints": [
+      "A7:66:A3:37:36:BB:FD:15:53:C9:68:F3:F0:7B:FA:E8:D4:6A:AD:D2:AD:A9:14:06:07:62:F8:0A:DE:26:C4:3A",
+      "97:6B:34:D7:C0:A7:CA:52:0C:FD:03:3B:42:0B:4F:E9:04:A8:CB:AA:62:1C:4B:E0:5D:4A:B6:85:D3:26:E3:D6"
+    ]
+  }
+}]
