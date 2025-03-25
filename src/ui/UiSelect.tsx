@@ -10,7 +10,7 @@ import {
 import { ComponentProps, forwardRef, ReactNode, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
-import { Icons } from '@/enums'
+import { Icons } from '@/constants/icons'
 
 import UiIcon from './UiIcon'
 

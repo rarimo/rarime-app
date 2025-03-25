@@ -10,7 +10,7 @@ import {
   useTheme,
 } from '@mui/material'
 
-import { Icons } from '@/enums'
+import { Icons } from '@/constants/icons'
 
 import UiIcon from './UiIcon'
 

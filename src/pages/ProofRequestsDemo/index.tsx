@@ -1,4 +1,5 @@
 import { JsonApiClient } from '@distributedlab/jac'
+import { yupResolver } from '@hookform/resolvers/yup'
 import {
   Button,
   Divider,
@@ -11,17 +12,17 @@ import {
   useTheme,
 } from '@mui/material'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
-import { Controller } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { QRCode } from 'react-qrcode-logo'
 import { v4 as uuid } from 'uuid'
+import { boolean, object, string } from 'yup'
 
 import { config } from '@/config'
-import { ErrorHandler } from '@/helpers'
-import { useForm } from '@/hooks'
+import { ErrorHandler } from '@/services/error-handler'
 import { UiSwitch, UiTextField } from '@/ui'
 
 const apiClient = new JsonApiClient({
-  baseUrl: config.VERIFICATOR_API_URL,
+  baseUrl: config.API_URL,
 })
 
 enum DemoSteps {
@@ -192,15 +193,20 @@ function ProofAttributesStep({
 }: {
   onSubmit: (verificationCheckEndpoint: string, deepLink: string) => void
 }) {
-  const { handleSubmit, control, isFormDisabled, getErrorMessage, disableForm, enableForm } =
-    useForm(DEFAULT_VALUES, yup =>
-      yup.object().shape({
-        [FieldNames.Uniqueness]: yup.boolean(),
-        [FieldNames.MinimumAge]: yup.string(),
-        [FieldNames.Nationality]: yup.string(),
-        [FieldNames.EventId]: yup.string().required(),
+  const [isFormDisabled, setIsFormDisabled] = useState(false)
+  const { control, formState, handleSubmit } = useForm({
+    mode: 'onTouched',
+    defaultValues: DEFAULT_VALUES,
+    resolver: yupResolver(
+      object().shape({
+        [FieldNames.Uniqueness]: boolean(),
+        [FieldNames.MinimumAge]: string(),
+        [FieldNames.Nationality]: string(),
+        [FieldNames.NationalityCheck]: boolean(),
+        [FieldNames.EventId]: string().required(),
       }),
-    )
+    ),
+  })
 
   const handleVerification = useCallback(
     async (attrs: {
@@ -240,33 +246,30 @@ function ProofAttributesStep({
     [onSubmit],
   )
 
-  const submit = useCallback(
-    async (formData: typeof DEFAULT_VALUES) => {
-      disableForm()
+  const submit = handleSubmit(async formData => {
+    setIsFormDisabled(true)
 
-      try {
-        const minimumAge = Number(formData[FieldNames.MinimumAge])
-        const nationality = formData[FieldNames.Nationality]
+    try {
+      const minimumAge = Number(formData[FieldNames.MinimumAge])
+      const nationality = formData[FieldNames.Nationality]
 
-        await handleVerification({
-          age_lower_bound: minimumAge ? minimumAge : undefined,
-          uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-          nationality: nationality ? nationality : undefined,
-          event_id: formData[FieldNames.EventId],
-          nationality_check: formData[FieldNames.NationalityCheck],
-        })
-      } catch (error) {
-        ErrorHandler.process(error)
-      }
+      await handleVerification({
+        age_lower_bound: minimumAge ? minimumAge : undefined,
+        uniqueness: Boolean(formData[FieldNames.Uniqueness]),
+        nationality: nationality ? nationality : undefined,
+        event_id: formData[FieldNames.EventId],
+        nationality_check: formData[FieldNames.NationalityCheck],
+      })
+    } catch (error) {
+      ErrorHandler.process(error)
+    }
 
-      enableForm()
-    },
-    [disableForm, enableForm, handleVerification],
-  )
+    setIsFormDisabled(false)
+  })
 
   return (
     <StepView title='Step 1/3' subtitle='Create verification request for the proof'>
-      <Stack component='form' spacing={4} onSubmit={handleSubmit(submit)}>
+      <Stack component='form' spacing={4} onSubmit={submit}>
         <Controller
           name={FieldNames.Uniqueness}
           control={control}
@@ -306,7 +309,7 @@ function ProofAttributesStep({
                   {...field}
                   type='number'
                   label='Minimum Age'
-                  errorMessage={getErrorMessage(FieldNames.MinimumAge)}
+                  errorMessage={formState.errors[FieldNames.MinimumAge]?.message}
                   disabled={isFormDisabled}
                 />
               </FormControl>
@@ -321,7 +324,7 @@ function ProofAttributesStep({
                   {...field}
                   label='Nationality'
                   placeholder='3-letter ISO code'
-                  errorMessage={getErrorMessage(FieldNames.Nationality)}
+                  errorMessage={formState.errors[FieldNames.Nationality]?.message}
                   disabled={isFormDisabled}
                 />
               </FormControl>
@@ -337,7 +340,7 @@ function ProofAttributesStep({
                 {...field}
                 label='Event ID'
                 placeholder=''
-                errorMessage={getErrorMessage(FieldNames.EventId)}
+                errorMessage={formState.errors[FieldNames.EventId]?.message}
                 disabled={isFormDisabled}
               />
             </FormControl>
