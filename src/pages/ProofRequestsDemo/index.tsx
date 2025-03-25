@@ -1,5 +1,5 @@
 import { JsonApiClient } from '@distributedlab/jac'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Button,
   Divider,
@@ -12,10 +12,10 @@ import {
   useTheme,
 } from '@mui/material'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { QRCode } from 'react-qrcode-logo'
 import { v4 as uuid } from 'uuid'
-import { boolean, object, string } from 'yup'
+import { z } from 'zod'
 
 import { config } from '@/config'
 import { ErrorHandler } from '@/services/error-handler'
@@ -172,21 +172,15 @@ function IntroStep({ onStart }: { onStart: () => void }) {
   )
 }
 
-enum FieldNames {
-  Uniqueness = 'uniqueness',
-  MinimumAge = 'minimumAge',
-  Nationality = 'nationality',
-  NationalityCheck = 'nationalityCheck',
-  EventId = 'eventId',
-}
+const formSchema = z.object({
+  uniqueness: z.boolean(),
+  minimumAge: z.union([z.number().int().positive(), z.nan()]).optional(),
+  nationality: z.string().optional(),
+  nationalityCheck: z.boolean(),
+  eventId: z.string().nonempty(),
+})
 
-const DEFAULT_VALUES = {
-  [FieldNames.Uniqueness]: false,
-  [FieldNames.MinimumAge]: '18',
-  [FieldNames.Nationality]: 'UKR',
-  [FieldNames.NationalityCheck]: false,
-  [FieldNames.EventId]: '12345678900987654321',
-}
+type FormValues = z.infer<typeof formSchema>
 
 function ProofAttributesStep({
   onSubmit,
@@ -194,18 +188,16 @@ function ProofAttributesStep({
   onSubmit: (verificationCheckEndpoint: string, deepLink: string) => void
 }) {
   const [isFormDisabled, setIsFormDisabled] = useState(false)
-  const { control, formState, handleSubmit } = useForm({
+  const { formState, register, handleSubmit } = useForm({
     mode: 'onTouched',
-    defaultValues: DEFAULT_VALUES,
-    resolver: yupResolver(
-      object().shape({
-        [FieldNames.Uniqueness]: boolean(),
-        [FieldNames.MinimumAge]: string(),
-        [FieldNames.Nationality]: string(),
-        [FieldNames.NationalityCheck]: boolean(),
-        [FieldNames.EventId]: string().required(),
-      }),
-    ),
+    defaultValues: {
+      uniqueness: false,
+      minimumAge: 18,
+      nationality: 'UKR',
+      nationalityCheck: false,
+      eventId: '12345678900987654321',
+    },
+    resolver: zodResolver(formSchema),
   })
 
   const handleVerification = useCallback(
@@ -224,7 +216,7 @@ function ProofAttributesStep({
       }>('/integrations/verificator-svc/private/verification-link', {
         body: {
           data: {
-            id: `${uuid()}@gmail.com`,
+            id: uuid(),
             type: 'user',
             attributes: {
               age_lower_bound: attrs.age_lower_bound,
@@ -246,106 +238,71 @@ function ProofAttributesStep({
     [onSubmit],
   )
 
-  const submit = handleSubmit(async formData => {
-    setIsFormDisabled(true)
+  const submit: SubmitHandler<FormValues> = useCallback(
+    async formData => {
+      setIsFormDisabled(true)
 
-    try {
-      const minimumAge = Number(formData[FieldNames.MinimumAge])
-      const nationality = formData[FieldNames.Nationality]
+      try {
+        await handleVerification({
+          age_lower_bound: formData.minimumAge ? formData.minimumAge : undefined,
+          uniqueness: formData.uniqueness,
+          nationality: formData.nationality ? formData.nationality : undefined,
+          event_id: formData.eventId,
+          nationality_check: formData.nationalityCheck,
+        })
+      } catch (error) {
+        ErrorHandler.process(error)
+      }
 
-      await handleVerification({
-        age_lower_bound: minimumAge ? minimumAge : undefined,
-        uniqueness: Boolean(formData[FieldNames.Uniqueness]),
-        nationality: nationality ? nationality : undefined,
-        event_id: formData[FieldNames.EventId],
-        nationality_check: formData[FieldNames.NationalityCheck],
-      })
-    } catch (error) {
-      ErrorHandler.process(error)
-    }
-
-    setIsFormDisabled(false)
-  })
+      setIsFormDisabled(false)
+    },
+    [handleVerification],
+  )
 
   return (
     <StepView title='Step 1/3' subtitle='Create verification request for the proof'>
-      <Stack component='form' spacing={4} onSubmit={submit}>
-        <Controller
-          name={FieldNames.Uniqueness}
-          control={control}
-          render={({ field }) => (
-            <FormControl>
-              <UiSwitch
-                {...field}
-                checked={field.value}
-                label='Uniqueness'
-                disabled={isFormDisabled}
-              />
-            </FormControl>
-          )}
-        />
-        <Controller
-          name={FieldNames.NationalityCheck}
-          control={control}
-          render={({ field }) => (
-            <FormControl>
-              <UiSwitch
-                {...field}
-                checked={field.value}
-                label='Nationality Check'
-                disabled={isFormDisabled}
-              />
-            </FormControl>
-          )}
-        />
+      <Stack component='form' spacing={4} onSubmit={handleSubmit(submit)}>
+        <FormControl>
+          <UiSwitch {...register('uniqueness')} label='Uniqueness' disabled={isFormDisabled} />
+        </FormControl>
+        <FormControl>
+          <UiSwitch
+            {...register('nationalityCheck')}
+            label='Nationality Check'
+            disabled={isFormDisabled}
+          />
+        </FormControl>
 
         <Stack direction='row' spacing={4}>
-          <Controller
-            name={FieldNames.MinimumAge}
-            control={control}
-            render={({ field }) => (
-              <FormControl>
-                <UiTextField
-                  {...field}
-                  type='number'
-                  label='Minimum Age'
-                  errorMessage={formState.errors[FieldNames.MinimumAge]?.message}
-                  disabled={isFormDisabled}
-                />
-              </FormControl>
-            )}
-          />
-          <Controller
-            name={FieldNames.Nationality}
-            control={control}
-            render={({ field }) => (
-              <FormControl>
-                <UiTextField
-                  {...field}
-                  label='Nationality'
-                  placeholder='3-letter ISO code'
-                  errorMessage={formState.errors[FieldNames.Nationality]?.message}
-                  disabled={isFormDisabled}
-                />
-              </FormControl>
-            )}
-          />
+          <FormControl>
+            <UiTextField
+              {...register('minimumAge', { valueAsNumber: true })}
+              type='number'
+              label='Minimum Age'
+              errorMessage={formState.errors.minimumAge?.message}
+              disabled={isFormDisabled}
+            />
+          </FormControl>
+          <FormControl>
+            <UiTextField
+              {...register('nationality')}
+              label='Nationality'
+              placeholder='3-letter ISO code'
+              errorMessage={formState.errors.nationality?.message}
+              disabled={isFormDisabled}
+            />
+          </FormControl>
         </Stack>
-        <Controller
-          name={FieldNames.EventId}
-          control={control}
-          render={({ field }) => (
-            <FormControl>
-              <UiTextField
-                {...field}
-                label='Event ID'
-                placeholder=''
-                errorMessage={formState.errors[FieldNames.EventId]?.message}
-                disabled={isFormDisabled}
-              />
-            </FormControl>
-          )}
-        />
+        <FormControl>
+          <UiTextField
+            {...register('eventId')}
+            label='Event ID'
+            placeholder=''
+            errorMessage={formState.errors.eventId?.message}
+            disabled={isFormDisabled}
+          />
+        </FormControl>
+
         <Button disabled={isFormDisabled} type='submit'>
           {isFormDisabled ? 'Requesting...' : 'Request Verification'}
         </Button>

@@ -8,7 +8,6 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
-    'plugin:react-i18n/recommended',
     'prettier',
   ],
   overrides: [
@@ -22,7 +21,12 @@ module.exports = {
     },
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
-  plugins: ['simple-import-sort', 'prettier', '@typescript-eslint', 'react-i18n'],
+  plugins: [
+    'simple-import-sort',
+    'prettier',
+    '@typescript-eslint',
+    'unused-imports'
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     tsconfigRootDir: '.',
@@ -60,8 +64,9 @@ module.exports = {
     ],
     'no-return-await': 0,
     'object-curly-spacing': ['error', 'always'],
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
+    'simple-import-sort/imports': 'warn',
+    'simple-import-sort/exports': 'warn',
+    'unused-imports/no-unused-imports': 'warn',
     'no-var': 'error',
     'comma-dangle': [1, 'always-multiline'],
     'linebreak-style': ['error', 'unix'],
@@ -82,11 +87,10 @@ module.exports = {
         allow: ['warn', 'error'],
       },
     ],
-    'react-i18n/no-dynamic-translation-keys': 'error',
-    'react-i18n/no-missing-interpolation-keys': 'error',
     'react/jsx-curly-brace-presence': ['warn', 'never'],
     // disable unnecessary rules from recommendations
     'react/display-name': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-empty-object-type': ['warn', { allowInterfaces: 'with-single-extends' }]
   },
 }

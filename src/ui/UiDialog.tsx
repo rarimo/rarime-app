@@ -22,9 +22,9 @@ export function UiDialogTitle({ children, onClose, ...rest }: UiDialogTitleProps
   const { palette } = useTheme()
 
   return (
-    <DialogTitle
+    <Stack
       {...rest}
-      component={Stack}
+      component={DialogTitle}
       direction='row'
       justifyContent='space-between'
       width='100%'
@@ -38,7 +38,7 @@ export function UiDialogTitle({ children, onClose, ...rest }: UiDialogTitleProps
       <IconButton color='secondary' aria-label='close' onClick={e => onClose?.(e, 'backdropClick')}>
         <UiIcon name={Icons.Close} size={5} />
       </IconButton>
-    </DialogTitle>
+    </Stack>
   )
 }
 

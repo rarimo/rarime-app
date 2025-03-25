@@ -1,7 +1,6 @@
 import packageJson from '../package.json'
 
 export type Config = {
-  APP_NAME: string
   APP_HOST_URL: string
   API_URL: string
   BUILD_VERSION: string
@@ -11,7 +10,6 @@ export type Config = {
 }
 
 export const config: Config = {
-  APP_NAME: import.meta.env.VITE_APP_NAME,
   APP_HOST_URL: import.meta.env.VITE_APP_HOST_URL,
   API_URL: import.meta.env.VITE_API_URL,
   BUILD_VERSION: packageJson.version || import.meta.env.VITE_APP_BUILD_VERSION,

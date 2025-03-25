@@ -1,6 +1,6 @@
 import { Alert, AlertTitle, Typography, useTheme } from '@mui/material'
 import { CustomContentProps, SnackbarContent, useSnackbar } from 'notistack'
-import { forwardRef } from 'react'
+import { Ref } from 'react'
 
 import { Icons } from '@/constants/icons'
 import { EmitterEvent } from '@/services/event-emitter'
@@ -11,19 +11,18 @@ interface Props extends CustomContentProps {
   title: string
   message: string
   icon: Icons
+  ref: Ref<HTMLDivElement>
 }
 
-const AppToast = forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { message, icon, title, id } = props
+export default function AppToast({ type, message, icon, title, id, ref }: Props) {
   const { spacing } = useTheme()
-
   const { closeSnackbar } = useSnackbar()
 
   return (
     <SnackbarContent ref={ref} role='alert'>
       <Alert
         icon={<UiIcon name={icon} />}
-        severity={props.type}
+        severity={type}
         sx={{ maxWidth: spacing(100) }}
         onClose={() => closeSnackbar(id)}
       >
@@ -32,8 +31,4 @@ const AppToast = forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
       </Alert>
     </SnackbarContent>
   )
-})
-
-AppToast.displayName = 'AppToast'
-
-export default AppToast
+}

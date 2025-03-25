@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
   VITE_API_URL: string
+  VITE_APP_HOST_URL: string
   VITE_APP_BUILD_VERSION: string
 }
 
