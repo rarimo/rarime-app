@@ -1,7 +1,6 @@
-import { ExtendedTypographyOptions } from '@/types'
-
 import { FONT_FAMILY, FontWeight } from './constants'
 import { toRem } from './helpers'
+import { ExtendedTypographyOptions } from './types'
 
 export const typography: ExtendedTypographyOptions = {
   htmlFontSize: 16,

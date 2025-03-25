@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import { QRCode } from 'react-qrcode-logo'
 import { useSearchParams } from 'react-router-dom'
 
-import { RarimeAppBadges } from '@/common'
+import RarimeAppBadges from '@/components/RarimeAppBadges'
 import { config } from '@/config'
-import { isMobile } from '@/helpers'
+import { isMobile } from '@/utils/device'
 
 type Props = {
   extCode?: string

@@ -382,48 +382,6 @@ export const components: Components<Omit<Theme, 'components'>> = {
       }),
     },
   },
-  MuiPagination: {
-    defaultProps: {
-      color: 'primary',
-      hidePrevButton: true,
-      hideNextButton: true,
-    },
-    styleOverrides: {
-      root: ({ theme }) => ({
-        '& .MuiButtonBase-root': {
-          ...typography.subtitle4,
-          color: theme.palette.text.secondary,
-        },
-      }),
-    },
-  },
-  MuiDrawer: {
-    defaultProps: {
-      anchor: 'right',
-    },
-    styleOverrides: {
-      root: {
-        '& > .MuiBackdrop-root': {
-          backgroundColor: 'rgba(32, 32, 32, 0.50)',
-        },
-      },
-      paper: ({ theme }) => ({
-        width: '100%',
-        maxWidth: theme.spacing(108),
-        backgroundColor: theme.palette.background.paper,
-        boxShadow: 'none',
-        border: 'none',
-        borderRadius: theme.spacing(3),
-      }),
-      paperAnchorRight: ({ theme }) => ({
-        height: 'unset',
-        top: theme.spacing(3),
-        bottom: theme.spacing(3),
-        left: 'unset',
-        right: theme.spacing(3),
-      }),
-    },
-  },
   MuiAlert: {
     styleOverrides: {
       root: ({ theme }) => ({
@@ -464,22 +422,6 @@ export const components: Components<Omit<Theme, 'components'>> = {
       }),
     },
   },
-  MuiLinearProgress: {
-    defaultProps: {
-      variant: 'determinate',
-    },
-    styleOverrides: {
-      root: ({ theme }) => ({
-        borderRadius: 250,
-        height: theme.spacing(2),
-        backgroundColor: theme.palette.action.active,
-      }),
-      barColorPrimary: ({ theme }) => ({
-        borderRadius: 250,
-        backgroundColor: theme.palette.primary.dark,
-      }),
-    },
-  },
   MuiDialog: {
     styleOverrides: {
       paper: ({ theme }) => ({
@@ -488,32 +430,6 @@ export const components: Components<Omit<Theme, 'components'>> = {
         backgroundColor: theme.palette.background.paper,
         boxShadow: `inset 0 0 0 1px ${theme.palette.action.active}`,
         border: 0,
-      }),
-    },
-  },
-  MuiChartsTooltip: {
-    styleOverrides: {
-      root: () => ({
-        '& .MuiChartsTooltip-root': {
-          backgroundColor: 'transparent',
-          border: 'none',
-        },
-      }),
-      table: ({ theme }) => ({
-        backgroundColor: theme.palette.additional.pureBlack,
-        padding: theme.spacing(2, 6),
-        borderRadius: theme.spacing(250),
-      }),
-      cell: ({ theme }) => ({
-        '&.MuiChartsTooltip-labelCell, &.MuiChartsTooltip-markCell': {
-          display: 'none',
-        },
-        '&.MuiChartsTooltip-valueCell': {
-          padding: '0 !important',
-          display: 'flex',
-          color: theme.palette.common.white,
-          '& .MuiTypography-root': typography.buttonSmall,
-        },
       }),
     },
   },

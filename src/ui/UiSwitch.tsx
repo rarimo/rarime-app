@@ -1,11 +1,11 @@
 import { FormControlLabel, Switch, type SwitchProps } from '@mui/material'
-import { forwardRef, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 interface Props extends SwitchProps {
   label?: ReactNode
 }
 
-const UiSwitch = forwardRef(({ label, ...rest }: Props, ref) => {
+export default function UiSwitch({ label, ref, ...rest }: Props) {
   return label ? (
     <FormControlLabel
       inputRef={ref}
@@ -14,8 +14,6 @@ const UiSwitch = forwardRef(({ label, ...rest }: Props, ref) => {
       sx={{ gap: 4, mx: 0 }}
     />
   ) : (
-    <Switch {...rest} inputRef={ref} />
+    <Switch ref={ref} {...rest} />
   )
-})
-
-export default UiSwitch
+}
