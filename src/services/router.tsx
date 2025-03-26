@@ -8,12 +8,14 @@ export enum RoutePaths {
   RewardsInvitationAlias = '/r/:code',
   DownloadApp = '/download-app',
   ProofRequestsDemo = '/proof-requests-demo',
+  ExternalRequest = '/external',
 }
 
 export function AppRouter() {
   const RewardsInvitationAlias = lazy(() => import('@/pages/RewardsInvitationAlias'))
   const DownloadApp = lazy(() => import('@/pages/DownloadApp'))
   const ProofRequestsDemo = lazy(() => import('@/pages/ProofRequestsDemo'))
+  const ExternalRequest = lazy(() => import('@/pages/ExternalRequest'))
 
   const router = createBrowserRouter([
     {
@@ -37,6 +39,10 @@ export function AppRouter() {
         {
           path: RoutePaths.ProofRequestsDemo,
           element: <ProofRequestsDemo />,
+        },
+        {
+          path: RoutePaths.ExternalRequest,
+          element: <ExternalRequest />,
         },
         {
           path: RoutePaths.Root,

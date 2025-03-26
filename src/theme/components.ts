@@ -148,7 +148,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: ({ theme }) => ({
         backgroundImage: 'unset',
-        background: theme.palette.background.light,
+        background: theme.palette.background.paper,
         padding: theme.spacing(6),
         borderColor: theme.palette.additional.layerBorder,
         borderRadius: theme.spacing(4),
@@ -430,6 +430,17 @@ export const components: Components<Omit<Theme, 'components'>> = {
         backgroundColor: theme.palette.background.paper,
         boxShadow: `inset 0 0 0 1px ${theme.palette.action.active}`,
         border: 0,
+      }),
+    },
+  },
+  MuiLink: {
+    styleOverrides: {
+      root: ({ theme }) => ({
+        color: theme.palette.text.primary,
+        textDecoration: 'none',
+        '&:hover': {
+          textDecoration: 'underline',
+        },
       }),
     },
   },

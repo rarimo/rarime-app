@@ -1,10 +1,10 @@
-import { Box, Button, Stack, useTheme } from '@mui/material'
+import { Box, Link, Stack, Typography, useTheme } from '@mui/material'
 import { PropsWithChildren } from 'react'
 
 import { vh } from '@/theme/helpers'
 
 export default function MainLayout({ children }: PropsWithChildren) {
-  const { spacing } = useTheme()
+  const { palette, spacing } = useTheme()
 
   return (
     <Stack direction='row' height={vh(100)}>
@@ -24,16 +24,12 @@ export default function MainLayout({ children }: PropsWithChildren) {
             sx={{ display: { xs: 'none', md: 'flex' } }}
           >
             <Box component='img' src='/branding/logo-sign-in.svg' alt='RariMe App' />
-            <Button
-              component='a'
-              href='https://rarime.com'
-              target='_blank'
-              variant='text'
-              color='secondary'
-              size='medium'
-            >
-              Visit Landing page
-            </Button>
+            <Typography variant='body3' color={palette.text.secondary}>
+              Powered by{' '}
+              <Link component='a' href='https://rarimo.com' target='_blank' typography='subtitle4'>
+                Rarimo
+              </Link>
+            </Typography>
           </Stack>
 
           <Stack
