@@ -56,7 +56,7 @@ function HomeCard({ title, description, icon, route }: CardProps) {
           name={icon}
           size={10}
           sx={{
-            color: palette.text.primary,
+            color: palette.common.black,
             background: palette.additional.gradient,
             borderRadius: '50%',
             padding: 2,
