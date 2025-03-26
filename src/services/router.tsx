@@ -4,7 +4,7 @@ import { createBrowserRouter, Navigate, Outlet, RouterProvider } from 'react-rou
 import MainLayout from '@/components/MainLayout'
 
 export enum RoutePaths {
-  Root = '/',
+  Home = '/',
   RewardsInvitationAlias = '/r/:code',
   DownloadApp = '/download-app',
   ProofRequestsDemo = '/proof-requests-demo',
@@ -12,6 +12,7 @@ export enum RoutePaths {
 }
 
 export function AppRouter() {
+  const Home = lazy(() => import('@/pages/Home'))
   const RewardsInvitationAlias = lazy(() => import('@/pages/RewardsInvitationAlias'))
   const DownloadApp = lazy(() => import('@/pages/DownloadApp'))
   const ProofRequestsDemo = lazy(() => import('@/pages/ProofRequestsDemo'))
@@ -19,7 +20,7 @@ export function AppRouter() {
 
   const router = createBrowserRouter([
     {
-      path: RoutePaths.Root,
+      path: RoutePaths.Home,
       element: (
         <MainLayout>
           <Suspense fallback={<></>}>
@@ -45,12 +46,12 @@ export function AppRouter() {
           element: <ExternalRequest />,
         },
         {
-          path: RoutePaths.Root,
-          element: <Navigate replace to={RoutePaths.DownloadApp} />,
+          path: RoutePaths.Home,
+          element: <Home />,
         },
         {
           path: '*',
-          element: <Navigate replace to={RoutePaths.Root} />,
+          element: <Navigate replace to={RoutePaths.Home} />,
         },
       ],
     },
