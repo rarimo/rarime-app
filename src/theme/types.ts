@@ -73,6 +73,8 @@ declare module '@mui/material/styles' {
       layerBorder: string
       pureBlack: string
       gradient: string
+      invertedDark: string
+      invertedLight: string
     }
   }
 
@@ -81,6 +83,8 @@ declare module '@mui/material/styles' {
       layerBorder: string
       pureBlack: string
       gradient: string
+      invertedDark: string
+      invertedLight: string
     }
   }
 }

@@ -59,7 +59,7 @@ export const components: Components<Omit<Theme, 'components'>> = {
     },
     styleOverrides: {
       root: ({ theme }) => ({
-        borderRadius: theme.spacing(250),
+        borderRadius: theme.spacing(4),
         transition: Transitions.Default,
       }),
       containedSizeLarge: ({ theme }) => ({
@@ -107,9 +107,10 @@ export const components: Components<Omit<Theme, 'components'>> = {
         },
       }),
       containedPrimary: ({ theme }) => ({
+        color: theme.palette.additional.invertedLight,
         '&.Mui-disabled': {
           backgroundColor: theme.palette.primary.main,
-          color: theme.palette.text.primary,
+          color: theme.palette.additional.invertedLight,
           opacity: 0.5,
         },
       }),

@@ -1,7 +1,9 @@
 import { Box, Link, Stack, Typography, useTheme } from '@mui/material'
 import { PropsWithChildren } from 'react'
 
+import { Icons } from '@/constants/icons'
 import { vh } from '@/theme/helpers'
+import { UiIcon } from '@/ui'
 
 export default function MainLayout({ children }: PropsWithChildren) {
   const { palette, spacing } = useTheme()
@@ -23,7 +25,7 @@ export default function MainLayout({ children }: PropsWithChildren) {
             alignItems='center'
             sx={{ display: { xs: 'none', md: 'flex' } }}
           >
-            <Box component='img' src='/branding/logo-sign-in.svg' alt='RariMe App' />
+            <UiIcon name={Icons.Rarime} size={8} />
             <Typography variant='body3' color={palette.text.secondary}>
               Powered by{' '}
               <Link component='a' href='https://rarimo.com' target='_blank' typography='subtitle4'>

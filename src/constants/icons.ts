@@ -4,4 +4,6 @@ export enum Icons {
   Close = 'close',
   Info = 'info',
   Warning = 'warning',
+  Rarime = 'rarime',
+  QrCodeLine = 'qr-code-line',
 }
